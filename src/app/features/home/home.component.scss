@@ -1,0 +1,17 @@
+.hero-section {
+  position: relative;
+  
+  h1 {
+    text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.8);
+  }
+}
+
+// Animación para el scroll indicator
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0) translateX(-50%);
+  }
+  50% {
+    transform: translateY(-10px) translateX(-50%);
+  }
+}

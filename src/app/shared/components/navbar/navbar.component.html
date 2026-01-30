@@ -1,0 +1,113 @@
+<nav 
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  [ngClass]="{
+    'bg-black/95 backdrop-blur-sm shadow-lg': isScrolled,
+    'bg-transparent': !isScrolled
+  }">
+  
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="flex items-center justify-between h-20">
+      
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center space-x-3 group">
+        <div class="w-12 h-12 bg-orange-600 rounded flex items-center justify-center">
+          <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="text-white font-bold text-xl group-hover:text-orange-600 transition-colors">
+            TRANSPARENCIA
+          </div>
+          <div class="text-gray-400 text-xs uppercase tracking-wider">
+            Minera
+          </div>
+        </div>
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden lg:flex items-center space-x-8">
+        <a routerLink="/" 
+           routerLinkActive="text-orange-600" 
+           [routerLinkActiveOptions]="{exact: true}"
+           class="text-white hover:text-orange-600 transition-colors font-medium">
+          Home
+        </a>
+        <a routerLink="/compania" 
+           routerLinkActive="text-orange-600"
+           class="text-white hover:text-orange-600 transition-colors font-medium">
+          Compañía
+        </a>
+        <a routerLink="/servicios" 
+           routerLinkActive="text-orange-600"
+           class="text-white hover:text-orange-600 transition-colors font-medium">
+          Servicios
+        </a>
+        <a routerLink="/sobrevuelo-drones" 
+           routerLinkActive="text-orange-600"
+           class="text-white hover:text-orange-600 transition-colors font-medium">
+          Sobrevuelo de Drones
+        </a>
+        <a routerLink="/galeria" 
+           routerLinkActive="text-orange-600"
+           class="text-white hover:text-orange-600 transition-colors font-medium">
+          Galería
+        </a>
+        <a routerLink="/contacto" 
+           class="px-6 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded transition-colors">
+          Contacto
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        (click)="toggleMobileMenu()"
+        class="lg:hidden text-white hover:text-orange-600 transition-colors">
+        <svg *ngIf="!isMobileMenuOpen" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg *ngIf="isMobileMenuOpen" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div 
+    *ngIf="isMobileMenuOpen"
+    class="lg:hidden bg-black/98 border-t border-orange-600/20">
+    <div class="container mx-auto px-6 py-6 space-y-4">
+      <a routerLink="/" 
+         (click)="toggleMobileMenu()"
+         class="block text-white hover:text-orange-600 transition-colors font-medium py-2">
+        Home
+      </a>
+      <a routerLink="/compania" 
+         (click)="toggleMobileMenu()"
+         class="block text-white hover:text-orange-600 transition-colors font-medium py-2">
+        Compañía
+      </a>
+      <a routerLink="/servicios" 
+         (click)="toggleMobileMenu()"
+         class="block text-white hover:text-orange-600 transition-colors font-medium py-2">
+        Servicios
+      </a>
+      <a routerLink="/sobrevuelo-drones" 
+         (click)="toggleMobileMenu()"
+         class="block text-white hover:text-orange-600 transition-colors font-medium py-2">
+        Sobrevuelo de Drones
+      </a>
+      <a routerLink="/galeria" 
+         (click)="toggleMobileMenu()"
+         class="block text-white hover:text-orange-600 transition-colors font-medium py-2">
+        Galería
+      </a>
+      <a routerLink="/contacto" 
+         (click)="toggleMobileMenu()"
+         class="block px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded transition-colors text-center mt-4">
+        Contacto
+      </a>
+    </div>
+  </div>
+</nav>
