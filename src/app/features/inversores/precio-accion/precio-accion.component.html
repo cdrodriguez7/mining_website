@@ -1,0 +1,30 @@
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <h1 class="text-5xl font-black text-white mb-12">Precio de <span class="text-orange-600">Acción</span></h1>
+
+    <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 max-w-2xl">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <div class="text-gray-400 text-sm mb-1">Símbolo</div>
+          <div class="text-3xl font-black text-white">{{ stockData.tsx.symbol }}</div>
+        </div>
+        <div class="text-right">
+          <div class="text-4xl font-bold text-white">${{ stockData.tsx.price }}</div>
+          <div [class]="stockData.tsx.change >= 0 ? 'text-green-500' : 'text-red-500'" class="text-lg font-semibold">
+            {{ stockData.tsx.change >= 0 ? '+' : '' }}{{ stockData.tsx.change }} ({{ stockData.tsx.changePercent }}%)
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4 pt-6 border-t border-zinc-800">
+        <div>
+          <div class="text-gray-500 text-sm">Volumen</div>
+          <div class="text-white font-semibold">{{ stockData.tsx.volume }}</div>
+        </div>
+        <div>
+          <div class="text-gray-500 text-sm">Cap. de Mercado</div>
+          <div class="text-white font-semibold">{{ stockData.tsx.marketCap }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

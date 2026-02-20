@@ -1,0 +1,5 @@
+📍 UBICACIÓN EN TU PROYECTO:
+
+src/app/features/mineria-responsable/reporte-esclavitud-moderna/
+
+Copia TODOS los archivos de esta carpeta a la ubicación indicada arriba.

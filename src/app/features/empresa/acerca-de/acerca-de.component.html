@@ -1,0 +1,191 @@
+<!-- Hero Section -->
+<section class="relative bg-black py-20 lg:py-32">
+  <div class="absolute inset-0 opacity-20">
+    <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?q=80&w=2070" 
+         alt="Minería" 
+         class="w-full h-full object-cover">
+  </div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-zinc-900"></div>
+  
+  <div class="container mx-auto px-6 lg:px-12 relative z-10">
+    <div class="max-w-4xl">
+      <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
+        Acerca de Nosotros
+      </div>
+      <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
+        Promoviendo la <span class="text-orange-600">Transparencia Minera</span>
+      </h1>
+      <p class="text-gray-300 text-lg lg:text-xl leading-relaxed mb-8">
+        Somos la plataforma líder en transparencia minera del cantón Ponce Enríquez, 
+        dedicados a proporcionar información clara y accesible sobre las operaciones mineras en la región.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="#mision" class="px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors inline-flex items-center justify-center">
+          <span>Conoce Nuestra Misión</span>
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </a>
+        <a routerLink="/contacto" class="px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-semibold rounded-lg transition-all inline-flex items-center justify-center">
+          Contáctanos
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Estadísticas -->
+<section class="py-16 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div *ngFor="let stat of statistics" class="text-center">
+        <div class="text-5xl mb-4">{{ stat.icon }}</div>
+        <div class="text-5xl font-black text-white mb-2">{{ stat.value }}</div>
+        <div class="h-1 w-16 bg-orange-600 mx-auto mb-3"></div>
+        <div class="text-gray-400 text-sm">{{ stat.label }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quiénes Somos -->
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
+          Quiénes Somos
+        </div>
+        <h2 class="text-4xl lg:text-5xl font-black text-white mb-6 leading-tight">
+          Plataforma de <span class="text-orange-600">Transparencia Minera</span>
+        </h2>
+        <p class="text-gray-400 mb-4 leading-relaxed">
+          El cantón Ponce Enríquez es reconocido como el principal productor de oro del Ecuador, 
+          contribuyendo con el <strong class="text-white">72% de la producción nacional</strong>. 
+          Esta realidad nos impulsa a mantener los más altos estándares de transparencia y responsabilidad.
+        </p>
+        <p class="text-gray-400 mb-4 leading-relaxed">
+          Nuestra plataforma proporciona acceso público a información detallada sobre:
+        </p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-start space-x-3 text-gray-400">
+            <svg class="w-6 h-6 text-orange-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span>Concesiones mineras activas y sus titulares</span>
+          </li>
+          <li class="flex items-start space-x-3 text-gray-400">
+            <svg class="w-6 h-6 text-orange-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span>Documentación legal y permisos ambientales</span>
+          </li>
+          <li class="flex items-start space-x-3 text-gray-400">
+            <svg class="w-6 h-6 text-orange-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span>Fases del proceso minero legal</span>
+          </li>
+          <li class="flex items-start space-x-3 text-gray-400">
+            <svg class="w-6 h-6 text-orange-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span>Impacto ambiental y social de las operaciones</span>
+          </li>
+        </ul>
+      </div>
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1615485500834-bc10199bc255?q=80&w=2070" 
+             alt="Operaciones Mineras" 
+             class="rounded-lg shadow-2xl">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Misión y Visión -->
+<section id="mision" class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl lg:text-5xl font-black text-white mb-4">
+        Misión y <span class="text-orange-600">Visión</span>
+      </h2>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8">
+      <!-- Misión -->
+      <div class="bg-black border-2 border-orange-600 rounded-xl p-8 lg:p-10">
+        <div class="text-5xl mb-6">🎯</div>
+        <h3 class="text-3xl font-bold text-white mb-4">Nuestra Misión</h3>
+        <p class="text-gray-400 leading-relaxed">
+          Facilitar el acceso público a información verificada sobre las operaciones mineras en Ponce Enríquez, 
+          promoviendo la transparencia, legalidad y desarrollo sostenible del sector. Servimos como puente entre 
+          las empresas mineras, autoridades y la comunidad, garantizando que todos los procesos cumplan con la 
+          normativa vigente y contribuyan al bienestar colectivo.
+        </p>
+      </div>
+
+      <!-- Visión -->
+      <div class="bg-black border-2 border-zinc-700 hover:border-orange-600 rounded-xl p-8 lg:p-10 transition-colors">
+        <div class="text-5xl mb-6">🔭</div>
+        <h3 class="text-3xl font-bold text-white mb-4">Nuestra Visión</h3>
+        <p class="text-gray-400 leading-relaxed">
+          Ser la plataforma de referencia nacional en transparencia minera, reconocida por nuestra integridad, 
+          precisión y compromiso con el desarrollo sostenible. Aspiramos a que Ponce Enríquez sea un ejemplo 
+          de minería responsable, donde la transparencia sea la norma y el desarrollo económico coexista 
+          armoniosamente con la protección ambiental y el bienestar social.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Valores -->
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="text-center mb-16">
+      <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
+        Nuestros Principios
+      </div>
+      <h2 class="text-4xl lg:text-5xl font-black text-white mb-4">
+        Valores que nos <span class="text-orange-600">Definen</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div *ngFor="let valor of valores" 
+           class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all hover:-translate-y-2">
+        <div class="text-5xl mb-6">{{ valor.icon }}</div>
+        <h3 class="text-2xl font-bold text-white mb-4">{{ valor.title }}</h3>
+        <p class="text-gray-400 leading-relaxed">{{ valor.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-20 bg-orange-600">
+  <div class="container mx-auto px-6 lg:px-12 text-center">
+    <h2 class="text-4xl lg:text-5xl font-black text-white mb-6">
+      ¿Quieres Conocer Más?
+    </h2>
+    <p class="text-white/90 text-lg mb-10 max-w-2xl mx-auto">
+      Explora nuestra galería de procesos legales o contáctanos para más información sobre 
+      las operaciones mineras en Ponce Enríquez.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a routerLink="/galeria" 
+         class="px-8 py-4 bg-white text-orange-600 font-bold rounded-lg hover:bg-gray-100 transition-colors inline-flex items-center justify-center">
+        <span>Explorar Galería</span>
+        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+      <a routerLink="/contacto" 
+         class="px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-orange-600 font-bold rounded-lg transition-all inline-flex items-center justify-center">
+        Contáctanos
+      </a>
+    </div>
+  </div>
+</section>

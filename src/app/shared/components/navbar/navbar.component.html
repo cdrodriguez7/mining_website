@@ -17,44 +17,85 @@
         </div>
         <div>
           <div class="text-white font-bold text-xl group-hover:text-orange-600 transition-colors">
-            TRANSPARENCIA
+            PLAMPROMIN S.A
           </div>
           <div class="text-gray-400 text-xs uppercase tracking-wider">
-            Minera
+            Ponce Enríquez
           </div>
         </div>
       </a>
 
       <!-- Desktop Menu -->
-      <div class="hidden lg:flex items-center space-x-8">
-        <a routerLink="/" 
-           routerLinkActive="text-orange-600" 
-           [routerLinkActiveOptions]="{exact: true}"
-           class="text-white hover:text-orange-600 transition-colors font-medium">
-          Home
-        </a>
-        <a routerLink="/compania" 
-           routerLinkActive="text-orange-600"
-           class="text-white hover:text-orange-600 transition-colors font-medium">
-          Compañía
-        </a>
-        <a routerLink="/servicios" 
-           routerLinkActive="text-orange-600"
-           class="text-white hover:text-orange-600 transition-colors font-medium">
-          Servicios
-        </a>
-        <a routerLink="/sobrevuelo-drones" 
-           routerLinkActive="text-orange-600"
-           class="text-white hover:text-orange-600 transition-colors font-medium">
-          Sobrevuelo de Drones
-        </a>
-        <a routerLink="/galeria" 
-           routerLinkActive="text-orange-600"
-           class="text-white hover:text-orange-600 transition-colors font-medium">
-          Galería
-        </a>
-        <a routerLink="/contacto" 
-           class="px-6 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded transition-colors">
+      <div class="hidden lg:flex items-center space-x-1">
+        <ng-container *ngFor="let item of menuItems">
+          <!-- Items sin submenu -->
+          <a 
+            *ngIf="!item.children && item.route"
+            [routerLink]="item.route"
+            routerLinkActive="text-orange-600" 
+            [routerLinkActiveOptions]="{exact: item.route === '/'}"
+            class="px-4 py-2 text-sm font-medium text-white hover:text-orange-600 transition-colors rounded-lg">
+            {{ item.label }}
+          </a>
+
+          <!-- Items con submenu -->
+          <div 
+            *ngIf="item.children"
+            class="relative group"
+            (mouseenter)="openDropdown = item.label"
+            (mouseleave)="openDropdown = null">
+            <button 
+              class="px-4 py-2 text-sm font-medium text-white hover:text-orange-600 transition-colors rounded-lg flex items-center space-x-1">
+              <span>{{ item.label }}</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div 
+              *ngIf="isDropdownOpen(item.label)"
+              class="absolute top-full left-0 mt-2 w-64 bg-zinc-900 border border-zinc-800 rounded-lg shadow-2xl py-2 z-50">
+              <ng-container *ngFor="let subItem of item.children">
+                <!-- Sub-items sin submenu -->
+                <a 
+                  *ngIf="!subItem.children && subItem.route"
+                  [routerLink]="subItem.route"
+                  (click)="closeAllDropdowns()"
+                  class="block px-4 py-2.5 text-sm text-gray-300 hover:bg-orange-600 hover:text-white transition-colors">
+                  {{ subItem.label }}
+                </a>
+
+                <!-- Sub-items con submenu (tercer nivel) -->
+                <div *ngIf="subItem.children" class="relative group/nested">
+                  <button 
+                    class="w-full text-left px-4 py-2.5 text-sm text-gray-300 hover:bg-zinc-800 transition-colors flex items-center justify-between">
+                    <span>{{ subItem.label }}</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                  </button>
+                  
+                  <!-- Nested Dropdown -->
+                  <div class="absolute left-full top-0 ml-2 w-64 bg-zinc-900 border border-zinc-800 rounded-lg shadow-2xl py-2 hidden group-hover/nested:block">
+                    <a 
+                      *ngFor="let nestedItem of subItem.children"
+                      [routerLink]="nestedItem.route"
+                      (click)="closeAllDropdowns()"
+                      class="block px-4 py-2.5 text-sm text-gray-300 hover:bg-orange-600 hover:text-white transition-colors">
+                      {{ nestedItem.label }}
+                    </a>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- CTA Button -->
+        <a 
+          routerLink="/contacto" 
+          class="ml-4 px-6 py-2.5 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded transition-colors">
           Contacto
         </a>
       </div>
@@ -76,36 +117,71 @@
   <!-- Mobile Menu -->
   <div 
     *ngIf="isMobileMenuOpen"
-    class="lg:hidden bg-black/98 border-t border-orange-600/20">
-    <div class="container mx-auto px-6 py-6 space-y-4">
-      <a routerLink="/" 
-         (click)="toggleMobileMenu()"
-         class="block text-white hover:text-orange-600 transition-colors font-medium py-2">
-        Home
-      </a>
-      <a routerLink="/compania" 
-         (click)="toggleMobileMenu()"
-         class="block text-white hover:text-orange-600 transition-colors font-medium py-2">
-        Compañía
-      </a>
-      <a routerLink="/servicios" 
-         (click)="toggleMobileMenu()"
-         class="block text-white hover:text-orange-600 transition-colors font-medium py-2">
-        Servicios
-      </a>
-      <a routerLink="/sobrevuelo-drones" 
-         (click)="toggleMobileMenu()"
-         class="block text-white hover:text-orange-600 transition-colors font-medium py-2">
-        Sobrevuelo de Drones
-      </a>
-      <a routerLink="/galeria" 
-         (click)="toggleMobileMenu()"
-         class="block text-white hover:text-orange-600 transition-colors font-medium py-2">
-        Galería
-      </a>
-      <a routerLink="/contacto" 
-         (click)="toggleMobileMenu()"
-         class="block px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded transition-colors text-center mt-4">
+    class="lg:hidden bg-black/98 border-t border-orange-600/20 max-h-[80vh] overflow-y-auto">
+    <div class="container mx-auto px-6 py-6 space-y-2">
+      <ng-container *ngFor="let item of menuItems">
+        <!-- Items sin submenu -->
+        <a 
+          *ngIf="!item.children && item.route"
+          [routerLink]="item.route"
+          (click)="toggleMobileMenu()"
+          class="block text-white hover:text-orange-600 transition-colors font-medium py-2">
+          {{ item.label }}
+        </a>
+
+        <!-- Items con submenu -->
+        <div *ngIf="item.children" class="space-y-2">
+          <button 
+            (click)="toggleDropdown(item.label)"
+            class="w-full text-left text-white hover:text-orange-600 transition-colors font-medium py-2 flex items-center justify-between">
+            <span>{{ item.label }}</span>
+            <svg 
+              class="w-5 h-5 transition-transform"
+              [class.rotate-180]="isDropdownOpen(item.label)"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+
+          <!-- Mobile Dropdown Content -->
+          <div 
+            *ngIf="isDropdownOpen(item.label)"
+            class="pl-4 space-y-2 border-l-2 border-orange-600/30">
+            <ng-container *ngFor="let subItem of item.children">
+              <!-- Sub-items sin submenu -->
+              <a 
+                *ngIf="!subItem.children && subItem.route"
+                [routerLink]="subItem.route"
+                (click)="toggleMobileMenu()"
+                class="block text-gray-400 hover:text-orange-600 transition-colors py-1.5 text-sm">
+                {{ subItem.label }}
+              </a>
+
+              <!-- Sub-items con submenu (tercer nivel) -->
+              <div *ngIf="subItem.children" class="space-y-1">
+                <div class="text-gray-300 py-1.5 text-sm font-medium">
+                  {{ subItem.label }}
+                </div>
+                <div class="pl-4 space-y-1">
+                  <a 
+                    *ngFor="let nestedItem of subItem.children"
+                    [routerLink]="nestedItem.route"
+                    (click)="toggleMobileMenu()"
+                    class="block text-gray-500 hover:text-orange-600 transition-colors py-1 text-xs">
+                    {{ nestedItem.label }}
+                  </a>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Mobile CTA -->
+      <a 
+        routerLink="/contacto" 
+        (click)="toggleMobileMenu()"
+        class="block px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded transition-colors text-center mt-4">
         Contacto
       </a>
     </div>

@@ -1,0 +1,5 @@
+📍 UBICACIÓN EN TU PROYECTO:
+
+src/app/features/inversores/precio-accion/
+
+Copia TODOS los archivos de esta carpeta a la ubicación indicada arriba.
