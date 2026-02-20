@@ -282,9 +282,17 @@ export const routes: Routes = [
   // ===== GALERÍA =====
   {
     path: 'galeria',
-    loadComponent: () => import('./features/gallery/gallery.component').then(m => m.GalleryComponent)  // ✅ DESCOMENTADO (nota: carpeta es "gallery")
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/gallery/gallery.component').then(m => m.GalleryComponent)  // ✅ DESCOMENTADO (nota: carpeta es "gallery")
+      },
+      {
+        path: 'subir',
+        loadComponent: () => import('./features/gallery/upload.component').then(m => m.UploadComponent)  // ✅ DESCOMENTADO
+      }
+    ]
   },
-
   // ===== 404 =====
   {
     path: '**',

@@ -1,0 +1,339 @@
+// ===== ANIMACIONES =====
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+// ===== CONTENEDOR PRINCIPAL =====
+.gallery-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #000000 0%, #0f1823 100%);
+}
+
+// ===== GRID DE IMÁGENES =====
+.gallery-grid {
+  display: grid;
+  gap: 1.5rem;
+  animation: fadeIn 0.6s ease-out;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// ===== TARJETA DE IMAGEN =====
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: #18181b;
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+
+  &:hover {
+    border-color: #ea580c;
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(234, 88, 12, 0.3);
+
+    .gallery-image {
+      transform: scale(1.1);
+    }
+
+    .gallery-overlay {
+      opacity: 1;
+    }
+  }
+
+  // Animación de entrada escalonada
+  @for $i from 1 through 20 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.05}s;
+    }
+  }
+}
+
+// ===== IMAGEN =====
+.gallery-image {
+  width: 100%;
+  height: 16rem;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(90deg, #18181b 0%, #27272a 50%, #18181b 100%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+// ===== OVERLAY CON INFORMACIÓN =====
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.7) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+}
+
+.gallery-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.5rem;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+
+  .gallery-item:hover & {
+    transform: translateY(0);
+  }
+}
+
+.gallery-description {
+  font-size: 0.875rem;
+  color: #d1d5db;
+  line-height: 1.5;
+  transform: translateY(20px);
+  transition: transform 0.3s ease 0.05s;
+
+  .gallery-item:hover & {
+    transform: translateY(0);
+  }
+}
+
+// ===== BADGE DE TAGS =====
+.gallery-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  transform: translateY(20px);
+  transition: transform 0.3s ease 0.1s;
+
+  .gallery-item:hover & {
+    transform: translateY(0);
+  }
+}
+
+.gallery-tag {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(234, 88, 12, 0.2);
+  border: 1px solid #ea580c;
+  color: #fb923c;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+// ===== ESTADO LOADING =====
+.gallery-skeleton {
+  .gallery-image {
+    background: linear-gradient(90deg, #18181b 0%, #27272a 50%, #18181b 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+  }
+}
+
+// ===== ESTADO VACÍO =====
+.gallery-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  .empty-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+
+  .empty-description {
+    color: #9ca3af;
+    font-size: 1rem;
+  }
+}
+
+// ===== BOTÓN DE ACCIÓN =====
+.gallery-action-button {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  &:active::before {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+// ===== FILTROS =====
+.gallery-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.filter-button {
+  padding: 0.5rem 1.25rem;
+  background: #18181b;
+  border: 2px solid #27272a;
+  color: #9ca3af;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #ea580c;
+    color: white;
+  }
+
+  &.active {
+    background: #ea580c;
+    border-color: #ea580c;
+    color: white;
+  }
+}
+
+// ===== LIGHTBOX (Modal de imagen completa) =====
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+
+  img {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 0.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  background: #ea580c;
+  color: white;
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+  }
+}
+
+// ===== CONTADOR DE IMÁGENES =====
+.gallery-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #18181b;
+  border: 2px solid #ea580c;
+  border-radius: 9999px;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+
+  .counter-icon {
+    color: #ea580c;
+    font-size: 1.25rem;
+  }
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: 640px) {
+  .gallery-grid {
+    gap: 1rem;
+  }
+
+  .gallery-image {
+    height: 12rem;
+  }
+
+  .gallery-overlay {
+    padding: 1rem;
+  }
+
+  .gallery-title {
+    font-size: 1rem;
+  }
+
+  .gallery-description {
+    font-size: 0.75rem;
+  }
+}

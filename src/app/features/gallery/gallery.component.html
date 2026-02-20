@@ -1,0 +1,65 @@
+<section class="py-20 bg-black gallery-container">
+  <div class="container mx-auto px-6 lg:px-12">
+    
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-12">
+      <div>
+        <h1 class="text-5xl font-black text-white mb-4">
+          Galería de <span class="text-orange-600">Imágenes</span>
+        </h1>
+        <div class="gallery-counter">
+          <span class="counter-icon"></span>
+          <span>{{ allImages.length }} imagen{{ allImages.length !== 1 ? 'es' : '' }}</span>
+        </div>
+      </div>
+      
+      <!-- Botón para subir -->
+      <a 
+        routerLink="/galeria/upload"
+        class="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors inline-flex items-center gap-2"
+      >
+        <span>Subir Imagen</span>
+      </a>
+    </div>
+
+    <!-- Estado vacío -->
+    <div *ngIf="allImages.length === 0" class="gallery-empty">
+      <h3 class="empty-title">No hay imágenes</h3>
+      <p class="empty-description">Sube tu primera imagen para comenzar</p>
+      <a 
+        routerLink="/galeria/upload"
+        class="mt-6 inline-block px-8 py-3 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors"
+      >
+        Subir Primera Imagen
+      </a>
+    </div>
+
+    <!-- Grid de imágenes -->
+    <div class="gallery-grid" *ngIf="allImages.length > 0">
+      <div 
+        *ngFor="let image of allImages; let i = index" 
+        class="gallery-item"
+      >
+        <img 
+          [src]="getImageUrl(image.publicId)"
+          [alt]="image.title"
+          class="gallery-image"
+          loading="lazy"
+        />
+        
+        <div class="gallery-overlay">
+          <h3 class="gallery-title">{{ image.title }}</h3>
+          <p class="gallery-description">{{ image.description }}</p>
+          
+          <!-- Tags -->
+          <div class="gallery-tags" *ngIf="image.tags && image.tags.length > 0">
+            <span *ngFor="let tag of image.tags" class="gallery-tag">
+              {{ tag }}
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

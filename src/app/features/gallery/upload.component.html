@@ -1,0 +1,164 @@
+<section class="py-20 bg-black upload-container">
+  <div class="container mx-auto px-6 lg:px-12">
+    
+    <!-- Header -->
+    <div class="mb-12">
+      <h1 class="text-5xl font-black text-white mb-4">
+        Subir <span class="text-orange-600">Imagen</span>
+      </h1>
+      <p class="text-gray-400">Carga tus imágenes a Cloudinary y visualízalas en la galería</p>
+    </div>
+
+    <div class="upload-card">
+      
+      <!-- Zona de drag & drop -->
+      <div class="upload-dropzone" [class.disabled]="uploading">
+        <div class="dropzone-icon"></div>
+        <h3 class="dropzone-title">Selecciona una imagen</h3>
+        <p class="dropzone-subtitle">JPG, PNG, GIF, WEBP (máx. 10MB)</p>
+        
+        <input 
+          type="file" 
+          id="fileInput"
+          class="file-input"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+          [disabled]="uploading"
+        />
+        <label for="fileInput" class="file-input-label">
+          <span></span>
+          <span>Seleccionar Archivo</span>
+        </label>
+      </div>
+
+      <!-- Mensaje de error -->
+      <div *ngIf="errorMessage" class="error-message">
+        <span class="error-icon"></span>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Preview del archivo + campos -->
+      <div *ngIf="selectedFile && !uploadedImage" class="file-preview">
+        <div class="preview-header">
+          <span class="preview-title">Archivo seleccionado</span>
+          <button 
+            class="preview-remove"
+            (click)="resetUpload()"
+            [disabled]="uploading"
+          >
+            ✕ Cancelar
+          </button>
+        </div>
+
+        <div class="preview-info">
+          <div class="preview-icon"></div>
+          <div class="preview-details">
+            <div class="file-name">{{ selectedFile.name }}</div>
+            <div class="file-size">{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</div>
+          </div>
+        </div>
+
+        <!-- Campos adicionales -->
+        <div class="mt-4 space-y-3">
+          <div>
+            <label class="block text-white font-semibold mb-2 text-sm">
+              Título de la imagen *
+            </label>
+            <input 
+              type="text"
+              [(ngModel)]="imageTitle"
+              placeholder="Ej: Excavadora en zona norte"
+              class="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded text-white focus:outline-none focus:border-orange-600"
+              [disabled]="uploading"
+            />
+          </div>
+
+          <div>
+            <label class="block text-white font-semibold mb-2 text-sm">
+              Descripción (opcional)
+            </label>
+            <textarea 
+              [(ngModel)]="imageDescription"
+              placeholder="Ej: Operación de extracción en curso"
+              rows="2"
+              class="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded text-white focus:outline-none focus:border-orange-600"
+              [disabled]="uploading"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de progreso -->
+      <div *ngIf="uploading" class="upload-progress">
+        <div class="progress-bar-container">
+          <div 
+            class="progress-bar"
+            [style.width.%]="uploadProgress"
+          ></div>
+        </div>
+        <p class="progress-text">
+          <span class="spinner"></span>
+          Subiendo... {{ uploadProgress }}%
+        </p>
+      </div>
+
+      <!-- Botón de subida -->
+      <div class="upload-actions" *ngIf="selectedFile && !uploadedImage">
+        <button 
+          (click)="uploadImage()"
+          [disabled]="!selectedFile || uploading || !imageTitle.trim()"
+          class="btn btn-primary"
+        >
+          <span *ngIf="!uploading">Subir a Cloudinary</span>
+          <span *ngIf="uploading" class="flex items-center gap-2">
+            <span class="spinner"></span>
+            Subiendo...
+          </span>
+        </button>
+      </div>
+
+      <!-- Resultado exitoso -->
+      <div *ngIf="uploadedImage" class="success-message">
+        <div class="success-header">
+          <span class="success-icon"></span>
+          <h3 class="success-title">¡Imagen subida exitosamente!</h3>
+        </div>
+        
+        <img 
+          [src]="getUploadedImageUrl()" 
+          [alt]="imageTitle"
+          class="uploaded-image"
+        />
+
+        <div class="image-details">
+          <p><strong>Título:</strong> {{ imageTitle }}</p>
+          <p *ngIf="imageDescription"><strong>Descripción:</strong> {{ imageDescription }}</p>
+          <p><strong>Public ID:</strong> {{ uploadedImage.public_id }}</p>
+          <p><strong>Formato:</strong> {{ uploadedImage.format }}</p>
+          <p><strong>Tamaño:</strong> {{ uploadedImage.width }}x{{ uploadedImage.height }}</p>
+          <p>
+            <strong>URL:</strong> 
+            <a [href]="uploadedImage.secure_url" target="_blank">
+              Ver imagen original →
+            </a>
+          </p>
+        </div>
+
+        <div class="flex gap-4 mt-6">
+          <button 
+            (click)="goToGallery()"
+            class="btn btn-primary flex-1"
+          >
+            Ver en Galería
+          </button>
+          <button 
+            (click)="resetUpload()"
+            class="btn btn-secondary"
+          >
+            Subir Otra
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
