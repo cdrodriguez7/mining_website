@@ -1,10 +1,10 @@
 <app-navbar></app-navbar>
 
-<!-- HERO SECTION - Exacto como en el video -->
+<!-- HERO SECTION - Con imagen dinámica -->
 <section class="hero-section relative h-screen overflow-hidden">
-  <!-- Background Image -->
+  <!-- Background Image DINÁMICA -->
   <div class="absolute inset-0 bg-cover bg-center" 
-       style="background-image: url('https://i0.wp.com/fiduvalor.com.ec/wp-content/uploads/2023/05/mineria-ecuador-imagen-previa.jpg?fit=768%2C438&ssl=1');">
+       [style.background-image]="'url(' + getHeroUrl(heroBackground) + ')'">
     <!-- Dark Overlay -->
     <div class="absolute inset-0 bg-black/70"></div>
   </div>
@@ -21,7 +21,6 @@
           Transparencia,<br>
           Innovacion y<br>
           Desarrollo Minero.
-
         </h1>
 
         <!-- Subtitle -->
@@ -83,7 +82,7 @@
   </div>
 </section>
 
-<!-- ABOUT SECTION -->
+<!-- ABOUT SECTION - Con imagen dinámica -->
 <section class="py-20 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
     <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -110,12 +109,17 @@
         </div>
       </div>
 
-      <!-- Right Image -->
+      <!-- Right Image DINÁMICA -->
       <div class="relative">
-        <img src="https://www.minergiaec.com/wp-content/uploads/mineria-desarrollo-social-economico-ecuador-1024x576.jpg" 
-             alt="Mining" 
+        <img [src]="getAboutUrl(aboutImage)" 
+             [alt]="aboutImage?.title || 'Mining'" 
              class="rounded-lg shadow-2xl">
         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
+        
+        <!-- Info de la imagen (opcional) -->
+        <div *ngIf="aboutImage" class="absolute bottom-4 left-4 right-4 bg-black/70 backdrop-blur-sm p-3 rounded">
+          <p class="text-white text-sm font-semibold">{{ aboutImage.title }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -212,7 +216,7 @@
   </div>
 </section>
 
-<!-- GALLERY SECTION -->
+<!-- GALLERY SECTION - Con imágenes dinámicas -->
 <section class="py-20 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
     <!-- Header -->
@@ -229,40 +233,19 @@
       </p>
     </div>
 
-    <!-- Gallery Grid -->
+    <!-- Gallery Grid DINÁMICO -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="group relative overflow-hidden rounded-lg aspect-video cursor-pointer">
-        <img src="https://geoinnova.org/wp-content/uploads/2021/08/Mineria-a-cielo-abierto.jpg" 
-             alt="Proyecto 1" 
+      <div 
+        *ngFor="let image of galleryImages; let i = index"
+        class="group relative overflow-hidden rounded-lg aspect-video cursor-pointer"
+      >
+        <img [src]="getGalleryUrl(image)" 
+             [alt]="image.title" 
              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
           <div>
-            <h3 class="text-white font-bold text-xl mb-2">Proyecto Minero 1</h3>
-            <p class="text-gray-300 text-sm">Exploración y extracción</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="group relative overflow-hidden rounded-lg aspect-video cursor-pointer">
-        <img src="https://imagenes.primicias.ec/files/image_480_270/uploads/2024/05/25/66521d7712682.jpeg" 
-             alt="Proyecto 2" 
-             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-          <div>
-            <h3 class="text-white font-bold text-xl mb-2">Maquinaria Pesada</h3>
-            <p class="text-gray-300 text-sm">Equipos de última generación</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="group relative overflow-hidden rounded-lg aspect-video cursor-pointer">
-        <img src="https://mascontainer.com.ec/wp-content/uploads/2023/01/Mineria-Ecuador.jpg" 
-             alt="Proyecto 3" 
-             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-          <div>
-            <h3 class="text-white font-bold text-xl mb-2">Operaciones Seguras</h3>
-            <p class="text-gray-300 text-sm">Cumplimiento normativo</p>
+            <h3 class="text-white font-bold text-xl mb-2">{{ image.title }}</h3>
+            <p class="text-gray-300 text-sm">{{ image.description }}</p>
           </div>
         </div>
       </div>

@@ -2,86 +2,98 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CloudinaryService } from '../../core/services/cloudinary.services';
-
-interface GalleryImage {
-  publicId: string;
-  title: string;
-  description: string;
-  tags?: string[];
-  uploadedAt?: Date;
-}
-
+import { GalleryService } from '../../core/services/gallery.service';
+import { CloudinaryImage, GalleryFolder } from '../../core/models/gallery.model';
+import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
 
 @Component({
   selector: 'app-gallery',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NavbarComponent],
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.scss']
 })
 export class GalleryComponent implements OnInit {
-  allImages: GalleryImage[] = [];
+  allImages: CloudinaryImage[] = [];
+  filteredImages: CloudinaryImage[] = [];
+  folders: GalleryFolder[] = [];
+  selectedFolder: string = 'all';
   
-  // Imágenes de ejemplo (Cloudinary samples)
-  sampleImages: GalleryImage[] = [
-    {
-      publicId: 'samples/landscapes/beach-boat',
-      title: 'Playa Ejemplo',
-      description: 'Imagen de ejemplo de Cloudinary',
-      tags: ['ejemplo', 'playa']
-    },
-    {
-      publicId: 'samples/landscapes/nature-mountains',
-      title: 'Montañas Ejemplo',
-      description: 'Imagen de ejemplo de Cloudinary',
-      tags: ['ejemplo', 'montaña']
-    },
-    {
-      publicId: 'samples/ecommerce/accessories-bag',
-      title: 'Accesorios Ejemplo',
-      description: 'Imagen de ejemplo de Cloudinary',
-      tags: ['ejemplo']
-    }
-  ];
+  // Para localStorage
+  uploadedImages: CloudinaryImage[] = [];
 
-  constructor(private cloudinaryService: CloudinaryService) {}
+  constructor(
+    private cloudinaryService: CloudinaryService,
+    private galleryService: GalleryService
+  ) {}
 
   ngOnInit() {
     this.loadGallery();
   }
 
   loadGallery() {
-    // Cargar imágenes subidas desde localStorage
-    const uploadedImages = this.getUploadedImages();
+    console.log('📂 Cargando galería completa...');
     
-    // Combinar imágenes de ejemplo con las subidas
-    this.allImages = [...uploadedImages, ...this.sampleImages];
+    // Cargar carpetas disponibles
+    this.folders = this.galleryService.getFolders();
     
-    console.log('Galería cargada:', this.allImages);
+    // Cargar todas las imágenes de Cloudinary
+    const cloudinaryImages = this.galleryService.getAllImages();
+    
+    // Cargar imágenes subidas vía upload (localStorage)
+    this.uploadedImages = this.getUploadedImages();
+    
+    // Combinar ambas
+    this.allImages = [...this.uploadedImages, ...cloudinaryImages];
+    this.filteredImages = [...this.allImages];
+    
+    console.log(`✅ Total: ${this.allImages.length} imágenes`);
+    console.log(`  - Desde Cloudinary: ${cloudinaryImages.length}`);
+    console.log(`  - Subidas vía upload: ${this.uploadedImages.length}`);
   }
 
-  getUploadedImages(): GalleryImage[] {
+  getUploadedImages(): CloudinaryImage[] {
     try {
       const stored = localStorage.getItem('cloudinary_uploaded_images');
       if (stored) {
-        return JSON.parse(stored);
+        const parsed = JSON.parse(stored);
+        // Convertir al formato CloudinaryImage
+        return parsed.map((img: any) => ({
+          publicId: img.publicId,
+          title: img.title,
+          description: img.description,
+          folder: 'uploads', // Carpeta especial para uploads
+          tags: img.tags || [],
+          width: 1920,
+          height: 1080,
+          format: 'jpg',
+          createdAt: new Date(img.uploadedAt),
+          secureUrl: ''
+        }));
       }
     } catch (error) {
-      console.error('Error al cargar imágenes:', error);
+      console.error('Error al cargar imágenes de localStorage:', error);
     }
     return [];
   }
 
-  getImageUrl(publicId: string): string {
-    return this.cloudinaryService.getImageUrl(publicId, 400, 300);
+  filterByFolder(folderName: string) {
+    this.selectedFolder = folderName;
+    
+    if (folderName === 'all') {
+      this.filteredImages = [...this.allImages];
+    } else {
+      this.filteredImages = this.allImages.filter(img => img.folder === folderName);
+    }
+    
+    console.log(`🔍 Filtrado por: ${folderName} - ${this.filteredImages.length} imágenes`);
   }
 
-  getThumbnailUrl(publicId: string): string {
-    return this.cloudinaryService.getThumbnailUrl(publicId, 200);
+  getImageUrl(image: CloudinaryImage): string {
+    return this.cloudinaryService.getCardUrl(image.publicId, 400);
   }
 
-
-  refreshGallery() {
-    this.loadGallery();
+  getThumbnailUrl(image: CloudinaryImage): string {
+    return this.cloudinaryService.getThumbnailUrl(image.publicId, 200);
   }
 }

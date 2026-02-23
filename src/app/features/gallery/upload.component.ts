@@ -139,7 +139,11 @@ constructor(
 
   getUploadedImageUrl(): string {
     if (!this.uploadedImage) return '';
-    return this.cloudinaryService.getImageUrl(this.uploadedImage.public_id, 600, 400);
+    return this.cloudinaryService.getImageUrl(this.uploadedImage.public_id, {
+      width: 600,
+      height: 400,
+      crop: 'fill'
+    });
   }
 
   resetUpload() {
