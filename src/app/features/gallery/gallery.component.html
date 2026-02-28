@@ -10,16 +10,21 @@
       </h1>
       <div class="flex items-center gap-4">
         <div class="gallery-counter">
-          <span class="counter-icon">📸</span>
+          <span class="counter-icon"></span>
           <span>{{ filteredImages.length }} imagen{{ filteredImages.length !== 1 ? 'es' : '' }}</span>
         </div>
-        <a 
-          routerLink="/galeria/upload"
-          class="px-6 py-2 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors text-sm"
+        <button 
+          (click)="showUpload = !showUpload"
+          class="px-6 py-2 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors text-sm flex items-center gap-2"
         >
-          📤 Subir Imagen
-        </a>
+          <span>{{ showUpload ? 'Cerrar' : 'Subir Imagen' }}</span>
+        </button>
       </div>
+    </div>
+
+    <!-- Componente de Upload (Toggle) -->
+    <div *ngIf="showUpload" class="mb-12 bg-gray-900 rounded-xl p-8 border-2 border-orange-600/20">
+      <app-upload (imageUploaded)="onImageUploaded()"></app-upload>
     </div>
 
     <!-- Filtros por carpeta -->
@@ -41,8 +46,14 @@
       </button>
     </div>
 
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="text-center py-20">
+      <div class="inline-block w-16 h-16 border-4 border-orange-600 border-t-transparent rounded-full animate-spin"></div>
+      <p class="text-white mt-4 text-lg">Cargando imágenes...</p>
+    </div>
+
     <!-- Grid de imágenes -->
-    <div class="gallery-grid" *ngIf="filteredImages.length > 0">
+    <div class="gallery-grid" *ngIf="!isLoading && filteredImages.length > 0">
       <div 
         *ngFor="let image of filteredImages; let i = index" 
         class="gallery-item"
@@ -52,34 +63,50 @@
           [alt]="image.title"
           class="gallery-image"
           loading="lazy"
+          (error)="onImageError($event, image)"
         />
         
         <div class="gallery-overlay">
           <h3 class="gallery-title">{{ image.title }}</h3>
-          <p class="gallery-description">{{ image.description }}</p>
           
-          <!-- Badge de carpeta -->
-          <div class="mt-2">
-            <span class="inline-block px-2 py-1 bg-orange-600/20 text-orange-400 text-xs font-bold rounded">
-              📁 {{ image.folder }}
-            </span>
-          </div>
           
           <!-- Tags -->
           <div class="gallery-tags" *ngIf="image.tags && image.tags.length > 0">
             <span *ngFor="let tag of image.tags.slice(0, 3)" class="gallery-tag">
-              {{ tag }}
+              #{{ tag }}
             </span>
           </div>
+
+          <!-- Metadata adicional -->
+          <!-- <div class="mt-2 text-xs text-gray-400 flex gap-3">
+            <span>{{ image.width }}x{{ image.height }}</span>
+            <span>{{ image.createdAt | date:'short' }}</span>
+          </div> -->
         </div>
       </div>
     </div>
 
+    
     <!-- Estado vacío -->
-    <div *ngIf="filteredImages.length === 0" class="gallery-empty">
-      <div class="empty-icon">🖼️</div>
+    <div *ngIf="!isLoading && filteredImages.length === 0" class="gallery-empty">
+      <div class="empty-icon"></div>
       <h3 class="empty-title">No hay imágenes en esta categoría</h3>
-      <p class="empty-description">Prueba seleccionando otra carpeta o sube nuevas imágenes</p>
+      <p class="empty-description">
+        {{ selectedFolder === 'all' 
+          ? 'Sube nuevas imágenes usando el botón "Subir Imagen"' 
+          : 'Prueba seleccionando otra carpeta o sube nuevas imágenes' }}
+      </p>
+      
+      <button 
+        *ngIf="!showUpload"
+        (click)="showUpload = true"
+        class="mt-4 px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors"
+      >
+        Subir Imagen
+      </button>
     </div>
+    
   </div>
 </section>
+
+<app-footer></app-footer>

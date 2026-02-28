@@ -1,161 +1,168 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { CloudinaryService, CloudinaryUploadResponse } from '../../core/services/cloudinary.services';
-
-interface GalleryImage {
-  publicId: string;
-  title: string;
-  description: string;
-  tags?: string[];
-  uploadedAt?: Date;
-}
+import { CloudinaryImage } from '../../core/models/gallery.model';
+import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
+import { FooterComponent } from '../../shared/components/footer/footer.component';
 
 @Component({
   selector: 'app-upload',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavbarComponent, FooterComponent],
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.scss']
 })
-
 export class UploadComponent {
-  selectedFile: File | null = null;
-  uploading = false;
+  @Output() imageUploaded = new EventEmitter<void>();
+  isUploading = false;
   uploadProgress = 0;
-  uploadedImage: CloudinaryUploadResponse | null = null;
-  errorMessage = '';
-  imageTitle = '';
-  imageDescription = '';  
+  uploadedImages: CloudinaryImage[] = [];
+  selectedFolder = 'mineria/maquinaria';
+  
+  // Opciones de carpetas
+  folders = [
+    { value: 'mineria/maquinaria', label: 'Maquinaria' },
+    { value: 'mineria/infraestructura', label: 'Infraestructura' },
+    { value: 'mineria/extraccion', label: 'Extracción de Mineral' },
+    { value: 'mineria/procesamiento', label: 'Procesamiento' },
+    { value: 'mineria/seguridad', label: 'Seguridad' },
+    { value: 'mineria/medio-ambiente', label: 'Medio Ambiente' }
+  ];
 
-constructor(
-    private cloudinaryService: CloudinaryService,
-    private router: Router
-) {}
+  constructor(private cloudinaryService: CloudinaryService) {
+    // Cargar imágenes subidas desde localStorage
+    this.loadUploadedImages();
+  }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
     
-    if (file) {
-      // Validar tipo de archivo
-      if (!file.type.startsWith('image/')) {
-        this.errorMessage = 'Por favor selecciona una imagen válida';
-        return;
-      }
-
-      // Validar tamaño (máximo 10MB)
-      if (file.size > 10 * 1024 * 1024) {
-        this.errorMessage = 'La imagen no debe superar los 10MB';
-        return;
-      }
-
-      this.selectedFile = file;
-      this.errorMessage = '';
-      
-      // Generar título automático del nombre del archivo
-      this.imageTitle = file.name.split('.')[0].replace(/[-_]/g, ' ');
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.uploadFile(file);
     }
   }
 
-  async uploadImage() {
-    if (!this.selectedFile) {
-      this.errorMessage = 'Por favor selecciona una imagen';
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
+      const file = event.dataTransfer.files[0];
+      this.uploadFile(file);
+    }
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  async uploadFile(file: File) {
+    // Validar tipo de archivo
+    if (!file.type.startsWith('image/')) {
+      alert('Por favor selecciona un archivo de imagen válido.');
       return;
     }
 
-    if (!this.imageTitle.trim()) {
-      this.errorMessage = 'Por favor ingresa un título para la imagen';
+    // Validar tamaño (máximo 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('La imagen es demasiado grande. Máximo 10MB.');
       return;
     }
 
-    this.uploading = true;
-    this.errorMessage = '';
+    this.isUploading = true;
     this.uploadProgress = 0;
 
-    // Simular progreso
-    const progressInterval = setInterval(() => {
-      if (this.uploadProgress < 90) {
-        this.uploadProgress += 10;
-      }
-    }, 200);
-
     try {
-      // Subir a Cloudinary
-      const result = await this.cloudinaryService.uploadImage(
-        this.selectedFile,
-        'mineria' // Carpeta en Cloudinary
+      console.log('Subiendo imagen:', file.name);
+      console.log('Carpeta destino:', this.selectedFolder);
+
+      const response = await this.cloudinaryService.uploadImage(
+        file,
+        this.selectedFolder,
+        (progress) => {
+          this.uploadProgress = progress;
+          console.log('Progress:', progress + '%');
+        }
       );
 
-      clearInterval(progressInterval);
-      this.uploadProgress = 100;
-      this.uploadedImage = result;
+      console.log('Upload completado:', response);
+
+      // Crear CloudinaryImage
+      const newImage: CloudinaryImage = {
+        publicId: response.public_id,
+        title: response.original_filename || 'Nueva imagen',
+        description: `Subida el ${new Date().toLocaleDateString()}`,
+        folder: this.selectedFolder.split('/').pop() || 'general',
+        tags: [this.selectedFolder.split('/').pop() || 'general'],
+        width: response.width,
+        height: response.height,
+        format: response.format,
+        createdAt: new Date(response.created_at),
+        secureUrl: response.secure_url
+      };
+
+      // Agregar a la lista de subidas
+      this.uploadedImages.unshift(newImage);
       
-      // Guardar en localStorage para la galería
-      this.saveToGallery(result);
-      
-      console.log('Imagen subida exitosamente:', result);
-      
+      // Guardar en localStorage
+      this.saveUploadedImages();
+
+      // Notificar éxito
+      alert('Imagen subida exitosamente!');
+
+      // Resetear progress
+      setTimeout(() => {
+        this.uploadProgress = 0;
+        this.isUploading = false;
+      }, 1000);
+
     } catch (error: any) {
-      clearInterval(progressInterval);
       console.error('Error al subir:', error);
-      this.errorMessage = error.message || 'Error al subir la imagen. Intenta nuevamente.';
-    } finally {
-      this.uploading = false;
+      alert('Error al subir la imagen: ' + error.message);
+      this.isUploading = false;
+      this.uploadProgress = 0;
     }
   }
 
-  saveToGallery(cloudinaryResponse: CloudinaryUploadResponse) {
-    const newImage: GalleryImage = {
-      publicId: cloudinaryResponse.public_id,
-      title: this.imageTitle.trim(),
-      description: this.imageDescription.trim() || 'Imagen subida desde la galería',
-      tags: ['subida', 'mineria'],
-      uploadedAt: new Date()
-    };
+  deleteImage(index: number) {
+    if (confirm('¿Estás seguro de eliminar esta imagen de la galería?')) {
+      this.uploadedImages.splice(index, 1);
+      this.saveUploadedImages();
+    }
+  }
 
-    // Obtener imágenes existentes
-    let existingImages: GalleryImage[] = [];
+  // Guardar en localStorage
+  private saveUploadedImages() {
     try {
-      const stored = localStorage.getItem('cloudinary_uploaded_images');
+      localStorage.setItem('uploadedImages', JSON.stringify(this.uploadedImages));
+      console.log('Imágenes guardadas en localStorage');
+    } catch (error) {
+      console.error('Error guardando en localStorage:', error);
+    }
+  }
+
+  // Cargar desde localStorage
+  private loadUploadedImages() {
+    try {
+      const stored = localStorage.getItem('uploadedImages');
       if (stored) {
-        existingImages = JSON.parse(stored);
+        this.uploadedImages = JSON.parse(stored);
+        // Convertir strings de fecha a Date objects
+        this.uploadedImages.forEach(img => {
+          img.createdAt = new Date(img.createdAt);
+        });
+        console.log('📦 Cargadas', this.uploadedImages.length, 'imágenes desde localStorage');
       }
     } catch (error) {
-      console.error('Error al leer localStorage:', error);
-    }
-
-    // Agregar nueva imagen al inicio
-    existingImages.unshift(newImage);
-
-    // Guardar en localStorage
-    try {
-      localStorage.setItem('cloudinary_uploaded_images', JSON.stringify(existingImages));
-      console.log('Imagen guardada en galería local');
-    } catch (error) {
-      console.error('Error al guardar en localStorage:', error);
+      console.error('Error cargando desde localStorage:', error);
+      this.uploadedImages = [];
     }
   }
 
-  getUploadedImageUrl(): string {
-    if (!this.uploadedImage) return '';
-    return this.cloudinaryService.getImageUrl(this.uploadedImage.public_id, {
-      width: 600,
-      height: 400,
-      crop: 'fill'
-    });
-  }
-
-  resetUpload() {
-    this.selectedFile = null;
-    this.uploadedImage = null;
-    this.errorMessage = '';
-    this.uploadProgress = 0;
-    this.imageTitle = '';
-    this.imageDescription = '';
-  }
-
-  goToGallery() {
-    this.router.navigate(['/galeria']);
+  getImageUrl(publicId: string): string {
+    return this.cloudinaryService.getThumbnailUrl(publicId, 300);
   }
 }

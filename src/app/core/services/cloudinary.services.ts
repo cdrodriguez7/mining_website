@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { fill, scale, fit, crop } from '@cloudinary/url-gen/actions/resize';
 import { auto } from '@cloudinary/url-gen/qualifiers/quality';
-import { auto as autoFormat } from '@cloudinary/url-gen/qualifiers/format';
-import { byRadius } from '@cloudinary/url-gen/actions/roundCorners';
 import { environment } from '../../../environments/environment';
 
 export interface TransformOptions {
@@ -15,26 +13,46 @@ export interface TransformOptions {
   gravity?: string;
 }
 
+export interface CloudinaryUploadResponse {
+  public_id: string;
+  version: number;
+  signature: string;
+  width: number;
+  height: number;
+  format: string;
+  resource_type: string;
+  created_at: string;
+  bytes: number;
+  type: string;
+  url: string;
+  secure_url: string;
+  original_filename?: string;
+  folder?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class CloudinaryService {
   private cloudinary: Cloudinary;
   private readonly API_URL: string;
+  private readonly CLOUD_NAME: string;
 
   constructor() {
+    this.CLOUD_NAME = environment.cloudinary.cloudName;
+    
     this.cloudinary = new Cloudinary({
       cloud: {
-        cloudName: environment.cloudinary.cloudName
+        cloudName: this.CLOUD_NAME
       }
     });
 
-    this.API_URL = `https://api.cloudinary.com/v1_1/${environment.cloudinary.cloudName}/image/upload`;
+    this.API_URL = `https://api.cloudinary.com/v1_1/${this.CLOUD_NAME}/image/upload`;
+    
+    console.log('☁️ Cloudinary Service inicializado');
+    console.log('📦 Cloud Name:', this.CLOUD_NAME);
   }
 
-  /**
-   * Obtener URL optimizada de imagen
-   */
   getImageUrl(publicId: string, options?: TransformOptions): string {
     const image = this.cloudinary.image(publicId);
     
@@ -60,41 +78,12 @@ export class CloudinaryService {
       }
     }
 
-    // Optimizaciones
-    image.quality(options?.quality || auto());
+    image.quality(auto());
     
     return image.toURL();
   }
 
-  /**
-   * Obtener URL para dimensiones específicas (responsive)
-   */
   getResponsiveUrl(publicId: string, width: number, height: number): string {
-    return this.getImageUrl(publicId, {
-      width,
-      height,
-      crop: 'fill',
-      quality: 'auto',
-      format: 'auto'
-    });
-  }
-
-  /**
-   * Obtener thumbnail
-   */
-  getThumbnailUrl(publicId: string, size: number = 200): string {
-    return this.getImageUrl(publicId, {
-      width: size,
-      height: size,
-      crop: 'fill'
-    });
-  }
-
-  /**
-   * Obtener URL optimizada para hero/banner (16:9)
-   */
-  getHeroUrl(publicId: string, width: number = 1600): string {
-    const height = Math.round(width * 9 / 16); // Aspect ratio 16:9
     return this.getImageUrl(publicId, {
       width,
       height,
@@ -103,11 +92,26 @@ export class CloudinaryService {
     });
   }
 
-  /**
-   * Obtener URL para card/thumbnail (4:3)
-   */
+  getThumbnailUrl(publicId: string, size: number = 200): string {
+    return this.getImageUrl(publicId, {
+      width: size,
+      height: size,
+      crop: 'fill'
+    });
+  }
+
+  getHeroUrl(publicId: string, width: number = 1600): string {
+    const height = Math.round(width * 9 / 16);
+    return this.getImageUrl(publicId, {
+      width,
+      height,
+      crop: 'fill',
+      quality: 'auto'
+    });
+  }
+
   getCardUrl(publicId: string, width: number = 400): string {
-    const height = Math.round(width * 3 / 4); // Aspect ratio 4:3
+    const height = Math.round(width * 3 / 4);
     return this.getImageUrl(publicId, {
       width,
       height,
@@ -116,7 +120,7 @@ export class CloudinaryService {
   }
 
   /**
-   * Subir imagen
+   * Subir imagen a Cloudinary
    */
   uploadImage(
     file: File,
@@ -129,11 +133,17 @@ export class CloudinaryService {
       formData.append('upload_preset', environment.cloudinary.uploadPreset);
       
       if (folder) {
-        formData.append('folder', folder);
+      console.log('[Cloudinary Service] Guardando en carpeta:', folder);
+      formData.append('folder', folder);
+      
+      formData.append('public_id', `${folder}/${Date.now()}`);
       }
+
+      formData.append('timestamp', Date.now().toString());
 
       const xhr = new XMLHttpRequest();
 
+      // Progress tracking
       xhr.upload.addEventListener('progress', (event) => {
         if (event.lengthComputable && onProgress) {
           const percentComplete = Math.round((event.loaded / event.total) * 100);
@@ -141,10 +151,12 @@ export class CloudinaryService {
         }
       });
 
+      // Success
       xhr.addEventListener('load', () => {
         if (xhr.status >= 200 && xhr.status < 300) {
           try {
             const response = JSON.parse(xhr.responseText);
+            console.log('✅ Upload exitoso:', response);
             resolve(response);
           } catch (error) {
             reject(new Error('Error al procesar la respuesta de Cloudinary'));
@@ -159,34 +171,19 @@ export class CloudinaryService {
         }
       });
 
+      // Error
       xhr.addEventListener('error', () => {
-        reject(new Error('Error de conexión'));
+        reject(new Error('Error de conexión con Cloudinary'));
       });
 
+      // Timeout
       xhr.addEventListener('timeout', () => {
-        reject(new Error('Timeout'));
+        reject(new Error('Timeout al subir la imagen'));
       });
 
-      xhr.timeout = 30000;
+      xhr.timeout = 60000; // 60 segundos
       xhr.open('POST', this.API_URL);
       xhr.send(formData);
     });
   }
-}
-
-export interface CloudinaryUploadResponse {
-  public_id: string;
-  version: number;
-  signature: string;
-  width: number;
-  height: number;
-  format: string;
-  resource_type: string;
-  created_at: string;
-  bytes: number;
-  type: string;
-  url: string;
-  secure_url: string;
-  original_filename?: string;
-  folder?: string;
 }

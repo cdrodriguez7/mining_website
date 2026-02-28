@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
 
 @Component({
   selector: 'app-precio-accion',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NavbarComponent ],
   templateUrl: './precio-accion.component.html',
   styleUrls: ['./precio-accion.component.scss']
 })

@@ -1,44 +1,39 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
-
 # Node
-/node_modules
+node_modules/
 npm-debug.log
-yarn-error.log
+package-lock.json
 
-# IDEs and editors
+# Angular
+/dist/
+/.angular/
+.ng_build_cache/
+
+# Environment
+.env
+.env.local
+.env*.local
+
+# Vercel
+.vercel/
+
+# IDE
+.vscode/
 .idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+*.swp
+*.swo
+*~
 
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/mcp.json
-.history/*
-
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
-__screenshots__/
-
-# System files
+# OS
 .DS_Store
 Thumbs.db
+
+<<<<<<< HEAD
+.env
+.env.local
+.env*.local
+.vercel
+.vercel
+.env*.local
+=======
+.vercel
+>>>>>>> 834c6fddd9bf3d184a2cc9019d2da2fe3599c7b2

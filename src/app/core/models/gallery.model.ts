@@ -12,6 +12,7 @@ export interface CloudinaryImage {
 }
 
 export interface GalleryFolder {
+  id: string;
   name: string;
   displayName: string;
   description: string;
@@ -26,39 +27,17 @@ export interface ImageDimensions {
 
 export const GALLERY_FOLDERS: GalleryFolder[] = [
   {
+    id: 'all',
+    name: 'all',
+    displayName: 'Todas',
+    path: 'mineria',
+    description: 'Todas las categorías'
+  },
+  {
+    id: 'maquinaria',
     name: 'maquinaria',
     displayName: 'Maquinaria',
-    description: 'Equipos y maquinaria pesada',
-    path: 'mineria/maquinaria'
-  },
-  {
-    name: 'extraccion',
-    displayName: 'Extracción de Mineral',
-    description: 'Procesos de extracción y minería',
-    path: 'mineria/extraccion'
-  },
-  {
-    name: 'infraestructura',
-    displayName: 'Infraestructura',
-    description: 'Instalaciones y construcciones',
-    path: 'mineria/infraestructura'
-  },
-  {
-    name: 'procesamiento',
-    displayName: 'Procesamiento',
-    description: 'Plantas de procesamiento',
-    path: 'mineria/procesamiento'
-  },
-  {
-    name: 'seguridad',
-    displayName: 'Seguridad',
-    description: 'Equipos de protección y seguridad',
-    path: 'mineria/seguridad'
-  },
-  {
-    name: 'medio-ambiente',
-    displayName: 'Medio Ambiente',
-    description: 'Sostenibilidad y cuidado ambiental',
-    path: 'mineria/medio-ambiente'
+    path: 'mineria',
+    description: 'Equipos y maquinaria minera'
   }
 ];

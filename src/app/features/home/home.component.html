@@ -3,10 +3,18 @@
 <!-- HERO SECTION - Con imagen dinámica -->
 <section class="hero-section relative h-screen overflow-hidden">
   <!-- Background Image DINÁMICA -->
-  <div class="absolute inset-0 bg-cover bg-center" 
-       [style.background-image]="'url(' + getHeroUrl(heroBackground) + ')'">
-    <!-- Dark Overlay -->
-    <div class="absolute inset-0 bg-black/70"></div>
+  <div class="absolute inset-0">
+    <div *ngIf="heroImage" class="absolute inset-0">
+      <img 
+        [src]="getHeroImageUrl()"
+        [alt]="heroImage.title"
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-black/70"></div>
+    </div>
+    
+    <!-- Fallback si no hay imagen -->
+    <div *ngIf="!heroImage" class="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900"></div>
   </div>
 
   <!-- Orange Accent Bar (derecha) -->
@@ -111,14 +119,27 @@
 
       <!-- Right Image DINÁMICA -->
       <div class="relative">
-        <img [src]="getAboutUrl(aboutImage)" 
-             [alt]="aboutImage?.title || 'Mining'" 
-             class="rounded-lg shadow-2xl">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
-        
-        <!-- Info de la imagen (opcional) -->
-        <div *ngIf="aboutImage" class="absolute bottom-4 left-4 right-4 bg-black/70 backdrop-blur-sm p-3 rounded">
-          <p class="text-white text-sm font-semibold">{{ aboutImage.title }}</p>
+        <div *ngIf="aboutImage" class="relative">
+          <img 
+            [src]="getAboutImageUrl()"
+            [alt]="aboutImage.title"
+            class="rounded-lg shadow-2xl w-full h-[600px] object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
+          
+          <!-- Info de la imagen -->
+          <div class="absolute bottom-4 left-4 right-4 bg-black/70 backdrop-blur-sm p-3 rounded">
+            <p class="text-white text-sm font-semibold">{{ aboutImage.title }}</p>
+            <p class="text-gray-300 text-xs">{{ aboutImage.folder }}</p>
+          </div>
+        </div>
+
+        <!-- Fallback si no hay imagen -->
+        <div *ngIf="!aboutImage" class="bg-gray-800 rounded-lg h-[600px] flex items-center justify-center">
+          <div class="text-center">
+            <div class="text-6xl mb-4"></div>
+            <p class="text-gray-500">Cargando imagen...</p>
+          </div>
         </div>
       </div>
     </div>
@@ -233,20 +254,45 @@
       </p>
     </div>
 
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="text-center py-20">
+      <div class="inline-block w-16 h-16 border-4 border-orange-600 border-t-transparent rounded-full animate-spin"></div>
+      <p class="text-white mt-4 text-lg">Cargando galería...</p>
+    </div>
+
     <!-- Gallery Grid DINÁMICO -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngIf="!isLoading" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div 
-        *ngFor="let image of galleryImages; let i = index"
+        *ngFor="let image of galleryPreviewImages; let i = index"
         class="group relative overflow-hidden rounded-lg aspect-video cursor-pointer"
       >
-        <img [src]="getGalleryUrl(image)" 
-             [alt]="image.title" 
-             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        <img 
+          [src]="getGalleryPreviewUrl(image)"
+          [alt]="image.title" 
+          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          loading="lazy"
+        />
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
           <div>
             <h3 class="text-white font-bold text-xl mb-2">{{ image.title }}</h3>
             <p class="text-gray-300 text-sm">{{ image.description }}</p>
+            <div class="mt-2">
+              <span class="inline-block px-2 py-1 bg-orange-600/80 text-white text-xs font-bold rounded">
+                📁 {{ image.folder }}
+              </span>
+            </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Placeholders si no hay suficientes imágenes -->
+      <div 
+        *ngFor="let placeholder of [].constructor(6 - galleryPreviewImages.length); let i = index"
+        class="bg-gray-900 rounded-lg aspect-video flex items-center justify-center border-2 border-dashed border-gray-700"
+      >
+        <div class="text-center">
+          <div class="text-4xl mb-2">📸</div>
+          <p class="text-gray-500 text-sm">Más imágenes próximamente</p>
         </div>
       </div>
     </div>
@@ -293,3 +339,18 @@
     </div>
   </div>
 </section>
+
+<!-- Debug Panel (remover en producción)
+<div *ngIf="!isLoading" class="fixed bottom-4 right-4 bg-black/90 text-white p-4 rounded-lg text-xs z-50 max-w-xs">
+  <h4 class="font-bold mb-2 text-orange-600">📊 Imágenes Dinámicas</h4>
+  <div class="space-y-1">
+    <p>Hero: {{ heroImage ? '✅ ' + heroImage.publicId : '❌ No disponible' }}</p>
+    <p>About: {{ aboutImage ? '✅ ' + aboutImage.publicId : '❌ No disponible' }}</p>
+    <p>Gallery: {{ galleryPreviewImages.length }}/6 imágenes</p>
+    <p class="text-gray-400 mt-2 pt-2 border-t border-gray-700">
+      Dimensiones Hero: {{ heroImage ? heroImage.width + 'x' + heroImage.height : 'N/A' }}
+    </p>
+  </div>
+</div> -->
+
+<app-footer></app-footer>
