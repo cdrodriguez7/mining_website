@@ -1,17 +1,6 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-
 const cloudinary = require('cloudinary').v2;
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-});
-
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
+module.exports = async (req: any, res: any) => {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
@@ -39,11 +28,23 @@ export default async function handler(
     if (!process.env.CLOUDINARY_CLOUD_NAME || 
         !process.env.CLOUDINARY_API_KEY || 
         !process.env.CLOUDINARY_API_SECRET) {
+      console.error('[ERROR] Variables de entorno faltantes');
       return res.status(500).json({
         success: false,
-        error: 'Configuracion de Cloudinary incompleta'
+        error: 'Configuracion de Cloudinary incompleta',
+        debug: {
+          cloudName: !!process.env.CLOUDINARY_CLOUD_NAME,
+          apiKey: !!process.env.CLOUDINARY_API_KEY,
+          apiSecret: !!process.env.CLOUDINARY_API_SECRET
+        }
       });
     }
+
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET
+    });
 
     console.log('[API] Buscando imagenes con prefix:', folder);
 
@@ -94,10 +95,10 @@ export default async function handler(
     return res.status(500).json({
       success: false,
       error: error.message || 'Error al obtener imagenes de Cloudinary',
-      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      stack: error.stack
     });
   }
-}
+};
 
 function formatTitle(fileName: string): string {
   return fileName
