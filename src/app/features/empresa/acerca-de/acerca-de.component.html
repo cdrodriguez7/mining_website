@@ -1,11 +1,12 @@
 <app-navbar></app-navbar>
 
-<!-- Hero Section -->
+<!-- Hero Section con imagen dinamica -->
 <section class="relative bg-black py-20 lg:py-32">
   <div class="absolute inset-0 opacity-20">
-    <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?q=80&w=2070" 
-         alt="Minería" 
-         class="w-full h-full object-cover">
+    <img 
+      [src]="getHeroImageUrl()"
+      [alt]="heroImage?.title || 'Minería'" 
+      class="w-full h-full object-cover">
   </div>
   <div class="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-zinc-900"></div>
   
@@ -50,7 +51,7 @@
   </div>
 </section>
 
-<!-- Quiénes Somos -->
+<!-- Quiénes Somos con imagen dinamica -->
 <section class="py-20 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
     <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -96,11 +97,31 @@
           </li>
         </ul>
       </div>
+      
+      <!-- Imagen dinamica -->
       <div class="relative">
-        <img src="https://images.unsplash.com/photo-1615485500834-bc10199bc255?q=80&w=2070" 
-             alt="Operaciones Mineras" 
-             class="rounded-lg shadow-2xl">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
+        <div *ngIf="!isLoading && aboutImage" class="relative">
+          <img 
+            [src]="getAboutImageUrl()"
+            [alt]="aboutImage.title" 
+            class="rounded-lg shadow-2xl w-full h-[600px] object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
+          
+          <!-- Info de la imagen -->
+          <div class="absolute bottom-4 left-4 right-4 bg-black/70 backdrop-blur-sm p-4 rounded">
+            <p class="text-white font-semibold">{{ aboutImage.title }}</p>
+            <p class="text-gray-300 text-sm">{{ aboutImage.description }}</p>
+          </div>
+        </div>
+
+        <!-- Fallback mientras carga o si no hay imagen -->
+        <div *ngIf="isLoading || !aboutImage" class="relative">
+          <img 
+            src="https://images.unsplash.com/photo-1615485500834-bc10199bc255?q=80&w=2070"
+            alt="Operaciones Mineras" 
+            class="rounded-lg shadow-2xl w-full h-[600px] object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -191,3 +212,5 @@
     </div>
   </div>
 </section>
+
+<app-footer></app-footer>

@@ -19,6 +19,7 @@ export class NavbarComponent {
   isScrolled = false;
   isMobileMenuOpen = false;
   openDropdown: string | null = null;
+  private closeTimeout: any = null;
 
   menuItems: MenuItem[] = [
     { label: 'Inicio', route: '/' },
@@ -52,26 +53,19 @@ export class NavbarComponent {
         { label: 'Forma de Información Anual', route: '/inversores/forma-informacion-anual' },
         { label: 'Materiales de Junta', route: '/inversores/materiales-junta' },
         { label: 'Dividendos', route: '/inversores/dividendos' },
-        {
-          label: 'Información Adicional',
-          children: [
-            { label: 'Para Inversores de EEUU', route: '/inversores/informacion-adicional/inversores-eeuu' },
-            { label: 'Para Inversores de Suecia', route: '/inversores/informacion-adicional/inversores-suecia' }
-          ]
-        }
       ]
     },
     {
       label: 'Operaciones',
       children: [
         {
-          label: 'Fruta del Norte',
+          label: 'Camilo Ponce Enríquez',
           children: [
-            { label: 'Visión General', route: '/operaciones/fruta-del-norte' },
-            { label: 'Historia', route: '/operaciones/fruta-del-norte/historia' },
-            { label: 'Geología y Mineralización', route: '/operaciones/fruta-del-norte/geologia' },
-            { label: 'Estado Operativo', route: '/operaciones/fruta-del-norte/operativo' },
-            { label: 'Guía de Producción', route: '/operaciones/fruta-del-norte/proyecciones' }
+            { label: 'Visión General', route: '/operaciones/camilo-ponce-enriquez' },
+            { label: 'Historia', route: '/operaciones/camilo-ponce-enriquez/historia' },
+            { label: 'Geología y Mineralización', route: '/operaciones/camilo-ponce-enriquez/geologia' },
+            { label: 'Estado Operativo', route: '/operaciones/camilo-ponce-enriquez/operativo' },
+            { label: 'Guía de Producción', route: '/operaciones/camilo-ponce-enriquez/proyecciones' }
           ]
         },
         { label: 'Exploración', route: '/operaciones/exploracion' },
@@ -89,29 +83,18 @@ export class NavbarComponent {
         { label: 'Medio Ambiente', route: '/mineria-responsable/medio-ambiente' },
         { label: 'Cambio Climático', route: '/mineria-responsable/cambio-climatico' },
         { label: 'Compromiso con Comunidades', route: '/mineria-responsable/comunidades' },
-        { label: 'Gobernanza', route: '/mineria-responsable/gobernanza' },
         { label: 'Estrategia 5 Años', route: '/mineria-responsable/estrategia-5-anos' },
         { label: 'Reportes de Sostenibilidad', route: '/mineria-responsable/reportes-sostenibilidad' },
-        { label: 'Reporte de Esclavitud Moderna', route: '/mineria-responsable/reporte-esclavitud-moderna' },
-        {
-          label: 'Otros Reportes',
-          children: [
-            { label: 'Reportes ESTMA', route: '/mineria-responsable/otros-reportes/estma' },
-            { label: 'Evaluación de Impacto Ambiental', route: '/mineria-responsable/otros-reportes/impacto-ambiental' },
-            { label: 'Reportes de Arqueología', route: '/mineria-responsable/otros-reportes/arqueologia' }
-          ]
-        },
         { label: 'Compromisos y Membresías', route: '/mineria-responsable/compromisos-membresias' }
       ]
     },
     { label: 'Noticias', route: '/noticias' },
-    { label: 'Carreras', route: '/carreras' },
     { label: 'Galería', route: '/galeria' }
   ];
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    this.isScrolled = window.pageYOffset > 50;
+    this.isScrolled = window.pageYOffset > 20;
   }
 
   toggleMobileMenu() {
@@ -129,7 +112,37 @@ export class NavbarComponent {
     return this.openDropdown === label;
   }
 
+  openMenu(label: string) {
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+      this.closeTimeout = null;
+    }
+    this.openDropdown = label;
+  }
+
+  closeMenu() {
+    this.closeTimeout = setTimeout(() => {
+      this.openDropdown = null;
+      this.closeTimeout = null;
+    }, 200);
+  }
+
+  cancelClose() {
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+      this.closeTimeout = null;
+    }
+  }
+
   closeAllDropdowns() {
     this.openDropdown = null;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.dropdown-container')) {
+      this.closeAllDropdowns();
+    }
   }
 }
