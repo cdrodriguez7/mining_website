@@ -3,5 +3,12 @@
     "target": "http://localhost:3001",
     "secure": false,
     "changeOrigin": true
+  },
+  "/metalprice": {
+    "target": "https://api.metalpriceapi.com",
+    "changeOrigin": true,
+    "pathRewrite": { "^/metalprice": "" },
+    "secure": true,
+    "logLevel": "debug"
   }
 }

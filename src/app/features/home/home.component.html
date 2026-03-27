@@ -55,7 +55,7 @@
   <div class="container mx-auto px-6 lg:px-12">
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
       <div class="text-center">
-        <div class="text-6xl font-black text-white mb-2">82</div>
+        <div class="text-6xl font-black text-white mb-2">3</div>
         <div class="flex items-center justify-center mb-2">
           <div class="w-8 h-1 bg-orange-600"></div>
         </div>
@@ -63,7 +63,7 @@
         <div class="text-gray-400 text-sm">Activas</div>
       </div>
       <div class="text-center">
-        <div class="text-6xl font-black text-white mb-2">30%</div>
+        <div class="text-6xl font-black text-white mb-2">5</div>
         <div class="flex items-center justify-center mb-2">
           <div class="w-8 h-1 bg-orange-600"></div>
         </div>
@@ -71,7 +71,7 @@
         <div class="text-gray-400 text-sm">Completos</div>
       </div>
       <div class="text-center">
-        <div class="text-6xl font-black text-white mb-2">25</div>
+        <div class="text-6xl font-black text-white mb-2">15</div>
         <div class="flex items-center justify-center mb-2">
           <div class="w-8 h-1 bg-orange-600"></div>
         </div>
@@ -79,7 +79,7 @@
         <div class="text-gray-400 text-sm">Experiencia</div>
       </div>
       <div class="text-center">
-        <div class="text-6xl font-black text-white mb-2">123+</div>
+        <div class="text-6xl font-black text-white mb-2">120+</div>
         <div class="flex items-center justify-center mb-2">
           <div class="w-8 h-1 bg-orange-600"></div>
         </div>
@@ -89,6 +89,137 @@
     </div>
   </div>
 </section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- METAL PRICES SECTION — nueva sección -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="metals-section py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+
+    <!-- Header -->
+    <div class="metals-header mb-12">
+      <div class="text-orange-600 font-semibold mb-3 uppercase tracking-wider text-sm">
+        Mercado Internacional
+      </div>
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+        <h2 class="text-5xl font-black text-white leading-tight">
+          Precio de <span class="text-orange-600">Metales</span>
+        </h2>
+        <div class="metals-live-badge" [class.is-live]="metalPrices?.isLive">
+          <span class="badge-dot"></span>
+          <span class="badge-text">{{ metalPrices?.isLive ? 'En vivo · USD' : 'Referencial · USD' }}</span>
+          <span class="badge-date">{{ metalPrices?.date }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="metalsLoading" class="metals-loading">
+      <div class="metals-spinner"></div>
+      <span class="text-gray-500 text-sm ml-3">Consultando mercado...</span>
+    </div>
+
+    <!-- Metal Tabs + Content -->
+    <div *ngIf="!metalsLoading && metalPrices" class="metals-body">
+
+      <!-- Tab Selector -->
+      <div class="metals-tabs">
+        <button
+          *ngFor="let metal of metalsList"
+          class="metal-tab"
+          [class.active]="activeMetal === metal.key"
+          (click)="selectMetal(metal.key)"
+        >
+          <span class="tab-icon" [style.color]="metal.color">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+              <path [attr.d]="metal.iconPath"/>
+            </svg>
+          </span>
+          <span class="tab-label">{{ metal.label }}</span>
+          <span class="tab-symbol">{{ metal.symbol }}</span>
+        </button>
+      </div>
+
+      <!-- Price Panel -->
+      <div class="metals-panel" *ngIf="activeMetalData">
+        
+        <!-- Left: Data Card -->
+        <div class="metals-data-card">
+          <div class="mdc-top">
+            <div class="mdc-accent-bar" [style.background]="activeMetalColor"></div>
+            <div>
+              <div class="mdc-label">{{ activeMetalData.label }} · {{ activeMetalData.symbol }}</div>
+              <div class="mdc-price">${{ activeMetalData.price | number:'1.2-2' }}</div>
+              <div class="mdc-change" [class.positive]="activeMetalData.change >= 0" [class.negative]="activeMetalData.change < 0">
+                <span class="change-arrow">{{ activeMetalData.change >= 0 ? '▲' : '▼' }}</span>
+                {{ activeMetalData.change >= 0 ? '+' : '' }}{{ activeMetalData.change | number:'1.2-2' }}
+                ({{ activeMetalData.change >= 0 ? '+' : '' }}{{ activeMetalData.changePct | number:'1.2-2' }}%)
+              </div>
+            </div>
+          </div>
+
+          <div class="mdc-rows">
+            <div class="mdc-row">
+              <span class="r-label">Apertura</span>
+              <span class="r-val">${{ activeMetalData.open | number:'1.2-2' }}</span>
+            </div>
+            <div class="mdc-row">
+              <span class="r-label">Máximo del día</span>
+              <span class="r-val">${{ activeMetalData.high | number:'1.2-2' }}</span>
+            </div>
+            <div class="mdc-row">
+              <span class="r-label">Mínimo del día</span>
+              <span class="r-val">${{ activeMetalData.low | number:'1.2-2' }}</span>
+            </div>
+            <div class="mdc-row">
+              <span class="r-label">Bid</span>
+              <span class="r-val">${{ activeMetalData.bid | number:'1.2-2' }}</span>
+            </div>
+            <div class="mdc-row">
+              <span class="r-label">Ask</span>
+              <span class="r-val">${{ activeMetalData.ask | number:'1.2-2' }}</span>
+            </div>
+            <div class="mdc-row highlight">
+              <span class="r-label">Máx. 52 sem.</span>
+              <span class="r-val">${{ activeMetalData.yearHigh | number:'1.2-2' }}</span>
+            </div>
+            <div class="mdc-row highlight">
+              <span class="r-label">Mín. 52 sem.</span>
+              <span class="r-val">${{ activeMetalData.yearLow | number:'1.2-2' }}</span>
+            </div>
+          </div>
+
+          <div class="mdc-unit">
+            Precios en {{ activeMetalData.unit }} · Mercado internacional
+          </div>
+        </div>
+
+        <!-- Right: Chart -->
+        <div class="metals-chart-area">
+
+          <!-- Period selector -->
+          <div class="chart-period-row">
+            <button *ngFor="let p of periods"
+              class="period-btn"
+              [class.active]="activePeriod === p.days"
+              (click)="selectPeriod(p.days)"
+            >{{ p.label }}</button>
+          </div>
+
+          <!-- Canvas -->
+          <div class="chart-canvas-wrapper">
+            <canvas id="metalPriceChart"></canvas>
+          </div>
+
+          <div class="chart-footnote">
+            Gráfico histórico simulado · Para datos históricos reales se requiere plan premium de la API
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ═══════════════════════════════════════════════════════ -->
 
 <!-- ABOUT SECTION - Con imagen dinámica -->
 <section class="py-20 bg-black">
@@ -338,18 +469,5 @@
     </div>
   </div>
 </section>
-
-<!-- Debug Panel (remover en producción)
-<div *ngIf="!isLoading" class="fixed bottom-4 right-4 bg-black/90 text-white p-4 rounded-lg text-xs z-50 max-w-xs">
-  <h4 class="font-bold mb-2 text-orange-600">📊 Imágenes Dinámicas</h4>
-  <div class="space-y-1">
-    <p>Hero: {{ heroImage ? '✅ ' + heroImage.publicId : '❌ No disponible' }}</p>
-    <p>About: {{ aboutImage ? '✅ ' + aboutImage.publicId : '❌ No disponible' }}</p>
-    <p>Gallery: {{ galleryPreviewImages.length }}/6 imágenes</p>
-    <p class="text-gray-400 mt-2 pt-2 border-t border-gray-700">
-      Dimensiones Hero: {{ heroImage ? heroImage.width + 'x' + heroImage.height : 'N/A' }}
-    </p>
-  </div>
-</div> -->
 
 <app-footer></app-footer>
