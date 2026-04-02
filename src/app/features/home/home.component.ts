@@ -6,9 +6,11 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
 import { CloudinaryService } from '../../core/services/cloudinary.services';
 import { GalleryService } from '../../core/services/gallery.service';
 import { ImageSelectorService } from '../../core/services/image-selector.service';
-import { CloudinaryImage } from '../../core/models/gallery.model';
+import { CloudinaryImage, SECTION_FOLDERS } from '../../core/models/gallery.model';
 import { MetalsService, MetalPricesState, MetalData } from '../../core/services/metal.service';
+import { NewsService, NewsItem } from '../../core/services/news.service';
 import { Subscription } from 'rxjs';
+import { ImagePreviewComponent } from '../../shared/components/image-preview/image-preview.component';
 
 import {
   Chart,
@@ -46,7 +48,8 @@ interface MetalTab {
     CommonModule,
     RouterModule,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    ImagePreviewComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
@@ -54,11 +57,19 @@ interface MetalTab {
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // ── Inyección con inject() — no requiere emitDecoratorMetadata ─────────────
-  private cloudinaryService    = inject(CloudinaryService);
-  private galleryService       = inject(GalleryService);
+  private cloudinaryService = inject(CloudinaryService);
+  private galleryService = inject(GalleryService);
   private imageSelectorService = inject(ImageSelectorService);
-  private metalsService        = inject(MetalsService);
-  private cdr                  = inject(ChangeDetectorRef);
+  private metalsService = inject(MetalsService);
+  private newsService = inject(NewsService);
+  private cdr = inject(ChangeDetectorRef);
+
+
+  mapImagePath = 'assets/planpromin_sa.png';
+
+  previewVisible = false;
+  previewUrl = '';
+  previewTitle = '';
 
   // ── Imágenes dinámicas ────────────────────────────────────────────────────
   isLoading = true;
@@ -67,14 +78,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   galleryPreviewImages: CloudinaryImage[] = [];
 
   // ── Metales ───────────────────────────────────────────────────────────────
-  metalsLoading = true;
+  metalsLoading   = true;
+  metalsRefreshing = false;
   metalPrices: MetalPricesState | null = null;
   activeMetal: 'gold' | 'silver' | 'copper' = 'gold';
   activePeriod = 30;
 
   periods = [
-    { label: '1M', days: 30  },
-    { label: '3M', days: 90  },
+    { label: '1M', days: 30 },
+    { label: '3M', days: 90 },
     { label: '6M', days: 180 },
     { label: '1A', days: 365 }
   ];
@@ -94,11 +106,20 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   ];
 
+  // ── Tarjetas de servicio ──────────────────────────────────────────────────
+  serviceCardImages: CloudinaryImage[] = [];
+
+  // ── Noticias ──────────────────────────────────────────────────────────────
+  previewNews: NewsItem[] = [];
+  newsLoading    = true;
+  newsRefreshing = false;
+  private noticiasImages: CloudinaryImage[] = [];
+
   private chartInstance: Chart | null = null;
   private metalsSub?: Subscription;
 
   // Constructor vacío — toda la inyección va arriba con inject()
-  constructor() {}
+  constructor() { }
 
   // ── Getters ───────────────────────────────────────────────────────────────
   get activeMetalData(): MetalData | null {
@@ -113,16 +134,17 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   async ngOnInit(): Promise<void> {
     await this.loadDynamicImages();
     this.loadMetalPrices();
+    this.loadNewsPreview(); // async, corre en paralelo con el resto
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void { }
 
   ngOnDestroy(): void {
     this.metalsSub?.unsubscribe();
     this.destroyChart();
   }
 
-  // ── Metales: carga ────────────────────────────────────────────────────────
+  // ── Metales: carga inicial (usa cache de sesión si existe) ───────────────
   private loadMetalPrices(): void {
     this.metalsLoading = true;
     this.metalsSub = this.metalsService.getMetalPrices().subscribe({
@@ -134,6 +156,25 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       },
       error: () => {
         this.metalsLoading = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  // ── Metales: actualización manual desde botón ─────────────────────────────
+  refreshMetalPrices(): void {
+    if (this.metalsRefreshing) return;
+    this.metalsRefreshing = true;
+    this.destroyChart();
+    this.metalsService.refresh().subscribe({
+      next: (data) => {
+        this.metalPrices = data;
+        this.metalsRefreshing = false;
+        this.cdr.detectChanges();
+        setTimeout(() => this.renderChart(), 150);
+      },
+      error: () => {
+        this.metalsRefreshing = false;
         this.cdr.detectChanges();
       }
     });
@@ -200,9 +241,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const volatility =
       this.activeMetal === 'copper' ? 0.08 :
-      this.activeMetal === 'silver' ? 0.07 : 0.05;
+        this.activeMetal === 'silver' ? 0.07 : 0.05;
 
-    const pts   = this.generateHistory(this.metalPrices[this.activeMetal].price, this.activePeriod, volatility);
+    const pts = this.generateHistory(this.metalPrices[this.activeMetal].price, this.activePeriod, volatility);
     const color = this.activeMetalColor;
 
     this.chartInstance = new Chart(canvas, {
@@ -270,21 +311,81 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  // ── Imágenes dinámicas (lógica original intacta) ──────────────────────────
+  // ── Noticias: carga inicial (usa cache de sesión si existe) ──────────────
+  private async loadNewsPreview(): Promise<void> {
+    this.newsLoading = true;
+    const [, noticiasImgs] = await Promise.all([
+      new Promise<void>(resolve => {
+        this.newsService.getNews().subscribe({
+          next: (news) => { this.previewNews = news.slice(0, 6); resolve(); },
+          error: () => resolve()
+        });
+      }),
+      this.galleryService.getNoticiasImages()
+    ]);
+    this.noticiasImages = noticiasImgs;
+    this.newsLoading = false;
+    this.cdr.detectChanges();
+  }
+
+  // ── Noticias: actualización manual desde botón ────────────────────────────
+  async refreshNews(): Promise<void> {
+    if (this.newsRefreshing) return;
+    this.newsRefreshing = true;
+    this.newsService.refresh().subscribe({
+      next: (news) => {
+        this.previewNews = news.slice(0, 6);
+        this.newsRefreshing = false;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.newsRefreshing = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  formatNewsDate(dateStr: string): string {
+    try {
+      return new Date(dateStr).toLocaleDateString('es-EC', {
+        day: 'numeric', month: 'short', year: 'numeric'
+      });
+    } catch { return ''; }
+  }
+
+  truncate(text: string, maxLen = 120): string {
+    if (!text) return '';
+    const clean = text.replace(/<[^>]*>/g, '');
+    return clean.length > maxLen ? clean.slice(0, maxLen).trimEnd() + '…' : clean;
+  }
+
+  /**
+   * Devuelve la URL de imagen fallback para una noticia sin imagen propia.
+   * Usa las imágenes de mineria/noticias/ en Cloudinary, rotadas por índice.
+   */
+  getFallbackImage(index: number): string {
+    if (this.noticiasImages.length > 0) {
+      const img = this.noticiasImages[index % this.noticiasImages.length];
+      return this.cloudinaryService.getCardUrl(img.publicId, 600);
+    }
+    return ''; // sin imagen si la carpeta está vacía
+  }
+
+  // ── Imágenes dinámicas ────────────────────────────────────────────────────
   async loadDynamicImages(): Promise<void> {
     try {
       this.isLoading = true;
-      await this.galleryService.initialize();
-      let allImages = this.galleryService.getAllImages();
-
-      if (allImages.length === 0) allImages = this.getUploadedImages();
-      if (allImages.length === 0) { this.isLoading = false; return; }
-
-      this.selectImages(allImages);
+      // Carga home y service card images en paralelo
+      const [, serviceImgs] = await Promise.all([
+        this.galleryService.initializeForSection(SECTION_FOLDERS.HOME, 3, false),
+        this.galleryService.getImagesForSection(SECTION_FOLDERS.OPERACIONES)
+      ]);
+      const allImages = this.galleryService.getAllImages();
+      if (allImages.length > 0) this.selectImages(allImages);
+      // Si operaciones no tiene imágenes, usar las de home como fallback
+      this.serviceCardImages = serviceImgs.length > 0 ? serviceImgs : allImages;
       this.isLoading = false;
     } catch {
-      const localImages = this.getUploadedImages();
-      if (localImages.length > 0) this.selectImages(localImages);
       this.isLoading = false;
     }
   }
@@ -299,25 +400,18 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.aboutImage = allImages.find(img => img.publicId !== this.heroImage?.publicId) || allImages[1];
     }
 
-    const usedIds = [this.heroImage?.publicId, this.aboutImage?.publicId].filter(Boolean);
-    const availableForGallery = allImages.filter(img => !usedIds.includes(img.publicId));
-    this.galleryPreviewImages = this.imageSelectorService.selectImages(
-      availableForGallery.length > 0 ? availableForGallery : allImages,
-      { aspectRatio: 'any' },
-      6
+    // Orden ascendente por fecha de subida (primera imagen del folder → primer bloque)
+    const sorted = [...allImages].sort(
+      (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
     );
+    this.galleryPreviewImages = sorted.slice(0, 9);
   }
 
-  private getUploadedImages(): CloudinaryImage[] {
-    try {
-      const stored = localStorage.getItem('uploadedImages');
-      if (stored) {
-        const images: CloudinaryImage[] = JSON.parse(stored);
-        images.forEach(img => { img.createdAt = new Date(img.createdAt); });
-        return images;
-      }
-    } catch {}
-    return [];
+
+  getServiceCardUrl(index: number): string {
+    if (this.serviceCardImages.length === 0) return '';
+    const img = this.serviceCardImages[index % this.serviceCardImages.length];
+    return this.cloudinaryService.getCardUrl(img.publicId, 800);
   }
 
   getHeroImageUrl(): string {
@@ -332,5 +426,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getGalleryPreviewUrl(image: CloudinaryImage): string {
     return this.cloudinaryService.getCardUrl(image.publicId, 600);
+  }
+
+  openPreview(url: string, title: string): void {
+    this.previewUrl   = url;
+    this.previewTitle = title;
+    this.previewVisible = true;
+  }
+
+  closePreview(): void {
+    this.previewVisible = false;
   }
 }

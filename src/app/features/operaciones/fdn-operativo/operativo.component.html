@@ -1,28 +1,181 @@
 <app-navbar></app-navbar>
 
-<section class="py-20 bg-black">
+<!-- Hero Section -->
+<section class="relative bg-black py-20 lg:py-32 overflow-hidden">
+  <div class="absolute inset-0">
+    <div *ngIf="heroImage" class="absolute inset-0">
+      <img [src]="getHeroImageUrl()" [alt]="heroImage.title" class="w-full h-full object-cover opacity-20">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
+  </div>
+  
+  <div class="container mx-auto px-6 lg:px-12 relative z-10">
+    <div class="max-w-4xl">
+      <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
+        Operaciones / Proceso
+      </div>
+      <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
+        Proceso <span class="text-orange-600">Operativo</span>
+      </h1>
+      <p class="text-xl text-gray-300 leading-relaxed">
+        {{ descripcionGeneral }}
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Métodos de Acceso -->
+<section class="py-20 bg-white">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase text-sm">Operaciones</div>
-    <h1 class="text-5xl font-black text-white mb-8">Estado <span class='text-orange-600'>Operativo</span></h1>
-    <div class="prose prose-invert max-w-none">
-      <p class="text-gray-400 text-lg mb-8">Información sobre estado <span class='text-orange-600'>operativo</span>.</p>
-      <div class="grid lg:grid-cols-3 gap-8">
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Datos Clave</h3>
-          <p class="text-gray-400 text-sm">Información relevante y actualizada.</p>
-        </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Métricas</h3>
-          <p class="text-gray-400 text-sm">Indicadores de desempeño.</p>
-        </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Documentos</h3>
-          <p class="text-gray-400 text-sm">Reportes oficiales.</p>
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold mb-4" style="color: #15A5DF;">{{ metodosAcceso.titulo }}</h2>
+      <p class="text-gray-700 leading-relaxed mb-8 text-lg">{{ metodosAcceso.descripcion }}</p>
+      
+      <div class="grid md:grid-cols-2 gap-6">
+        <div *ngFor="let metodo of metodosAcceso.metodos" 
+             class="bg-gray-50 p-6 rounded-lg border-l-4 hover:shadow-lg transition-shadow"
+             style="border-color: #E9951D;">
+          <h3 class="text-xl font-bold mb-3" style="color: #15A5DF;">{{ metodo.nombre }}</h3>
+          <p class="text-gray-700 leading-relaxed">{{ metodo.descripcion }}</p>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Proceso de Beneficio con Imágenes -->
+<section class="py-20 bg-gray-50">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold mb-4" style="color: #15A5DF;">{{ procesoBeneficio.titulo }}</h2>
+      <p class="text-gray-700 leading-relaxed mb-12">{{ procesoBeneficio.descripcion }}</p>
+
+      <!-- Imágenes del Proceso -->
+      <div class="grid md:grid-cols-2 gap-6 mb-12" *ngIf="processImages.length > 0">
+        <div *ngFor="let image of processImages" class="rounded-lg overflow-hidden shadow-lg cursor-pointer"
+             (click)="openPreview(getImageUrl(image), image.title)">
+          <img [src]="getImageUrl(image)"
+               [alt]="image.title"
+               class="w-full h-64 object-cover hover:scale-105 transition-transform duration-300">
+        </div>
+      </div>
+
+      <!-- Etapas del Proceso -->
+      <div class="space-y-6">
+        <div *ngFor="let etapa of procesoBeneficio.etapas" 
+             class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white font-black text-xl"
+                 style="background-color: #E9951D;">
+              {{ etapa.numero }}
+            </div>
+            <div class="flex-1">
+              <h3 class="text-xl font-bold mb-2" style="color: #15A5DF;">{{ etapa.nombre }}</h3>
+              <p class="text-gray-700 leading-relaxed">{{ etapa.descripcion }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Productos Finales -->
+<section class="py-20 bg-white">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8" style="color: #15A5DF;">{{ productosFinales.titulo }}</h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <div *ngFor="let producto of productosFinales.productos" 
+             class="bg-gradient-to-br from-gray-50 to-white p-8 rounded-xl border-2 hover:shadow-2xl transition-all"
+             style="border-color: #E9951D;">
+          <h3 class="text-2xl font-bold mb-4" style="color: #15A5DF;">{{ producto.nombre }}</h3>
+          <p class="text-gray-700 leading-relaxed mb-4">{{ producto.descripcion }}</p>
+          <div class="pt-4 border-t" style="border-color: #E5E7EB;">
+            <div class="text-sm font-semibold" style="color: #E9951D;">DESTINO</div>
+            <div class="text-gray-800 font-medium">{{ producto.destino }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Capacidad Operativa -->
+<section class="py-20 bg-gray-900 text-white">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8" style="color: #E9951D;">{{ capacidadOperativa.titulo }}</h2>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center p-6 bg-gray-800 rounded-lg">
+          <div class="text-4xl font-black mb-2" style="color: #E9951D;">{{ capacidadOperativa.capacidadActual }}</div>
+          <div class="text-sm text-gray-400 uppercase tracking-wide">Capacidad Diaria</div>
+        </div>
+        <div class="text-center p-6 bg-gray-800 rounded-lg">
+          <div class="text-4xl font-black mb-2" style="color: #15A5DF;">{{ capacidadOperativa.leyPromedio }}</div>
+          <div class="text-sm text-gray-400 uppercase tracking-wide">Ley Promedio</div>
+        </div>
+        <div class="text-center p-6 bg-gray-800 rounded-lg">
+          <div class="text-4xl font-black mb-2" style="color: #E9951D;">{{ capacidadOperativa.recuperacionPromedio }}</div>
+          <div class="text-sm text-gray-400 uppercase tracking-wide">Recuperación Promedio</div>
+        </div>
+      </div>
+
+      <div class="mt-8 grid md:grid-cols-2 gap-6">
+        <div class="bg-gray-800 p-6 rounded-lg">
+          <div class="text-sm font-semibold mb-2" style="color: #E9951D;">MÉTODO DE MINADO</div>
+          <div class="text-xl">{{ capacidadOperativa.metodoMinado }}</div>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-lg">
+          <div class="text-sm font-semibold mb-2" style="color: #15A5DF;">TIPO DE PLANTA</div>
+          <div class="text-xl">{{ capacidadOperativa.tipoPlanta }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Infraestructura -->
+<section class="py-20 bg-white">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8 text-center" style="color: #15A5DF;">Infraestructura Principal</h2>
+      
+      <div class="grid md:grid-cols-2 gap-4">
+        <div *ngFor="let item of infraestructura" 
+             class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+          <svg class="w-6 h-6 flex-shrink-0" style="color: #E9951D;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span class="text-gray-700 font-medium">{{ item }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Navegación -->
+<section class="py-16 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-black text-white mb-8">Explora Más</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <a routerLink="/operaciones/geologia" class="px-6 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-bold rounded-lg transition-all">
+          Geología
+        </a>
+        <a routerLink="/operaciones/overview" class="px-6 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-bold rounded-lg transition-all">
+          Vista General
+        </a>
+        <a routerLink="/operaciones/proyecciones" class="px-6 py-4 text-white font-bold rounded-lg transition-colors" style="background-color: #E9951D;">
+          Proyecciones
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
+
+<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle" (closed)="closePreview()"></app-image-preview>

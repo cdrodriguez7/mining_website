@@ -1,1 +1,154 @@
-// Estilos específicos
+// ===== ANIMACIONES =====
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+// ===== PILARES =====
+.group {
+  animation: fadeIn 0.6s ease-out;
+  
+  &:hover {
+    .text-white {
+      transition: color 0.3s ease;
+    }
+  }
+}
+
+// ===== MÉTRICAS =====
+.bg-black\/50 {
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.2);
+  }
+}
+
+// ===== PRÁCTICAS =====
+.bg-zinc-900 {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateX(4px);
+  }
+}
+
+// ===== COMITÉS =====
+.border-zinc-800 {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    box-shadow: 0 20px 25px -5px rgba(234, 88, 12, 0.15),
+                0 10px 10px -5px rgba(234, 88, 12, 0.1);
+  }
+}
+
+// ===== ICONOS =====
+svg {
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+// ===== BADGES =====
+.rounded-full,
+.rounded-lg {
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: 1024px) {
+  .lg\:grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .text-5xl,
+  .text-7xl {
+    font-size: 2.5rem;
+  }
+  
+  .p-8 {
+    padding: 1.5rem;
+  }
+  
+  .md\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ===== ACCESIBILIDAD =====
+button,
+a {
+  &:focus {
+    outline: 2px solid #ea580c;
+    outline-offset: 2px;
+  }
+  
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.3);
+  }
+}
+
+// ===== GALERÍA =====
+.aspect-video {
+  overflow: hidden;
+  
+  img {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+// ===== GRADIENTES =====
+.bg-gradient-to-br {
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+// ===== HOVER EFFECTS =====
+.hover\:border-orange-600:hover {
+  border-color: #ea580c;
+  box-shadow: 0 0 20px rgba(234, 88, 12, 0.3);
+}

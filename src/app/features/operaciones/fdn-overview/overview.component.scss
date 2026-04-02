@@ -1,1 +1,153 @@
-// Estilos
+// ===== PALETA DE COLORES PLAMPROMIN =====
+$primary-blue: #15A5DF;
+$primary-orange: #E9951D;
+$primary-red: #CF1C3A;
+$primary-gray: #F1F2F3;
+
+$dark-blue: darken($primary-blue, 15%);
+$light-blue: lighten($primary-blue, 40%);
+$dark-orange: darken($primary-orange, 10%);
+$light-orange: lighten($primary-orange, 35%);
+
+$bg-dark: #0A0A0A;
+$bg-medium: #1A1A1A;
+$bg-light: #2A2A2A;
+
+// ===== ANIMACIONES =====
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+// ===== MAPA FULL WIDTH =====
+.w-full {
+  img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+// Eliminar cualquier borde redondeado o padding que limite la imagen
+section {
+  overflow: hidden;
+}
+
+// ===== MAPA Y ESTADÍSTICAS =====
+.bg-yellow-500,
+.bg-orange-500 {
+  background-color: $primary-orange !important;
+  animation: fadeIn 0.6s ease-out;
+  
+  &:hover {
+    animation: pulse 2s infinite;
+  }
+}
+
+// Ajuste de textos en círculos estadísticos
+.text-yellow-900 {
+  color: darken($primary-orange, 35%) !important;
+}
+
+// ===== DATOS TÉCNICOS =====
+.hover\:bg-gray-100:hover {
+  background-color: $primary-gray;
+  transition: background-color 0.3s ease;
+}
+
+// ===== TARJETAS DE STATS =====
+.group {
+  &:hover {
+    .text-orange-600 {
+      color: $primary-orange !important;
+      transition: transform 0.3s ease;
+    }
+  }
+}
+
+.text-orange-600 {
+  color: $primary-orange !important;
+}
+
+.bg-orange-600 {
+  background-color: $primary-orange !important;
+  
+  &:hover {
+    background-color: $dark-orange !important;
+  }
+}
+
+.border-orange-600 {
+  border-color: $primary-orange !important;
+}
+
+// ===== GRADIENTE AZUL =====
+.bg-gradient-to-b {
+//   background: linear-gradient(to bottom, $dark-blue, $primary-blue, $bg-medium);
+}
+
+.from-blue-900 {
+  --tw-gradient-from: $dark-blue;
+}
+
+.via-blue-800 {
+  --tw-gradient-via: $primary-blue;
+}
+
+.to-zinc-900 {
+  --tw-gradient-to: $bg-medium;
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: 1024px) {
+  .lg\:col-span-8 { 
+    order: 1;
+  }
+  .lg\:col-span-4 { 
+    order: 2;
+  }
+  
+  .absolute.top-6.right-6 {
+    position: static;
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .absolute.bottom-6.right-6 {
+    position: static;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .text-5xl, .text-7xl { font-size: 2.5rem; }
+  .text-4xl { font-size: 2rem; }
+  .md\:grid-cols-3 { grid-template-columns: 1fr; }
+  .p-6 { padding: 1rem; }
+}
+
+// ===== ACCESIBILIDAD =====
+*:focus-visible {
+  outline: 2px solid $primary-orange;
+  outline-offset: 2px;
+}
+
+// ===== IMÁGENES =====
+.aspect-video {
+  overflow: hidden;
+  
+  img {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}

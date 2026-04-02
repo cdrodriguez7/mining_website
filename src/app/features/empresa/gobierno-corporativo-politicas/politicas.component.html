@@ -1,39 +1,177 @@
 <app-navbar></app-navbar>
 
+<!-- Hero Section -->
+<section class="relative bg-black py-20 lg:py-32 overflow-hidden">
+  <div class="absolute inset-0">
+    <div *ngIf="heroImage" class="absolute inset-0">
+      <img [src]="getHeroImageUrl()" [alt]="heroImage.title" class="w-full h-full object-cover opacity-20">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
+  </div>
+  
+  <div class="container mx-auto px-6 lg:px-12 relative z-10">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-2 mb-4 text-sm">
+        <a routerLink="/empresa/gobierno-corporativo" class="text-gray-400 hover:text-orange-600 transition-colors">Gobierno Corporativo</a>
+        <span class="text-zinc-600">/</span>
+        <span class="text-orange-600 font-semibold">Políticas</span>
+      </div>
+      <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
+        Políticas <span class="text-orange-600">Centrales</span>
+      </h1>
+      <p class="text-gray-300 text-lg lg:text-xl leading-relaxed">
+        Marco normativo integral que guía nuestras operaciones en aspectos éticos, financieros, 
+        operacionales, ambientales y laborales.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Categorías Overview -->
+<section class="py-16 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="grid md:grid-cols-5 gap-4">
+      <div class="bg-black border-2 border-blue-600 rounded-xl p-6 text-center hover:bg-blue-600/10 transition-all">
+        <div class="text-4xl mb-2"></div>
+        <div class="text-blue-600 font-bold">Ética</div>
+        <div class="text-gray-400 text-sm mt-1">{{ getPoliticasPorCategoria('Ética').length }} políticas</div>
+      </div>
+      <div class="bg-black border-2 border-purple-600 rounded-xl p-6 text-center hover:bg-purple-600/10 transition-all">
+        <div class="text-4xl mb-2"></div>
+        <div class="text-purple-600 font-bold">Financiera</div>
+        <div class="text-gray-400 text-sm mt-1">{{ getPoliticasPorCategoria('Financiera').length }} políticas</div>
+      </div>
+      <div class="bg-black border-2 border-orange-600 rounded-xl p-6 text-center hover:bg-orange-600/10 transition-all">
+        <div class="text-4xl mb-2"></div>
+        <div class="text-orange-600 font-bold">Operacional</div>
+        <div class="text-gray-400 text-sm mt-1">{{ getPoliticasPorCategoria('Operacional').length }} políticas</div>
+      </div>
+      <div class="bg-black border-2 border-green-600 rounded-xl p-6 text-center hover:bg-green-600/10 transition-all">
+        <div class="text-4xl mb-2"></div>
+        <div class="text-green-600 font-bold">Sostenibilidad</div>
+        <div class="text-gray-400 text-sm mt-1">{{ getPoliticasPorCategoria('Sostenibilidad').length }} políticas</div>
+      </div>
+      <div class="bg-black border-2 border-yellow-600 rounded-xl p-6 text-center hover:bg-yellow-600/10 transition-all">
+        <div class="text-4xl mb-2"></div>
+        <div class="text-yellow-600 font-bold">Laboral</div>
+        <div class="text-gray-400 text-sm mt-1">{{ getPoliticasPorCategoria('Laboral').length }} políticas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Todas las Políticas -->
 <section class="py-20 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
-      Gobierno Corporativo
-    </div>
-    <h1 class="text-5xl lg:text-6xl font-black text-white mb-8">
-      Políticas <span class='text-orange-600'>Centrales</span>
-    </h1>
-    
-    <div class="prose prose-invert prose-orange max-w-none">
-      <p class="text-gray-400 text-lg leading-relaxed mb-8">
-        Información detallada sobre políticas <span class='text-orange-600'>centrales</span>. Esta sección contiene datos importantes
-        y actualizados sobre nuestras operaciones y compromisos.
-      </p>
-      
-      <div class="grid lg:grid-cols-3 gap-8 mt-12">
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
-          <div class="text-5xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Información Clave</h3>
-          <p class="text-gray-400">Datos relevantes y actualizados sobre esta sección.</p>
-        </div>
+    <div class="space-y-8">
+      <div *ngFor="let politica of politicas" 
+           class="bg-zinc-900 border-2 border-zinc-800 rounded-xl overflow-hidden hover:border-opacity-100 transition-all"
+           [ngClass]="getCategoriaColor(politica.categoria)">
         
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
-          <div class="text-5xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Métricas</h3>
-          <p class="text-gray-400">Indicadores de desempeño y resultados.</p>
-        </div>
-        
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
-          <div class="text-5xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Documentación</h3>
-          <p class="text-gray-400">Acceso a reportes y documentos oficiales.</p>
+        <div class="p-8">
+          <!-- Header -->
+          <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+            <div class="flex-1">
+              <div class="flex items-center space-x-3 mb-3">
+                <span class="px-3 py-1 rounded-full text-xs font-bold border-2" 
+                      [ngClass]="getCategoriaColor(politica.categoria)">
+                  {{ politica.categoria }}
+                </span>
+                <span class="text-gray-500 text-sm">Revisión: {{ politica.revision }}</span>
+              </div>
+              <h3 class="text-2xl font-bold text-white mb-2">{{ politica.titulo }}</h3>
+              <p class="text-gray-400 leading-relaxed">{{ politica.descripcion }}</p>
+            </div>
+            <button class="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors whitespace-nowrap">
+              Ver Documento
+            </button>
+          </div>
+
+          <!-- Detalles en Grid -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Alcance y Responsable -->
+            <div class="space-y-4">
+              <div class="bg-black rounded-lg p-4 border border-zinc-800">
+                <h4 class="text-sm font-semibold text-orange-600 mb-2 uppercase tracking-wider">Alcance</h4>
+                <p class="text-gray-300 text-sm">{{ politica.alcance }}</p>
+              </div>
+              <div class="bg-black rounded-lg p-4 border border-zinc-800">
+                <h4 class="text-sm font-semibold text-orange-600 mb-2 uppercase tracking-wider">Responsable</h4>
+                <p class="text-gray-300 text-sm">{{ politica.responsable }}</p>
+              </div>
+            </div>
+
+            <!-- Objetivos -->
+            <div class="bg-black rounded-lg p-4 border border-zinc-800">
+              <h4 class="text-sm font-semibold text-orange-600 mb-3 uppercase tracking-wider">Objetivos Principales</h4>
+              <ul class="space-y-2">
+                <li *ngFor="let objetivo of politica.objetivos" 
+                    class="text-gray-300 text-sm flex items-start">
+                  <span class="text-orange-600 mr-2 mt-1">•</span>
+                  <span>{{ objetivo }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Principios -->
+          <div class="mt-6 bg-black rounded-lg p-4 border border-zinc-800">
+            <h4 class="text-sm font-semibold text-orange-600 mb-3 uppercase tracking-wider">Principios Rectores</h4>
+            <div class="grid md:grid-cols-2 gap-3">
+              <div *ngFor="let principio of politica.principios" 
+                   class="flex items-start space-x-2 text-gray-300 text-sm">
+                <svg class="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>{{ principio }}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Galería -->
+<section *ngIf="policyImages.length > 0" class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-black text-white mb-4">
+        Implementación de <span class="text-orange-600">Políticas</span>
+      </h2>
+      <p class="text-gray-400">Evidencia visual de nuestro compromiso</p>
+    </div>
+    <div class="grid md:grid-cols-4 gap-6">
+      <div *ngFor="let image of policyImages" class="group relative overflow-hidden rounded-lg aspect-video">
+        <img [src]="getImageUrl(image)" [alt]="image.title" 
+             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+          <p class="text-white text-sm font-semibold">{{ image.title }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-16 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-black text-white mb-4">¿Preguntas sobre nuestras políticas?</h2>
+      <p class="text-gray-400 mb-8">Contáctanos para obtener más información o acceder a documentos completos</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a routerLink="/empresa/gobierno-corporativo/documentos" 
+           class="px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
+          Ver Todos los Documentos
+        </a>
+        <a routerLink="/contacto" 
+           class="px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-bold rounded-lg transition-all">
+          Contactar
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

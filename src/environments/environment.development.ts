@@ -1,9 +1,11 @@
 export const environment = {
   production: false,
-  metalpriceApiKey: 'c8135499d819193cd05f8f56cf07a14d',
+  // Dev: llama directamente a MetalpriceAPI (CORS soportado)
+  // así no necesita que npm run start:api esté corriendo
+  metalpriceUrl: 'https://api.metalpriceapi.com/v1/latest?api_key=25d0e09e06c131e31f3900e844a22fbd&base=USD&currencies=XAU,XAG',
   baseUrl: 'http://localhost:3000/api',
   cloudinary: {
-    cloudName: 'dlumbzsnd',        // ← TU CLOUD NAME
-    uploadPreset: 'PLAMPROMINV1'     // ← TU PRESET NAME
+    cloudName: 'dlumbzsnd',
+    uploadPreset: 'PLAMPROMINV1'
   }
 };

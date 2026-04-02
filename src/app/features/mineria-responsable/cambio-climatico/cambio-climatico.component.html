@@ -1,28 +1,145 @@
 <app-navbar></app-navbar>
 
+<!-- HERO -->
+<section class="relative h-[60vh] min-h-[420px] overflow-hidden">
+  <div *ngIf="!isLoading && heroImage" class="absolute inset-0">
+    <img [src]="getHeroUrl()" alt="Cambio Climático PLAMPROMIN"
+         class="w-full h-full object-cover" />
+  </div>
+  <div *ngIf="isLoading || !heroImage" class="absolute inset-0 bg-zinc-900"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+
+  <div class="relative z-10 h-full flex items-end pb-16">
+    <div class="container mx-auto px-6 lg:px-12">
+      <div class="flex items-center gap-3 mb-4">
+        <a routerLink="/mineria-responsable" class="text-gray-400 hover:text-orange-600 text-sm transition-colors">Minería Responsable</a>
+        <span class="text-zinc-600">/</span>
+        <span class="text-orange-600 text-sm font-semibold">Cambio Climático</span>
+      </div>
+      <h1 class="text-6xl font-black text-white leading-tight">
+        Cambio <span class="text-orange-600">Climático</span>
+      </h1>
+      <p class="text-gray-300 mt-4 max-w-xl text-lg">
+        Medimos, reducimos y compensamos nuestras emisiones de carbono.
+        Meta: −20% de emisiones GHG absolutas al 2030.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- EMISIONES -->
 <section class="py-20 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase text-sm">Sostenibilidad</div>
-    <h1 class="text-5xl font-black text-white mb-8">Estrategia de <span class='text-orange-600'>Cambio Climático</span></h1>
-    <div class="prose prose-invert max-w-none">
-      <p class="text-gray-400 text-lg mb-8">Información sobre estrategia de <span class='text-orange-600'>cambio climático</span>.</p>
-      <div class="grid lg:grid-cols-3 gap-8">
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Datos Clave</h3>
-          <p class="text-gray-400 text-sm">Información relevante y actualizada.</p>
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-4">Inventario GHG 2024</p>
+        <h2 class="text-4xl font-black text-white mb-8 leading-tight">
+          Nuestras <span class="text-orange-600">Emisiones</span>
+        </h2>
+        <div class="space-y-4 mb-8">
+          <div *ngFor="let e of emisionesData"
+               class="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+            <div class="flex items-start justify-between mb-2">
+              <span class="text-orange-600 font-bold text-sm uppercase tracking-wider">{{ e.alcance }}</span>
+              <div class="text-right">
+                <span class="text-white font-black text-2xl">{{ e.valor }}</span>
+                <span class="text-gray-400 text-sm ml-1">{{ e.unidad }}</span>
+              </div>
+            </div>
+            <p class="text-gray-400 text-sm">{{ e.descripcion }}</p>
+          </div>
         </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Métricas</h3>
-          <p class="text-gray-400 text-sm">Indicadores de desempeño.</p>
+        <div class="p-4 bg-zinc-900 border-l-4 border-orange-600 rounded-r-xl">
+          <p class="text-gray-300 text-sm leading-relaxed">
+            <span class="text-white font-semibold">Total 2024: 9.600 tCO₂e</span> —
+            Intensidad de emisiones: 0.48 tCO₂e/oz Au producida.
+            Reportado bajo metodología <span class="text-orange-600">GHG Protocol Corporate Standard</span>.
+          </p>
         </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Documentos</h3>
-          <p class="text-gray-400 text-sm">Reportes oficiales.</p>
+      </div>
+
+      <div class="relative">
+        <div *ngIf="!isLoading && sectionImages[0]" class="rounded-xl overflow-hidden cursor-pointer"
+             (click)="openPreview(getImageUrl(sectionImages[0]), sectionImages[0].title)">
+          <img [src]="getImageUrl(sectionImages[0])" [alt]="sectionImages[0].title"
+               class="w-full h-[480px] object-cover" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+        </div>
+        <div *ngIf="isLoading || !sectionImages[0]"
+             class="w-full h-[480px] bg-zinc-900 rounded-xl animate-pulse"></div>
+        <!-- Badge meta -->
+        <div class="absolute bottom-6 right-6 bg-black/85 backdrop-blur-sm border border-orange-600/40 rounded-xl px-5 py-4">
+          <div class="text-orange-600 font-black text-3xl">−20%</div>
+          <div class="text-gray-300 text-xs">Meta GHG al 2030</div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- PLAN DE ACCIÓN -->
+<section class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-3">Hoja de Ruta</p>
+    <h2 class="text-4xl font-black text-white mb-12">
+      Plan de Acción <span class="text-orange-600">2025–2030</span>
+    </h2>
+
+    <div class="relative">
+      <!-- Línea de tiempo vertical -->
+      <div class="absolute left-[28px] top-0 bottom-0 w-px bg-zinc-700 hidden lg:block"></div>
+
+      <div class="space-y-6">
+        <div *ngFor="let a of acciones"
+             class="flex items-start gap-6 group">
+          <div class="w-14 h-14 bg-zinc-900 border-2 border-orange-600 rounded-full
+                      flex items-center justify-center text-orange-600 font-black text-sm
+                      flex-shrink-0 z-10 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+            {{ a.anio.slice(2) }}
+          </div>
+          <div class="flex-1 bg-black border border-zinc-800 hover:border-orange-600 rounded-xl p-6 transition-colors">
+            <span class="text-orange-600 font-bold text-sm">{{ a.anio }}</span>
+            <p class="text-gray-300 mt-1 leading-relaxed">{{ a.meta }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INICIATIVAS -->
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+      <div>
+        <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-4">Iniciativas Clave</p>
+        <h2 class="text-4xl font-black text-white mb-8 leading-tight">
+          Hacia una Operación<br><span class="text-orange-600">Baja en Carbono</span>
+        </h2>
+        <div class="space-y-6">
+          <div *ngFor="let ini of iniciativas"
+               class="border-l-2 border-orange-600 pl-6">
+            <h3 class="text-white font-bold text-lg mb-2">{{ ini.titulo }}</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">{{ ini.desc }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative">
+        <div *ngIf="!isLoading && sectionImages[1]" class="rounded-xl overflow-hidden cursor-pointer"
+             (click)="openPreview(getImageUrl(sectionImages[1]), sectionImages[1].title)">
+          <img [src]="getImageUrl(sectionImages[1])" [alt]="sectionImages[1].title"
+               class="w-full h-[460px] object-cover" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+        </div>
+        <div *ngIf="isLoading || !sectionImages[1]"
+             class="w-full h-[460px] bg-zinc-900 rounded-xl animate-pulse"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
+
+<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle" (closed)="closePreview()"></app-image-preview>

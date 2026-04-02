@@ -1,1 +1,129 @@
-// Estilos
+$primary-blue: #15A5DF;
+$primary-orange: #E9951D;
+$primary-red: #CF1C3A;
+$primary-gray: #F1F2F3;
+
+$dark-blue: darken($primary-blue, 15%);
+$light-blue: lighten($primary-blue, 40%);
+$dark-orange: darken($primary-orange, 10%);
+$light-orange: lighten($primary-orange, 35%);
+
+$bg-dark: #0A0A0A;
+$bg-medium: #1A1A1A;
+$bg-light: #2A2A2A;
+
+
+// ===== ANIMACIONES =====
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// ===== SECCIONES =====
+section {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+// ===== CARDS DE PROCESO =====
+.bg-white,
+.bg-gray-50 {
+  transition: all 0.3s ease;
+}
+
+.hover\:shadow-lg:hover,
+.hover\:shadow-xl:hover,
+.hover\:shadow-2xl:hover {
+  animation: scaleIn 0.3s ease-out;
+}
+
+// ===== NÚMEROS DE ETAPAS =====
+.rounded-full {
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+// ===== IMÁGENES =====
+img {
+  transition: transform 0.5s ease;
+}
+
+// ===== ESTADÍSTICAS =====
+.text-4xl {
+  font-variant-numeric: tabular-nums;
+}
+
+// ===== INFRAESTRUCTURA ITEMS =====
+.flex.items-center {
+  svg {
+    transition: transform 0.3s ease;
+  }
+
+  &:hover svg {
+    transform: scale(1.2) rotate(5deg);
+  }
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: 1024px) {
+  .lg\:text-7xl {
+    font-size: 3rem;
+  }
+
+  .lg\:py-32 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .text-5xl {
+    font-size: 2.5rem;
+  }
+
+  .text-3xl {
+    font-size: 1.875rem;
+  }
+
+  .md\:grid-cols-2,
+  .md\:grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .text-4xl {
+    font-size: 2rem;
+  }
+}
+
+// ===== ACCESIBILIDAD =====
+*:focus-visible {
+  outline: 2px solid $primary-orange;
+  outline-offset: 2px;
+}
+
+a {
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba(233, 149, 29, 0.3);
+  }
+}

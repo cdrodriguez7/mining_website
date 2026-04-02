@@ -52,16 +52,17 @@ export class CloudinaryBackendService {
       console.log(`${data.count} imagenes de ${folder}`);
       
       return data.images.map(img => ({
-        publicId: img.publicId,
-        title: img.title,
+        publicId:    img.publicId,
+        title:       img.title,
         description: img.description,
-        folder: img.folder,
-        tags: img.tags,
-        width: img.width,
-        height: img.height,
-        format: img.format,
-        createdAt: new Date(img.createdAt),
-        secureUrl: img.secureUrl
+        folder:      img.folder,
+        assetFolder: img.assetFolder,
+        tags:        img.tags,
+        width:       img.width,
+        height:      img.height,
+        format:      img.format,
+        createdAt:   new Date(img.createdAt),
+        secureUrl:   img.secureUrl
       }));
       
     } catch (error: any) {

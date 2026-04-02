@@ -54,11 +54,12 @@
 
     <!-- Grid de imágenes -->
     <div class="gallery-grid" *ngIf="!isLoading && filteredImages.length > 0">
-      <div 
-        *ngFor="let image of filteredImages; let i = index" 
+      <div
+        *ngFor="let image of filteredImages; let i = index"
         class="gallery-item"
+        (click)="openPreview(image)"
       >
-        <img 
+        <img
           [src]="getImageUrl(image)"
           [alt]="image.title"
           class="gallery-image"
@@ -110,3 +111,11 @@
 </section>
 
 <app-footer></app-footer>
+
+<!-- Previsualizador de imagen completa -->
+<app-image-preview
+  [visible]="previewVisible"
+  [imageUrl]="previewUrl"
+  [imageTitle]="previewTitle"
+  (closed)="closePreview()"
+></app-image-preview>

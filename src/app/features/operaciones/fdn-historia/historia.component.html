@@ -1,28 +1,141 @@
 <app-navbar></app-navbar>
 
-<section class="py-20 bg-black">
+<!-- Hero Section -->
+<section class="relative bg-black py-20 lg:py-32 overflow-hidden">
+  <div class="absolute inset-0">
+    <div *ngIf="heroImage" class="absolute inset-0">
+      <img [src]="getHeroImageUrl()" [alt]="heroImage.title" class="w-full h-full object-cover opacity-20">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
+  </div>
+  
+  <div class="container mx-auto px-6 lg:px-12 relative z-10">
+    <div class="max-w-4xl">
+      <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
+        Operaciones / Historia
+      </div>
+      <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
+        Historia del <span class="text-orange-600">Proyecto</span>
+      </h1>
+      <p class="text-gray-300 text-lg lg:text-xl leading-relaxed">
+        {{ subtitulo }}
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline Vertical -->
+<section class="py-20 bg-white">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase text-sm">Operaciones</div>
-    <h1 class="text-5xl font-black text-white mb-8">Historia de <span class='text-orange-600'>Fruta del Norte</span></h1>
-    <div class="prose prose-invert max-w-none">
-      <p class="text-gray-400 text-lg mb-8">Información sobre historia de <span class='text-orange-600'>fruta del norte</span>.</p>
-      <div class="grid lg:grid-cols-3 gap-8">
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Datos Clave</h3>
-          <p class="text-gray-400 text-sm">Información relevante y actualizada.</p>
-        </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Métricas</h3>
-          <p class="text-gray-400 text-sm">Indicadores de desempeño.</p>
-        </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Documentos</h3>
-          <p class="text-gray-400 text-sm">Reportes oficiales.</p>
+    <div class="max-w-5xl mx-auto">
+      
+      <!-- Timeline Container -->
+      <div class="relative">
+        <!-- Línea vertical central -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-blue-600"></div>
+
+        <!-- Hitos -->
+        <div class="space-y-0">
+          <div *ngFor="let hito of hitos; let i = index" 
+               class="relative timeline-item"
+               [class.timeline-left]="hito.lado === 'izquierda'"
+               [class.timeline-right]="hito.lado === 'derecha'">
+            
+            <!-- Contenedor del hito -->
+            <div class="flex items-center justify-between">
+              
+              <!-- Lado izquierdo -->
+              <div class="w-5/12" [class.text-right]="hito.lado === 'izquierda'">
+                <div *ngIf="hito.lado === 'izquierda'" 
+                     class="bg-white border-2 border-gray-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+                  <h3 class="text-xl font-bold text-blue-700 mb-2">{{ hito.titulo }}</h3>
+                  <p class="text-gray-600 text-sm leading-relaxed">{{ hito.descripcion }}</p>
+                </div>
+              </div>
+
+              <!-- Año y punto central -->
+              <div class="w-2/12 flex flex-col items-center relative z-10">
+                <!-- Año -->
+                <div class="bg-blue-600 text-white font-black text-xl px-6 py-2 rounded-full shadow-lg mb-3">
+                  {{ hito.ano }}
+                </div>
+                
+                <!-- Icono en círculo -->
+                <div class="bg-blue-700 rounded-full w-20 h-20 flex items-center justify-center shadow-xl border-4 border-white">
+                  <span class="text-3xl">{{ hito.icono }}</span>
+                </div>
+              </div>
+
+              <!-- Lado derecho -->
+              <div class="w-5/12" [class.text-left]="hito.lado === 'derecha'">
+                <div *ngIf="hito.lado === 'derecha'" 
+                     class="bg-white border-2 border-gray-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+                  <h3 class="text-xl font-bold text-blue-700 mb-2">{{ hito.titulo }}</h3>
+                  <p class="text-gray-600 text-sm leading-relaxed">{{ hito.descripcion }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Espaciador -->
+            <div class="h-12"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Galería Histórica -->
+<section *ngIf="historyImages.length > 0" class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-black text-white mb-4">
+        Momentos <span class="text-orange-600">Clave</span>
+      </h2>
+      <p class="text-gray-400">Imágenes que cuentan nuestra historia</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div *ngFor="let image of historyImages"
+           class="group relative overflow-hidden rounded-lg aspect-square cursor-pointer"
+           (click)="openPreview(getImageUrl(image), image.title)">
+        <img [src]="getImageUrl(image)" [alt]="image.title"
+             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+          <div>
+            <h3 class="text-white font-bold text-lg mb-1">{{ image.title }}</h3>
+            <p *ngIf="image.description" class="text-gray-300 text-sm">{{ image.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Visión a Futuro -->
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl font-black text-white mb-6">
+        Comprometidos con el <span class="text-orange-600">Futuro</span>
+      </h2>
+      <p class="text-gray-300 text-lg leading-relaxed mb-8">
+        Continuamos invirtiendo en exploración, tecnología y desarrollo comunitario para mantener 
+        nuestra posición como operador minero responsable y líder en el sector aurífero ecuatoriano.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a routerLink="/operaciones/overview" 
+           class="px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
+          Vista General
+        </a>
+        <a routerLink="/operaciones/geologia" 
+           class="px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-bold rounded-lg transition-all">
+          Geología del Proyecto
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
+<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle" (closed)="closePreview()"></app-image-preview>

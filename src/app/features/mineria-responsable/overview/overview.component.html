@@ -1,28 +1,160 @@
 <app-navbar></app-navbar>
 
-<section class="py-20 bg-black">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase text-sm">Sostenibilidad</div>
-    <h1 class="text-5xl font-black text-white mb-8">Minería <span class='text-orange-600'>Responsable</span></h1>
-    <div class="prose prose-invert max-w-none">
-      <p class="text-gray-400 text-lg mb-8">Información sobre minería <span class='text-orange-600'>responsable</span>.</p>
-      <div class="grid lg:grid-cols-3 gap-8">
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Datos Clave</h3>
-          <p class="text-gray-400 text-sm">Información relevante y actualizada.</p>
-        </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Métricas</h3>
-          <p class="text-gray-400 text-sm">Indicadores de desempeño.</p>
-        </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Documentos</h3>
-          <p class="text-gray-400 text-sm">Reportes oficiales.</p>
-        </div>
+<!-- HERO -->
+<section class="relative h-[70vh] min-h-[480px] overflow-hidden">
+  <div *ngIf="!isLoading && heroImage" class="absolute inset-0">
+    <img [src]="getHeroUrl()" alt="Minería Responsable PLAMPROMIN"
+         class="w-full h-full object-cover" />
+  </div>
+  <div *ngIf="isLoading || !heroImage" class="absolute inset-0 bg-zinc-900"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+  <!-- Accent bar -->
+  <div class="absolute top-0 right-0 w-80 h-full bg-gradient-to-b from-orange-600 to-orange-700
+              transform skew-x-[-12deg] translate-x-40 hidden lg:block opacity-80"></div>
+
+  <div class="relative z-10 h-full flex items-center">
+    <div class="container mx-auto px-6 lg:px-12">
+      <p class="text-orange-600 font-semibold uppercase tracking-widest text-sm mb-4">Sostenibilidad</p>
+      <h1 class="text-6xl lg:text-8xl font-black text-white leading-tight mb-6">
+        Minería<br><span class="text-orange-600">Responsable</span>
+      </h1>
+      <div class="flex items-start gap-4 max-w-xl">
+        <div class="w-1 h-16 bg-orange-600 flex-shrink-0 mt-1"></div>
+        <p class="text-gray-300 text-lg leading-relaxed">
+          Operamos con los más altos estándares ambientales, sociales y de gobernanza en
+          la zona minera de Camilo Ponce Enríquez, Azuay, Ecuador.
+        </p>
       </div>
     </div>
   </div>
 </section>
+
+<!-- MÉTRICAS ESG -->
+<section class="py-16 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div *ngFor="let m of metricas" class="text-center">
+        <div class="text-5xl font-black mb-2" [ngClass]="m.color">{{ m.valor }}</div>
+        <div class="w-8 h-1 bg-orange-600 mx-auto mb-2"></div>
+        <div class="text-white font-bold mb-1">{{ m.unidad }}</div>
+        <div class="text-gray-500 text-sm">{{ m.periodo }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILARES -->
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="mb-14">
+      <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-3">Nuestros Pilares</p>
+      <h2 class="text-5xl font-black text-white">
+        Compromiso con el <span class="text-orange-600">Futuro</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <a *ngFor="let p of pilares" [routerLink]="p.link"
+         class="group bg-zinc-900 border border-zinc-800 rounded-xl p-8
+                hover:border-orange-600 hover:bg-zinc-800/50 transition-all duration-300">
+        <div class="w-12 h-12 rounded-lg bg-orange-600/10 border border-orange-600/30
+                    flex items-center justify-center mb-6 group-hover:bg-orange-600/20 transition-colors">
+          <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" [attr.d]="p.icon"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-500 transition-colors">{{ p.label }}</h3>
+        <p class="text-gray-400 text-sm leading-relaxed mb-4">{{ p.desc }}</p>
+        <div class="flex items-center gap-2 text-orange-600 text-sm font-semibold">
+          Ver más
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA CLOUDINARY -->
+<section class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-3">Operaciones en Terreno</p>
+    <h2 class="text-4xl font-black text-white mb-10">Camilo Ponce Enríquez, <span class="text-orange-600">Azuay</span></h2>
+
+    <div *ngIf="isLoading" class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div *ngFor="let i of [1,2,3,4]" class="aspect-video bg-zinc-800 rounded-xl animate-pulse"></div>
+    </div>
+
+    <div *ngIf="!isLoading && galleryImages.length > 0" class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div *ngFor="let img of galleryImages"
+           class="group relative aspect-video overflow-hidden rounded-xl cursor-pointer"
+           (click)="openPreview(getImageUrl(img), img.title)">
+        <img [src]="getImageUrl(img)" [alt]="img.title"
+             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+             loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </div>
+    </div>
+
+    <div class="mt-8 text-center">
+      <a routerLink="/galeria"
+         class="inline-flex items-center gap-2 px-8 py-3 border border-orange-600 text-orange-600
+                hover:bg-orange-600 hover:text-white rounded-lg transition-colors font-semibold">
+        Ver galería completa
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- REPORTES CTA -->
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="grid md:grid-cols-3 gap-6">
+      <a routerLink="/mineria-responsable/reportes-sostenibilidad"
+         class="group bg-zinc-900 border border-zinc-800 hover:border-orange-600 rounded-xl p-8 transition-all">
+        <div class="text-orange-600 mb-4">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-500 transition-colors">Reporte de Sostenibilidad</h3>
+        <p class="text-gray-400 text-sm">Informe anual GRI con indicadores ambientales, sociales y de gobernanza.</p>
+      </a>
+      <a routerLink="/mineria-responsable/estrategia-5-anos"
+         class="group bg-zinc-900 border border-zinc-800 hover:border-orange-600 rounded-xl p-8 transition-all">
+        <div class="text-orange-600 mb-4">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-500 transition-colors">Estrategia 2026–2030</h3>
+        <p class="text-gray-400 text-sm">Hoja de ruta ESG con metas y KPIs para los próximos cinco años.</p>
+      </a>
+      <a routerLink="/mineria-responsable/compromisos-membresias"
+         class="group bg-zinc-900 border border-zinc-800 hover:border-orange-600 rounded-xl p-8 transition-all">
+        <div class="text-orange-600 mb-4">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-500 transition-colors">Compromisos y Membresías</h3>
+        <p class="text-gray-400 text-sm">Iniciativas internacionales a las que PLAMPROMIN se ha adherido.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
+
+
+<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle" (closed)="closePreview()"></app-image-preview>

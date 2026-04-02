@@ -1,28 +1,67 @@
 <app-navbar></app-navbar>
 
-<section class="py-20 bg-black">
+<section class="py-20 bg-black min-h-screen">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase text-sm">Sostenibilidad</div>
-    <h1 class="text-5xl font-black text-white mb-8">Reportes de <span class='text-orange-600'>Sostenibilidad</span></h1>
-    <div class="prose prose-invert max-w-none">
-      <p class="text-gray-400 text-lg mb-8">Información sobre reportes de <span class='text-orange-600'>sostenibilidad</span>.</p>
-      <div class="grid lg:grid-cols-3 gap-8">
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Datos Clave</h3>
-          <p class="text-gray-400 text-sm">Información relevante y actualizada.</p>
+
+    <div class="flex items-center gap-3 mb-10">
+      <a routerLink="/mineria-responsable" class="text-gray-400 hover:text-orange-600 text-sm transition-colors">Minería Responsable</a>
+      <span class="text-zinc-600">/</span>
+      <span class="text-orange-600 text-sm font-semibold">Reportes de Sostenibilidad</span>
+    </div>
+
+    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-4">Transparencia</p>
+    <h1 class="text-5xl font-black text-white mb-4 leading-tight">
+      Reportes de <span class="text-orange-600">Sostenibilidad</span>
+    </h1>
+    <p class="text-gray-400 text-lg mb-14 max-w-2xl">
+      Informes anuales integrados que muestran nuestro desempeño ambiental, social y de gobernanza
+      bajo el estándar GRI Standards 2021.
+    </p>
+
+    <!-- Reportes anuales -->
+    <div class="space-y-4 mb-14">
+      <div *ngFor="let r of reportes"
+           class="flex flex-col md:flex-row md:items-center justify-between gap-4
+                  bg-zinc-900 border border-zinc-800 hover:border-orange-600 rounded-xl p-6 transition-all group">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-orange-600/15 border border-orange-600/40 rounded-xl
+                      flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="text-white font-bold group-hover:text-orange-500 transition-colors">{{ r.titulo }}</div>
+            <div class="text-gray-500 text-sm">{{ r.subtitulo }}</div>
+          </div>
         </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Métricas</h3>
-          <p class="text-gray-400 text-sm">Indicadores de desempeño.</p>
+        <div class="flex items-center gap-4">
+          <span class="px-3 py-1 bg-zinc-800 text-gray-400 text-xs rounded-lg">{{ r.paginas }}</span>
+          <span class="px-3 py-1 bg-orange-600/15 text-orange-600 border border-orange-600/30 text-xs font-semibold rounded-lg">{{ r.estado }}</span>
         </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Documentos</h3>
-          <p class="text-gray-400 text-sm">Reportes oficiales.</p>
-        </div>
+      </div>
+    </div>
+
+    <!-- GRI Index -->
+    <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8">
+      <h2 class="text-2xl font-black text-white mb-3">Índice de Contenido <span class="text-orange-600">GRI</span></h2>
+      <p class="text-gray-400 text-sm leading-relaxed mb-5">
+        Todos nuestros reportes incluyen un índice de contenido GRI que mapea cada indicador
+        divulgado con la sección correspondiente del informe, facilitando la comparabilidad
+        con otras empresas del sector.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <span class="px-3 py-1.5 bg-black border border-zinc-700 text-gray-300 text-xs rounded-lg">GRI 2: Divulgaciones generales</span>
+        <span class="px-3 py-1.5 bg-black border border-zinc-700 text-gray-300 text-xs rounded-lg">GRI 302: Energía</span>
+        <span class="px-3 py-1.5 bg-black border border-zinc-700 text-gray-300 text-xs rounded-lg">GRI 303: Agua</span>
+        <span class="px-3 py-1.5 bg-black border border-zinc-700 text-gray-300 text-xs rounded-lg">GRI 305: Emisiones</span>
+        <span class="px-3 py-1.5 bg-black border border-zinc-700 text-gray-300 text-xs rounded-lg">GRI 306: Residuos</span>
+        <span class="px-3 py-1.5 bg-black border border-zinc-700 text-gray-300 text-xs rounded-lg">GRI 403: SST</span>
+        <span class="px-3 py-1.5 bg-black border border-zinc-700 text-gray-300 text-xs rounded-lg">GRI 413: Comunidades</span>
       </div>
     </div>
   </div>
 </section>
+
+<app-footer></app-footer>

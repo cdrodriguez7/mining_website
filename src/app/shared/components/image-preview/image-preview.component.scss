@@ -1,0 +1,127 @@
+// ── Overlay — siempre en el DOM, visible solo con .ip-active ─────────────────
+.ip-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(8px);
+  flex-direction: column;
+
+  &.ip-active {
+    display: flex;
+    animation: ip-fade-in 0.2s ease;
+  }
+}
+
+@keyframes ip-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+// ── Barra superior ─────────────────────────────────────────────────────────────
+.ip-topbar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1.25rem;
+  background: rgba(0, 0, 0, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+// ── Nombre de la imagen ────────────────────────────────────────────────────────
+.ip-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  max-width: calc(100vw - 6rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ip-title-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+  color: #ea580c;
+}
+
+// ── Botón cerrar ───────────────────────────────────────────────────────────────
+.ip-close {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &:hover {
+    background: #ea580c;
+    border-color: #ea580c;
+    color: #fff;
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// ── Área de imagen ─────────────────────────────────────────────────────────────
+.ip-image-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow: hidden;
+  cursor: zoom-out;
+}
+
+// ── Imagen ─────────────────────────────────────────────────────────────────────
+.ip-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  cursor: default;
+  animation: ip-scale-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes ip-scale-in {
+  from { transform: scale(0.88); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+// ── Responsive ─────────────────────────────────────────────────────────────────
+@media (max-width: 640px) {
+  .ip-topbar {
+    padding: 0.75rem 1rem;
+  }
+
+  .ip-title {
+    font-size: 0.85rem;
+  }
+
+  .ip-image-wrapper {
+    padding: 1rem;
+  }
+}

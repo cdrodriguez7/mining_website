@@ -1,1 +1,178 @@
-// Estilos específicos del componente
+// ===== ANIMACIONES =====
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// ===== TARJETAS DE DOCUMENTOS =====
+.bg-zinc-900,
+.bg-black {
+  animation: fadeInUp 0.5s ease-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+  }
+}
+
+// ===== ICONOS DE CATEGORÍAS =====
+.w-12.h-12 {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+// ===== BOTONES DE DESCARGA =====
+button {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  &:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+  
+  &:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+// ===== BADGES DE CATEGORÍA =====
+.rounded-xl {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+              
+  &:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2),
+                0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// ===== HOVER DE COLORES =====
+.hover\:border-blue-600:hover {
+  border-color: #2563eb;
+  box-shadow: 0 0 15px rgba(37, 99, 235, 0.3);
+}
+
+.hover\:border-orange-600:hover {
+  border-color: #ea580c;
+  box-shadow: 0 0 15px rgba(234, 88, 12, 0.3);
+}
+
+.hover\:border-green-600:hover {
+  border-color: #16a34a;
+  box-shadow: 0 0 15px rgba(22, 163, 74, 0.3);
+}
+
+.hover\:border-purple-600:hover {
+  border-color: #9333ea;
+  box-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
+}
+
+// ===== TEXTOS =====
+h3 {
+  transition: color 0.3s ease;
+}
+
+// ===== IMÁGENES =====
+.aspect-video {
+  overflow: hidden;
+  
+  img {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: 1024px) {
+  .lg\:flex-row {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .text-5xl,
+  .text-7xl {
+    font-size: 2.5rem;
+  }
+  
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .p-6 {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .md\:grid-cols-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ===== ACCESIBILIDAD =====
+*:focus-visible {
+  outline: 2px solid #ea580c;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2);
+}
+
+// ===== TRANSICIONES SUAVES =====
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// ===== EFECTOS DE GRUPO =====
+.group {
+  &:hover {
+    .group-hover\:bg-blue-600\/30 {
+      background-color: rgba(37, 99, 235, 0.3);
+    }
+    
+    .group-hover\:bg-orange-600\/30 {
+      background-color: rgba(234, 88, 12, 0.3);
+    }
+    
+    .group-hover\:bg-green-600\/30 {
+      background-color: rgba(22, 163, 74, 0.3);
+    }
+    
+    .group-hover\:bg-purple-600\/30 {
+      background-color: rgba(147, 51, 234, 0.3);
+    }
+  }
+}

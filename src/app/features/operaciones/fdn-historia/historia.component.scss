@@ -1,1 +1,181 @@
-// Estilos
+// ===== PALETA DE COLORES PLAMPROMIN =====
+$primary-blue: #15A5DF;
+$primary-orange: #E9951D;
+$primary-red: #CF1C3A;
+$primary-gray: #F1F2F3;
+
+$dark-blue: darken($primary-blue, 15%);
+$light-blue: lighten($primary-blue, 40%);
+$dark-orange: darken($primary-orange, 10%);
+$light-orange: lighten($primary-orange, 35%);
+
+$bg-dark: #0A0A0A;
+$bg-medium: #1A1A1A;
+$bg-light: #2A2A2A;
+
+// ===== ANIMACIONES =====
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+// ===== TIMELINE =====
+.timeline-item {
+  animation: fadeIn 0.6s ease-out;
+  
+  &.timeline-left {
+    .bg-white {
+      animation: slideInLeft 0.8s ease-out;
+    }
+  }
+  
+  &.timeline-right {
+    .bg-white {
+      animation: slideInRight 0.8s ease-out;
+    }
+  }
+}
+
+// ===== LÍNEA VERTICAL =====
+.bg-blue-600 {
+  background-color: $primary-blue !important;
+  
+  &.w-1 {
+    box-shadow: 0 0 10px rgba($primary-blue, 0.5);
+  }
+}
+
+// ===== AÑOS Y PUNTOS =====
+.bg-blue-600.rounded-full {
+  background-color: $primary-blue !important;
+  box-shadow: 0 4px 15px rgba($primary-blue, 0.4);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba($primary-blue, 0.6);
+  }
+}
+
+.bg-blue-700.rounded-full {
+  background-color: $dark-blue !important;
+  box-shadow: 0 8px 20px rgba($dark-blue, 0.5);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 0 12px 25px rgba($dark-blue, 0.7);
+  }
+}
+
+.text-blue-700,
+.text-blue-600 {
+  color: $primary-blue !important;
+}
+
+// ===== TARJETAS DE HITOS =====
+.border-gray-200 {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    border-color: $primary-blue;
+    box-shadow: 0 20px 40px rgba($primary-blue, 0.2);
+  }
+}
+
+// Colores naranja para botones y acentos
+.text-orange-600 {
+  color: $primary-orange !important;
+}
+
+.bg-orange-600 {
+  background-color: $primary-orange !important;
+  
+  &:hover {
+    background-color: $dark-orange !important;
+  }
+}
+
+.border-orange-600 {
+  border-color: $primary-orange !important;
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: 1024px) {
+  .relative.left-1 {
+    left: 2rem;
+  }
+  
+  .timeline-item {
+    .flex {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .w-5\/12,
+    .w-2\/12 {
+      width: 100%;
+    }
+    
+    .w-5\/12 {
+      &.text-right {
+        text-align: left;
+      }
+      
+      .bg-white {
+        margin-left: 5rem;
+      }
+    }
+    
+    .w-2\/12 {
+      position: absolute;
+      left: 0;
+      width: 4rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .text-5xl, .text-7xl { font-size: 2.5rem; }
+  .text-4xl { font-size: 2rem; }
+  .text-xl { font-size: 1.125rem; }
+  
+  .bg-blue-700.rounded-full {
+    width: 3.5rem;
+    height: 3.5rem;
+    
+    span {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .bg-blue-600.rounded-full {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+// ===== ACCESIBILIDAD =====
+*:focus-visible {
+  outline: 2px solid $primary-orange;
+  outline-offset: 2px;
+}
+
+// ===== IMÁGENES =====
+.aspect-square {
+  overflow: hidden;
+  
+  img {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}

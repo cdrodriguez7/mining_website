@@ -1,40 +1,299 @@
 <app-navbar></app-navbar>
 
+<!-- Hero Section -->
+<section class="relative bg-black py-20 lg:py-32 overflow-hidden">
+  <div class="absolute inset-0">
+    <div *ngIf="heroImage" class="absolute inset-0 cursor-pointer" (click)="openPreview(getHeroImageUrl(), heroImage?.title || 'Imagen')">
+      <img [src]="getHeroImageUrl()" [alt]="heroImage.title" class="w-full h-full object-cover opacity-20">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
+  </div>
+  
+  <div class="container mx-auto px-6 lg:px-12 relative z-10">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-2 mb-4 text-sm">
+        <a routerLink="/empresa/gobierno-corporativo" class="text-gray-400 hover:text-orange-600 transition-colors">Gobierno Corporativo</a>
+        <span class="text-zinc-600">/</span>
+        <span class="text-orange-600 font-semibold">Canal de Denuncias</span>
+      </div>
+      <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
+        Canal de <span class="text-orange-600">Denuncias</span>
+      </h1>
+      <p class="text-gray-300 text-lg lg:text-xl leading-relaxed">
+        Sistema confidencial y seguro para reportar conductas inapropiadas, violaciones éticas 
+        o irregularidades. Tu voz es importante y protegida.
+      </p>
+    </div>
+  </div>
+</section>
 
+<!-- Garantías -->
+<section class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-black text-white mb-4">
+        Nuestras <span class="text-orange-600">Garantías</span>
+      </h2>
+      <p class="text-gray-400">Protegemos a quienes denuncian</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let garantia of garantias" 
+           class="bg-black border border-zinc-800 rounded-xl p-6 hover:border-orange-600 transition-all">
+        <div class="text-5xl mb-4">{{ garantia.icono }}</div>
+        <h3 class="text-xl font-bold text-white mb-2">{{ garantia.titulo }}</h3>
+        <p class="text-gray-400 text-sm">{{ garantia.descripcion }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Canales de Contacto -->
 <section class="py-20 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
-      Gobierno Corporativo
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-black text-white mb-4">
+        Canales de <span class="text-orange-600">Contacto</span>
+      </h2>
+      <p class="text-gray-400">Múltiples vías para presentar su denuncia</p>
     </div>
-    <h1 class="text-5xl lg:text-6xl font-black text-white mb-8">
-      Canal de <span class='text-orange-600'>Denuncias</span>
-    </h1>
-    
-    <div class="prose prose-invert prose-orange max-w-none">
-      <p class="text-gray-400 text-lg leading-relaxed mb-8">
-        Información detallada sobre canal de <span class='text-orange-600'>denuncias</span>. Esta sección contiene datos importantes
-        y actualizados sobre nuestras operaciones y compromisos.
-      </p>
-      
-      <div class="grid lg:grid-cols-3 gap-8 mt-12">
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
-          <div class="text-5xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Información Clave</h3>
-          <p class="text-gray-400">Datos relevantes y actualizados sobre esta sección.</p>
-        </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div *ngFor="let canal of canalesContacto" 
+           class="bg-zinc-900 border-2 border-zinc-800 rounded-xl p-6 text-center hover:border-orange-600 transition-all">
+        <div class="text-5xl mb-4">{{ canal.icono }}</div>
+        <h3 class="text-lg font-bold text-white mb-2">{{ canal.tipo }}</h3>
+        <p class="text-orange-600 font-semibold text-sm mb-2">{{ canal.detalle }}</p>
+        <p class="text-gray-400 text-xs mb-3">{{ canal.disponibilidad }}</p>
+        <span *ngIf="canal.anonimo" 
+              class="inline-block px-3 py-1 bg-green-600/20 text-green-600 text-xs font-bold rounded-full">
+          Anónimo
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Formulario de Denuncia -->
+<section class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-black text-white mb-4">
+          Presentar <span class="text-orange-600">Denuncia</span>
+        </h2>
+        <p class="text-gray-400 mb-8">Complete el formulario a continuación</p>
         
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
-          <div class="text-5xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Métricas</h3>
-          <p class="text-gray-400">Indicadores de desempeño y resultados.</p>
+        <button (click)="toggleForm()" 
+                class="px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
+          {{ showForm ? 'Cerrar Formulario' : 'Abrir Formulario de Denuncia' }}
+        </button>
+      </div>
+
+      <div *ngIf="showForm" class="bg-black border-2 border-zinc-800 rounded-xl p-8">
+        <form (ngSubmit)="enviarDenuncia()">
+          
+          <!-- Tipo de Denuncia -->
+          <div class="mb-6">
+            <label class="block text-white font-semibold mb-2">
+              Tipo de Denuncia <span class="text-red-500">*</span>
+            </label>
+            <select [(ngModel)]="denuncia.tipoDenuncia" name="tipoDenuncia" required
+                    class="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:border-orange-600 focus:outline-none">
+              <option value="">Seleccione...</option>
+              <option *ngFor="let tipo of tiposDenuncia" [value]="tipo">{{ tipo }}</option>
+            </select>
+          </div>
+
+          <!-- Descripción -->
+          <div class="mb-6">
+            <label class="block text-white font-semibold mb-2">
+              Descripción Detallada <span class="text-red-500">*</span>
+            </label>
+            <textarea [(ngModel)]="denuncia.descripcion" name="descripcion" required rows="6"
+                      placeholder="Describa los hechos de manera clara y detallada..."
+                      class="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:border-orange-600 focus:outline-none resize-none">
+            </textarea>
+          </div>
+
+          <!-- Fecha y Ubicación -->
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label class="block text-white font-semibold mb-2">Fecha Aproximada</label>
+              <input type="date" [(ngModel)]="denuncia.fecha" name="fecha"
+                     class="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:border-orange-600 focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-white font-semibold mb-2">Ubicación</label>
+              <input type="text" [(ngModel)]="denuncia.ubicacion" name="ubicacion"
+                     placeholder="Área, departamento, etc."
+                     class="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:border-orange-600 focus:outline-none">
+            </div>
+          </div>
+
+          <!-- Testigos y Evidencia -->
+          <div class="mb-6">
+            <label class="block text-white font-semibold mb-2">Testigos (opcional)</label>
+            <input type="text" [(ngModel)]="denuncia.testigos" name="testigos"
+                   placeholder="Nombres de personas que presenciaron los hechos"
+                   class="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:border-orange-600 focus:outline-none">
+          </div>
+
+          <div class="mb-6">
+            <label class="block text-white font-semibold mb-2">Evidencia Disponible (opcional)</label>
+            <textarea [(ngModel)]="denuncia.evidencia" name="evidencia" rows="3"
+                      placeholder="Describa cualquier documento, correo, foto u otra evidencia que respalde su denuncia"
+                      class="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:border-orange-600 focus:outline-none resize-none">
+            </textarea>
+          </div>
+
+          <!-- Denuncia Anónima -->
+          <div class="mb-6 bg-zinc-900 rounded-lg p-4 border border-zinc-700">
+            <label class="flex items-center cursor-pointer">
+              <input type="checkbox" [(ngModel)]="denuncia.anonima" name="anonima" 
+                     (change)="onAnonimaChange()"
+                     class="w-5 h-5 text-orange-600 border-zinc-600 rounded focus:ring-orange-600">
+              <span class="ml-3 text-white font-semibold">Presentar denuncia de forma anónima</span>
+            </label>
+            <p class="text-gray-400 text-sm mt-2 ml-8">
+              Si marca esta opción, no será necesario proporcionar sus datos personales
+            </p>
+          </div>
+
+          <!-- Datos del Denunciante (solo si no es anónima) -->
+          <div *ngIf="!denuncia.anonima" class="mb-6 space-y-4">
+            <h3 class="text-lg font-bold text-white">Datos de Contacto (opcional)</h3>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-white font-semibold mb-2">Nombre Completo</label>
+                <input type="text" [(ngModel)]="denuncia.denuncianteNombre" name="denuncianteNombre"
+                       class="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:border-orange-600 focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-white font-semibold mb-2">Correo Electrónico</label>
+                <input type="email" [(ngModel)]="denuncia.denuncianteEmail" name="denuncianteEmail"
+                       class="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:border-orange-600 focus:outline-none">
+              </div>
+            </div>
+            <div>
+              <label class="block text-white font-semibold mb-2">Teléfono</label>
+              <input type="tel" [(ngModel)]="denuncia.denuncianteTelefono" name="denuncianteTelefono"
+                     class="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:border-orange-600 focus:outline-none">
+            </div>
+          </div>
+
+          <!-- Botones -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-end">
+            <button type="button" (click)="resetForm()"
+                    class="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold rounded-lg transition-colors">
+              Limpiar Formulario
+            </button>
+            <button type="submit"
+                    class="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
+              Enviar Denuncia
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Mensaje de éxito -->
+      <div *ngIf="formSubmitted" class="mt-8 bg-green-600/20 border-l-4 border-green-600 p-6 rounded-r-lg">
+        <h3 class="text-green-600 font-bold text-lg mb-2">✓ Denuncia Enviada Exitosamente</h3>
+        <p class="text-gray-300 text-sm">
+          Su denuncia ha sido registrada y será investigada. Si proporcionó datos de contacto, 
+          nos comunicaremos con usted. Guarde su código de seguimiento.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Proceso de Investigación -->
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-black text-white mb-4">
+        Proceso de <span class="text-orange-600">Investigación</span>
+      </h2>
+      <p class="text-gray-400">¿Qué sucede después de presentar una denuncia?</p>
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+      <div class="space-y-6">
+        <div class="flex items-start space-x-4 bg-zinc-900 rounded-lg p-6 border border-zinc-800">
+          <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold">
+            1
+          </div>
+          <div class="flex-1">
+            <h3 class="text-white font-bold text-lg mb-2">Recepción y Registro</h3>
+            <p class="text-gray-400 text-sm">
+              La denuncia es recibida por el Comité de Ética y registrada con un código único de seguimiento. 
+              Plazo: 24 horas.
+            </p>
+          </div>
         </div>
-        
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
-          <div class="text-5xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Documentación</h3>
-          <p class="text-gray-400">Acceso a reportes y documentos oficiales.</p>
+
+        <div class="flex items-start space-x-4 bg-zinc-900 rounded-lg p-6 border border-zinc-800">
+          <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold">
+            2
+          </div>
+          <div class="flex-1">
+            <h3 class="text-white font-bold text-lg mb-2">Evaluación Preliminar</h3>
+            <p class="text-gray-400 text-sm">
+              Se evalúa la gravedad, jurisdicción y recursos necesarios para la investigación. 
+              Plazo: 5 días hábiles.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4 bg-zinc-900 rounded-lg p-6 border border-zinc-800">
+          <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold">
+            3
+          </div>
+          <div class="flex-1">
+            <h3 class="text-white font-bold text-lg mb-2">Investigación</h3>
+            <p class="text-gray-400 text-sm">
+              Se recopilan pruebas, se entrevistan testigos y se analizan documentos. El denunciante es protegido. 
+              Plazo: 30 días hábiles (prorrogable).
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4 bg-zinc-900 rounded-lg p-6 border border-zinc-800">
+          <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold">
+            4
+          </div>
+          <div class="flex-1">
+            <h3 class="text-white font-bold text-lg mb-2">Resolución y Acciones</h3>
+            <p class="text-gray-400 text-sm">
+              Se emite informe final con conclusiones y se toman medidas correctivas o disciplinarias. 
+              Se notifica al denunciante (si proporcionó contacto).
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Nota Legal -->
+<section class="py-16 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto bg-black border-l-4 border-orange-600 p-8 rounded-r-xl">
+      <h3 class="text-2xl font-bold text-white mb-4">Compromiso de Protección</h3>
+      <p class="text-gray-400 leading-relaxed mb-4">
+        PLAMPROMIN S.A. prohíbe estrictamente cualquier forma de represalia contra personas que presenten 
+        denuncias de buena fe. Cualquier acto de represalia será investigado y sancionado severamente, 
+        incluyendo la terminación de la relación laboral.
+      </p>
+      <p class="text-gray-400 leading-relaxed">
+        Su valentía al denunciar conductas inapropiadas contribuye a mantener un ambiente ético y seguro 
+        para todos. Gracias por su compromiso con la integridad.
+      </p>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
+
+<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle" (closed)="closePreview()"></app-image-preview>

@@ -1,28 +1,60 @@
 <app-navbar></app-navbar>
 
-<section class="py-20 bg-black">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase text-sm">Sostenibilidad</div>
-    <h1 class="text-5xl font-black text-white mb-8">Evaluación de <span class='text-orange-600'>Impacto Ambiental</span></h1>
-    <div class="prose prose-invert max-w-none">
-      <p class="text-gray-400 text-lg mb-8">Información sobre evaluación de <span class='text-orange-600'>impacto ambiental</span>.</p>
-      <div class="grid lg:grid-cols-3 gap-8">
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Datos Clave</h3>
-          <p class="text-gray-400 text-sm">Información relevante y actualizada.</p>
-        </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Métricas</h3>
-          <p class="text-gray-400 text-sm">Indicadores de desempeño.</p>
-        </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Documentos</h3>
-          <p class="text-gray-400 text-sm">Reportes oficiales.</p>
+<section class="py-20 bg-black min-h-screen">
+  <div class="container mx-auto px-6 lg:px-12 max-w-4xl">
+
+    <div class="flex items-center gap-3 mb-10">
+      <a routerLink="/mineria-responsable" class="text-gray-400 hover:text-orange-600 text-sm transition-colors">Minería Responsable</a>
+      <span class="text-zinc-600">/</span>
+      <span class="text-gray-400 text-sm">Otros Reportes</span>
+      <span class="text-zinc-600">/</span>
+      <span class="text-orange-600 text-sm font-semibold">Impacto Ambiental</span>
+    </div>
+
+    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-4">Documentación Ambiental</p>
+    <h1 class="text-5xl font-black text-white mb-6 leading-tight">
+      Estudio de <span class="text-orange-600">Impacto Ambiental</span>
+    </h1>
+    <p class="text-gray-400 text-lg mb-10 max-w-2xl">
+      El EIA de PLAMPROMIN fue aprobado por el Ministerio del Ambiente, Agua y Transición
+      Ecológica (MAATE) y establece las medidas de prevención, mitigación y compensación
+      de los impactos de la operación minera en Camilo Ponce Enríquez.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-5 mb-10">
+      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+        <div class="text-orange-600 font-semibold text-sm mb-1">EIA Aprobado</div>
+        <div class="text-white font-bold text-xl mb-2">2019 · Vigente</div>
+        <p class="text-gray-400 text-sm">Aprobado mediante Resolución MAATE-DGA-2019-0214. Revisión quinquenal programada para 2024.</p>
+      </div>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+        <div class="text-orange-600 font-semibold text-sm mb-1">Plan de Manejo Ambiental</div>
+        <div class="text-white font-bold text-xl mb-2">Actualización 2023</div>
+        <p class="text-gray-400 text-sm">Plan de manejo actualizado con nuevas medidas para el área de procesamiento y gestión de relaves.</p>
+      </div>
+    </div>
+
+    <h2 class="text-2xl font-black text-white mb-6">Componentes del <span class="text-orange-600">EIA</span></h2>
+    <div class="space-y-3 mb-10">
+      <div *ngFor="let c of componentes"
+           class="flex gap-4 p-5 bg-zinc-900 border border-zinc-800 hover:border-orange-600 rounded-xl transition-colors">
+        <div class="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
+        <div>
+          <div class="text-white font-semibold mb-1">{{ c.titulo }}</div>
+          <div class="text-gray-400 text-sm">{{ c.desc }}</div>
         </div>
       </div>
     </div>
+
+    <div class="bg-zinc-900 border border-orange-600/30 rounded-xl p-7">
+      <h3 class="text-white font-bold mb-2">Monitoreo de Cumplimiento</h3>
+      <p class="text-gray-400 text-sm leading-relaxed">
+        El MAATE realiza inspecciones anuales de cumplimiento del EIA. PLAMPROMIN presenta
+        informes de cumplimiento semestrales. En las últimas tres inspecciones (2022–2024)
+        se obtuvo calificación <span class="text-green-400 font-semibold">CONFORME</span> sin observaciones pendientes.
+      </p>
+    </div>
   </div>
 </section>
+
+<app-footer></app-footer>

@@ -1,1 +1,38 @@
 // Estilos específicos del componente
+// ===== ANIMACIONES =====
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// ===== CATEGORÍAS =====
+.border-blue-600:hover { box-shadow: 0 0 20px rgba(37, 99, 235, 0.4); }
+.border-purple-600:hover { box-shadow: 0 0 20px rgba(147, 51, 234, 0.4); }
+.border-orange-600:hover { box-shadow: 0 0 20px rgba(234, 88, 12, 0.4); }
+.border-green-600:hover { box-shadow: 0 0 20px rgba(22, 163, 74, 0.4); }
+.border-yellow-600:hover { box-shadow: 0 0 20px rgba(202, 138, 4, 0.4); }
+
+// ===== POLÍTICAS =====
+.bg-zinc-900 {
+  animation: fadeIn 0.5s ease-out;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: 768px) {
+  .text-5xl, .text-7xl { font-size: 2.5rem; }
+  .md\:grid-cols-5 { grid-template-columns: repeat(2, 1fr); }
+  .md\:grid-cols-2 { grid-template-columns: 1fr; }
+  .p-8 { padding: 1.5rem; }
+}
+
+// ===== ACCESIBILIDAD =====
+*:focus-visible {
+  outline: 2px solid #ea580c;
+  outline-offset: 2px;
+}

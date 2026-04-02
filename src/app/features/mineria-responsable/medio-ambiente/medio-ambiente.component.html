@@ -1,28 +1,162 @@
 <app-navbar></app-navbar>
 
+<!-- HERO -->
+<section class="relative h-[60vh] min-h-[420px] overflow-hidden">
+  <div *ngIf="!isLoading && heroImage" class="absolute inset-0">
+    <img [src]="getHeroUrl()" alt="Medio Ambiente PLAMPROMIN"
+         class="w-full h-full object-cover" />
+  </div>
+  <div *ngIf="isLoading || !heroImage" class="absolute inset-0 bg-zinc-900"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+
+  <div class="relative z-10 h-full flex items-end pb-16">
+    <div class="container mx-auto px-6 lg:px-12">
+      <div class="flex items-center gap-3 mb-4">
+        <a routerLink="/mineria-responsable" class="text-gray-400 hover:text-orange-600 text-sm transition-colors">Minería Responsable</a>
+        <span class="text-zinc-600">/</span>
+        <span class="text-orange-600 text-sm font-semibold">Medio Ambiente</span>
+      </div>
+      <h1 class="text-6xl font-black text-white leading-tight">
+        Gestión <span class="text-orange-600">Ambiental</span>
+      </h1>
+      <p class="text-gray-300 mt-4 max-w-xl text-lg">
+        Camilo Ponce Enríquez, Azuay — ecosistemas de bosque nublado,
+        cuencas hidrográficas estratégicas y biodiversidad a preservar.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- INDICADORES -->
+<section class="py-14 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+      <div *ngFor="let ind of indicadores"
+           class="bg-black rounded-xl p-6 border-l-4 text-center" [ngClass]="ind.color">
+        <div class="text-3xl font-black text-white mb-1">{{ ind.valor }}</div>
+        <div class="text-gray-400 text-sm">{{ ind.desc }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTEXTO ZONA -->
 <section class="py-20 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase text-sm">Sostenibilidad</div>
-    <h1 class="text-5xl font-black text-white mb-8">Gestión <span class='text-orange-600'>Ambiental</span></h1>
-    <div class="prose prose-invert max-w-none">
-      <p class="text-gray-400 text-lg mb-8">Información sobre gestión <span class='text-orange-600'>ambiental</span>.</p>
-      <div class="grid lg:grid-cols-3 gap-8">
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Datos Clave</h3>
-          <p class="text-gray-400 text-sm">Información relevante y actualizada.</p>
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-4">Contexto Ambiental</p>
+        <h2 class="text-4xl font-black text-white mb-6 leading-tight">
+          Zona Minera de Camilo<br><span class="text-orange-600">Ponce Enríquez</span>
+        </h2>
+        <p class="text-gray-400 leading-relaxed mb-4">
+          El cantón Camilo Ponce Enríquez se ubica en la provincia de Azuay, en la vertiente
+          occidental de los Andes ecuatorianos, entre los 100 y 3.500 msnm. Su territorio forma
+          parte de la cuenca hidrográfica del Golfo de Guayaquil, alimentada por los ríos Gala,
+          Tenguel y Siete.
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-4">
+          Los ecosistemas presentes incluyen bosque tropical húmedo en las zonas bajas, bosque
+          nublado en las estribaciones medias y páramo en las cimas. Esta diversidad altitudinal
+          sustenta una alta biodiversidad, incluyendo especies endémicas de anfibios, aves y plantas.
+        </p>
+        <p class="text-gray-400 leading-relaxed">
+          PLAMPROMIN opera con plena conciencia de su responsabilidad en este entorno sensible,
+          aplicando el principio de prevención y mejora continua en todos sus procesos extractivos.
+        </p>
+      </div>
+
+      <!-- Imagen dinámica Cloudinary -->
+      <div class="relative">
+        <div *ngIf="!isLoading && sectionImages[0]" class="relative rounded-xl overflow-hidden cursor-pointer"
+             (click)="openPreview(getImageUrl(sectionImages[0]), sectionImages[0].title)">
+          <img [src]="getImageUrl(sectionImages[0])" [alt]="sectionImages[0].title"
+               class="w-full h-[480px] object-cover" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
         </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Métricas</h3>
-          <p class="text-gray-400 text-sm">Indicadores de desempeño.</p>
-        </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Documentos</h3>
-          <p class="text-gray-400 text-sm">Reportes oficiales.</p>
+        <div *ngIf="isLoading || !sectionImages[0]"
+             class="w-full h-[480px] bg-zinc-900 rounded-xl animate-pulse"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMAS AMBIENTALES -->
+<section class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-3">Programas</p>
+    <h2 class="text-4xl font-black text-white mb-12">
+      Gestión Ambiental <span class="text-orange-600">Integrada</span>
+    </h2>
+
+    <div class="space-y-8">
+      <div *ngFor="let prog of programas; let i = index"
+           class="group bg-black border border-zinc-800 rounded-xl overflow-hidden
+                  hover:border-orange-600 transition-all duration-300">
+        <div class="flex flex-col lg:flex-row">
+          <!-- Imagen del programa -->
+          <div class="lg:w-80 flex-shrink-0 relative overflow-hidden">
+            <div *ngIf="!isLoading && sectionImages[i]" class="cursor-pointer"
+                 (click)="openPreview(getImageUrl(sectionImages[i]), sectionImages[i].title)">
+              <img [src]="getImageUrl(sectionImages[i])" alt=""
+                   class="w-full h-56 lg:h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                   loading="lazy" />
+            </div>
+            <div *ngIf="isLoading || !sectionImages[i]"
+                 class="w-full h-56 lg:h-full min-h-[200px] bg-zinc-800 flex items-center justify-center">
+              <svg class="w-12 h-12 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" [attr.d]="prog.icono"/>
+              </svg>
+            </div>
+            <!-- Número de programa -->
+            <div class="absolute top-4 left-4 w-10 h-10 bg-orange-600 rounded-lg
+                        flex items-center justify-center text-white font-black text-lg">
+              {{ i + 1 }}
+            </div>
+          </div>
+
+          <!-- Contenido -->
+          <div class="p-8 flex flex-col justify-center">
+            <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-orange-500 transition-colors">
+              {{ prog.titulo }}
+            </h3>
+            <p class="text-gray-400 leading-relaxed mb-6">{{ prog.descripcion }}</p>
+            <ul class="space-y-2">
+              <li *ngFor="let kpi of prog.kpis"
+                  class="flex items-center gap-3 text-gray-300 text-sm">
+                <div class="w-1.5 h-1.5 bg-orange-600 rounded-full flex-shrink-0"></div>
+                {{ kpi }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- CTA -->
+<section class="py-16 bg-black">
+  <div class="container mx-auto px-6 lg:px-12 text-center">
+    <h3 class="text-3xl font-black text-white mb-4">Más información ambiental</h3>
+    <p class="text-gray-400 mb-8 max-w-xl mx-auto">
+      Descarga nuestro Estudio de Impacto Ambiental (EIA) y los reportes anuales de monitoreo.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a routerLink="/mineria-responsable/otros-reportes/impacto-ambiental"
+         class="px-8 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
+        Ver EIA
+      </a>
+      <a routerLink="/mineria-responsable/reportes-sostenibilidad"
+         class="px-8 py-3 border border-zinc-600 hover:border-orange-600 text-gray-300 hover:text-orange-600 font-bold rounded-lg transition-colors">
+        Reportes de Sostenibilidad
+      </a>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
+
+
+<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle" (closed)="closePreview()"></app-image-preview>

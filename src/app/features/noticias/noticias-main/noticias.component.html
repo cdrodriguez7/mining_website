@@ -1,37 +1,104 @@
 <app-navbar></app-navbar>
 
-<section class="py-20 bg-black">
+<section class="py-20 bg-black min-h-screen">
   <div class="container mx-auto px-6 lg:px-12">
-    <h1 class="text-5xl font-black text-white mb-8"><span class="text-orange-600">Noticias</span> y Comunicados</h1>
 
-    <div class="flex flex-wrap gap-3 mb-12">
-      <a *ngFor="let ano of anos"
-         [routerLink]="['/noticias', ano]"
-         class="px-6 py-2 bg-zinc-900 text-gray-300 hover:bg-orange-600 hover:text-white rounded-lg transition-colors font-semibold">
-        {{ ano }}
-      </a>
+    <!-- Header -->
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-10 gap-4">
+      <h1 class="text-5xl font-black text-white">
+        <span class="text-orange-600">Noticias</span> del Sector
+      </h1>
+      <button (click)="refresh()" [disabled]="isLoading"
+        class="inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold border border-zinc-700 text-gray-400 hover:border-orange-600 hover:text-orange-600 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+        <svg class="w-4 h-4" [class.animate-spin]="isLoading" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+        Actualizar
+      </button>
     </div>
 
-    <div class="space-y-6">
-      <article *ngFor="let noticia of noticiasRecientes"
-               class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
-        <div class="flex items-start justify-between mb-4">
-          <div>
-            <span class="inline-block px-3 py-1 bg-orange-600/20 text-orange-600 text-sm font-semibold rounded mb-3">
-              {{ noticia.categoria }}
+    <!-- Selector de año -->
+
+    <!-- Cargando -->
+    <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-32 gap-4">
+      <div class="w-12 h-12 border-4 border-orange-600 border-t-transparent rounded-full animate-spin"></div>
+      <p class="text-gray-500">Obteniendo últimas noticias...</p>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="!isLoading && hasError" class="text-center py-24">
+      <p class="text-gray-500 mb-4">No se pudo conectar con las fuentes de noticias.</p>
+      <button (click)="refresh()"
+        class="px-6 py-2 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors">
+        Reintentar
+      </button>
+    </div>
+
+    <!-- Sin resultados -->
+    <div *ngIf="!isLoading && !hasError && news.length === 0" class="text-center py-24">
+      <p class="text-gray-500">No hay noticias disponibles en este momento.</p>
+    </div>
+
+    <!-- Lista de noticias -->
+    <div *ngIf="!isLoading && !hasError && news.length > 0" class="space-y-6">
+      <article *ngFor="let item of news; let i = index"
+        class="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-orange-600 transition-all group">
+        <div class="flex flex-col md:flex-row">
+
+          <!-- Imagen: real (RSS/og:image) → fallback Cloudinary noticias/ → sin imagen -->
+          <div class="md:w-56 md:flex-shrink-0 flex-shrink-0 relative overflow-hidden bg-zinc-800 cursor-pointer"
+               (click)="openPreview(item.image || getFallbackImage(i), item.title)">
+            <ng-container *ngIf="item.image || getFallbackImage(i) as imgSrc">
+              <img [src]="imgSrc"
+                   [alt]="item.title"
+                   (error)="item.image = ''"
+                   class="w-full h-48 md:h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                   loading="lazy" />
+            </ng-container>
+            <span *ngIf="!item.image"
+                  class="absolute top-2 left-2 px-2 py-0.5 bg-black/60 backdrop-blur-sm text-gray-400 text-xs rounded-full">
+              Referencial
             </span>
-            <h3 class="text-2xl font-bold text-white mb-2">{{ noticia.titulo }}</h3>
-            <p class="text-gray-500 text-sm">{{ noticia.fecha }}</p>
+          </div>
+
+          <!-- Contenido -->
+          <div class="p-6 flex flex-col justify-between flex-1">
+            <div>
+              <div class="flex flex-wrap items-center gap-3 mb-3">
+                <span class="px-3 py-1 bg-orange-600/20 text-orange-600 text-xs font-semibold rounded">
+                  {{ item.category }}
+                </span>
+                <span class="text-zinc-500 text-xs font-medium">{{ item.source }}</span>
+                <span class="text-zinc-600 text-xs">{{ formatDate(item.pubDate) }}</span>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-500 transition-colors leading-snug">
+                {{ item.title }}
+              </h3>
+              <p class="text-gray-400 text-sm leading-relaxed">{{ item.description }}</p>
+            </div>
+
+            <div class="mt-4">
+              <a [href]="item.link" target="_blank" rel="noopener noreferrer"
+                class="text-orange-600 hover:text-orange-500 text-sm font-semibold inline-flex items-center gap-1 transition-colors">
+                Leer artículo completo
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
-        <p class="text-gray-400 leading-relaxed mb-4">{{ noticia.resumen }}</p>
-        <a href="#" class="text-orange-600 hover:text-orange-500 font-semibold inline-flex items-center">
-          Leer más
-          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
-        </a>
       </article>
     </div>
+
+    <!-- Nota de fuentes -->
+    <p *ngIf="!isLoading && news.length > 0" class="text-center text-zinc-600 text-xs mt-10">
+      Noticias obtenidas de Mining.com · Minería Chilena · BNamericas — actualizadas semanalmente
+    </p>
+
   </div>
 </section>
+
+<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle" (closed)="closePreview()"></app-image-preview>

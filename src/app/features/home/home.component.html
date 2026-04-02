@@ -3,34 +3,30 @@
 <!-- HERO SECTION - Con imagen dinámica -->
 <section class="hero-section relative h-screen overflow-hidden">
   <!-- Background Image DINÁMICA -->
-  <div class="absolute inset-0">
+  <div class="absolute inset-0 flex items-center">
     <div *ngIf="heroImage" class="absolute inset-0">
-      <img 
-        [src]="getHeroImageUrl()"
-        [alt]="heroImage.title"
-        class="w-full h-full object-cover"
-      />
-      <div class="absolute inset-0 bg-black/70"></div>
+      <img [src]="mapImagePath" alt="Mapa" class="rounded-lg shadow-lg w-full">
     </div>
-    
-    <!-- Fallback si no hay imagen -->
-    <div *ngIf="!heroImage" class="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-black/0 to-black"></div>
   </div>
 
+
   <!-- Orange Accent Bar (derecha) -->
-  <div class="absolute top-0 right-0 w-96 h-full bg-gradient-to-b from-orange-600 to-orange-700 transform skew-x-[-15deg] translate-x-48 hidden lg:block"></div>
+  <div
+    class="absolute top-0 right-0 w-96 h-full bg-gradient-to-b from-orange-600 to-orange-700 transform skew-x-[-15deg] translate-x-48 hidden lg:block">
+  </div>
 
   <!-- Hero Content -->
-  <div class="relative z-10 h-full flex items-center">
+  <!-- <div class="relative z-10 h-full flex items-start pt-20 ">
     <div class="container mx-auto px-6 lg:px-12">
       <div class="max-w-4xl">
-        <!-- Main Heading -->
+         Main Heading 
         <h1 class="text-6xl lg:text-8xl font-black text-white mb-8 leading-tight">
           From Waste<br>
           to Gold<br>
         </h1>
 
-        <!-- Subtitle -->
+         Subtitle 
         <div class="flex items-start space-x-4 max-w-2xl">
           <div class="w-1 h-20 bg-orange-600"></div>
           <p class="text-gray-300 text-lg leading-relaxed">
@@ -40,7 +36,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- Scroll Down Indicator -->
   <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
@@ -50,45 +46,6 @@
   </div>
 </section>
 
-<!-- STATS SECTION -->
-<section class="py-20 bg-zinc-900">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
-      <div class="text-center">
-        <div class="text-6xl font-black text-white mb-2">3</div>
-        <div class="flex items-center justify-center mb-2">
-          <div class="w-8 h-1 bg-orange-600"></div>
-        </div>
-        <div class="text-orange-600 font-semibold mb-1">Concesiones</div>
-        <div class="text-gray-400 text-sm">Activas</div>
-      </div>
-      <div class="text-center">
-        <div class="text-6xl font-black text-white mb-2">5</div>
-        <div class="flex items-center justify-center mb-2">
-          <div class="w-8 h-1 bg-orange-600"></div>
-        </div>
-        <div class="text-orange-600 font-semibold mb-1">Proyectos</div>
-        <div class="text-gray-400 text-sm">Completos</div>
-      </div>
-      <div class="text-center">
-        <div class="text-6xl font-black text-white mb-2">15</div>
-        <div class="flex items-center justify-center mb-2">
-          <div class="w-8 h-1 bg-orange-600"></div>
-        </div>
-        <div class="text-orange-600 font-semibold mb-1">Años</div>
-        <div class="text-gray-400 text-sm">Experiencia</div>
-      </div>
-      <div class="text-center">
-        <div class="text-6xl font-black text-white mb-2">120+</div>
-        <div class="flex items-center justify-center mb-2">
-          <div class="w-8 h-1 bg-orange-600"></div>
-        </div>
-        <div class="text-orange-600 font-semibold mb-1">Trabajadores</div>
-        <div class="text-gray-400 text-sm">Activos</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- METAL PRICES SECTION — nueva sección -->
@@ -105,10 +62,21 @@
         <h2 class="text-5xl font-black text-white leading-tight">
           Precio de <span class="text-orange-600">Metales</span>
         </h2>
-        <div class="metals-live-badge" [class.is-live]="metalPrices?.isLive">
-          <span class="badge-dot"></span>
-          <span class="badge-text">{{ metalPrices?.isLive ? 'En vivo · USD' : 'Referencial · USD' }}</span>
-          <span class="badge-date">{{ metalPrices?.date }}</span>
+        <div class="flex items-center gap-4">
+          <div class="metals-live-badge" [class.is-live]="metalPrices?.isLive">
+            <span class="badge-dot"></span>
+            <span class="badge-text">{{ metalPrices?.isLive ? 'En vivo · USD' : 'Referencial · USD' }}</span>
+            <span class="badge-date">{{ metalPrices?.date }}</span>
+          </div>
+          <button (click)="refreshMetalPrices()" [disabled]="metalsRefreshing"
+            class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-orange-500 border border-orange-600/40 rounded-lg hover:bg-orange-600/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+            <svg class="w-3.5 h-3.5" [class.animate-spin]="metalsRefreshing" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            {{ metalsRefreshing ? 'Actualizando…' : 'Actualizar' }}
+          </button>
         </div>
       </div>
     </div>
@@ -124,15 +92,11 @@
 
       <!-- Tab Selector -->
       <div class="metals-tabs">
-        <button
-          *ngFor="let metal of metalsList"
-          class="metal-tab"
-          [class.active]="activeMetal === metal.key"
-          (click)="selectMetal(metal.key)"
-        >
+        <button *ngFor="let metal of metalsList" class="metal-tab" [class.active]="activeMetal === metal.key"
+          (click)="selectMetal(metal.key)">
           <span class="tab-icon" [style.color]="metal.color">
             <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-              <path [attr.d]="metal.iconPath"/>
+              <path [attr.d]="metal.iconPath" />
             </svg>
           </span>
           <span class="tab-label">{{ metal.label }}</span>
@@ -142,7 +106,7 @@
 
       <!-- Price Panel -->
       <div class="metals-panel" *ngIf="activeMetalData">
-        
+
         <!-- Left: Data Card -->
         <div class="metals-data-card">
           <div class="mdc-top">
@@ -150,7 +114,8 @@
             <div>
               <div class="mdc-label">{{ activeMetalData.label }} · {{ activeMetalData.symbol }}</div>
               <div class="mdc-price">${{ activeMetalData.price | number:'1.2-2' }}</div>
-              <div class="mdc-change" [class.positive]="activeMetalData.change >= 0" [class.negative]="activeMetalData.change < 0">
+              <div class="mdc-change" [class.positive]="activeMetalData.change >= 0"
+                [class.negative]="activeMetalData.change < 0">
                 <span class="change-arrow">{{ activeMetalData.change >= 0 ? '▲' : '▼' }}</span>
                 {{ activeMetalData.change >= 0 ? '+' : '' }}{{ activeMetalData.change | number:'1.2-2' }}
                 ({{ activeMetalData.change >= 0 ? '+' : '' }}{{ activeMetalData.changePct | number:'1.2-2' }}%)
@@ -194,16 +159,14 @@
           </div>
         </div>
 
+
         <!-- Right: Chart -->
         <div class="metals-chart-area">
 
           <!-- Period selector -->
           <div class="chart-period-row">
-            <button *ngFor="let p of periods"
-              class="period-btn"
-              [class.active]="activePeriod === p.days"
-              (click)="selectPeriod(p.days)"
-            >{{ p.label }}</button>
+            <button *ngFor="let p of periods" class="period-btn" [class.active]="activePeriod === p.days"
+              (click)="selectPeriod(p.days)">{{ p.label }}</button>
           </div>
 
           <!-- Canvas -->
@@ -221,6 +184,47 @@
 </section>
 <!-- ═══════════════════════════════════════════════════════ -->
 
+<!-- STATS SECTION -->
+<section class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- <div class="text-center">
+        <div class="text-6xl font-black text-white mb-2">3</div>
+        <div class="flex items-center justify-center mb-2">
+          <div class="w-8 h-1 bg-orange-600"></div>
+        </div>
+        <div class="text-orange-600 font-semibold mb-1">Contratos de operación</div>
+        <div class="text-gray-400 text-sm">Activas</div>
+      </div> -->
+      <div class="text-center">
+        <div class="text-6xl font-black text-white mb-2">5</div>
+        <div class="flex items-center justify-center mb-2">
+          <div class="w-8 h-1 bg-orange-600"></div>
+        </div>
+        <div class="text-orange-600 font-semibold mb-1">Proyectos</div>
+        <div class="text-gray-400 text-sm">Completos</div>
+      </div>
+      <div class="text-center">
+        <div class="text-6xl font-black text-white mb-2">15</div>
+        <div class="flex items-center justify-center mb-2">
+          <div class="w-8 h-1 bg-orange-600"></div>
+        </div>
+        <div class="text-orange-600 font-semibold mb-1">Años</div>
+        <div class="text-gray-400 text-sm">Experiencia</div>
+      </div>
+      <div class="text-center">
+        <div class="text-6xl font-black text-white mb-2">120+</div>
+        <div class="flex items-center justify-center mb-2">
+          <div class="w-8 h-1 bg-orange-600"></div>
+        </div>
+        <div class="text-orange-600 font-semibold mb-1">Trabajadores</div>
+        <div class="text-gray-400 text-sm">Activos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- ABOUT SECTION - Con imagen dinámica -->
 <section class="py-20 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
@@ -235,14 +239,15 @@
           <span class="text-orange-600">Desarrollo Sostenible</span>
         </h2>
         <p class="text-gray-400 mb-6 leading-relaxed">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam congue ipsum sed luctus 
-          interdum. Vestibulum est neque, tempus nec tincidunt ut, pellentesque eu nisi. Fusce accumsan 
-          felis odio, non sagittis lorem efficiat at. Quisque cursus sit amet erat quis tempus.
+          PLAMPROMIN S.A. opera en el cantón Camilo Ponce Enríquez, el principal distrito aurífero
+          del Ecuador, responsable del 72% de la producción nacional de oro. Con más de 25 años de
+          trayectoria, combinamos técnica minera de vanguardia con un compromiso firme hacia el
+          cuidado del medio ambiente y el bienestar de las comunidades locales.
         </p>
         <p class="text-gray-400 mb-8 leading-relaxed">
-          Suspendisse egestas tincidunt sapien, sit amet mollis tortor rutrum ut. Duis sed placerat 
-          lectus, nec auctor massa. Nam lacinia, elit quis commodo pulvinar, est orci ultrices magna, 
-          vitae facilisis urna erat vitae ipsum.
+          Nuestras 82 concesiones activas abarcan desde la exploración geológica hasta el beneficio
+          y comercialización del mineral, generando empleo directo para más de 123 trabajadores —
+          el 75% provenientes de las comunidades del área de influencia de la operación.
         </p>
         <div class="flex items-center space-x-4">
         </div>
@@ -250,18 +255,16 @@
 
       <!-- Right Image DINÁMICA -->
       <div class="relative">
-        <div *ngIf="aboutImage" class="relative">
-          <img 
-            [src]="getAboutImageUrl()"
-            [alt]="aboutImage.title"
-            class="rounded-lg shadow-2xl w-full h-[600px] object-cover"
-          />
+        <div *ngIf="aboutImage" class="relative cursor-pointer"
+          (click)="openPreview(getAboutImageUrl(), aboutImage.title)">
+          <img [src]="getAboutImageUrl()" [alt]="aboutImage.title"
+            class="rounded-lg shadow-2xl w-full h-[600px] object-cover" />
           <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
-          
+
           <!-- Info de la imagen -->
           <div class="absolute bottom-4 left-4 right-4 bg-black/70 backdrop-blur-sm p-3 rounded">
             <p class="text-white text-sm font-semibold">{{ aboutImage.title }}</p>
-            <p class="text-gray-300 text-xs">{{ aboutImage.folder }}</p>
+            <!-- <p class="text-gray-300 text-xs">{{ aboutImage.folder }}</p> -->
           </div>
         </div>
 
@@ -277,166 +280,465 @@
   </div>
 </section>
 
-<!-- SERVICES SECTION -->
-<section class="py-20 bg-zinc-900 relative">
-  <!-- Background Pattern -->
-  <div class="absolute inset-0 opacity-5" 
-       style="background-image: url('https://mineriaenlinea.com/wp-content/uploads/2019/04/CoalMining1teck-1.jpg'); background-size: cover; background-attachment: fixed;">
-  </div>
-
+<!-- SERVICES SECTION — Planta de Beneficio -->
+<section class="py-24 bg-zinc-900 relative">
   <div class="container mx-auto px-6 lg:px-12 relative z-10">
-    <div class="grid lg:grid-cols-2 gap-16 items-start">
-      
-      <!-- Left Side - Services Cards -->
-      <div class="space-y-8">
-        <!-- Service 1 -->
-        <div class="group">
-          <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-orange-600 transition-colors">
-            Servicios de Exploración Geológica
-          </h3>
-          <p class="text-gray-400 mb-4">
-            Realizar estudios geológicos, mapeo y prospección para identificar posibles sitios mineros.
-          </p>
-          <a href="#" class="text-orange-600 font-semibold inline-flex items-center group">
-            Ver más 
-            <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-            </svg>
-          </a>
-          <!-- Icon -->
-          <div class="mt-6">
-            <svg class="w-20 h-20 text-orange-600/20" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
-          </div>
-          <!-- Divider -->
-          <div class="mt-6 h-px bg-orange-600/20"></div>
-        </div>
 
-        <!-- Service 2 -->
-        <div class="group">
-          <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-orange-600 transition-colors">
-            Perforación y Explotación
-          </h3>
-          <p class="text-gray-400 mb-4">
-            Realizar perforaciones controladas y voladuras para extraer minerales del subsuelo.
-          </p>
-          <a href="#" class="text-orange-600 font-semibold inline-flex items-center group">
-            Ver más 
-            <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-            </svg>
-          </a>
-          <!-- Icon -->
-          <div class="mt-6">
-            <svg class="w-20 h-20 text-orange-600/20" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Side - Large Title -->
-      <div class="lg:sticky lg:top-32">
-        <div class="flex items-start space-x-4 mb-8">
-          <div class="w-1 h-32 bg-orange-600"></div>
-          <div>
-            <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
-              Nuestros Servicios
-            </div>
-            <h2 class="text-5xl lg:text-6xl font-black text-white leading-tight">
-              Extraer Valor,<br>
-              Impulsando el Progreso
-            </h2>
-          </div>
-        </div>
-        
-        <p class="text-gray-400 mb-6 leading-relaxed">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam congue ipsum sed luctus 
-          interdum. Vestibulum est neque, tempus nec tincidunt ut, pellentesque eu nisi.
+    <!-- ── Encabezado ── -->
+    <div class="flex items-start gap-6 mb-16">
+      <div class="w-1 h-28 bg-orange-600 flex-shrink-0 mt-1"></div>
+      <div class="flex-1">
+        <span class="text-orange-600 font-semibold uppercase tracking-wider text-sm">Nuestros Servicios</span>
+        <h2 class="text-5xl lg:text-6xl font-black text-white leading-tight mt-2 mb-4">
+          Planta de <span class="text-orange-600">Beneficio</span>
+        </h2>
+        <p class="text-gray-400 leading-relaxed text-justify">
+          Instalación industrial destinada al procesamiento integral de minerales, abarcando desde la reducción de
+          tamaño
+          mediante etapas de conminución hasta la aplicación de procesos de concentración y extracción, como la
+          flotación
+          y la cianuración, con el propósito de obtener concentrados o valores metálicos. Su operación se enfoca en
+          optimizar la liberación mineralógica y maximizar la recuperación metalúrgica, mediante el control de variables
+          operativas y la aplicación de criterios técnicos que garantizan eficiencia, estabilidad del proceso y
+          sostenibilidad en el tratamiento del mineral.
         </p>
-        
-        <p class="text-gray-400 mb-8 leading-relaxed">
-          Suspendisse egestas tincidunt sapien, sit amet mollis tortor rutrum ut. Duis sed placerat 
-          lectus, nec auctor massa. Nam lacinia, elit quis commodo pulvinar, est orci ultrices magna.
-        </p>
-
-        <div class="flex items-center space-x-4">
-        </div>
       </div>
     </div>
+
+    <!-- ── Bloque 1 + 2: Planta y Terceros en dos columnas ── -->
+    <div class="grid lg:grid-cols-2 gap-8 mb-8">
+
+      <!-- Bloque 1 — Planta de Beneficio -->
+      <!-- Fuente imagen: https://www.infomine.com/minesite/images/MineralProcessing.jpg -->
+      <div class="service-card group relative overflow-hidden rounded-2xl" style="min-height: 360px;">
+        <!-- Imagen desde internet — planta de procesamiento de minerales -->
+        <img
+          src="https://nuevamineria01.akamaized.net/revista/wp-content/uploads/2019/08/Trabajadores-miner%C3%ADa-subterr%C3%A1nea-mujer.jpg"
+          alt="Planta de Beneficio — procesamiento de minerales"
+          class="absolute inset-0 w-full h-full object-cover scale-105 blur-[2px] group-hover:blur-[6px] group-hover:scale-110 transition-all duration-500">
+        <!-- Overlay — degradado negro leve en reposo, se intensifica en hover -->
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-black/[0.99] via-black/95 to-black/88 transition-all duration-500">
+        </div>
+        <div class="absolute left-0 top-0 bottom-0 w-1 bg-orange-600"></div>
+        <div class="relative z-10 p-8 flex flex-col justify-end h-full">
+          <div class="text-orange-500 text-xs font-bold uppercase tracking-widest mb-3">01.</div>
+          <h3 class="text-2xl font-black text-white mb-3 leading-tight">Procesamiento Industrial</h3>
+          <p class="text-gray-200 text-sm leading-relaxed text-justify">
+            Su operación se enfoca en optimizar la liberación mineralógica y maximizar la recuperación metalúrgica,
+            mediante el control de variables operativas y la aplicación de criterios técnicos que garantizan
+            eficiencia, estabilidad del proceso y sostenibilidad en el tratamiento del mineral.
+          </p>
+        </div>
+      </div>
+
+      <!-- Bloque 2 — Tratamiento a Terceros -->
+      <!-- Fuente imagen: https://commons.wikimedia.org/wiki/File:Gold_Mine_South_Africa.jpg -->
+      <div class="service-card group relative overflow-hidden rounded-2xl" style="min-height: 360px;">
+        <!-- Imagen desde internet — operaciones mineras / recepción de material -->
+        <img src="https://www.promineria.com/assets/images/notas/fotos/procesamiento_minerales.jpg"
+          alt="Tratamiento de Material a Terceros — recepción de mineral externo"
+          class="absolute inset-0 w-full h-full object-cover scale-105 blur-[2px] group-hover:blur-[6px] group-hover:scale-110 transition-all duration-500">
+        <!-- Overlay — degradado negro leve en reposo, se intensifica en hover -->
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-black/[0.99] via-black/95 to-black/88 transition-all duration-500">
+        </div>
+        <div class="absolute left-0 top-0 bottom-0 w-1 bg-orange-600"></div>
+        <div class="relative z-10 p-8 flex flex-col justify-end h-full">
+          <div class="text-orange-500 text-xs font-bold uppercase tracking-widest mb-3">02.</div>
+          <h3 class="text-2xl font-black text-white mb-3 leading-tight">Tratamiento de Material a Terceros</h3>
+          <p class="text-gray-200 text-sm leading-relaxed text-justify">
+            Autorización legal que permite a la planta de beneficio procesar mineral proveniente de concesiones
+            externas,
+            en cumplimiento de la normativa minera vigente. Contempla recepción, control y procesamiento bajo
+            condiciones
+            técnicas establecidas, garantizando trazabilidad, cumplimiento ambiental y eficiencia metalúrgica.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Bloque 3: Procesos de Tratamiento ── -->
+    <div class="rounded-2xl overflow-hidden border border-white/5" style="background: rgba(0,0,0,0.35);">
+
+      <!-- Cabecera del bloque -->
+      <div class="px-8 pt-10 pb-6 border-b border-white/10">
+        <span class="text-orange-600 text-xs font-bold uppercase tracking-widest">03 · Procesos Metalúrgicos</span>
+        <h3 class="text-3xl font-black text-white mt-2 mb-3">Procesos de Tratamiento de Material</h3>
+      </div>
+
+      <!-- Tres procesos en columnas -->
+      <div class="grid lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
+
+        <!-- Proceso A — Conminución -->
+        <!-- Fuente imagen: https://commons.wikimedia.org/wiki/File:Ball_mill.jpg -->
+        <div class="group relative overflow-hidden">
+          <!-- Imagen desde internet — molinos de bolas / trituración -->
+          <img src="https://www.minejxsc.com/wp-content/uploads/2025/05/how-does-a-rock-crusher-work2.webp"
+            alt="Conminución — molinos y trituración de mineral"
+            class="absolute inset-0 w-full h-full object-cover opacity-35 blur-[2px] group-hover:opacity-20 group-hover:blur-[5px] transition-all duration-500">
+          <!-- Overlay adicional en hover -->
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/55 transition-all duration-500"></div>
+          <div class="relative z-10 p-8">
+            <div class="flex items-center gap-3 mb-4">
+              <span
+                class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">A</span>
+              <h4 class="text-white font-black text-lg leading-tight">Conminución y Clasificación Granulométrica</h4>
+            </div>
+            <p class="text-gray-300 text-sm leading-relaxed mb-4 text-justify">
+              El procesamiento del mineral inicia con la reducción progresiva de su tamaño mediante trituración y
+              molienda,
+              operaciones desarrolladas en circuito cerrado junto con sistemas de clasificación granulométrica que
+              emplean
+              cribas (zarandas) para controlar la distribución de tamaños.
+            </p>
+            <p class="text-gray-400 text-sm leading-relaxed text-justify">
+              Las cribas separan eficientemente el material grueso del fino: el sobredimensionado retorna al circuito de
+              molienda, mientras el material que cumple la granulometría requerida (P80) avanza a las etapas siguientes.
+              Esta etapa es clave porque la liberación mineralógica que se logra aquí condiciona directamente la
+              eficiencia de los procesos de concentración y extracción posteriores.
+            </p>
+          </div>
+        </div>
+
+        <!-- Proceso B — Cianuración -->
+        <!-- Fuente imagen: https://commons.wikimedia.org/wiki/File:Leaching_tanks_gold_mine.jpg -->
+        <div class="group relative overflow-hidden">
+          <!-- Imagen desde internet — tanques de lixiviación / cianuración -->
+          <img src="https://i.ytimg.com/vi/kgVPO2WLr3k/maxresdefault.jpg"
+            alt="Cianuración — tanques de lixiviación metalúrgica"
+            class="absolute inset-0 w-full h-full object-cover opacity-35 blur-[2px] group-hover:opacity-20 group-hover:blur-[5px] transition-all duration-500">
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/55 transition-all duration-500"></div>
+          <div class="relative z-10 p-8">
+            <div class="flex items-center gap-3 mb-4">
+              <span
+                class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">B</span>
+              <h4 class="text-white font-black text-lg leading-tight">Cianuración (Lixiviación Metalúrgica)</h4>
+            </div>
+            <p class="text-gray-300 text-sm leading-relaxed mb-4 text-justify">
+              La cianuración es el proceso mediante el cual se disuelve el oro presente en el mineral usando soluciones
+              alcalinas de cianuro. Antes de iniciar la lixiviación, la pulpa es acondicionada controlando su densidad,
+              pH y nivel de oxidación. La disolución ocurre en tanques de agitación donde se monitorean parámetros como
+              cianuro libre, oxígeno disuelto, potencial redox y tiempo de residencia para asegurar la máxima
+              recuperación del metal.
+            </p>
+            <p class="text-gray-400 text-sm leading-relaxed text-justify">
+              La solución cargada con oro es luego capturada en carbón activado (adsorción), el metal se extrae del
+              carbón mediante elución y se recupera por electrodeposición. El proceso culmina con la fundición para
+              obtener doré, un aleación metálica de oro y plata lista para su refinación final.
+            </p>
+          </div>
+        </div>
+
+        <!-- Proceso C — Flotación -->
+        <!-- Fuente imagen: https://commons.wikimedia.org/wiki/File:Flotation_cell.jpg -->
+        <div class="group relative overflow-hidden">
+          <!-- Imagen desde internet — celdas de flotación de minerales sulfurados -->
+          <img src="https://amvconsultoresperu.com/wp-content/uploads/2021/02/flotacion-2-1024x651-1-1023x650.webp"
+            alt="Flotación — celdas de flotación de minerales sulfurados"
+            class="absolute inset-0 w-full h-full object-cover opacity-35 blur-[2px] group-hover:opacity-20 group-hover:blur-[5px] transition-all duration-500">
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/55 transition-all duration-500"></div>
+          <div class="relative z-10 p-8">
+            <div class="flex items-center gap-3 mb-4">
+              <span
+                class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">C</span>
+              <h4 class="text-white font-black text-lg leading-tight">Flotación de Minerales Sulfurados</h4>
+            </div>
+            <p class="text-gray-300 text-sm leading-relaxed mb-4 text-justify">
+              La flotación separa los minerales de interés del material estéril aprovechando las diferencias en la
+              superficie de las partículas. En las celdas de flotación se inyecta aire controladamente generando
+              burbujas a las que se adhieren selectivamente los minerales, gracias a reactivos químicos como colectores
+              (xantatos, ditiofosfatos), espumantes y modificadores de pH, depresores y activadores que controlan
+              la selectividad del sistema.
+            </p>
+            <p class="text-gray-400 text-sm leading-relaxed text-justify">
+              Se monitorean continuamente la granulometría (P80), dosificación de reactivos, aireación
+              y estabilidad de la espuma. El concentrado obtenido es acondicionado para su comercialización; los
+              relaves son gestionados bajo criterios técnicos y ambientales que garantizan el cumplimiento normativo.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </section>
 
-<!-- GALLERY SECTION - Con imágenes dinámicas -->
-<section class="py-20 bg-black">
+<!-- NUESTRO TRABAJO — 3 sub-secciones con 3 imágenes cada una -->
+<section class="py-24 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
-    <!-- Header -->
-    <div class="text-center mb-16">
-      <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
-        Nuestro Trabajo
-      </div>
-      <h2 class="text-5xl font-black text-white mb-6">
-        Mineria de Exelencia, <span class="text-orange-600">Modelando la Industria</span>
-      </h2>
-      <p class="text-gray-400 max-w-3xl mx-auto">
-        Suspendisse egestas tincidunt sapien, sit amet mollis tortor rutrum ut. Duis sed placerat lectus, 
-        nec auctor massa. Nam lacinia, elit quis commodo pulvinar.
-      </p>
+
+    <!-- Encabezado principal -->
+    <div class="flex items-center mb-20">
+      <p class="text-orange-600 font-semibold uppercase tracking-widest text-sm mb-4">Nuestro Trabajo</p>
     </div>
 
-    <!-- Loading State -->
+    <!-- Loading -->
     <div *ngIf="isLoading" class="text-center py-20">
-      <div class="inline-block w-16 h-16 border-4 border-orange-600 border-t-transparent rounded-full animate-spin"></div>
-      <p class="text-white mt-4 text-lg">Cargando galería...</p>
+      <div class="inline-block w-12 h-12 border-4 border-orange-600 border-t-transparent rounded-full animate-spin">
+      </div>
+      <p class="text-gray-500 mt-4 text-sm">Cargando galería...</p>
     </div>
 
-    <!-- Gallery Grid DINÁMICO -->
-    <div *ngIf="!isLoading" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div 
-        *ngFor="let image of galleryPreviewImages; let i = index"
-        class="group relative overflow-hidden rounded-lg aspect-video cursor-pointer"
-      >
-        <img 
-          [src]="getGalleryPreviewUrl(image)"
-          [alt]="image.title" 
-          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-          loading="lazy"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-          <div>
-            <h3 class="text-white font-bold text-xl mb-2">{{ image.title }}</h3>
-            <div class="mt-2">
-              <span class="inline-block px-2 py-1 bg-orange-600/80 text-white text-xs font-bold rounded">
-                📁 {{ image.folder }}
-              </span>
+    <div *ngIf="!isLoading" class="space-y-12">
+
+      <!-- ── BLOQUE 1: Minería de Excelencia ── -->
+      <div>
+        <div class="mb-8">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-1 h-12 bg-orange-600"></div>
+            <div>
+              <span class="flex items-center text-orange-600 font-semibold uppercase tracking-wider text-xs">01</span>
+              <h3 class="text-3xl lg:text-4xl font-black text-white leading-tight">
+                Minería de <span class="text-orange-600">Excelencia</span>
+              </h3>
             </div>
+          </div>
+          <p class="text-gray-400 leading-relaxed ml-5">
+            Operamos 6 relaveras para el reproceso en el cantón Camilo Ponce Enríquez con los más altos estándares
+            técnicos. Nuestra planta de beneficio procesa 1000 toneladas para el reproceso y 280 toneladas para
+            materiales nuevos por dia combinando eficiencia
+            operativa con control ambiental, posicionando a PLAMPROMIN como
+            referente de producción aurífera de reprocesos responsables en Ecuador.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div *ngFor="let image of galleryPreviewImages.slice(0,3); let i = index"
+            class="group relative overflow-hidden rounded-xl aspect-video cursor-pointer"
+            (click)="openPreview(getGalleryPreviewUrl(image), image.title)">
+            <img [src]="getGalleryPreviewUrl(image)" [alt]="image.title"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              loading="lazy" />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+              <span class="text-white font-semibold text-sm">{{ image.title }}</span>
+            </div>
+          </div>
+          <!-- Placeholders si faltan imágenes -->
+          <div *ngFor="let p of [].constructor(3 - (galleryPreviewImages.slice(0,3).length))"
+            class="bg-zinc-900 rounded-xl aspect-video flex items-center justify-center border border-dashed border-zinc-700">
+            <svg class="w-10 h-10 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
           </div>
         </div>
       </div>
 
-      <!-- Placeholders si no hay suficientes imágenes -->
-      <div 
-        *ngFor="let placeholder of [].constructor(6 - galleryPreviewImages.length); let i = index"
-        class="bg-gray-900 rounded-lg aspect-video flex items-center justify-center border-2 border-dashed border-gray-700"
-      >
-        <div class="text-center">
-          <div class="text-4xl mb-2">📸</div>
-          <p class="text-gray-500 text-sm">Más imágenes próximamente</p>
+      <!-- Divider -->
+      <div class="h-px bg-zinc-900"></div>
+
+      <!-- ── BLOQUE 2: Modelando la Industria ── -->
+      <div>
+        <div class="mb-8">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-1 h-12 bg-orange-600"></div>
+            <div>
+              <span class="flex items-center text-orange-600 font-semibold uppercase tracking-wider text-xs">02</span>
+              <h3 class="text-3xl lg:text-4xl font-black text-white leading-tight">
+                Modelando la <span class="text-orange-600">Industria</span>
+              </h3>
+            </div>
+          </div>
+          <p class="text-gray-400 leading-relaxed ml-5">
+            Más de 25 años de operación continua nos han permitido perfeccionar cada etapa del proceso
+            minero: desde la exploración geológica y el diseño de nuestras plantas de beneficio con los mas altos
+            estandares de las normas ecuatorianas. asi mismo, toda nuestra infraestructura cuenta con modelados 3D con
+            estudios de prefactibilidad para ser mas eficiente nuestro Trabajo
+            . Invertimos en tecnología de punta, formación técnica del
+            talento local y mejora continua de procesos para elevar el estándar de la minería ecuatoriana.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div *ngFor="let image of galleryPreviewImages.slice(3,6); let i = index"
+            class="group relative overflow-hidden rounded-xl aspect-video cursor-pointer"
+            (click)="openPreview(getGalleryPreviewUrl(image), image.title)">
+            <img [src]="getGalleryPreviewUrl(image)" [alt]="image.title"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              loading="lazy" />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+              <span class="text-white font-semibold text-sm">{{ image.title }}</span>
+            </div>
+          </div>
+          <div *ngFor="let p of [].constructor(3 - (galleryPreviewImages.slice(3,6).length))"
+            class="bg-zinc-900 rounded-xl aspect-video flex items-center justify-center border border-dashed border-zinc-700">
+            <svg class="w-10 h-10 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
         </div>
       </div>
+
+      <!-- Divider -->
+      <div class="h-px bg-zinc-900"></div>
+
+      <!-- ── BLOQUE 3: De la basura al oro ── -->
+      <div>
+        <div class="mb-8">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-1 h-12 bg-orange-600"></div>
+            <div>
+              <span class="flex items-center text-orange-600 font-semibold uppercase tracking-wider text-xs">03</span>
+              <h3 class="text-3xl lg:text-4xl font-black text-white leading-tight">
+                De la basura al oro:<br>
+                <span class="text-orange-600">Reprocesamiento de Relaves</span>
+              </h3>
+            </div>
+          </div>
+          <p class="text-gray-400 leading-relaxed ml-5">
+            PLAMPROMIN es pionera en Ecuador en el reprocesamiento de relaves históricos — residuos
+            de procesos mineros anteriores que aún contienen concentraciones recuperables de oro.
+            A través de tecnología de cianuración y flotación avanzada, transformamos material
+            descartado en producción valiosa, reduciendo el pasivo ambiental y extendiendo la
+            vida útil de las operaciones sin necesidad de nueva extracción del subsuelo y transportando el material a un
+            punto determinado previo al diseño de nuestras relaveras con los mas altos niveles de seguridad nacional,
+            reduciendo puntos de impactos ambientales sucesivos y concentrandolos en un solo punto determinado.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div *ngFor="let image of galleryPreviewImages.slice(6,9); let i = index"
+            class="group relative overflow-hidden rounded-xl aspect-video cursor-pointer"
+            (click)="openPreview(getGalleryPreviewUrl(image), image.title)">
+            <img [src]="getGalleryPreviewUrl(image)" [alt]="image.title"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              loading="lazy" />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+              <span class="text-white font-semibold text-sm">{{ image.title }}</span>
+            </div>
+          </div>
+          <div *ngFor="let p of [].constructor(3 - (galleryPreviewImages.slice(6,9).length))"
+            class="bg-zinc-900 rounded-xl aspect-video flex items-center justify-center border border-dashed border-zinc-700">
+            <svg class="w-10 h-10 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <!-- CTA Button -->
-    <div class="text-center mt-12">
-      <a routerLink="/galeria" 
-         class="inline-flex items-center px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
-        <span>Ver Galería Completa</span>
-        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+    <!-- CTA -->
+    <div class="text-center mt-20">
+      <a routerLink="/galeria"
+        class="inline-flex items-center px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors gap-2">
+        Ver Galería Completa
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
       </a>
     </div>
+
+  </div>
+</section>
+
+<!-- NOTICIAS PREVIEW -->
+<section class="py-24 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+
+    <!-- Header -->
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
+      <div>
+        <p class="text-orange-600 font-semibold uppercase tracking-widest text-sm mb-3">Sector Minero</p>
+        <h2 class="text-4xl lg:text-5xl font-black text-white leading-tight">
+          Últimas <span class="text-orange-600">Noticias</span>
+        </h2>
+      </div>
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <button (click)="refreshNews()" [disabled]="newsRefreshing"
+          class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-orange-500 border border-orange-600/40 rounded-lg hover:bg-orange-600/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+          <svg class="w-3.5 h-3.5" [class.animate-spin]="newsRefreshing" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          {{ newsRefreshing ? 'Actualizando…' : 'Actualizar' }}
+        </button>
+        <a routerLink="/noticias"
+          class="inline-flex items-center gap-2 text-orange-600 hover:text-orange-500 font-semibold transition-colors">
+          Ver todas las noticias
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="newsLoading" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div *ngFor="let s of [1,2,3,4,5,6]" class="bg-black border border-zinc-800 rounded-xl p-6 animate-pulse">
+        <div class="h-3 bg-zinc-700 rounded w-1/3 mb-4"></div>
+        <div class="h-5 bg-zinc-700 rounded w-full mb-2"></div>
+        <div class="h-5 bg-zinc-700 rounded w-4/5 mb-4"></div>
+        <div class="h-3 bg-zinc-800 rounded w-full mb-2"></div>
+        <div class="h-3 bg-zinc-800 rounded w-3/4"></div>
+      </div>
+    </div>
+
+    <!-- Grid de noticias -->
+    <div *ngIf="!newsLoading && previewNews.length > 0" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <a *ngFor="let item of previewNews; let i = index" [href]="item.link" target="_blank" rel="noopener noreferrer"
+        class="group flex flex-col bg-black border border-zinc-800 hover:border-orange-600/60 rounded-xl overflow-hidden transition-all hover:-translate-y-1">
+
+        <!-- Imagen: real (RSS/og:image) o fallback temático por índice -->
+        <div class="relative overflow-hidden h-44 flex-shrink-0">
+          <img [src]="item.image || getFallbackImage(i)" [alt]="item.title" (error)="item.image = getFallbackImage(i)"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <span *ngIf="!item.image"
+            class="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-sm text-gray-400 text-xs rounded-full">
+            Referencial
+          </span>
+        </div>
+
+        <!-- Contenido -->
+        <div class="flex flex-col flex-1 p-5">
+          <!-- Fuente + fecha -->
+          <div class="flex items-center justify-between mb-3">
+            <span
+              class="px-2.5 py-0.5 bg-orange-600/10 border border-orange-600/20 text-orange-500 text-xs font-semibold rounded-full">
+              {{ item.source }}
+            </span>
+            <span class="text-gray-600 text-xs">{{ formatNewsDate(item.pubDate) }}</span>
+          </div>
+
+          <!-- Título -->
+          <h4
+            class="text-white font-bold text-sm leading-snug mb-3 group-hover:text-orange-500 transition-colors line-clamp-2">
+            {{ item.title }}
+          </h4>
+
+          <!-- Descripción truncada -->
+          <p class="text-gray-500 text-xs leading-relaxed flex-1">
+            {{ truncate(item.description, 115) }}
+          </p>
+
+          <!-- Leer más -->
+          <div
+            class="flex items-center gap-1 mt-4 text-orange-600 text-xs font-semibold group-hover:gap-2 transition-all">
+            Leer nota completa
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Estado vacío -->
+    <div *ngIf="!newsLoading && previewNews.length === 0" class="text-center py-16 text-gray-600">
+      <svg class="w-12 h-12 mx-auto mb-4 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+          d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+      </svg>
+      <p class="text-sm">No hay noticias disponibles en este momento.</p>
+    </div>
+
   </div>
 </section>
 
@@ -444,7 +746,9 @@
 <section class="py-24 bg-orange-600 relative overflow-hidden">
   <!-- Pattern Background -->
   <div class="absolute inset-0 opacity-10">
-    <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px);"></div>
+    <div class="absolute inset-0"
+      style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px);">
+    </div>
   </div>
 
   <div class="container mx-auto px-6 lg:px-12 relative z-10 text-center">
@@ -455,15 +759,15 @@
       Contáctenos hoy para una consulta sobre sus necesidades mineras y requisitos de cumplimiento legal.
     </p>
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-      <a routerLink="/contacto" 
-         class="px-8 py-4 bg-white text-orange-600 font-bold rounded-lg hover:bg-gray-100 transition-colors inline-flex items-center">
+      <a routerLink="/contacto"
+        class="px-8 py-4 bg-white text-orange-600 font-bold rounded-lg hover:bg-gray-100 transition-colors inline-flex items-center">
         <span>Contáctenos</span>
         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
         </svg>
       </a>
-      <a routerLink="/servicios" 
-         class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-orange-600 transition-all">
+      <a routerLink="/servicios"
+        class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-orange-600 transition-all">
         Nuestros Servicios
       </a>
     </div>
@@ -471,3 +775,6 @@
 </section>
 
 <app-footer></app-footer>
+
+<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle"
+  (closed)="closePreview()"></app-image-preview>

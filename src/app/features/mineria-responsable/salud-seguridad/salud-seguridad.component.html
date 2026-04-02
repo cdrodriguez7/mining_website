@@ -1,39 +1,177 @@
 <app-navbar></app-navbar>
 
-<section class="py-20 bg-black">
-  <div class="container mx-auto px-6 lg:px-12">
-    <h1 class="text-5xl font-black text-white mb-8">Salud y <span class="text-orange-600">Seguridad</span></h1>
+<!-- HERO -->
+<section class="relative h-[60vh] min-h-[420px] overflow-hidden">
+  <div *ngIf="!isLoading && heroImage" class="absolute inset-0">
+    <img [src]="getHeroUrl()" alt="Salud y Seguridad PLAMPROMIN"
+         class="w-full h-full object-cover" />
+  </div>
+  <div *ngIf="isLoading || !heroImage" class="absolute inset-0 bg-zinc-900"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
 
-    <div class="grid lg:grid-cols-3 gap-8 mb-12">
-      <div class="bg-zinc-900 p-8 rounded-xl text-center border border-zinc-800">
-        <div class="text-5xl mb-4"></div>
-        <div class="text-4xl font-bold text-white mb-2">0</div>
-        <div class="text-gray-400">Fatalidades (2024)</div>
+  <div class="relative z-10 h-full flex items-end pb-16">
+    <div class="container mx-auto px-6 lg:px-12">
+      <div class="flex items-center gap-3 mb-4">
+        <a routerLink="/mineria-responsable" class="text-gray-400 hover:text-orange-600 text-sm transition-colors">Minería Responsable</a>
+        <span class="text-zinc-600">/</span>
+        <span class="text-orange-600 text-sm font-semibold">Salud y Seguridad</span>
       </div>
-      <div class="bg-zinc-900 p-8 rounded-xl text-center border border-zinc-800">
-        <div class="text-5xl mb-4"></div>
-        <div class="text-4xl font-bold text-white mb-2">1.2</div>
-        <div class="text-gray-400">TRIR (Tasa de Incidentes)</div>
-      </div>
-      <div class="bg-zinc-900 p-8 rounded-xl text-center border border-zinc-800">
-        <div class="text-5xl mb-4"></div>
-        <div class="text-4xl font-bold text-white mb-2">100%</div>
-        <div class="text-gray-400">Cumplimiento Normativo</div>
-      </div>
-    </div>
-
-    <div class="bg-zinc-900 border-l-4 border-orange-600 p-8 rounded">
-      <h3 class="text-2xl font-bold text-white mb-4">Nuestro Compromiso</h3>
-      <p class="text-gray-400 leading-relaxed mb-4">
-        La seguridad de nuestros trabajadores es nuestra máxima prioridad. Implementamos programas 
-        integrales de prevención, capacitación continua y mejora de condiciones laborales.
+      <h1 class="text-6xl font-black text-white leading-tight">
+        Salud y <span class="text-orange-600">Seguridad</span>
+      </h1>
+      <p class="text-gray-300 mt-4 max-w-xl text-lg">
+        La protección de nuestros trabajadores es la prioridad número uno.
+        Cada turno, cada tarea, cada decisión parte de este principio.
       </p>
-      <ul class="space-y-2 text-gray-400">
-        <li>✓ Capacitaciones mensuales obligatorias</li>
-        <li>✓ Equipos de protección personal de última generación</li>
-        <li>✓ Auditorías de seguridad semanales</li>
-        <li>✓ Protocolos de emergencia actualizados</li>
-      </ul>
     </div>
   </div>
 </section>
+
+<!-- KPIs -->
+<section class="py-16 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+      <div *ngFor="let k of kpis"
+           class="bg-black rounded-xl p-6 border-l-4 text-center" [ngClass]="k.borde">
+        <div class="text-4xl font-black mb-1" [ngClass]="k.color">{{ k.valor }}</div>
+        <div class="text-white font-bold mb-1 text-sm">{{ k.etiqueta }}</div>
+        <div class="text-gray-500 text-xs">{{ k.periodo }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPROMISO + IMAGEN -->
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <!-- Imagen Cloudinary -->
+      <div class="relative order-2 lg:order-1">
+        <div *ngIf="!isLoading && sectionImages[0]" class="rounded-xl overflow-hidden cursor-pointer"
+             (click)="openPreview(getImageUrl(sectionImages[0]), sectionImages[0].title)">
+          <img [src]="getImageUrl(sectionImages[0])" [alt]="sectionImages[0].title"
+               class="w-full h-[480px] object-cover" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-xl"></div>
+        </div>
+        <div *ngIf="isLoading || !sectionImages[0]"
+             class="w-full h-[480px] bg-zinc-900 rounded-xl animate-pulse"></div>
+        <!-- Badge -->
+        <div class="absolute bottom-6 left-6 bg-black/80 backdrop-blur-sm rounded-xl px-5 py-3 border border-zinc-700">
+          <div class="text-green-400 font-black text-2xl">0</div>
+          <div class="text-gray-300 text-xs">Fatalidades 2024</div>
+        </div>
+      </div>
+
+      <div class="order-1 lg:order-2">
+        <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-4">Nuestro Compromiso</p>
+        <h2 class="text-4xl font-black text-white mb-6 leading-tight">
+          Cero daño es<br><span class="text-orange-600">nuestra meta</span>
+        </h2>
+        <p class="text-gray-400 leading-relaxed mb-4">
+          PLAMPROMIN opera bajo el sistema de gestión integrado QHSE, alineado con la
+          norma ISO 45001. Todos los niveles de la organización — desde gerencia hasta
+          operadores de frente — son responsables activos de la seguridad.
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-6">
+          En 2024, alcanzamos 2.1 millones de horas trabajadas sin un accidente con
+          tiempo perdido (LTI), un hito que refleja la cultura de prevención arraigada
+          en nuestro equipo de más de 120 colaboradores.
+        </p>
+        <div class="flex items-start gap-3 p-4 bg-zinc-900 rounded-xl border border-zinc-800">
+          <div class="w-2 h-full min-h-[40px] bg-orange-600 rounded flex-shrink-0"></div>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            <span class="text-white font-semibold">TRIR 1.2</span> — Por debajo del promedio
+            de la industria minera ecuatoriana (3.5). Meta 2025: TRIR ≤ 0.8.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMAS -->
+<section class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-3">Programas</p>
+    <h2 class="text-4xl font-black text-white mb-12">
+      Sistema <span class="text-orange-600">QHSE</span> Integrado
+    </h2>
+
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div *ngFor="let prog of programas"
+           class="bg-black border border-zinc-800 hover:border-orange-600 rounded-xl p-8 transition-all group">
+        <h3 class="text-xl font-bold text-white mb-5 group-hover:text-orange-500 transition-colors">
+          {{ prog.titulo }}
+        </h3>
+        <ul class="space-y-3">
+          <li *ngFor="let item of prog.items" class="flex items-start gap-3 text-gray-400 text-sm">
+            <svg class="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            {{ item }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGEN + NORMATIVA -->
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-4">Cumplimiento Legal</p>
+        <h2 class="text-4xl font-black text-white mb-6 leading-tight">
+          Marco Normativo <span class="text-orange-600">Ecuador</span>
+        </h2>
+        <p class="text-gray-400 leading-relaxed mb-6">
+          Cumplimos con todas las obligaciones del Código del Trabajo, el Reglamento de Seguridad Minera
+          (Decreto 3516), las normas del Instituto Ecuatoriano de Seguridad Social (IESS) y el Acuerdo
+          Ministerial 174 del Ministerio del Trabajo.
+        </p>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3 p-4 bg-zinc-900 rounded-lg border border-zinc-800">
+            <div class="w-8 h-8 bg-orange-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <span class="text-gray-300 text-sm">ISO 45001:2018 — Sistema de Gestión en SST (en certificación)</span>
+          </div>
+          <div class="flex items-center gap-3 p-4 bg-zinc-900 rounded-lg border border-zinc-800">
+            <div class="w-8 h-8 bg-orange-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <span class="text-gray-300 text-sm">Reglamento Interno de SST aprobado por el MEER</span>
+          </div>
+          <div class="flex items-center gap-3 p-4 bg-zinc-900 rounded-lg border border-zinc-800">
+            <div class="w-8 h-8 bg-orange-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <span class="text-gray-300 text-sm">Auditorías externas anuales del IESS Seguro de Riesgos del Trabajo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative">
+        <div *ngIf="!isLoading && sectionImages[1]" class="rounded-xl overflow-hidden cursor-pointer"
+             (click)="openPreview(getImageUrl(sectionImages[1]), sectionImages[1].title)">
+          <img [src]="getImageUrl(sectionImages[1])" [alt]="sectionImages[1].title"
+               class="w-full h-[440px] object-cover" loading="lazy" />
+        </div>
+        <div *ngIf="isLoading || !sectionImages[1]"
+             class="w-full h-[440px] bg-zinc-900 rounded-xl animate-pulse"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
+
+<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle" (closed)="closePreview()"></app-image-preview>

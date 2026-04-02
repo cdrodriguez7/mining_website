@@ -1,28 +1,224 @@
 <app-navbar></app-navbar>
 
-<section class="py-20 bg-black">
+<!-- Hero Section -->
+<section class="relative bg-black py-20 lg:py-32 overflow-hidden">
+  <div class="absolute inset-0">
+    <div *ngIf="heroImage" class="absolute inset-0 cursor-pointer" (click)="openPreview(getHeroImageUrl(), heroImage?.title || 'Imagen')">
+      <img [src]="getHeroImageUrl()" [alt]="heroImage.title" class="w-full h-full object-cover opacity-20">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
+  </div>
+  
+  <div class="container mx-auto px-6 lg:px-12 relative z-10">
+    <div class="max-w-4xl">
+      <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
+        Operaciones / Proyecciones
+      </div>
+      <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
+        Guía y <span class="text-orange-600">Proyecciones</span>
+      </h1>
+    </div>
+  </div>
+</section>
+
+<!-- Tabla de Proyecciones -->
+<section class="py-20 bg-gray-50">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase text-sm">Operaciones</div>
-    <h1 class="text-5xl font-black text-white mb-8">Guía de <span class='text-orange-600'>Producción</span></h1>
-    <div class="prose prose-invert max-w-none">
-      <p class="text-gray-400 text-lg mb-8">Información sobre guía de <span class='text-orange-600'>producción</span>.</p>
-      <div class="grid lg:grid-cols-3 gap-8">
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Datos Clave</h3>
-          <p class="text-gray-400 text-sm">Información relevante y actualizada.</p>
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8 text-center" style="color: #15A5DF;">Proyecciones 2026 - 2028</h2>
+      
+      <!-- Tabla -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="text-white" style="background-color: #15A5DF;">
+                <th class="px-6 py-4 text-left font-bold">Métrica</th>
+                <th class="px-6 py-4 text-center font-bold">2026</th>
+                <th class="px-6 py-4 text-center font-bold">2027</th>
+                <th class="px-6 py-4 text-center font-bold">2028</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 font-semibold text-gray-800">Producción (oz Au)</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[0].produccion }}</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[1].produccion }}</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[2].produccion }}</td>
+              </tr>
+              <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 font-semibold text-gray-800">Capital Sustentante ($ Millones)</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[0].capitalSustaining }}</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[1].capitalSustaining }}</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[2].capitalSustaining }}</td>
+              </tr>
+              <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 font-semibold text-gray-800">Costo Operativo ($/oz)</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[0].costoOperativo }}<sup>(1)</sup></td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[1].costoOperativo }}<sup>(1)</sup></td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[2].costoOperativo }}<sup>(1)</sup></td>
+              </tr>
+              <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 font-semibold text-gray-800">AISC ($/oz)</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[0].aisc }}<sup>(1)</sup></td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[1].aisc }}<sup>(1)</sup></td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[2].aisc }}<sup>(1)</sup></td>
+              </tr>
+              <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 font-semibold text-gray-800">Throughput (TPD)</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[0].throughput | number }}</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[1].throughput | number }}</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[2].throughput | number }}</td>
+              </tr>
+              <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 font-semibold text-gray-800">Ley Promedio (g/t)</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[0].leyPromedio }}</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[1].leyPromedio }}</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[2].leyPromedio }}</td>
+              </tr>
+              <tr class="hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 font-semibold text-gray-800">Recuperación Promedio</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[0].recuperacion }}</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[1].recuperacion }}</td>
+                <td class="px-6 py-4 text-center text-gray-700">{{ proyecciones[2].recuperacion }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Métricas</h3>
-          <p class="text-gray-400 text-sm">Indicadores de desempeño.</p>
-        </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Documentos</h3>
-          <p class="text-gray-400 text-sm">Reportes oficiales.</p>
+      </div>
+
+      <!-- Notas -->
+      <div class="bg-gray-100 p-6 rounded-lg">
+        <p class="text-sm font-semibold mb-2" style="color: #15A5DF;">NOTAS:</p>
+        <ul class="space-y-1">
+          <li *ngFor="let nota of notasProyecciones; let i = index" class="text-sm text-gray-700">
+            <sup>({{ i + 1 }})</sup> {{ nota }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Programa de Exploración -->
+<section class="py-20 bg-white">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8" style="color: #15A5DF;">Programa de Exploración 2026</h2>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div *ngFor="let programa of programaExploracion" 
+             class="bg-gradient-to-br from-gray-50 to-white p-6 rounded-xl border-2 hover:shadow-xl transition-all"
+             style="border-color: #E9951D;">
+          <h3 class="text-xl font-bold mb-3" style="color: #15A5DF;">{{ programa.nombre }}</h3>
+          <div class="text-3xl font-black mb-4" style="color: #E9951D;">{{ programa.presupuesto }}</div>
+          <p class="text-gray-700 leading-relaxed text-sm">{{ programa.objetivo }}</p>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Inversión de Capital -->
+<section class="py-20 bg-gray-50">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8" style="color: #15A5DF;">{{ inversionCapital.titulo }}</h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Capital Sustentante -->
+        <div class="bg-white p-8 rounded-xl shadow-lg">
+          <h3 class="text-2xl font-bold mb-2" style="color: #15A5DF;">Capital Sustentante</h3>
+          <div class="text-3xl font-black mb-4" style="color: #E9951D;">{{ inversionCapital.sustaining.total }}</div>
+          <p class="text-gray-700 mb-6">{{ inversionCapital.sustaining.descripcion }}</p>
+          <ul class="space-y-2">
+            <li *ngFor="let item of inversionCapital.sustaining.items" 
+                class="flex items-start space-x-2">
+              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color: #E9951D;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+              <span class="text-gray-700 text-sm">{{ item }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Capital de Expansión -->
+        <div class="bg-white p-8 rounded-xl shadow-lg">
+          <h3 class="text-2xl font-bold mb-2" style="color: #15A5DF;">Capital de Expansión</h3>
+          <div class="text-3xl font-black mb-4" style="color: #E9951D;">{{ inversionCapital.expansion.total }}</div>
+          <p class="text-gray-700 mb-6">{{ inversionCapital.expansion.descripcion }}</p>
+          <ul class="space-y-2">
+            <li *ngFor="let item of inversionCapital.expansion.items" 
+                class="flex items-start space-x-2">
+              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color: #E9951D;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+              <span class="text-gray-700 text-sm">{{ item }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Objetivos Estratégicos -->
+<section class="py-20 bg-white">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8 text-center" style="color: #15A5DF;">Objetivos Estratégicos 2026-2028</h2>
+      
+      <div class="grid md:grid-cols-2 gap-6">
+        <div *ngFor="let objetivo of objetivosEstrategicos" 
+             class="bg-gray-50 p-6 rounded-lg border-l-4 hover:shadow-lg transition-shadow"
+             style="border-color: #E9951D;">
+          <h3 class="text-xl font-bold mb-3" style="color: #15A5DF;">{{ objetivo.titulo }}</h3>
+          <p class="text-gray-700 leading-relaxed">{{ objetivo.descripcion }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Factores de Riesgo -->
+<section class="py-20 bg-gray-900 text-white">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8" style="color: #E9951D;">Factores de Riesgo</h2>
+      
+      <div class="space-y-3">
+        <div *ngFor="let riesgo of factoresRiesgo" 
+             class="flex items-start space-x-3 bg-gray-800 p-4 rounded-lg">
+          <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: #E9951D;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+          </svg>
+          <span class="text-gray-200">{{ riesgo }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Navegación -->
+<section class="py-16 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-black text-white mb-8">Explora Más</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <a routerLink="/operaciones/overview" class="px-6 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-bold rounded-lg transition-all">
+          Vista General
+        </a>
+        <a routerLink="/operaciones/geologia" class="px-6 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-bold rounded-lg transition-all">
+          Geología
+        </a>
+        <a routerLink="/operaciones/operativo" class="px-6 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-bold rounded-lg transition-all">
+          Proceso Operativo
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
+
+<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle" (closed)="closePreview()"></app-image-preview>

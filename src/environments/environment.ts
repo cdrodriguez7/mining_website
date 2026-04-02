@@ -1,9 +1,10 @@
 export const environment = {
-  production: false,
-  metalpriceApiKey: 'c8135499d819193cd05f8f56cf07a14d',
-  baseUrl: 'http://localhost:3000/api',
+  production: true,
+  // Prod: usa el serverless /api/metalprice (API key en Vercel env vars)
+  metalpriceUrl: '/api/metalprice',
+  baseUrl: '/api',
   cloudinary: {
-    cloudName: 'dlumbzsnd',        // ← TU CLOUD NAME
-    uploadPreset: 'PLAMPROMINV1'     // ← TU PRESET NAME
+    cloudName: 'dlumbzsnd',
+    uploadPreset: 'PLAMPROMINV1'
   }
 };

@@ -1,8 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, catchError, of } from 'rxjs';
-import { environment } from '../../../environments/environment';
-
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 export interface MetalData {
   price: number;
   change: number;
@@ -34,17 +33,20 @@ interface MetalpriceApiResponse {
   rates: { [key: string]: number };
 }
 
+const STORAGE_KEY = 'plampromin_metals_v1';
+const TTL_MS = 24 * 60 * 60 * 1000; // 24 horas
+
+interface CachedMetals {
+  data: MetalPricesState;
+  savedAt: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class MetalsService {
-
-  // inject() en lugar de constructor — coherente con el componente
   private http = inject(HttpClient);
-
-  private apiKey  = environment.metalpriceApiKey ?? 'TU_API_KEY_AQUI';
-  private baseUrl = '/metalprice/v1';
-
-  // Solo XAU y XAG — COPPER no está en el plan gratuito de MetalpriceAPI
-  private readonly SYMBOLS = 'XAU,XAG';
+  // Llama directo a MetalpriceAPI desde el browser (soporta CORS).
+  // Funciona en dev y producción sin proxy ni serverless.
+  private readonly apiUrl = 'https://api.metalpriceapi.com/v1/latest?api_key=25d0e09e06c131e31f3900e844a22fbd&base=USD&currencies=XAU,XAG';
 
   private readonly fallback: MetalPricesState = {
     gold: {
@@ -62,7 +64,6 @@ export class MetalsService {
       unit: 'USD / oz troy', symbol: 'XAG', label: 'Plata'
     },
     copper: {
-      // Siempre referencial — MetalpriceAPI free no incluye cobre
       price: 4.68, change: 0.07, changePct: 1.52,
       open: 4.61, high: 4.72, low: 4.58,
       bid: 4.67, ask: 4.69,
@@ -73,34 +74,78 @@ export class MetalsService {
     isLive: false
   };
 
+  /**
+   * Devuelve precios desde localStorage si los datos tienen menos de 24h.
+   * Solo llama a la API externa si el cache está vacío o expirado.
+   */
   getMetalPrices(): Observable<MetalPricesState> {
-    const url = `${this.baseUrl}/latest?api_key=${this.apiKey}&base=USD&currencies=${this.SYMBOLS}`;
+    const cached = this.readCache();
+    if (cached) {
+      console.log('[MetalsService] Usando cache (< 24h)');
+      return of(cached);
+    }
+    return this.fetchFromApi();
+  }
 
-    return this.http.get<MetalpriceApiResponse>(url).pipe(
+  /**
+   * Ignora el cache y fuerza una nueva llamada a la API.
+   * Llamar solo desde el botón "Actualizar".
+   */
+  refresh(): Observable<MetalPricesState> {
+    this.clearCache();
+    return this.fetchFromApi();
+  }
+
+  private fetchFromApi(): Observable<MetalPricesState> {
+    console.log('[MetalsService] Llamando a MetalpriceAPI...');
+    return this.http.get<MetalpriceApiResponse>(this.apiUrl).pipe(
       map(res => {
         if (!res?.success || !res?.rates) {
           console.warn('[MetalsService] Respuesta inválida, usando fallback');
           return this.fallback;
         }
-
         const r = res.rates;
         const goldPrice   = r['USDXAU'] ?? (r['XAU'] ? +(1 / r['XAU']).toFixed(2) : 0);
         const silverPrice = r['USDXAG'] ?? (r['XAG'] ? +(1 / r['XAG']).toFixed(2) : 0);
         const isLive      = goldPrice > 0 && silverPrice > 0;
-
-        return {
+        const state: MetalPricesState = {
           gold:   { ...this.fallback.gold,   price: isLive ? +goldPrice.toFixed(2)   : this.fallback.gold.price },
           silver: { ...this.fallback.silver, price: isLive ? +silverPrice.toFixed(2) : this.fallback.silver.price },
           copper: { ...this.fallback.copper },
           date: new Date().toLocaleDateString('es-EC', { day: 'numeric', month: 'short', year: 'numeric' }),
           isLive
         };
+        this.writeCache(state);
+        return state;
       }),
       catchError(err => {
-        const body = err?.error;
-        console.error('[MetalsService] HTTP', err?.status, '—', body?.error?.info ?? err?.message);
+        console.error('[MetalsService] HTTP', err?.status, '—', err?.message);
         return of(this.fallback);
       })
     );
+  }
+
+  private readCache(): MetalPricesState | null {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      const entry: CachedMetals = JSON.parse(raw);
+      if (Date.now() - entry.savedAt > TTL_MS) {
+        localStorage.removeItem(STORAGE_KEY);
+        return null;
+      }
+      return entry.data;
+    } catch { return null; }
+  }
+
+  private writeCache(state: MetalPricesState): void {
+    try {
+      const entry: CachedMetals = { data: state, savedAt: Date.now() };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(entry));
+    } catch { }
+  }
+
+  private clearCache(): void {
+    localStorage.removeItem(STORAGE_KEY);
   }
 }

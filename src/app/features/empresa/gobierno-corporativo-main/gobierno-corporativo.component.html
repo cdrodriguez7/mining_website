@@ -1,39 +1,128 @@
 <app-navbar></app-navbar>
 
+<!-- Hero -->
+<section class="relative bg-black py-24 overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-orange-600/8 via-transparent to-transparent pointer-events-none"></div>
+  <div class="container mx-auto px-6 lg:px-12 relative z-10">
+    <div class="flex items-center gap-3 mb-8 text-sm">
+      <a routerLink="/empresa/acerca-de" class="text-gray-400 hover:text-orange-600 transition-colors">Empresa</a>
+      <span class="text-zinc-600">/</span>
+      <span class="text-orange-600 font-semibold">Gobierno Corporativo</span>
+    </div>
+    <p class="text-orange-600 font-semibold uppercase tracking-widest text-sm mb-5">Marco Institucional</p>
+    <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-none">
+      Gobierno<br><span class="text-orange-600">Corporativo</span>
+    </h1>
+    <p class="text-gray-300 text-lg max-w-2xl leading-relaxed">
+      PLAMPROMIN S.A. se rige por un modelo de gobierno corporativo basado en la transparencia,
+      la rendición de cuentas y la protección de los intereses de todos sus grupos de interés.
+    </p>
+  </div>
+</section>
+
+<!-- Métricas de gobierno -->
+<section class="bg-zinc-900 border-y border-zinc-800">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="grid grid-cols-2 lg:grid-cols-4 divide-x divide-zinc-800">
+      <div class="py-10 px-8 text-center">
+        <div class="text-4xl font-black text-orange-600 mb-2">100%</div>
+        <div class="text-white font-semibold text-sm mb-1">Sesiones Documentadas</div>
+        <div class="text-gray-500 text-xs">Actas firmadas y archivadas</div>
+      </div>
+      <div class="py-10 px-8 text-center">
+        <div class="text-4xl font-black text-orange-600 mb-2">2/3</div>
+        <div class="text-white font-semibold text-sm mb-1">Directores Independientes</div>
+        <div class="text-gray-500 text-xs">Sin vínculo accionarial</div>
+      </div>
+      <div class="py-10 px-8 text-center">
+        <div class="text-4xl font-black text-orange-600 mb-2">5</div>
+        <div class="text-white font-semibold text-sm mb-1">Comités Activos</div>
+        <div class="text-gray-500 text-xs">Supervisión especializada</div>
+      </div>
+      <div class="py-10 px-8 text-center">
+        <div class="text-4xl font-black text-orange-600 mb-2">GRI</div>
+        <div class="text-white font-semibold text-sm mb-1">Reporte Integrado</div>
+        <div class="text-gray-500 text-xs">Global Reporting Initiative</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Estructura de gobierno -->
 <section class="py-20 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
-      Empresa
-    </div>
-    <h1 class="text-5xl lg:text-6xl font-black text-white mb-8">
-      Gobierno <span class='text-orange-600'>Corporativo</span>
-    </h1>
-    
-    <div class="prose prose-invert prose-orange max-w-none">
-      <p class="text-gray-400 text-lg leading-relaxed mb-8">
-        Información detallada sobre gobierno <span class='text-orange-600'>corporativo</span>. Esta sección contiene datos importantes
-        y actualizados sobre nuestras operaciones y compromisos.
-      </p>
-      
-      <div class="grid lg:grid-cols-3 gap-8 mt-12">
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
-          <div class="text-5xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Información Clave</h3>
-          <p class="text-gray-400">Datos relevantes y actualizados sobre esta sección.</p>
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+      <div>
+        <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-4">Arquitectura</p>
+        <h2 class="text-3xl lg:text-4xl font-black text-white mb-8">
+          Estructura de <span class="text-orange-600">Gobierno</span>
+        </h2>
+        <p class="text-gray-400 leading-relaxed mb-10">
+          PLAMPROMIN opera bajo una estructura de gobierno corporativo de cuatro niveles que garantiza
+          la separación entre la propiedad, la supervisión y la gestión operativa, conforme a las
+          mejores prácticas internacionales y la normativa de la Ley de Compañías del Ecuador.
+        </p>
+        <div class="space-y-4">
+          <div *ngFor="let nivel of estructura"
+               class="flex gap-5 p-5 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-orange-600/40 transition-colors">
+            <div class="w-10 h-10 bg-orange-600 rounded-xl flex items-center justify-center text-white font-black text-sm flex-shrink-0">
+              {{ nivel.nivel }}
+            </div>
+            <div>
+              <h4 class="text-white font-bold mb-1">{{ nivel.nombre }}</h4>
+              <p class="text-gray-400 text-sm">{{ nivel.desc }}</p>
+            </div>
+          </div>
         </div>
-        
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
-          <div class="text-5xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Métricas</h3>
-          <p class="text-gray-400">Indicadores de desempeño y resultados.</p>
-        </div>
-        
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
-          <div class="text-5xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Documentación</h3>
-          <p class="text-gray-400">Acceso a reportes y documentos oficiales.</p>
+      </div>
+
+      <div class="space-y-6">
+        <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm">Secciones</p>
+        <h2 class="text-3xl font-black text-white">Explora el <span class="text-orange-600">marco institucional</span></h2>
+        <div class="space-y-4">
+          <a *ngFor="let s of subsecciones" [routerLink]="s.link"
+             class="flex items-start gap-5 p-6 bg-zinc-900 border border-zinc-800 hover:border-orange-600 rounded-xl transition-all hover:-translate-y-0.5 group block">
+            <div class="w-12 h-12 bg-orange-600/10 border border-orange-600/30 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-orange-600/20 transition-colors">
+              <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" [attr.d]="s.icono"/>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-3 mb-1">
+                <h4 class="text-white font-bold">{{ s.titulo }}</h4>
+                <span class="px-2.5 py-0.5 bg-orange-600/10 text-orange-600 border border-orange-600/20 text-xs font-semibold rounded-full flex-shrink-0">
+                  {{ s.badge }}
+                </span>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed">{{ s.desc }}</p>
+            </div>
+            <svg class="w-5 h-5 text-gray-600 group-hover:text-orange-600 group-hover:translate-x-1 transition-all flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Declaración de compromiso -->
+<section class="py-16 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12 max-w-4xl text-center">
+    <div class="bg-black border border-zinc-800 rounded-2xl p-10">
+      <svg class="w-12 h-12 text-orange-600 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+      </svg>
+      <h3 class="text-2xl font-black text-white mb-4">Compromiso con la Integridad Institucional</h3>
+      <p class="text-gray-400 leading-relaxed max-w-2xl mx-auto">
+        El Directorio de PLAMPROMIN S.A. se compromete a mantener los más altos estándares de
+        gobierno corporativo, asegurando que todas las decisiones se adopten en interés de la
+        empresa y de sus grupos de interés, con pleno respeto a la ley y a los principios éticos
+        que guían nuestra actividad.
+      </p>
+      <p class="text-orange-600 font-semibold mt-6 text-sm">— Directorio PLAMPROMIN S.A.</p>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

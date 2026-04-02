@@ -1,28 +1,129 @@
 <app-navbar></app-navbar>
 
+<!-- HERO -->
+<section class="relative h-[60vh] min-h-[420px] overflow-hidden">
+  <div *ngIf="!isLoading && heroImage" class="absolute inset-0">
+    <img [src]="getHeroUrl()" alt="Gobernanza ESG PLAMPROMIN"
+         class="w-full h-full object-cover" />
+  </div>
+  <div *ngIf="isLoading || !heroImage" class="absolute inset-0 bg-zinc-900"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+
+  <div class="relative z-10 h-full flex items-end pb-16">
+    <div class="container mx-auto px-6 lg:px-12">
+      <div class="flex items-center gap-3 mb-4">
+        <a routerLink="/mineria-responsable" class="text-gray-400 hover:text-orange-600 text-sm transition-colors">Minería Responsable</a>
+        <span class="text-zinc-600">/</span>
+        <span class="text-orange-600 text-sm font-semibold">Gobernanza ESG</span>
+      </div>
+      <h1 class="text-6xl font-black text-white leading-tight">
+        Gobernanza en <span class="text-orange-600">Sostenibilidad</span>
+      </h1>
+      <p class="text-gray-300 mt-4 max-w-xl text-lg">
+        Transparencia, rendición de cuentas y marcos de reporte internacionales
+        como base de nuestra gestión ESG.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ESTRUCTURA -->
 <section class="py-20 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase text-sm">Sostenibilidad</div>
-    <h1 class="text-5xl font-black text-white mb-8">Gobernanza en <span class='text-orange-600'>Sostenibilidad</span></h1>
-    <div class="prose prose-invert max-w-none">
-      <p class="text-gray-400 text-lg mb-8">Información sobre gobernanza en <span class='text-orange-600'>sostenibilidad</span>.</p>
-      <div class="grid lg:grid-cols-3 gap-8">
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Datos Clave</h3>
-          <p class="text-gray-400 text-sm">Información relevante y actualizada.</p>
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+      <div>
+        <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-4">Estructura de Gobernanza</p>
+        <h2 class="text-4xl font-black text-white mb-8 leading-tight">
+          Responsabilidad en<br><span class="text-orange-600">todos los niveles</span>
+        </h2>
+        <div class="space-y-4">
+          <div *ngFor="let e of estructura; let i = index"
+               class="flex gap-4 p-5 bg-zinc-900 border border-zinc-800 hover:border-orange-600 rounded-xl transition-colors group">
+            <div class="w-10 h-10 bg-orange-600/15 border border-orange-600/40 rounded-lg
+                        flex items-center justify-center text-orange-600 font-black text-sm flex-shrink-0">
+              {{ i + 1 }}
+            </div>
+            <div>
+              <div class="text-white font-bold mb-1 group-hover:text-orange-500 transition-colors">{{ e.nivel }}</div>
+              <div class="text-gray-400 text-sm leading-relaxed">{{ e.rol }}</div>
+            </div>
+          </div>
         </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Métricas</h3>
-          <p class="text-gray-400 text-sm">Indicadores de desempeño.</p>
+      </div>
+
+      <div>
+        <div *ngIf="!isLoading && sectionImage" class="rounded-xl overflow-hidden mb-6 cursor-pointer"
+             (click)="openPreview(getSectionUrl(), sectionImage!.title)">
+          <img [src]="getSectionUrl()" [alt]="sectionImage!.title"
+               class="w-full h-72 object-cover" loading="lazy" />
         </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Documentos</h3>
-          <p class="text-gray-400 text-sm">Reportes oficiales.</p>
+        <div *ngIf="isLoading || !sectionImage"
+             class="w-full h-72 bg-zinc-900 rounded-xl animate-pulse mb-6"></div>
+
+        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+          <h3 class="text-white font-bold mb-3">Auditoría Independiente</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">
+            El reporte de sostenibilidad y los estados financieros de PLAMPROMIN son
+            auditados anualmente por un tercero independiente. Los resultados se
+            publican en el informe anual integrado.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <span class="px-3 py-1 bg-orange-600/15 text-orange-600 border border-orange-600/30 text-xs font-semibold rounded-lg">
+              Auditoría financiera externa
+            </span>
+            <span class="px-3 py-1 bg-orange-600/15 text-orange-600 border border-orange-600/30 text-xs font-semibold rounded-lg">
+              Verificación GHG inventario
+            </span>
+            <span class="px-3 py-1 bg-orange-600/15 text-orange-600 border border-orange-600/30 text-xs font-semibold rounded-lg">
+              Revisión IESS anual
+            </span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- MARCOS DE REPORTE -->
+<section class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-3">Transparencia</p>
+    <h2 class="text-4xl font-black text-white mb-12">
+      Marcos y <span class="text-orange-600">Estándares</span>
+    </h2>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div *ngFor="let m of marcos"
+           class="bg-black border border-zinc-800 hover:border-orange-600 rounded-xl p-6 transition-all group">
+        <div class="flex items-start gap-3 mb-3">
+          <div class="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
+          <h3 class="text-white font-bold group-hover:text-orange-500 transition-colors">{{ m.nombre }}</h3>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed">{{ m.desc }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Reportes -->
+<section class="py-16 bg-black">
+  <div class="container mx-auto px-6 lg:px-12 text-center">
+    <h3 class="text-3xl font-black text-white mb-4">Documentos de Gobernanza</h3>
+    <p class="text-gray-400 mb-8 max-w-xl mx-auto">Accede a nuestros reportes anuales, política ESG y documentos de cumplimiento.</p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a routerLink="/mineria-responsable/reportes-sostenibilidad"
+         class="px-8 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
+        Reportes de Sostenibilidad
+      </a>
+      <a routerLink="/mineria-responsable/politica"
+         class="px-8 py-3 border border-zinc-600 hover:border-orange-600 text-gray-300 hover:text-orange-600 font-bold rounded-lg transition-colors">
+        Política QHSE
+      </a>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
+
+<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle" (closed)="closePreview()"></app-image-preview>

@@ -121,15 +121,15 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'fruta-del-norte',
+        redirectTo: 'camilo-ponce-enriquez',
         pathMatch: 'full'
       },
       {
-        path: 'fruta-del-norte',
+        path: 'ponce-enriquez',
         children: [
           {
-            path: '',
-            loadComponent: () => import('./features/operaciones/fdn-overview/overview.component').then(m => m.OverviewComponent)  // ✅ DESCOMENTADO
+            path: 'overview',
+            loadComponent: () => import('./features/operaciones/fdn-overview/overview.component').then(m => m.OverviewComponent)  
           },
           {
             path: 'historia',

@@ -133,10 +133,8 @@ export class CloudinaryService {
       formData.append('upload_preset', environment.cloudinary.uploadPreset);
       
       if (folder) {
-      console.log('[Cloudinary Service] Guardando en carpeta:', folder);
-      formData.append('folder', folder);
-      
-      formData.append('public_id', `${folder}/${Date.now()}`);
+        console.log('[Cloudinary Service] Guardando en carpeta:', folder);
+        formData.append('folder', folder);
       }
 
       formData.append('timestamp', Date.now().toString());

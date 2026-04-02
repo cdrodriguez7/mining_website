@@ -1,33 +1,290 @@
 <app-navbar></app-navbar>
 
-<section class="py-20 bg-black">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase text-sm">Gobierno Corporativo</div>
-    <h1 class="text-5xl font-black text-white mb-8">Prácticas de <span class="text-orange-600">Gobernanza</span></h1>
-    
-    <div class="prose prose-invert max-w-none">
-      <p class="text-gray-400 text-lg mb-8">
-        Nuestra organización se rige por los más altos estándares de gobierno corporativo, 
-        asegurando transparencia, responsabilidad y ética en todas nuestras operaciones.
+<!-- Hero Section -->
+<section class="relative bg-black py-20 lg:py-32 overflow-hidden">
+  <div class="absolute inset-0">
+    <div *ngIf="heroImage" class="absolute inset-0">
+      <img 
+        [src]="getHeroImageUrl()"
+        [alt]="heroImage.title"
+        class="w-full h-full object-cover opacity-20">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
+  </div>
+  
+  <div class="container mx-auto px-6 lg:px-12 relative z-10">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-2 mb-4 text-sm">
+        <a routerLink="/empresa/gobierno-corporativo" class="text-gray-400 hover:text-orange-600 transition-colors">Gobierno Corporativo</a>
+        <span class="text-zinc-600">/</span>
+        <span class="text-orange-600 font-semibold">Prácticas</span>
+      </div>
+      <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
+        Prácticas de <span class="text-orange-600">Gobernanza</span>
+      </h1>
+      <p class="text-gray-300 text-lg lg:text-xl leading-relaxed">
+        Implementamos las mejores prácticas internacionales de gobierno corporativo, 
+        basadas en los principios de la OCDE y adaptadas a la realidad del sector minero ecuatoriano.
       </p>
-      
-      <div class="grid lg:grid-cols-3 gap-8">
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Transparencia</h3>
-          <p class="text-gray-400 text-sm">Rendición de cuentas y reportes periódicos.</p>
-        </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Ética</h3>
-          <p class="text-gray-400 text-sm">Código de conducta y valores corporativos.</p>
-        </div>
-        <div class="bg-zinc-900 p-8 rounded-xl hover:border-orange-600 border border-zinc-800 transition-all">
-          <div class="text-4xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Cumplimiento</h3>
-          <p class="text-gray-400 text-sm">Auditorías internas y externas regulares.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Los 4 Pilares -->
+<section class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-black text-white mb-4">
+        Los Cuatro <span class="text-orange-600">Pilares</span>
+      </h2>
+      <p class="text-gray-400 max-w-3xl mx-auto">
+        Nuestro marco de gobierno corporativo se sustenta en cuatro pilares fundamentales
+      </p>
+    </div>
+
+    <div class="space-y-12">
+      <div *ngFor="let pilar of pilares; let i = index" 
+           class="bg-black border-2 border-zinc-800 hover:border-orange-600 rounded-xl overflow-hidden transition-all group">
+        
+        <div class="grid lg:grid-cols-3 gap-0">
+          <!-- Cabecera del Pilar -->
+          <div class="lg:col-span-1 bg-gradient-to-br from-zinc-900 to-black p-8 border-b lg:border-b-0 lg:border-r border-zinc-800">
+            <div class="text-6xl mb-4">{{ pilar.icono }}</div>
+            <h3 class="text-3xl font-black text-white mb-4 group-hover:text-orange-600 transition-colors">
+              {{ pilar.titulo }}
+            </h3>
+            <p class="text-gray-400 leading-relaxed">{{ pilar.descripcion }}</p>
+
+            <!-- Métricas del Pilar -->
+            <div class="mt-8 space-y-4">
+              <div *ngFor="let metrica of pilar.metricas" 
+                   class="bg-black/50 rounded-lg p-4 border border-zinc-800">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-gray-500 text-xs uppercase tracking-wider">{{ metrica.nombre }}</span>
+                  <span [ngClass]="getTendenciaColor(metrica.tendencia)">
+                    {{ getTendenciaIcon(metrica.tendencia) }}
+                  </span>
+                </div>
+                <div class="text-2xl font-bold text-white">{{ metrica.valor }}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Prácticas Implementadas -->
+          <div class="lg:col-span-2 p-8">
+            <h4 class="text-xl font-bold text-white mb-6 flex items-center">
+              <svg class="w-6 h-6 text-orange-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              Prácticas Implementadas
+            </h4>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div *ngFor="let practica of pilar.practicas" 
+                   class="flex items-start space-x-3 bg-zinc-900 p-4 rounded-lg border border-zinc-800 hover:border-orange-600 transition-colors">
+                <div class="w-2 h-2 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
+                <span class="text-gray-300 text-sm leading-relaxed">{{ practica }}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Comités del Directorio -->
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="text-center mb-16">
+      <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
+        Estructura de Supervisión
+      </div>
+      <h2 class="text-4xl font-black text-white mb-4">
+        Comités del <span class="text-orange-600">Directorio</span>
+      </h2>
+      <p class="text-gray-400 max-w-3xl mx-auto">
+        Comités especializados que supervisan áreas clave de la gestión corporativa
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8">
+      <div *ngFor="let comite of comites" 
+           class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
+        
+        <!-- Header del Comité -->
+        <div class="mb-6 pb-6 border-b border-zinc-800">
+          <h3 class="text-2xl font-bold text-white mb-4">{{ comite.nombre }}</h3>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <span class="text-gray-500">Presidente:</span>
+              <p class="text-gray-300 font-semibold mt-1">{{ comite.presidente }}</p>
+            </div>
+            <div>
+              <span class="text-gray-500">Miembros:</span>
+              <p class="text-gray-300 font-semibold mt-1">{{ comite.miembros }} directores</p>
+            </div>
+            <div class="col-span-2">
+              <span class="text-gray-500">Frecuencia:</span>
+              <p class="text-gray-300 font-semibold mt-1">{{ comite.frecuencia }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Responsabilidades -->
+        <div class="mb-6">
+          <h4 class="text-sm font-semibold text-orange-600 mb-3 uppercase tracking-wider flex items-center">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+            </svg>
+            Responsabilidades
+          </h4>
+          <ul class="space-y-2">
+            <li *ngFor="let resp of comite.responsabilidades" 
+                class="text-gray-400 text-sm flex items-start">
+              <span class="text-orange-600 mr-2">•</span>
+              <span>{{ resp }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Logros 2025 -->
+        <div class="bg-black rounded-lg p-4 border border-zinc-800">
+          <h4 class="text-sm font-semibold text-orange-600 mb-3 uppercase tracking-wider flex items-center">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+            </svg>
+            Logros 2025
+          </h4>
+          <ul class="space-y-2">
+            <li *ngFor="let logro of comite.logros2025" 
+                class="text-gray-400 text-sm flex items-start">
+              <span class="text-green-500 mr-2">✓</span>
+              <span>{{ logro }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Galería de Evidencia -->
+<section *ngIf="galleryImages.length > 0" class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-black text-white mb-4">
+        Nuestras <span class="text-orange-600">Instalaciones</span>
+      </h2>
+      <p class="text-gray-400">Espacios donde se ejerce la gobernanza corporativa</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div *ngFor="let image of galleryImages"
+           class="group relative overflow-hidden rounded-lg aspect-video cursor-pointer"
+           (click)="openPreview(getImageUrl(image), image.title)">
+        <img
+          [src]="getImageUrl(image)"
+          [alt]="image.title"
+          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+          <p class="text-white text-sm font-semibold">{{ image.title }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Marco Normativo -->
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-black text-white mb-4">
+          Marco <span class="text-orange-600">Normativo</span>
+        </h2>
+        <p class="text-gray-400">Bases legales de nuestro gobierno corporativo</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-orange-600 transition-all">
+          <div class="w-12 h-12 bg-orange-600/20 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Principios OCDE</h3>
+          <p class="text-gray-400 text-sm">Adherimos a los Principios de Gobierno Corporativo del G20 y la OCDE, adaptados al contexto ecuatoriano.</p>
+        </div>
+
+        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-orange-600 transition-all">
+          <div class="w-12 h-12 bg-orange-600/20 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Ley de Compañías</h3>
+          <p class="text-gray-400 text-sm">Cumplimiento estricto de la Ley de Compañías del Ecuador y normativa de la Superintendencia de Compañías.</p>
+        </div>
+
+        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-orange-600 transition-all">
+          <div class="w-12 h-12 bg-orange-600/20 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Ley Minera</h3>
+          <p class="text-gray-400 text-sm">Alineación con la Ley de Minería No. 45 y regulaciones específicas del sector extractivo ecuatoriano.</p>
+        </div>
+
+        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-orange-600 transition-all">
+          <div class="w-12 h-12 bg-orange-600/20 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Normas Internacionales</h3>
+          <p class="text-gray-400 text-sm">Certificaciones ISO y adhesión al Código Internacional de Manejo del Cianuro (ICMI).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-16 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-black text-white mb-4">
+        Más Información sobre Gobierno Corporativo
+      </h2>
+      <p class="text-gray-400 mb-8">
+        Explora nuestros documentos, políticas y mecanismos de denuncia
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a routerLink="/empresa/gobierno-corporativo/documentos" 
+           class="px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
+          Ver Documentos
+        </a>
+        <a routerLink="/empresa/gobierno-corporativo/politicas" 
+           class="px-8 py-4 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-lg transition-colors">
+          Políticas Centrales
+        </a>
+        <a routerLink="/empresa/gobierno-corporativo/denuncias" 
+           class="px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-bold rounded-lg transition-all">
+          Canal de Denuncias
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
+
+<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle" (closed)="closePreview()"></app-image-preview>

@@ -1,39 +1,152 @@
 <app-navbar></app-navbar>
 
-<section class="py-20 bg-black">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
-      Empresa
+<!-- Hero -->
+<section class="relative bg-black py-24 overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-orange-600/8 via-transparent to-transparent pointer-events-none"></div>
+  <div class="container mx-auto px-6 lg:px-12 relative z-10">
+    <div class="flex items-center gap-3 mb-8 text-sm">
+      <a routerLink="/empresa/acerca-de" class="text-gray-400 hover:text-orange-600 transition-colors">Empresa</a>
+      <span class="text-zinc-600">/</span>
+      <span class="text-orange-600 font-semibold">Información Corporativa</span>
     </div>
-    <h1 class="text-5xl lg:text-6xl font-black text-white mb-8">
-      Información <span class='text-orange-600'>Corporativa</span>
+    <p class="text-orange-600 font-semibold uppercase tracking-widest text-sm mb-5">Registro Legal</p>
+    <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-none">
+      Información<br><span class="text-orange-600">Corporativa</span>
     </h1>
-    
-    <div class="prose prose-invert prose-orange max-w-none">
-      <p class="text-gray-400 text-lg leading-relaxed mb-8">
-        Información detallada sobre información <span class='text-orange-600'>corporativa</span>. Esta sección contiene datos importantes
-        y actualizados sobre nuestras operaciones y compromisos.
-      </p>
-      
-      <div class="grid lg:grid-cols-3 gap-8 mt-12">
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
-          <div class="text-5xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Información Clave</h3>
-          <p class="text-gray-400">Datos relevantes y actualizados sobre esta sección.</p>
-        </div>
-        
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
-          <div class="text-5xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Métricas</h3>
-          <p class="text-gray-400">Indicadores de desempeño y resultados.</p>
-        </div>
-        
-        <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-8 hover:border-orange-600 transition-all">
-          <div class="text-5xl mb-4"></div>
-          <h3 class="text-xl font-bold text-white mb-2">Documentación</h3>
-          <p class="text-gray-400">Acceso a reportes y documentos oficiales.</p>
+    <p class="text-gray-300 text-lg max-w-2xl leading-relaxed">
+      Datos legales, concesiones mineras vigentes e hitos institucionales de
+      PLAMPROMIN S.A., la empresa productora de oro del cantón Camilo Ponce Enríquez.
+    </p>
+  </div>
+</section>
+
+<!-- Datos Legales -->
+<section class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="grid lg:grid-cols-3 gap-12">
+      <div>
+        <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-4">Ficha Legal</p>
+        <h2 class="text-3xl font-black text-white mb-6">Datos de la <span class="text-orange-600">Sociedad</span></h2>
+        <p class="text-gray-400 text-sm leading-relaxed">
+          Información oficial inscrita en el Registro Mercantil y en la Agencia de Regulación y
+          Control Minero (ARCOM). Todos los títulos mineros de PLAMPROMIN se encuentran vigentes
+          y al día en sus obligaciones ante los organismos de control.
+        </p>
+      </div>
+
+      <div class="lg:col-span-2">
+        <div class="bg-black border border-zinc-800 rounded-2xl overflow-hidden">
+          <div *ngFor="let d of datosLegales; let i = index"
+               class="flex flex-col sm:flex-row sm:items-start gap-2 px-6 py-4"
+               [class]="i % 2 === 0 ? 'bg-black' : 'bg-zinc-900/50'">
+            <dt class="text-gray-500 text-sm w-full sm:w-48 flex-shrink-0 pt-0.5">{{ d.etiqueta }}</dt>
+            <dd class="text-white text-sm font-medium">{{ d.valor }}</dd>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Concesiones principales -->
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="mb-12">
+      <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-2">Cartera Minera</p>
+      <h2 class="text-3xl font-black text-white">Concesiones <span class="text-orange-600">Principales</span></h2>
+      <p class="text-gray-400 mt-3 max-w-xl">
+        Selección de los títulos mineros más significativos del portafolio de 82 concesiones activas de PLAMPROMIN.
+      </p>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-zinc-800">
+            <th class="text-left py-4 px-5 text-gray-500 text-xs uppercase tracking-wider font-semibold">Área / Bloque</th>
+            <th class="text-left py-4 px-5 text-gray-500 text-xs uppercase tracking-wider font-semibold">Fase</th>
+            <th class="text-left py-4 px-5 text-gray-500 text-xs uppercase tracking-wider font-semibold">Superficie</th>
+            <th class="text-left py-4 px-5 text-gray-500 text-xs uppercase tracking-wider font-semibold">Estado</th>
+            <th class="text-left py-4 px-5 text-gray-500 text-xs uppercase tracking-wider font-semibold">Vencimiento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of concesiones"
+              class="border-b border-zinc-900 hover:bg-zinc-900/50 transition-colors">
+            <td class="py-4 px-5">
+              <span class="text-white font-semibold">{{ c.nombre }}</span>
+            </td>
+            <td class="py-4 px-5">
+              <span class="px-2.5 py-1 text-xs font-semibold rounded-full"
+                    [class]="c.tipo === 'Explotación' ? 'bg-orange-600/15 text-orange-500 border border-orange-600/30' : 'bg-zinc-700 text-gray-300'">
+                {{ c.tipo }}
+              </span>
+            </td>
+            <td class="py-4 px-5 text-gray-300">{{ c.has }}</td>
+            <td class="py-4 px-5">
+              <span class="flex items-center gap-1.5 text-green-400 text-sm font-semibold">
+                <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                {{ c.estado }}
+              </span>
+            </td>
+            <td class="py-4 px-5 text-gray-400">{{ c.vence }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-4 text-gray-600 text-xs">
+      Listado parcial. El portafolio completo de 82 concesiones está disponible para consulta en el
+      Sistema de Administración Minera (SIAMM) de la ARCOM.
+    </p>
+  </div>
+</section>
+
+<!-- Hitos institucionales -->
+<section class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="text-center mb-14">
+      <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-4">Historia</p>
+      <h2 class="text-3xl font-black text-white">Hitos <span class="text-orange-600">Institucionales</span></h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div *ngFor="let h of hitos"
+           class="bg-black border border-zinc-800 hover:border-orange-600/40 rounded-xl p-6 transition-colors">
+        <div class="text-3xl font-black text-orange-600 mb-3">{{ h.anio }}</div>
+        <h4 class="text-white font-bold mb-2">{{ h.titulo }}</h4>
+        <p class="text-gray-400 text-sm leading-relaxed">{{ h.desc }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Organismos reguladores -->
+<section class="py-16 bg-black">
+  <div class="container mx-auto px-6 lg:px-12 max-w-5xl">
+    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-8 text-center">Supervisión Institucional</p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 text-center">
+        <div class="text-orange-600 font-black text-sm mb-2">ARCOM</div>
+        <div class="text-white font-semibold text-xs mb-1">Agencia de Regulación y Control Minero</div>
+        <div class="text-gray-500 text-xs">Títulos mineros y cumplimiento sectorial</div>
+      </div>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 text-center">
+        <div class="text-orange-600 font-black text-sm mb-2">MAATE</div>
+        <div class="text-white font-semibold text-xs mb-1">Ministerio del Ambiente</div>
+        <div class="text-gray-500 text-xs">Licencia ambiental y EIA</div>
+      </div>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 text-center">
+        <div class="text-orange-600 font-black text-sm mb-2">SRI</div>
+        <div class="text-white font-semibold text-xs mb-1">Servicio de Rentas Internas</div>
+        <div class="text-gray-500 text-xs">Obligaciones tributarias</div>
+      </div>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 text-center">
+        <div class="text-orange-600 font-black text-sm mb-2">Supercias</div>
+        <div class="text-white font-semibold text-xs mb-1">Superintendencia de Compañías</div>
+        <div class="text-gray-500 text-xs">Estados financieros anuales</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

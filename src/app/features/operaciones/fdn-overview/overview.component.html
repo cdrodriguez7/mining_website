@@ -1,35 +1,144 @@
 <app-navbar></app-navbar>
 
-<section class="relative bg-black py-20">
-  <div class="container mx-auto px-6 lg:px-12">
-    <h1 class="text-6xl font-black text-white mb-8">
-      <span class="text-orange-600">Fruta del Norte</span><br>Mina de Clase Mundial
-    </h1>
-    
-    <div class="grid lg:grid-cols-3 gap-8 mb-12">
-      <div class="bg-zinc-900 p-6 rounded-lg border border-zinc-800">
-        <div class="text-4xl mb-2">⛏️</div>
-        <div class="text-3xl font-bold text-white mb-1">450K oz</div>
-        <div class="text-gray-400">Producción Anual de Oro</div>
-      </div>
-      <div class="bg-zinc-900 p-6 rounded-lg border border-zinc-800">
-        <div class="text-4xl mb-2"></div>
-        <div class="text-3xl font-bold text-white mb-1">5.23M oz</div>
-        <div class="text-gray-400">Reservas Probadas</div>
-      </div>
-      <div class="bg-zinc-900 p-6 rounded-lg border border-zinc-800">
-        <div class="text-4xl mb-2"></div>
-        <div class="text-3xl font-bold text-white mb-1">1,200+</div>
-        <div class="text-gray-400">Empleados</div>
-      </div>
+<!-- Hero Section -->
+<section class="relative bg-black py-20 lg:py-32 overflow-hidden">
+  <div class="absolute inset-0">
+    <div *ngIf="heroImage" class="absolute inset-0">
+      <img [src]="getHeroImageUrl()" [alt]="heroImage.title" class="w-full h-full object-cover opacity-20">
     </div>
-
-    <div class="prose prose-invert max-w-none">
-      <p class="text-gray-300 text-lg leading-relaxed">
-        Fruta del Norte es una de las minas de oro de más alta ley en el mundo, ubicada en la provincia 
-        de Zamora Chinchipe, Ecuador. Con operaciones iniciadas en 2019, representa uno de los proyectos 
-        mineros más importantes de América Latina.
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
+  </div>
+  
+  <div class="container mx-auto px-6 lg:px-12 relative z-10">
+    <div class="max-w-4xl">
+      <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
+        Operaciones / Camilo Ponce Enríquez
+      </div>
+      <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
+        Proyecto <span class="text-orange-600">Minero</span>
+      </h1>
+      <p class="text-gray-300 text-lg lg:text-xl leading-relaxed">
+        Operaciones de minería aurífera subterránea de clase mundial en la región 
+        metalogénica de Camilo Ponce Enríquez, Ecuador.
       </p>
     </div>
   </div>
 </section>
+
+<!-- Mapa de Concesiones - Imagen Full Width -->
+<section class="py-0" style="background: linear-gradient(to bottom, #0E7AA8, #15A5DF, #1A1A1A);">
+  <div class="w-full px-0">
+    
+    <!-- Contenedor de la imagen del mapa - Sin límites de ancho -->
+    <div class="relative w-full">
+      <img [src]="mapImagePath" 
+           alt="Mapa de concesiones mineras Camilo Ponce Enríquez"
+           class="w-full h-auto block">
+    </div>
+
+  </div>
+</section>
+
+<!-- Datos Técnicos -->
+<section class="py-20 bg-white">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-4xl font-black text-gray-900 mb-12 text-center">
+        Datos Técnicos del <span class="text-orange-600">Proyecto</span>
+      </h2>
+
+      <div class="bg-gray-50 rounded-xl border-2 border-gray-200 overflow-hidden">
+        <div class="divide-y divide-gray-200">
+          <div *ngFor="let dato of datosTecnicos; let i = index" 
+               class="grid md:grid-cols-3 gap-4 p-6 hover:bg-gray-100 transition-colors"
+               [class.bg-gray-100]="i % 2 === 0">
+            <div class="md:col-span-1">
+              <span class="text-sm font-bold text-gray-600 uppercase tracking-wider">{{ dato.label }}</span>
+            </div>
+            <div class="md:col-span-2">
+              <span class="text-gray-900 font-medium">{{ dato.value }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Estadísticas Clave -->
+<!-- <section class="py-20 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-black text-white mb-4">
+        Indicadores <span class="text-orange-600">Clave</span>
+      </h2>
+      <p class="text-gray-400">Métricas principales del proyecto</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+      <div *ngFor="let stat of proyectoStats" 
+           class="bg-black border-2 border-zinc-800 rounded-xl p-8 text-center hover:border-orange-600 transition-all group">
+        <div class="text-6xl mb-4">{{ stat.icon }}</div>
+        <div class="text-4xl font-black text-orange-600 mb-2 group-hover:scale-110 transition-transform">
+          {{ stat.value }}
+        </div>
+        <div class="text-gray-400 font-semibold">{{ stat.label }}</div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- Galería de Operaciones -->
+<section class="py-20 bg-black">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-black text-white mb-4">
+        Nuestras <span class="text-orange-600">Operaciones</span>
+      </h2>
+      <p class="text-gray-400">Vista de las instalaciones y procesos mineros</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let image of operationImages"
+           class="group relative overflow-hidden rounded-lg aspect-video cursor-pointer"
+           (click)="openPreview(getImageUrl(image), image.title)">
+        <img [src]="getImageUrl(image)" [alt]="image.title"
+             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+          <div>
+            <h3 class="text-white font-bold text-lg mb-1">{{ image.title }}</h3>
+            <p *ngIf="image.description" class="text-gray-300 text-sm">{{ image.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Navegación a otras secciones -->
+<section class="py-16 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-black text-white mb-4">Explora Más</h2>
+      <p class="text-gray-400 mb-8">Conoce más sobre nuestras operaciones</p>
+      <div class="grid md:grid-cols-3 gap-4">
+        <a routerLink="/operaciones/historia" 
+           class="px-6 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
+          Historia
+        </a>
+        <a routerLink="/operaciones/geologia" 
+           class="px-6 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
+          Geología
+        </a>
+        <a routerLink="/operaciones/operativo" 
+           class="px-6 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
+          Proceso Operativo
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
+
+<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle" (closed)="closePreview()"></app-image-preview>

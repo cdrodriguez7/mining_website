@@ -19,7 +19,7 @@ export class NavbarComponent {
   isScrolled = false;
   isMobileMenuOpen = false;
   openDropdown: string | null = null;
-  private closeTimeout: any = null;
+  openNestedDropdown: string | null = null;
 
   menuItems: MenuItem[] = [
     { label: 'Inicio', route: '/' },
@@ -29,7 +29,7 @@ export class NavbarComponent {
         { label: 'Acerca de Nosotros', route: '/empresa/acerca-de' },
         { label: 'Gerencia', route: '/empresa/gerencia' },
         { label: 'Directorio', route: '/empresa/directorio' },
-        { 
+        {
           label: 'Gobierno Corporativo',
           children: [
             { label: 'Prácticas de Gobernanza', route: '/empresa/gobierno-corporativo/practicas' },
@@ -38,38 +38,17 @@ export class NavbarComponent {
             { label: 'Política de Denuncias', route: '/empresa/gobierno-corporativo/denuncias' }
           ]
         },
-        { label: 'Información Corporativa', route: '/empresa/informacion-corporativa' }
       ]
     },
     {
-      label: 'Inversores',
+      label: 'Camilo Ponce Enríquez',
       children: [
-        { label: 'Resumen', route: '/inversores' },
-        { label: 'Precio de Acción', route: '/inversores/precio-accion' },
-        { label: 'Presentaciones', route: '/inversores/presentaciones' },
-        { label: 'Eventos', route: '/inversores/eventos' },
-        { label: 'Estados Financieros', route: '/inversores/estados-financieros' },
-        { label: 'Cobertura de Analistas', route: '/inversores/cobertura-analistas' },
-        { label: 'Forma de Información Anual', route: '/inversores/forma-informacion-anual' },
-        { label: 'Materiales de Junta', route: '/inversores/materiales-junta' },
-        { label: 'Dividendos', route: '/inversores/dividendos' },
-      ]
-    },
-    {
-      label: 'Operaciones',
-      children: [
-        {
-          label: 'Camilo Ponce Enríquez',
-          children: [
-            { label: 'Visión General', route: '/operaciones/camilo-ponce-enriquez' },
-            { label: 'Historia', route: '/operaciones/camilo-ponce-enriquez/historia' },
-            { label: 'Geología y Mineralización', route: '/operaciones/camilo-ponce-enriquez/geologia' },
-            { label: 'Estado Operativo', route: '/operaciones/camilo-ponce-enriquez/operativo' },
-            { label: 'Guía de Producción', route: '/operaciones/camilo-ponce-enriquez/proyecciones' }
-          ]
-        },
+        { label: 'Visión General', route: '/operaciones/ponce-enriquez/overview' },
+        { label: 'Historia', route: '/operaciones/ponce-enriquez/historia' },
+        { label: 'Geología y Mineralización', route: '/operaciones/ponce-enriquez/geologia' },
+        { label: 'Estado Operativo', route: '/operaciones/ponce-enriquez/operativo' },
+        { label: 'Guía de Producción', route: '/operaciones/ponce-enriquez/proyecciones' },
         { label: 'Exploración', route: '/operaciones/exploracion' },
-        { label: 'Guía y Perspectivas', route: '/operaciones/guia-perspectivas' },
         { label: 'Reservas y Recursos', route: '/operaciones/reservas-recursos' },
         { label: 'Reporte Técnico', route: '/operaciones/reporte-tecnico' }
       ]
@@ -81,10 +60,7 @@ export class NavbarComponent {
         { label: 'Política de Minería Responsable', route: '/mineria-responsable/politica' },
         { label: 'Salud y Seguridad', route: '/mineria-responsable/salud-seguridad' },
         { label: 'Medio Ambiente', route: '/mineria-responsable/medio-ambiente' },
-        { label: 'Cambio Climático', route: '/mineria-responsable/cambio-climatico' },
-        { label: 'Compromiso con Comunidades', route: '/mineria-responsable/comunidades' },
         { label: 'Estrategia 5 Años', route: '/mineria-responsable/estrategia-5-anos' },
-        { label: 'Reportes de Sostenibilidad', route: '/mineria-responsable/reportes-sostenibilidad' },
         { label: 'Compromisos y Membresías', route: '/mineria-responsable/compromisos-membresias' }
       ]
     },
@@ -101,41 +77,37 @@ export class NavbarComponent {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
     if (!this.isMobileMenuOpen) {
       this.openDropdown = null;
+      this.openNestedDropdown = null;
     }
   }
 
-  toggleDropdown(label: string) {
-    this.openDropdown = this.openDropdown === label ? null : label;
+  toggleDropdown(label: string, event: Event) {
+    event.stopPropagation();
+    if (this.openDropdown === label) {
+      this.openDropdown = null;
+      this.openNestedDropdown = null;
+    } else {
+      this.openDropdown = label;
+      this.openNestedDropdown = null;
+    }
+  }
+
+  toggleNestedDropdown(label: string, event: Event) {
+    event.stopPropagation();
+    this.openNestedDropdown = this.openNestedDropdown === label ? null : label;
   }
 
   isDropdownOpen(label: string): boolean {
     return this.openDropdown === label;
   }
 
-  openMenu(label: string) {
-    if (this.closeTimeout) {
-      clearTimeout(this.closeTimeout);
-      this.closeTimeout = null;
-    }
-    this.openDropdown = label;
-  }
-
-  closeMenu() {
-    this.closeTimeout = setTimeout(() => {
-      this.openDropdown = null;
-      this.closeTimeout = null;
-    }, 200);
-  }
-
-  cancelClose() {
-    if (this.closeTimeout) {
-      clearTimeout(this.closeTimeout);
-      this.closeTimeout = null;
-    }
+  isNestedDropdownOpen(label: string): boolean {
+    return this.openNestedDropdown === label;
   }
 
   closeAllDropdowns() {
     this.openDropdown = null;
+    this.openNestedDropdown = null;
   }
 
   @HostListener('document:click', ['$event'])
