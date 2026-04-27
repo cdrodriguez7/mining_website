@@ -1,144 +1,195 @@
 <app-navbar></app-navbar>
 
-<!-- Hero Section -->
-<section class="relative bg-black py-20 lg:py-32 overflow-hidden">
+<!-- ───── Hero ───── -->
+<section class="relative bg-black py-20 lg:py-44 overflow-hidden">
   <div class="absolute inset-0">
     <div *ngIf="heroImage" class="absolute inset-0">
-      <img [src]="getHeroImageUrl()" [alt]="heroImage.title" class="w-full h-full object-cover opacity-20">
+      <img [src]="getHeroImageUrl()" [alt]="heroImage.title"
+           class="w-full h-full object-cover opacity-25">
     </div>
-    <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black"></div>
   </div>
-  
-  <div class="container mx-auto px-6 lg:px-12 relative z-10">
-    <div class="max-w-4xl">
-      <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
-        Operaciones / Camilo Ponce Enríquez
-      </div>
-      <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
-        Proyecto <span class="text-orange-600">Minero</span>
-      </h1>
-      <p class="text-gray-300 text-lg lg:text-xl leading-relaxed">
-        Operaciones de minería aurífera subterránea de clase mundial en la región 
-        metalogénica de Camilo Ponce Enríquez, Ecuador.
+  <div class="container mx-auto px-4 lg:px-16 relative z-10">
+    <div class="flex items-center gap-2 mb-4 lg:mb-6 text-sm">
+      <span class="text-gray-400">Operaciones</span>
+      <span class="text-zinc-600">/</span>
+      <span class="text-orange-500 font-semibold">Camilo Ponce Enríquez</span>
+    </div>
+    <h1 class="text-3xl lg:text-7xl font-black text-white leading-tight">
+      Complejo <span class="text-orange-500">Beneficiador</span>
+    </h1>
+    <p class="text-gray-400 text-sm lg:text-lg mt-3 lg:mt-4 max-w-lg">
+      Principal planta de beneficio del distrito aurífero de Camilo Ponce Enríquez, Azuay — Ecuador
+    </p>
+  </div>
+</section>
+
+<!-- ───── Intro (fondo oscuro, texto descriptivo de calidad) ───── -->
+<section class="py-16 bg-zinc-900 border-b border-zinc-800">
+  <div class="container mx-auto px-6 lg:px-16">
+    <h2 class="text-2xl lg:text-3xl font-black text-white mb-6 max-w-2xl leading-snug">
+      El mayor complejo beneficiador de minerales auríferos<br class="hidden lg:block">
+      al servicio de la minería artesanal del sur del Ecuador
+    </h2>
+    <div class="max-w-3xl ml-auto">
+      <p class="text-gray-400 leading-relaxed text-base">
+        PLANPROMIN S.A. opera en el sector Shumiral del cantón Camilo Ponce Enríquez una planta de beneficio
+        de minerales metálicos y reprocesamiento de relaves que sirve a las concesiones artesanales y de pequeña
+        escala del distrito. Con una capacidad combinada de aproximadamente 2,440 toneladas por día —distribuidas
+        en cuatro módulos propios, un módulo de flotación de relaves y la Planta Lajo— el complejo transforma
+        el mineral aurífero en barras de doré y concentrado polimetálico, aportando valor agregado local y
+        generando empleo directo en la zona de influencia.
       </p>
     </div>
   </div>
 </section>
 
-<!-- Mapa de Concesiones - Imagen Full Width -->
-<section class="py-0" style="background: linear-gradient(to bottom, #0E7AA8, #15A5DF, #1A1A1A);">
-  <div class="w-full px-0">
-    
-    <!-- Contenedor de la imagen del mapa - Sin límites de ancho -->
-    <div class="relative w-full">
-      <img [src]="mapImagePath" 
-           alt="Mapa de concesiones mineras Camilo Ponce Enríquez"
-           class="w-full h-auto block">
-    </div>
-
+<!-- ───── Mapa full-width ───── -->
+<section class="bg-black py-0">
+  <div class="w-full">
+    <img [src]="mapImagePath"
+         alt="Mapa de concesiones mineras Camilo Ponce Enríquez"
+         class="w-full h-auto block">
   </div>
 </section>
 
-<!-- Datos Técnicos -->
-<section class="py-20 bg-white">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-4xl font-black text-gray-900 mb-12 text-center">
-        Datos Técnicos del <span class="text-orange-600">Proyecto</span>
-      </h2>
+<!-- ───── Datos del Complejo (estilo "Fruta del Norte Facts", tema oscuro) ───── -->
+<section class="py-12 lg:py-20 bg-zinc-900">
+  <div class="container mx-auto px-4 lg:px-16">
+    <div class="grid lg:grid-cols-4 gap-6 lg:gap-10 items-start">
 
-      <div class="bg-gray-50 rounded-xl border-2 border-gray-200 overflow-hidden">
-        <div class="divide-y divide-gray-200">
-          <div *ngFor="let dato of datosTecnicos; let i = index" 
-               class="grid md:grid-cols-3 gap-4 p-6 hover:bg-gray-100 transition-colors"
-               [class.bg-gray-100]="i % 2 === 0">
-            <div class="md:col-span-1">
-              <span class="text-sm font-bold text-gray-600 uppercase tracking-wider">{{ dato.label }}</span>
-            </div>
-            <div class="md:col-span-2">
-              <span class="text-gray-900 font-medium">{{ dato.value }}</span>
-            </div>
+      <!-- Título a la izquierda -->
+      <div class="lg:col-span-1">
+        <h2 class="text-2xl lg:text-3xl font-black text-white leading-tight">
+          Complejo<br>Ponce Enríquez<br>
+          <span class="text-orange-500">Datos Clave</span>
+        </h2>
+      </div>
+
+      <!-- Tabla de datos — 2 columnas en mobile, 5 en desktop -->
+      <div class="lg:col-span-3 divide-y divide-zinc-800">
+        <div *ngFor="let dato of datosTecnicos"
+             class="flex flex-col sm:grid sm:grid-cols-5 gap-1 sm:gap-4 py-4 items-start">
+          <div class="sm:col-span-2 text-xs font-bold uppercase tracking-wider text-orange-500 leading-snug">
+            {{ dato.label }}
+          </div>
+          <div class="sm:col-span-3 text-gray-300 text-sm leading-relaxed">
+            {{ dato.value }}
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- Estadísticas Clave -->
-<!-- <section class="py-20 bg-zinc-900">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-center mb-12">
-      <h2 class="text-4xl font-black text-white mb-4">
-        Indicadores <span class="text-orange-600">Clave</span>
-      </h2>
-      <p class="text-gray-400">Métricas principales del proyecto</p>
-    </div>
+<!-- ───── Tarjetas de navegación (diseño oscuro con borde naranja inferior) ───── -->
+<section class="bg-black py-0">
+  <div class="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-zinc-800">
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-      <div *ngFor="let stat of proyectoStats" 
-           class="bg-black border-2 border-zinc-800 rounded-xl p-8 text-center hover:border-orange-600 transition-all group">
-        <div class="text-6xl mb-4">{{ stat.icon }}</div>
-        <div class="text-4xl font-black text-orange-600 mb-2 group-hover:scale-110 transition-transform">
-          {{ stat.value }}
-        </div>
-        <div class="text-gray-400 font-semibold">{{ stat.label }}</div>
+    <a routerLink="/operaciones/reservas-recursos"
+       class="group flex items-center justify-between px-5 py-6 md:px-8 md:py-10 bg-zinc-900 hover:bg-zinc-800 transition-colors duration-200 border-b-4 border-orange-500">
+      <span class="text-white font-semibold text-lg group-hover:text-orange-500 transition-colors">Reservas &amp; Recursos</span>
+      <svg class="w-5 h-5 text-orange-500 group-hover:translate-x-1 transition-transform duration-200"
+           fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+      </svg>
+    </a>
+
+    <a routerLink="/operaciones/reporte-tecnico"
+       class="group flex items-center justify-between px-5 py-6 md:px-8 md:py-10 bg-zinc-900 hover:bg-zinc-800 transition-colors duration-200 border-b-4 border-orange-500">
+      <span class="text-white font-semibold text-lg group-hover:text-orange-500 transition-colors">Reporte Técnico</span>
+      <svg class="w-5 h-5 text-orange-500 group-hover:translate-x-1 transition-transform duration-200"
+           fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+      </svg>
+    </a>
+
+    <a routerLink="/operaciones/guia-perspectivas"
+       class="group flex items-center justify-between px-5 py-6 md:px-8 md:py-10 bg-zinc-900 hover:bg-zinc-800 transition-colors duration-200 border-b-4 border-orange-500">
+      <span class="text-white font-semibold text-lg group-hover:text-orange-500 transition-colors">Guía &amp; Perspectivas</span>
+      <svg class="w-5 h-5 text-orange-500 group-hover:translate-x-1 transition-transform duration-200"
+           fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+      </svg>
+    </a>
+
+  </div>
+</section>
+
+<!-- ───── "La Historia Hasta Hoy" (fondo negro, timeline con puntos naranjos) ───── -->
+<section class="py-12 lg:py-20 bg-black overflow-hidden">
+  <div class="container mx-auto px-4 lg:px-16">
+    <div class="grid lg:grid-cols-4 gap-10 items-start">
+
+      <!-- Título + enlace -->
+      <div class="lg:col-span-1">
+        <h2 class="text-2xl lg:text-3xl font-black text-white leading-tight mb-6">
+          La Historia<br>Hasta Hoy
+        </h2>
+        <a routerLink="/operaciones/ponce-enriquez/historia"
+           class="inline-flex items-center gap-1 text-sm font-semibold text-orange-500 hover:text-orange-400 transition-colors">
+          Historia completa
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
       </div>
+
+      <!-- Timeline horizontal con scroll -->
+      <div class="lg:col-span-3 overflow-x-auto pb-4">
+        <div class="relative flex gap-0 min-w-max">
+          <!-- Línea de conexión -->
+          <div class="absolute top-[7px] left-0 right-0 h-px bg-zinc-700"></div>
+
+          <div *ngFor="let hito of hitos"
+               class="relative flex-shrink-0 w-52 pr-6">
+            <!-- Punto del timeline -->
+            <div class="w-3.5 h-3.5 rounded-full border-2 border-orange-500 bg-orange-500 relative z-10 mb-5"></div>
+            <!-- Año -->
+            <p class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">{{ hito.anio }}</p>
+            <!-- Título -->
+            <p class="text-sm font-bold text-white mb-2 leading-snug">{{ hito.titulo }}</p>
+            <!-- Descripción -->
+            <p class="text-xs text-zinc-400 leading-relaxed">{{ hito.descripcion }}</p>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </div>
-</section> -->
+</section>
 
-<!-- Galería de Operaciones -->
-<section class="py-20 bg-black">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-center mb-12">
-      <h2 class="text-4xl font-black text-white mb-4">
-        Nuestras <span class="text-orange-600">Operaciones</span>
-      </h2>
-      <p class="text-gray-400">Vista de las instalaciones y procesos mineros</p>
-    </div>
+<!-- ───── Galería de operaciones ───── -->
+<section class="py-12 lg:py-20 bg-zinc-900" *ngIf="operationImages.length > 0">
+  <div class="container mx-auto px-4 lg:px-16">
+    <p class="text-orange-500 font-semibold uppercase tracking-wider text-xs mb-3">En Terreno</p>
+    <h2 class="text-3xl font-black text-white mb-10">
+      Nuestras <span class="text-orange-500">Operaciones</span>
+    </h2>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
       <div *ngFor="let image of operationImages"
-           class="group relative overflow-hidden rounded-lg aspect-video cursor-pointer"
+           class="group relative overflow-hidden rounded-xl aspect-video cursor-pointer border border-zinc-800 hover:border-orange-500 transition-all"
            (click)="openPreview(getImageUrl(image), image.title)">
         <img [src]="getImageUrl(image)" [alt]="image.title"
-             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
           <div>
-            <h3 class="text-white font-bold text-lg mb-1">{{ image.title }}</h3>
-            <p *ngIf="image.description" class="text-gray-300 text-sm">{{ image.description }}</p>
+            <h3 class="text-white font-bold text-sm mb-0.5">{{ image.title }}</h3>
+            <p *ngIf="image.description" class="text-gray-300 text-xs">{{ image.description }}</p>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Navegación a otras secciones -->
-<section class="py-16 bg-zinc-900">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl font-black text-white mb-4">Explora Más</h2>
-      <p class="text-gray-400 mb-8">Conoce más sobre nuestras operaciones</p>
-      <div class="grid md:grid-cols-3 gap-4">
-        <a routerLink="/operaciones/historia" 
-           class="px-6 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
-          Historia
-        </a>
-        <a routerLink="/operaciones/geologia" 
-           class="px-6 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
-          Geología
-        </a>
-        <a routerLink="/operaciones/operativo" 
-           class="px-6 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
-          Proceso Operativo
-        </a>
       </div>
     </div>
   </div>
 </section>
 
 <app-footer></app-footer>
-
-<app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle" (closed)="closePreview()"></app-image-preview>
+<app-image-preview
+  [visible]="previewVisible"
+  [imageUrl]="previewUrl"
+  [imageTitle]="previewTitle"
+  (closed)="closePreview()">
+</app-image-preview>

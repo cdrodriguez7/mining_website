@@ -32,114 +32,93 @@ export class HistoriaComponent implements OnInit {
   previewUrl = '';
   previewTitle = '';
 
-  subtitulo = 'Construyendo una Empresa Minera Líder';
+  subtitulo = 'Trayectoria del complejo beneficiador al servicio de la minería artesanal de Camilo Ponce Enríquez.';
 
   // Timeline de hitos históricos
   hitos: HitoHistorico[] = [
     {
-      ano: '2006',
-      titulo: 'Descubrimiento',
-      descripcion: 'Descubrimiento del yacimiento aurífero en Camilo Ponce Enríquez. Primeros estudios geológicos identifican potencial significativo.',
+      ano: '1990s',
+      titulo: 'Actividad Minera Artesanal en CPE',
+      descripcion: 'La zona de Camilo Ponce Enríquez concentra una intensa actividad minera artesanal y de pequeña escala, con numerosos mineros extrayendo mineral aurífero de las vetas y estructuras del distrito.',
       icono: '⛏️',
       lado: 'derecha'
     },
     {
-      ano: '2007',
-      titulo: 'Programa Inicial de Perforación',
-      descripcion: 'Tercer pozo de un programa de perforación de tres pozos intersecta un promedio de 4.14 g/t de oro y 8.5 g/t de plata en 237.3m.',
-      icono: '🔨',
+      ano: '2001',
+      titulo: 'Constitución de PLANPROMIN S.A.',
+      descripcion: 'Se constituye PLANPROMIN S.A. con el objetivo de prestar servicios de beneficio de minerales al sector minero artesanal y de pequeña escala de la zona de Camilo Ponce Enríquez.',
+      icono: '🏢',
       lado: 'izquierda'
     },
     {
-      ano: '2008',
-      titulo: 'Estimación Inicial de Recursos Minerales Inferidos',
-      descripcion: 'Primera estimación de recursos publicada a finales de 2007, consistente en 58.9 Mt con ley de 7.23 g/t oro y 11.8 g/t plata, con ley de corte de 2.3 g/t oro-equivalente.',
-      icono: '📄',
+      ano: '2003',
+      titulo: 'Primer Registro de Planta',
+      descripcion: 'Obtención del primer registro de planta de beneficio ante la Dirección Nacional de Minería (DINAMI), autorizando el procesamiento de mineral aurífero proveniente de concesionarios de la zona.',
+      icono: '📋',
       lado: 'derecha'
     },
     {
-      ano: '2008-2014',
-      titulo: 'Adquisición del Proyecto',
-      descripcion: 'PLAMPROMIN S.A. adquiere los activos en 2008 por aproximadamente USD 1.2 mil millones, consolidando la propiedad 100%.',
-      icono: '💰',
+      ano: '2006',
+      titulo: 'Ampliación del Complejo',
+      descripcion: 'Primera expansión significativa del complejo beneficiador. Incorporación de celdas de flotación para la recuperación de sulfuros portadores de oro y modernización del circuito de molienda.',
+      icono: '🔧',
       lado: 'izquierda'
     },
     {
-      ano: '2010-2012',
-      titulo: 'Perforación Adicional y Actualización de Recursos',
-      descripcion: 'Programas extensivos de perforación confirman y expanden los recursos minerales. Actualización del modelo geológico.',
-      icono: '🔨',
+      ano: '2009',
+      titulo: 'Instalación del Circuito CIL',
+      descripcion: 'Instalación del circuito de lixiviación con carbón activado (CIL), integrando la etapa de cianuración al proceso. El CIL elevó la recuperación metalúrgica global y permitió la producción de barras de doré en sitio.',
+      icono: '⚙️',
       lado: 'derecha'
     },
     {
-      ano: '2013',
-      titulo: 'Estudio de Prefactibilidad (PFS)',
-      descripcion: 'Completado el Estudio de Prefactibilidad que demuestra la viabilidad técnica y económica del proyecto subterráneo.',
-      icono: '📊',
+      ano: '2012',
+      titulo: 'Autorización 1,000 TPD',
+      descripcion: 'El Ministerio de Energía y Minas otorga autorización formal para operar la planta principal con capacidad de 1,000 toneladas por día (código 10000922), consolidando el estatus regulatorio del complejo.',
+      icono: '✅',
       lado: 'izquierda'
     },
     {
       ano: '2015',
-      titulo: 'Estudio de Factibilidad (FS)',
-      descripcion: 'Estudio de Factibilidad completo confirma proyecto subterráneo con vida útil de 12 años y producción promedio de 500,000 oz/año.',
-      icono: '✅',
+      titulo: 'Incorporación de Planta Lajo',
+      descripcion: 'Firma de contrato de cesión de derechos para operar la Planta Lajo (400 TPD), ampliando la capacidad total del complejo beneficiador a 1,400 TPD y permitiendo atender la creciente demanda del sector artesanal.',
+      icono: '🏭',
       lado: 'derecha'
     },
     {
-      ano: '2016-2017',
-      titulo: 'Licencias y Permisos',
-      descripcion: 'Obtención de Licencia Ambiental del Ministerio del Ambiente y permisos clave de ARCOM, SENAGUA y autoridades locales.',
-      icono: '📋',
+      ano: '2017',
+      titulo: 'Programa de Reprocesamiento de Relaves',
+      descripcion: 'Implementación de un circuito especializado para el tratamiento de relaves históricos del sector. El sistema permite recuperar el oro residual de materiales previamente depositados, contribuyendo a la remediación ambiental de la zona.',
+      icono: '♻️',
       lado: 'izquierda'
     },
     {
-      ano: '2018',
-      titulo: 'Inicio de Construcción',
-      descripcion: 'Comienzo oficial de la fase de construcción. Desarrollo de infraestructura superficial y preparación de accesos subterráneos.',
-      icono: '🏗️',
+      ano: '2019',
+      titulo: 'Renovación de Licencia Ambiental',
+      descripcion: 'Actualización de la Licencia Ambiental del Ministerio del Ambiente, incorporando un Plan de Manejo Ambiental con estándares internacionales de gestión de relaves, uso responsable del cianuro y monitoreo continuo de aguas.',
+      icono: '🌿',
       lado: 'derecha'
     },
     {
-      ano: '2019-2020',
-      titulo: 'Desarrollo Subterráneo',
-      descripcion: 'Avance acelerado en el desarrollo de túneles, rampas y preparación de zonas de extracción. Construcción de planta de procesamiento.',
-      icono: '⚙️',
-      lado: 'izquierda'
-    },
-    {
-      ano: '2021',
-      titulo: 'Primera Producción Comercial',
-      descripcion: 'Inicio de operaciones comerciales. Primera barra de oro producida. Ramp-up gradual hacia capacidad nominal.',
-      icono: '🥇',
-      lado: 'derecha'
-    },
-    {
-      ano: '2022-2023',
-      titulo: 'Optimización Operacional',
-      descripcion: 'Alcance de capacidad nominal de diseño. Implementación de mejoras continuas en procesos de extracción y procesamiento.',
-      icono: '📈',
+      ano: '2022',
+      titulo: 'Modernización del Laboratorio Metalúrgico',
+      descripcion: 'Implementación de un laboratorio metalúrgico de última generación en sitio, con equipos de análisis de ley, caracterización mineralógica y control de procesos en tiempo real para optimizar la recuperación y el control de calidad.',
+      icono: '🔬',
       lado: 'izquierda'
     },
     {
       ano: '2024',
-      titulo: 'Certificaciones Internacionales',
-      descripcion: 'Obtención de certificaciones ISO 14001, ISO 45001 e ISO 9001. Certificación del Código Internacional de Manejo del Cianuro.',
-      icono: '🏆',
+      titulo: 'Optimización Operacional',
+      descripcion: 'Implementación de mejoras en los circuitos de concentración gravimétrica y flotación, elevando la recuperación promedio al 88% y reduciendo el consumo de reactivos por tonelada procesada.',
+      icono: '📈',
       lado: 'derecha'
-    },
-    {
-      ano: '2025',
-      titulo: 'Exploración de Expansión',
-      descripcion: 'Programas de exploración regional identifican nuevos objetivos. Estudios preliminares para potencial extensión de vida útil.',
-      icono: '🔍',
-      lado: 'izquierda'
     },
     {
       ano: '2026+',
-      titulo: 'Futuro Sostenible',
-      descripcion: 'Compromiso con operación responsable, generación de valor para stakeholders y contribución al desarrollo sostenible del Ecuador.',
+      titulo: 'Expansión y Sostenibilidad',
+      descripcion: 'Comprometidos con la expansión responsable de la capacidad de procesamiento y la implementación de tecnologías más limpias para el beneficio de minerales, alineados con estándares internacionales.',
       icono: '🌱',
-      lado: 'derecha'
+      lado: 'izquierda'
     }
   ];
 

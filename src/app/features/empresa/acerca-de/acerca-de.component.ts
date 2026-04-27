@@ -90,7 +90,7 @@ export class AcercaDeComponent implements OnInit {
   ];
 
   hitos = [
-    { anio: '1998', evento: 'Constitución de PLAMPROMIN S.A. en Quito, Ecuador' },
+    { anio: '1998', evento: 'Constitución de PLANPROMIN S.A. en Quito, Ecuador' },
     { anio: '2003', evento: 'Obtención de primeras concesiones en el cantón Ponce Enríquez' },
     { anio: '2010', evento: 'Ampliación de operaciones: planta de beneficio y sistema de relaves' },
     { anio: '2015', evento: 'Certificación ISO 14001 e implementación del Plan de Manejo Ambiental' },

@@ -38,7 +38,7 @@ export class ComunidadesComponent implements OnInit {
   programas = [
     {
       titulo: 'Educación y Becas',
-      descripcion: 'A través de la Fundación PLAMPROMIN, financiamos 15 becas universitarias anuales para jóvenes de Camilo Ponce Enríquez y comunidades vecinas. Desde 2018, más de 90 estudiantes han accedido a educación superior técnica o universitaria.',
+      descripcion: 'A través de la Fundación PLANPROMIN, financiamos 15 becas universitarias anuales para jóvenes de Camilo Ponce Enríquez y comunidades vecinas. Desde 2018, más de 90 estudiantes han accedido a educación superior técnica o universitaria.',
       imagen: 0
     },
     {

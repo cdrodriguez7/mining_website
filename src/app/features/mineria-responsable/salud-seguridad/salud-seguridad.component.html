@@ -3,7 +3,7 @@
 <!-- HERO -->
 <section class="relative h-[60vh] min-h-[420px] overflow-hidden">
   <div *ngIf="!isLoading && heroImage" class="absolute inset-0">
-    <img [src]="getHeroUrl()" alt="Salud y Seguridad PLAMPROMIN"
+    <img [src]="getHeroUrl()" alt="Salud y Seguridad PLANPROMIN"
          class="w-full h-full object-cover" />
   </div>
   <div *ngIf="isLoading || !heroImage" class="absolute inset-0 bg-zinc-900"></div>
@@ -28,22 +28,8 @@
   </div>
 </section>
 
-<!-- KPIs -->
-<section class="py-16 bg-zinc-900">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
-      <div *ngFor="let k of kpis"
-           class="bg-black rounded-xl p-6 border-l-4 text-center" [ngClass]="k.borde">
-        <div class="text-4xl font-black mb-1" [ngClass]="k.color">{{ k.valor }}</div>
-        <div class="text-white font-bold mb-1 text-sm">{{ k.etiqueta }}</div>
-        <div class="text-gray-500 text-xs">{{ k.periodo }}</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- COMPROMISO + IMAGEN -->
-<section class="py-20 bg-black">
+<section class="py-20 bg-zinc-900">
   <div class="container mx-auto px-6 lg:px-12">
     <div class="grid lg:grid-cols-2 gap-16 items-center">
       <!-- Imagen Cloudinary -->
@@ -55,7 +41,7 @@
           <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-xl"></div>
         </div>
         <div *ngIf="isLoading || !sectionImages[0]"
-             class="w-full h-[480px] bg-zinc-900 rounded-xl animate-pulse"></div>
+             class="w-full h-[480px] bg-black rounded-xl animate-pulse"></div>
         <!-- Badge -->
         <div class="absolute bottom-6 left-6 bg-black/80 backdrop-blur-sm rounded-xl px-5 py-3 border border-zinc-700">
           <div class="text-green-400 font-black text-2xl">0</div>
@@ -69,7 +55,7 @@
           Cero daño es<br><span class="text-orange-600">nuestra meta</span>
         </h2>
         <p class="text-gray-400 leading-relaxed mb-4">
-          PLAMPROMIN opera bajo el sistema de gestión integrado QHSE, alineado con la
+          PLANPROMIN opera bajo el sistema de gestión integrado QHSE, alineado con la
           norma ISO 45001. Todos los niveles de la organización — desde gerencia hasta
           operadores de frente — son responsables activos de la seguridad.
         </p>
@@ -78,7 +64,7 @@
           tiempo perdido (LTI), un hito que refleja la cultura de prevención arraigada
           en nuestro equipo de más de 120 colaboradores.
         </p>
-        <div class="flex items-start gap-3 p-4 bg-zinc-900 rounded-xl border border-zinc-800">
+        <div class="flex items-start gap-3 p-4 bg-black rounded-xl border border-zinc-800">
           <div class="w-2 h-full min-h-[40px] bg-orange-600 rounded flex-shrink-0"></div>
           <p class="text-gray-300 text-sm leading-relaxed">
             <span class="text-white font-semibold">TRIR 1.2</span> — Por debajo del promedio
@@ -91,7 +77,7 @@
 </section>
 
 <!-- PROGRAMAS -->
-<section class="py-20 bg-zinc-900">
+<section class="py-20 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
     <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-3">Programas</p>
     <h2 class="text-4xl font-black text-white mb-12">
@@ -100,7 +86,7 @@
 
     <div class="grid lg:grid-cols-3 gap-6">
       <div *ngFor="let prog of programas"
-           class="bg-black border border-zinc-800 hover:border-orange-600 rounded-xl p-8 transition-all group">
+           class="bg-zinc-900 border border-zinc-800 hover:border-orange-600 rounded-xl p-8 transition-all group">
         <h3 class="text-xl font-bold text-white mb-5 group-hover:text-orange-500 transition-colors">
           {{ prog.titulo }}
         </h3>
@@ -118,7 +104,7 @@
 </section>
 
 <!-- IMAGEN + NORMATIVA -->
-<section class="py-20 bg-black">
+<section class="py-20 bg-zinc-900">
   <div class="container mx-auto px-6 lg:px-12">
     <div class="grid lg:grid-cols-2 gap-16 items-center">
       <div>
@@ -132,7 +118,7 @@
           Ministerial 174 del Ministerio del Trabajo.
         </p>
         <div class="space-y-3">
-          <div class="flex items-center gap-3 p-4 bg-zinc-900 rounded-lg border border-zinc-800">
+          <div class="flex items-center gap-3 p-4 bg-black rounded-lg border border-zinc-800">
             <div class="w-8 h-8 bg-orange-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
               <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -140,7 +126,7 @@
             </div>
             <span class="text-gray-300 text-sm">ISO 45001:2018 — Sistema de Gestión en SST (en certificación)</span>
           </div>
-          <div class="flex items-center gap-3 p-4 bg-zinc-900 rounded-lg border border-zinc-800">
+          <div class="flex items-center gap-3 p-4 bg-black rounded-lg border border-zinc-800">
             <div class="w-8 h-8 bg-orange-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
               <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -148,7 +134,7 @@
             </div>
             <span class="text-gray-300 text-sm">Reglamento Interno de SST aprobado por el MEER</span>
           </div>
-          <div class="flex items-center gap-3 p-4 bg-zinc-900 rounded-lg border border-zinc-800">
+          <div class="flex items-center gap-3 p-4 bg-black rounded-lg border border-zinc-800">
             <div class="w-8 h-8 bg-orange-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
               <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -166,7 +152,7 @@
                class="w-full h-[440px] object-cover" loading="lazy" />
         </div>
         <div *ngIf="isLoading || !sectionImages[1]"
-             class="w-full h-[440px] bg-zinc-900 rounded-xl animate-pulse"></div>
+             class="w-full h-[440px] bg-black rounded-xl animate-pulse"></div>
       </div>
     </div>
   </div>

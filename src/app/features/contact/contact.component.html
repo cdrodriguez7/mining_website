@@ -1,0 +1,179 @@
+<app-navbar></app-navbar>
+
+<!-- Hero -->
+<section class="relative bg-black py-20 lg:py-28 overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
+  <div class="container mx-auto px-6 lg:px-12 relative z-10">
+    <div class="max-w-3xl">
+      <div class="flex items-center gap-2 mb-4 text-sm">
+        <a routerLink="/" class="text-gray-400 hover:text-orange-600 transition-colors">Inicio</a>
+        <span class="text-zinc-600">/</span>
+        <span class="text-orange-600 font-semibold">Contacto</span>
+      </div>
+      <h1 class="text-3xl lg:text-7xl font-black text-white mb-6 leading-tight">
+        Contác<span class="text-orange-600">tenos</span>
+      </h1>
+      <p class="text-gray-300 text-lg leading-relaxed">
+        Estamos disponibles para atender sus consultas, cotizaciones y solicitudes de servicio.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Contenido principal -->
+<section class="py-12 lg:py-20 bg-zinc-900">
+  <div class="container mx-auto px-4 lg:px-12">
+    <div class="grid lg:grid-cols-3 gap-8 lg:gap-12">
+
+      <!-- ── Columna izquierda: info de contacto ── -->
+      <div class="space-y-5">
+        <h2 class="text-2xl font-black text-white mb-8">Información de Contacto</h2>
+
+        <div *ngFor="let item of infoContacto"
+             class="bg-black border border-zinc-800 rounded-xl p-6 flex items-start gap-4 hover:border-orange-600/40 transition-colors">
+          <div class="w-10 h-10 bg-orange-600/15 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" [attr.d]="item.icon"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-white font-bold mb-1">{{ item.titulo }}</h3>
+            <p *ngFor="let linea of item.lineas" class="text-gray-400 text-sm leading-relaxed">{{ linea }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Columna derecha: formulario ── -->
+      <div class="lg:col-span-2">
+
+        <!-- Banner éxito -->
+        <div *ngIf="showSuccess"
+             class="success-banner mb-8 bg-green-900/30 border border-green-600/40 rounded-xl p-6 flex items-start gap-4">
+          <div class="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-green-400 font-bold mb-1">¡Solicitud enviada exitosamente!</h3>
+            <p class="text-gray-400 text-sm">Hemos recibido su mensaje. Nuestro equipo se contactará en menos de 24 horas.</p>
+          </div>
+        </div>
+
+        <!-- Banner error -->
+        <div *ngIf="showError"
+             class="mb-8 bg-red-900/30 border border-red-600/40 rounded-xl p-6 flex items-start gap-4">
+          <div class="w-10 h-10 bg-red-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-red-400 font-bold mb-1">Error al enviar</h3>
+            <p class="text-gray-400 text-sm">{{ errorMessage }}</p>
+          </div>
+        </div>
+
+        <!-- Formulario -->
+        <form [formGroup]="form" (ngSubmit)="onSubmit()"
+              class="bg-black border border-zinc-800 rounded-2xl p-5 lg:p-8 space-y-5 lg:space-y-6">
+
+          <h2 class="text-2xl font-black text-white mb-2">Envíenos su Solicitud</h2>
+          <p class="text-gray-400 text-sm">Los campos marcados con <span class="text-orange-500">*</span> son obligatorios.</p>
+
+          <!-- Tipo de solicitud -->
+          <div class="form-field">
+            <label class="field-label">Tipo de solicitud <span class="text-orange-500">*</span></label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <button *ngFor="let tipo of tiposSolicitud"
+                      type="button"
+                      (click)="form.get('tipoSolicitud')?.setValue(tipo.id)"
+                      class="px-3 py-2 rounded-lg border text-sm font-medium transition-all"
+                      [ngClass]="form.get('tipoSolicitud')?.value === tipo.id
+                        ? 'bg-orange-600 border-orange-600 text-white'
+                        : 'bg-zinc-900 border-zinc-700 text-gray-400 hover:border-orange-600/40'">
+                {{ tipo.label }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Nombre + Empresa -->
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div class="form-field">
+              <label class="field-label" for="nombre">Nombre completo <span class="text-orange-500">*</span></label>
+              <input id="nombre" type="text" formControlName="nombre"
+                     placeholder="Gonzalo Páez"
+                     class="field-input" [class.field-error]="invalid('nombre')">
+              <span *ngIf="invalid('nombre')" class="field-error-text">{{ errorFor('nombre') }}</span>
+            </div>
+            <div class="form-field">
+              <label class="field-label" for="empresa">Empresa</label>
+              <input id="empresa" type="text" formControlName="empresa"
+                     placeholder="PLANPROMIN S.A."
+                     class="field-input">
+            </div>
+          </div>
+
+          <!-- Email + Teléfono -->
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div class="form-field">
+              <label class="field-label" for="email">Correo electrónico <span class="text-orange-500">*</span></label>
+              <input id="email" type="email" formControlName="email"
+                     placeholder="correo@empresa.com"
+                     class="field-input" [class.field-error]="invalid('email')">
+              <span *ngIf="invalid('email')" class="field-error-text">{{ errorFor('email') }}</span>
+            </div>
+            <div class="form-field">
+              <label class="field-label" for="telefono">Teléfono</label>
+              <input id="telefono" type="tel" formControlName="telefono"
+                     placeholder="0712215007"
+                     class="field-input" [class.field-error]="invalid('telefono')">
+              <span *ngIf="invalid('telefono')" class="field-error-text">{{ errorFor('telefono') }}</span>
+            </div>
+          </div>
+
+          <!-- Asunto -->
+          <div class="form-field">
+            <label class="field-label" for="asunto">Asunto <span class="text-orange-500">*</span></label>
+            <input id="asunto" type="text" formControlName="asunto"
+                   placeholder="Breve descripción del motivo"
+                   class="field-input" [class.field-error]="invalid('asunto')">
+            <span *ngIf="invalid('asunto')" class="field-error-text">{{ errorFor('asunto') }}</span>
+          </div>
+
+          <!-- Mensaje -->
+          <div class="form-field">
+            <label class="field-label" for="mensaje">Mensaje <span class="text-orange-500">*</span></label>
+            <textarea id="mensaje" formControlName="mensaje" rows="6"
+                      placeholder="Describa detalladamente su consulta o solicitud..."
+                      class="field-input resize-none" [class.field-error]="invalid('mensaje')"></textarea>
+            <div class="flex justify-between items-center mt-1">
+              <span *ngIf="invalid('mensaje')" class="field-error-text">{{ errorFor('mensaje') }}</span>
+              <span class="text-gray-600 text-xs ml-auto">
+                {{ form.get('mensaje')?.value?.length ?? 0 }} caracteres
+              </span>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit"
+                  [disabled]="isSubmitting"
+                  class="w-full py-4 bg-orange-600 hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-3">
+            <svg *ngIf="isSubmitting" class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+            <svg *ngIf="!isSubmitting" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+            </svg>
+            {{ isSubmitting ? 'Enviando...' : 'Enviar Solicitud' }}
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

@@ -1,130 +1,103 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
+import { FooterComponent } from '../../shared/components/footer/footer.component';
+import { ContactService } from '../../core/services/contact.service';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  template: `
-    <section class="min-h-screen bg-dark-950 pt-32 pb-20">
-      <div class="container-custom max-w-6xl">
-        <!-- Header -->
-        <div class="text-center mb-16">
-          <h1 class="text-5xl font-display font-bold text-white mb-6">
-            <span class="gradient-text">Contacto</span>
-          </h1>
-          <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-            ¿Tienes preguntas sobre los procesos mineros? Estamos aquí para ayudarte
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-12">
-          <!-- Contact Form -->
-          <div class="bg-dark-800 rounded-2xl p-8">
-            <h2 class="text-2xl font-display font-bold text-white mb-6">
-              Envíanos un mensaje
-            </h2>
-            <form (ngSubmit)="onSubmit()" class="space-y-6">
-              <div>
-                <label class="block text-gray-300 mb-2" for="name">Nombre completo</label>
-                <input 
-                  type="text" 
-                  id="name"
-                  [(ngModel)]="formData.name"
-                  name="name"
-                  required
-                  class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white focus:outline-none focus:border-accent-500 transition-colors">
-              </div>
-              <div>
-                <label class="block text-gray-300 mb-2" for="email">Email</label>
-                <input 
-                  type="email" 
-                  id="email"
-                  [(ngModel)]="formData.email"
-                  name="email"
-                  required
-                  class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white focus:outline-none focus:border-accent-500 transition-colors">
-              </div>
-              <div>
-                <label class="block text-gray-300 mb-2" for="subject">Asunto</label>
-                <input 
-                  type="text" 
-                  id="subject"
-                  [(ngModel)]="formData.subject"
-                  name="subject"
-                  required
-                  class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white focus:outline-none focus:border-accent-500 transition-colors">
-              </div>
-              <div>
-                <label class="block text-gray-300 mb-2" for="message">Mensaje</label>
-                <textarea 
-                  id="message"
-                  [(ngModel)]="formData.message"
-                  name="message"
-                  rows="5"
-                  required
-                  class="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white focus:outline-none focus:border-accent-500 transition-colors resize-none"></textarea>
-              </div>
-              <button type="submit" class="btn-primary w-full">
-                Enviar Mensaje
-              </button>
-            </form>
-          </div>
-
-          <!-- Contact Info -->
-          <div class="space-y-6">
-            <div class="bg-dark-800 rounded-2xl p-8">
-              <div class="text-4xl mb-4">📍</div>
-              <h3 class="text-xl font-display font-bold text-white mb-3">Ubicación</h3>
-              <p class="text-gray-300">
-                Cantón Ponce Enríquez<br>
-                Provincia del Azuay<br>
-                Ecuador
-              </p>
-            </div>
-
-            <div class="bg-dark-800 rounded-2xl p-8">
-              <div class="text-4xl mb-4">📧</div>
-              <h3 class="text-xl font-display font-bold text-white mb-3">Email</h3>
-              <p class="text-gray-300">
-                info&#64;transparenciaminera.ec
-              </p>
-            </div>
-
-            <div class="bg-dark-800 rounded-2xl p-8">
-              <div class="text-4xl mb-4">📞</div>
-              <h3 class="text-xl font-display font-bold text-white mb-3">Teléfono</h3>
-              <p class="text-gray-300">
-                +593 XX XXX XXXX
-              </p>
-            </div>
-
-            <div class="bg-dark-800 rounded-2xl p-8">
-              <div class="text-4xl mb-4">🕐</div>
-              <h3 class="text-xl font-display font-bold text-white mb-3">Horario</h3>
-              <p class="text-gray-300">
-                Lunes a Viernes: 8:00 AM - 5:00 PM<br>
-                Sábados: 9:00 AM - 1:00 PM
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  `
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, NavbarComponent, FooterComponent],
+  templateUrl: './contact.component.html',
+  styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent {
-  formData = {
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  };
+  private fb      = inject(FormBuilder);
+  private service = inject(ContactService);
 
-  onSubmit() {
-    console.log('Form submitted:', this.formData);
-    alert('Mensaje enviado correctamente. Te contactaremos pronto.');
-    this.formData = { name: '', email: '', subject: '', message: '' };
+  isSubmitting  = false;
+  showSuccess   = false;
+  showError     = false;
+  errorMessage  = '';
+
+  readonly tiposSolicitud = [
+    { id: 'cotizacion',  label: 'Solicitar Cotización' },
+    { id: 'informacion', label: 'Información General' },
+    { id: 'operaciones', label: 'Consulta Operaciones' },
+    { id: 'otro',        label: 'Otro' }
+  ];
+
+  readonly infoContacto = [
+    {
+      icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z',
+      titulo: 'Ubicación',
+      lineas: ['Sector Shumiral', 'Cantón Camilo Ponce Enríquez', 'Provincia del Azuay, Ecuador']
+    },
+    {
+      icon: 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z',
+      titulo: 'Teléfono',
+      lineas: ['+593 7 122 5007', 'Lun - Vie: 8:00 - 18:00']
+    },
+    {
+      icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+      titulo: 'Correo',
+      lineas: ['financiero@planpromin.com', 'Respuesta en menos de 24 h']
+    },
+    {
+      icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+      titulo: 'Horario de Atención',
+      lineas: ['Lun – Vie: 8:00 AM – 5:00 PM', 'Sáb: 9:00 AM – 1:00 PM']
+    }
+  ];
+
+  form: FormGroup = this.fb.group({
+    tipoSolicitud: ['cotizacion', Validators.required],
+    nombre:        ['', [Validators.required, Validators.minLength(3)]],
+    empresa:       [''],
+    email:         ['', [Validators.required, Validators.email]],
+    telefono:      ['', [Validators.pattern(/^[0-9]{7,15}$/)]],
+    asunto:        ['', [Validators.required, Validators.minLength(5)]],
+    mensaje:       ['', [Validators.required, Validators.minLength(20)]]
+  });
+
+  invalid(field: string): boolean {
+    const c = this.form.get(field);
+    return !!(c?.invalid && c.touched);
+  }
+
+  errorFor(field: string): string {
+    const c = this.form.get(field);
+    if (c?.hasError('required'))   return 'Campo obligatorio';
+    if (c?.hasError('email'))      return 'Email inválido';
+    if (c?.hasError('minlength'))  return `Mínimo ${c.errors?.['minlength'].requiredLength} caracteres`;
+    if (c?.hasError('pattern'))    return 'Solo números (7-15 dígitos)';
+    return '';
+  }
+
+  onSubmit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.isSubmitting = true;
+    this.showSuccess  = false;
+    this.showError    = false;
+
+    this.service.enviar(this.form.value).subscribe({
+      next: () => {
+        this.isSubmitting = false;
+        this.showSuccess  = true;
+        this.form.reset({ tipoSolicitud: 'cotizacion' });
+        setTimeout(() => document.querySelector('.success-banner')?.scrollIntoView({ behavior: 'smooth' }), 100);
+      },
+      error: (err) => {
+        this.isSubmitting = false;
+        this.showError    = true;
+        this.errorMessage = err?.error?.error ?? 'Error al enviar. Por favor intente nuevamente o contáctenos por teléfono.';
+      }
+    });
   }
 }

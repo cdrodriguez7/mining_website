@@ -13,7 +13,7 @@ import { FooterComponent } from '../../../shared/components/footer/footer.compon
 })
 export class InformacionCorporativaComponent {
   datosLegales = [
-    { etiqueta: 'Razón Social', valor: 'PLAMPROMIN S.A.' },
+    { etiqueta: 'Razón Social', valor: 'PLANPROMIN S.A.' },
     { etiqueta: 'RUC', valor: '0190458321001' },
     { etiqueta: 'Tipo de Sociedad', valor: 'Sociedad Anónima' },
     { etiqueta: 'Fecha de Constitución', valor: '14 de marzo de 1998' },
@@ -34,7 +34,7 @@ export class InformacionCorporativaComponent {
   ];
 
   hitos = [
-    { anio: '1998', titulo: 'Constitución', desc: 'PLAMPROMIN S.A. se inscribe en el Registro Mercantil de Cuenca con capital inicial de USD 1.200.000.' },
+    { anio: '1998', titulo: 'Constitución', desc: 'PLANPROMIN S.A. se inscribe en el Registro Mercantil de Cuenca con capital inicial de USD 1.200.000.' },
     { anio: '2003', titulo: 'Primer Título Minero', desc: 'ARCOM otorga el primer título de explotación para el Área Ponce Norte.' },
     { anio: '2010', titulo: 'Ampliación Industrial', desc: 'Inauguración de la planta de beneficio con capacidad de 150 t/día.' },
     { anio: '2015', titulo: 'Certificación ISO', desc: 'Obtención de la certificación ISO 14001:2015 por el Bureau Veritas.' },

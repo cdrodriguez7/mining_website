@@ -59,16 +59,29 @@ li,
 /* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
   h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   h2 {
-    font-size: 2rem;
+    font-size: 1.75rem;
+  }
+
+  /* Evitar desbordamiento horizontal en mobile */
+  .container {
+    width: 100%;
+    overflow-x: clip;
+  }
+
+  /* Texto justificado en mobile puede verse mal con palabras largas */
+  p, li {
+    hyphens: auto;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 }
 
 // =====================================================
-// PALETA DE COLORES CORPORATIVA PLAMPROMIN S.A.
+// PALETA DE COLORES CORPORATIVA PLANPROMIN S.A.
 // =====================================================
 // Basada en identidad visual corporativa
 // Última actualización: Marzo 2026

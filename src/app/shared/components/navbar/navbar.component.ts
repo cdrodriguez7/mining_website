@@ -47,10 +47,10 @@ export class NavbarComponent {
         { label: 'Historia', route: '/operaciones/ponce-enriquez/historia' },
         { label: 'Geología y Mineralización', route: '/operaciones/ponce-enriquez/geologia' },
         { label: 'Estado Operativo', route: '/operaciones/ponce-enriquez/operativo' },
-        { label: 'Guía de Producción', route: '/operaciones/ponce-enriquez/proyecciones' },
-        { label: 'Exploración', route: '/operaciones/exploracion' },
-        { label: 'Reservas y Recursos', route: '/operaciones/reservas-recursos' },
-        { label: 'Reporte Técnico', route: '/operaciones/reporte-tecnico' }
+        { label: 'Guía de Producción', route: '/operaciones/ponce-enriquez/proyecciones' }
+        // { label: 'Exploración', route: '/operaciones/exploracion' },
+        // { label: 'Reservas y Recursos', route: '/operaciones/reservas-recursos' },
+        // { label: 'Reporte Técnico', route: '/operaciones/reporte-tecnico' }
       ]
     },
     {
@@ -60,8 +60,8 @@ export class NavbarComponent {
         { label: 'Política de Minería Responsable', route: '/mineria-responsable/politica' },
         { label: 'Salud y Seguridad', route: '/mineria-responsable/salud-seguridad' },
         { label: 'Medio Ambiente', route: '/mineria-responsable/medio-ambiente' },
-        { label: 'Estrategia 5 Años', route: '/mineria-responsable/estrategia-5-anos' },
-        { label: 'Compromisos y Membresías', route: '/mineria-responsable/compromisos-membresias' }
+        // { label: 'Estrategia 5 Años', route: '/mineria-responsable/estrategia-5-anos' },
+        // { label: 'Compromisos y Membresías', route: '/mineria-responsable/compromisos-membresias' }
       ]
     },
     { label: 'Noticias', route: '/noticias' },

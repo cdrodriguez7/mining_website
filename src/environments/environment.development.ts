@@ -6,6 +6,6 @@ export const environment = {
   baseUrl: 'http://localhost:3000/api',
   cloudinary: {
     cloudName: 'dlumbzsnd',
-    uploadPreset: 'PLAMPROMINV1'
+    uploadPreset: 'PLANPROMINV1'
   }
 };

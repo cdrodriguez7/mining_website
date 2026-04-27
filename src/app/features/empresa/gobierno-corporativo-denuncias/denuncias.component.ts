@@ -86,7 +86,7 @@ export class DenunciasComponent implements OnInit {
     {
       tipo: 'Correo Electrónico',
       icono: '✉️',
-      detalle: 'denuncias@plampromin.com',
+      detalle: 'denuncias@planpromin.com',
       disponibilidad: 'Respuesta en 48h',
       anonimo: true
     },

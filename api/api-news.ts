@@ -28,8 +28,8 @@ export interface NewsResponse {
 })
 export class NewsService {
   private apiUrl = `${environment.apiUrl}/api/news`;
-  private cacheKey = 'plampromin_news_cache';
-  private cacheTimestampKey = 'plampromin_news_timestamp';
+  private cacheKey = 'planpromin_news_cache';
+  private cacheTimestampKey = 'planpromin_news_timestamp';
   private cacheDuration = 24 * 60 * 60 * 1000; // 24 horas
 
   constructor(private http: HttpClient) {}

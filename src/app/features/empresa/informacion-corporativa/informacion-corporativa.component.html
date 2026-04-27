@@ -2,7 +2,8 @@
 
 <!-- Hero -->
 <section class="relative bg-black py-24 overflow-hidden">
-  <div class="absolute inset-0 bg-gradient-to-br from-orange-600/8 via-transparent to-transparent pointer-events-none"></div>
+  <div class="absolute inset-0 bg-gradient-to-br from-orange-600/8 via-transparent to-transparent pointer-events-none">
+  </div>
   <div class="container mx-auto px-6 lg:px-12 relative z-10">
     <div class="flex items-center gap-3 mb-8 text-sm">
       <a routerLink="/empresa/acerca-de" class="text-gray-400 hover:text-orange-600 transition-colors">Empresa</a>
@@ -15,7 +16,7 @@
     </h1>
     <p class="text-gray-300 text-lg max-w-2xl leading-relaxed">
       Datos legales, concesiones mineras vigentes e hitos institucionales de
-      PLAMPROMIN S.A., la empresa productora de oro del cantón Camilo Ponce Enríquez.
+      PLANPROMIN S.A., la empresa productora de oro del cantón Camilo Ponce Enríquez.
     </p>
   </div>
 </section>
@@ -29,7 +30,7 @@
         <h2 class="text-3xl font-black text-white mb-6">Datos de la <span class="text-orange-600">Sociedad</span></h2>
         <p class="text-gray-400 text-sm leading-relaxed">
           Información oficial inscrita en el Registro Mercantil y en la Agencia de Regulación y
-          Control Minero (ARCOM). Todos los títulos mineros de PLAMPROMIN se encuentran vigentes
+          Control Minero (ARCOM). Todos los títulos mineros de PLANPROMIN se encuentran vigentes
           y al día en sus obligaciones ante los organismos de control.
         </p>
       </div>
@@ -37,8 +38,8 @@
       <div class="lg:col-span-2">
         <div class="bg-black border border-zinc-800 rounded-2xl overflow-hidden">
           <div *ngFor="let d of datosLegales; let i = index"
-               class="flex flex-col sm:flex-row sm:items-start gap-2 px-6 py-4"
-               [class]="i % 2 === 0 ? 'bg-black' : 'bg-zinc-900/50'">
+            class="flex flex-col sm:flex-row sm:items-start gap-2 px-6 py-4"
+            [class]="i % 2 === 0 ? 'bg-black' : 'bg-zinc-900/50'">
             <dt class="text-gray-500 text-sm w-full sm:w-48 flex-shrink-0 pt-0.5">{{ d.etiqueta }}</dt>
             <dd class="text-white text-sm font-medium">{{ d.valor }}</dd>
           </div>
@@ -53,32 +54,33 @@
   <div class="container mx-auto px-6 lg:px-12">
     <div class="mb-12">
       <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-2">Cartera Minera</p>
-      <h2 class="text-3xl font-black text-white">Concesiones <span class="text-orange-600">Principales</span></h2>
+      <h2 class="text-3xl font-black text-white">Relaveras <span class="text-orange-600">Principales</span></h2>
       <p class="text-gray-400 mt-3 max-w-xl">
-        Selección de los títulos mineros más significativos del portafolio de 82 concesiones activas de PLAMPROMIN.
+        Selección de los títulos mineros más significativos del portafolio de 82 concesiones activas de PLANPROMIN.
       </p>
     </div>
+
 
     <div class="overflow-x-auto">
       <table class="w-full">
         <thead>
           <tr class="border-b border-zinc-800">
-            <th class="text-left py-4 px-5 text-gray-500 text-xs uppercase tracking-wider font-semibold">Área / Bloque</th>
+            <th class="text-left py-4 px-5 text-gray-500 text-xs uppercase tracking-wider font-semibold">Relavera #</th>
             <th class="text-left py-4 px-5 text-gray-500 text-xs uppercase tracking-wider font-semibold">Fase</th>
             <th class="text-left py-4 px-5 text-gray-500 text-xs uppercase tracking-wider font-semibold">Superficie</th>
             <th class="text-left py-4 px-5 text-gray-500 text-xs uppercase tracking-wider font-semibold">Estado</th>
-            <th class="text-left py-4 px-5 text-gray-500 text-xs uppercase tracking-wider font-semibold">Vencimiento</th>
+            <th class="text-left py-4 px-5 text-gray-500 text-xs uppercase tracking-wider font-semibold">Vencimiento
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let c of concesiones"
-              class="border-b border-zinc-900 hover:bg-zinc-900/50 transition-colors">
+          <tr *ngFor="let c of concesiones" class="border-b border-zinc-900 hover:bg-zinc-900/50 transition-colors">
             <td class="py-4 px-5">
               <span class="text-white font-semibold">{{ c.nombre }}</span>
             </td>
             <td class="py-4 px-5">
               <span class="px-2.5 py-1 text-xs font-semibold rounded-full"
-                    [class]="c.tipo === 'Explotación' ? 'bg-orange-600/15 text-orange-500 border border-orange-600/30' : 'bg-zinc-700 text-gray-300'">
+                [class]="c.tipo === 'Explotación' ? 'bg-orange-600/15 text-orange-500 border border-orange-600/30' : 'bg-zinc-700 text-gray-300'">
                 {{ c.tipo }}
               </span>
             </td>
@@ -111,7 +113,7 @@
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
       <div *ngFor="let h of hitos"
-           class="bg-black border border-zinc-800 hover:border-orange-600/40 rounded-xl p-6 transition-colors">
+        class="bg-black border border-zinc-800 hover:border-orange-600/40 rounded-xl p-6 transition-colors">
         <div class="text-3xl font-black text-orange-600 mb-3">{{ h.anio }}</div>
         <h4 class="text-white font-bold mb-2">{{ h.titulo }}</h4>
         <p class="text-gray-400 text-sm leading-relaxed">{{ h.desc }}</p>
@@ -123,7 +125,8 @@
 <!-- Organismos reguladores -->
 <section class="py-16 bg-black">
   <div class="container mx-auto px-6 lg:px-12 max-w-5xl">
-    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-8 text-center">Supervisión Institucional</p>
+    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-8 text-center">Supervisión Institucional
+    </p>
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 text-center">
         <div class="text-orange-600 font-black text-sm mb-2">ARCOM</div>

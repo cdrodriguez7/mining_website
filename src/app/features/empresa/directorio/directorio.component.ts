@@ -64,7 +64,7 @@ export class DirectorioComponent {
       tipo: 'Secretaría',
       desde: '2019',
       comites: ['Comité Ejecutivo'],
-      bio: 'Abogada corporativa con LLM en Derecho Societario. Responsable de la custodia de actas, libros corporativos y coordinación de sesiones del Directorio y la Junta General de Accionistas de PLAMPROMIN.',
+      bio: 'Abogada corporativa con LLM en Derecho Societario. Responsable de la custodia de actas, libros corporativos y coordinación de sesiones del Directorio y la Junta General de Accionistas de PLANPROMIN.',
       iniciales: 'SO'
     }
   ];

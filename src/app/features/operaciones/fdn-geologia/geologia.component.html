@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<!-- Hero Section -->
+<!-- Hero -->
 <section class="relative bg-black py-20 lg:py-32 overflow-hidden">
   <div class="absolute inset-0">
     <div *ngIf="heroImage" class="absolute inset-0">
@@ -8,47 +8,43 @@
     </div>
     <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
   </div>
-  
   <div class="container mx-auto px-6 lg:px-12 relative z-10">
-    <div class="max-w-4xl">
-      <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
-        Operaciones / Geología
-      </div>
-      <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
-        Geología y <span class="text-orange-600">Mineralización</span>
-      </h1>
+    <div class="flex items-center gap-2 mb-4 text-sm">
+      <span class="text-gray-400">Operaciones</span>
+      <span class="text-zinc-600">/</span>
+      <span class="text-orange-600 font-semibold">Geología</span>
     </div>
+    <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
+      Geología y <span class="text-orange-600">Mineralización</span>
+    </h1>
   </div>
 </section>
 
 <!-- Tipo de Depósito -->
-<section class="py-20 bg-white">
+<section class="py-20 bg-zinc-900">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="max-w-6xl mx-auto">
-      <div class="bg-gray-100 rounded-xl p-8 mb-8">
-        <h2 class="text-3xl font-bold mb-6" style="color: #15A5DF;">{{ tipoDeposito.clasificacion }}</h2>
-        <div class="grid md:grid-cols-2 gap-4">
-          <div *ngFor="let caract of tipoDeposito.caracteristicas" 
-               class="flex items-start space-x-3 bg-white p-4 rounded-lg">
-            <svg class="w-6 h-6 flex-shrink-0 mt-1" style="color: #15A5DF;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-            <span class="text-gray-700">{{ caract }}</span>
-          </div>
+    <div class="bg-black border border-zinc-800 rounded-xl p-8 mb-8">
+      <h2 class="text-2xl font-bold text-white mb-6">{{ tipoDeposito.clasificacion }}</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div *ngFor="let caract of tipoDeposito.caracteristicas"
+             class="flex items-start space-x-3 bg-zinc-900 p-4 rounded-lg border border-zinc-800">
+          <svg class="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+          <span class="text-gray-300 text-sm">{{ caract }}</span>
         </div>
       </div>
+    </div>
 
-      <!-- Características Principales -->
-      <div class="space-y-4">
-        <div *ngFor="let item of caracteristicas" 
-             class="bg-gray-50 border-l-4 p-6 rounded-r-lg hover:bg-gray-100 transition-colors"
-             style="border-color: #15A5DF;">
-          <div class="flex items-start space-x-4">
-            <span class="text-4xl">{{ item.icono }}</span>
-            <div class="flex-1">
-              <h3 class="text-xl font-bold mb-2" style="color: #15A5DF;">{{ item.titulo }}</h3>
-              <p class="text-gray-700 leading-relaxed">{{ item.descripcion }}</p>
-            </div>
+    <!-- Características Principales -->
+    <div class="space-y-4">
+      <div *ngFor="let item of caracteristicas"
+           class="bg-black border-l-4 border-orange-600 p-6 rounded-r-xl hover:bg-zinc-900 transition-colors">
+        <div class="flex items-start space-x-4">
+          <span class="text-4xl flex-shrink-0">{{ item.icono }}</span>
+          <div class="flex-1">
+            <h3 class="text-lg font-bold text-orange-500 mb-2">{{ item.titulo }}</h3>
+            <p class="text-gray-400 leading-relaxed text-sm">{{ item.descripcion }}</p>
           </div>
         </div>
       </div>
@@ -56,28 +52,28 @@
   </div>
 </section>
 
-<!-- Contexto Regional + Imagen -->
-<section class="py-20 bg-gray-50">
+<!-- Contexto Regional -->
+<section class="py-20 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid lg:grid-cols-2 gap-12 items-start">
-        <!-- Imagen -->
-        <div *ngIf="geologiaImages.length > 0" class="order-2 lg:order-1 cursor-pointer"
-             (click)="openPreview(getImageUrl(geologiaImages[0]), geologiaImages[0].title)">
-          <img [src]="getImageUrl(geologiaImages[0])"
-               [alt]="geologiaImages[0].title"
-               class="w-full rounded-lg shadow-lg">
-        </div>
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+      <!-- Imagen -->
+      <div *ngIf="geologiaImages.length > 0"
+           class="order-2 lg:order-1 rounded-xl overflow-hidden border border-zinc-800 cursor-pointer hover:border-orange-600 transition-all"
+           (click)="openPreview(getImageUrl(geologiaImages[0]), geologiaImages[0].title)">
+        <img [src]="getImageUrl(geologiaImages[0])"
+             [alt]="geologiaImages[0].title"
+             class="w-full object-cover hover:scale-105 transition-transform duration-500">
+      </div>
 
-        <!-- Texto -->
-        <div class="order-1 lg:order-2">
-          <h2 class="text-3xl font-bold mb-6" style="color: #15A5DF;">{{ contextoRegional.titulo }}</h2>
-          <div class="space-y-4">
-            <p *ngFor="let parrafo of contextoRegional.parrafos" 
-               class="text-gray-700 leading-relaxed">
-              {{ parrafo }}
-            </p>
-          </div>
+      <!-- Texto -->
+      <div class="order-1 lg:order-2">
+        <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-4">Contexto Regional</p>
+        <h2 class="text-3xl font-black text-white mb-6 leading-tight">{{ contextoRegional.titulo }}</h2>
+        <div class="space-y-4">
+          <p *ngFor="let parrafo of contextoRegional.parrafos"
+             class="text-gray-400 leading-relaxed">
+            {{ parrafo }}
+          </p>
         </div>
       </div>
     </div>
@@ -85,57 +81,64 @@
 </section>
 
 <!-- Mineralización -->
-<section class="py-20 bg-white">
+<section class="py-20 bg-zinc-900">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl font-bold mb-6" style="color: #15A5DF;">{{ mineralizacion.titulo }}</h2>
-      <p class="text-gray-700 leading-relaxed mb-6 text-lg">{{ mineralizacion.descripcion }}</p>
-      <div class="space-y-3">
-        <div *ngFor="let zona of mineralizacion.zonas" 
-             class="flex items-start space-x-3 bg-gray-50 p-4 rounded-lg">
-          <svg class="w-6 h-6 flex-shrink-0 mt-1" style="color: #E9951D;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
-          <p class="text-gray-700 leading-relaxed">{{ zona }}</p>
-        </div>
+    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-3">Zonas</p>
+    <h2 class="text-3xl font-black text-white mb-4">{{ mineralizacion.titulo }}</h2>
+    <p class="text-gray-400 leading-relaxed mb-8 text-lg">{{ mineralizacion.descripcion }}</p>
+    <div class="space-y-3">
+      <div *ngFor="let zona of mineralizacion.zonas"
+           class="flex items-start space-x-3 bg-black p-5 rounded-xl border border-zinc-800 hover:border-orange-600/50 transition-colors">
+        <svg class="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+        </svg>
+        <p class="text-gray-300 leading-relaxed text-sm">{{ zona }}</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- Mineralogía -->
-<section class="py-20 bg-gray-50">
+<section class="py-20 bg-black">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl font-bold mb-6" style="color: #15A5DF;">{{ mineralogia.titulo }}</h2>
-      <p class="text-gray-700 leading-relaxed mb-6">{{ mineralogia.descripcion }}</p>
-      <ul class="space-y-3">
-        <li *ngFor="let detalle of mineralogia.detalles" 
-            class="text-gray-700 leading-relaxed pl-6 border-l-2"
-            style="border-color: #E9951D;">
-          {{ detalle }}
-        </li>
-      </ul>
-    </div>
+    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-3">Composición</p>
+    <h2 class="text-3xl font-black text-white mb-4">{{ mineralogia.titulo }}</h2>
+    <p class="text-gray-400 leading-relaxed mb-8">{{ mineralogia.descripcion }}</p>
+    <ul class="space-y-3">
+      <li *ngFor="let detalle of mineralogia.detalles"
+          class="text-gray-300 leading-relaxed pl-6 border-l-2 border-orange-600 py-1">
+        {{ detalle }}
+      </li>
+    </ul>
   </div>
 </section>
 
 <!-- Navegación -->
-<section class="py-16 bg-black">
+<section class="py-16 bg-zinc-900">
   <div class="container mx-auto px-6 lg:px-12">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl font-black text-white mb-8">Explora Más</h2>
-      <div class="grid md:grid-cols-3 gap-4">
-        <a routerLink="/operaciones/overview" class="px-6 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-bold rounded-lg transition-all">
-          Vista General
-        </a>
-        <a routerLink="/operaciones/operativo" class="px-6 py-4 text-white font-bold rounded-lg transition-colors" style="background-color: #E9951D;">
-          Proceso Operativo
-        </a>
-        <a routerLink="/operaciones/proyecciones" class="px-6 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-bold rounded-lg transition-all">
-          Proyecciones
-        </a>
-      </div>
+    <h2 class="text-3xl font-black text-white mb-8 text-center">Explora <span class="text-orange-600">Más</span></h2>
+    <div class="grid md:grid-cols-3 gap-4">
+      <a routerLink="/operaciones/ponce-enriquez/overview"
+         class="group flex items-center justify-between px-6 py-5 bg-black border border-zinc-800 hover:border-orange-600 rounded-xl transition-all">
+        <span class="text-white font-bold group-hover:text-orange-500 transition-colors">Vista General</span>
+        <svg class="w-4 h-4 text-orange-600 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a routerLink="/operaciones/ponce-enriquez/operativo"
+         class="group flex items-center justify-between px-6 py-5 bg-black border border-zinc-800 hover:border-orange-600 rounded-xl transition-all">
+        <span class="text-white font-bold group-hover:text-orange-500 transition-colors">Proceso Operativo</span>
+        <svg class="w-4 h-4 text-orange-600 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a routerLink="/operaciones/ponce-enriquez/proyecciones"
+         class="group flex items-center justify-between px-6 py-5 bg-black border border-zinc-800 hover:border-orange-600 rounded-xl transition-all">
+        <span class="text-white font-bold group-hover:text-orange-500 transition-colors">Proyecciones</span>
+        <svg class="w-4 h-4 text-orange-600 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </a>
     </div>
   </div>
 </section>

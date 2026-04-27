@@ -1,9 +1,9 @@
 <app-navbar></app-navbar>
 
 <!-- HERO -->
-<section class="relative h-[70vh] min-h-[480px] overflow-hidden">
+<section class="relative h-[55vh] lg:h-[70vh] min-h-[380px] lg:min-h-[480px] overflow-hidden">
   <div *ngIf="!isLoading && heroImage" class="absolute inset-0">
-    <img [src]="getHeroUrl()" alt="Minería Responsable PLAMPROMIN"
+    <img [src]="getHeroUrl()" alt="Minería Responsable PLANPROMIN"
          class="w-full h-full object-cover" />
   </div>
   <div *ngIf="isLoading || !heroImage" class="absolute inset-0 bg-zinc-900"></div>
@@ -15,14 +15,14 @@
               transform skew-x-[-12deg] translate-x-40 hidden lg:block opacity-80"></div>
 
   <div class="relative z-10 h-full flex items-center">
-    <div class="container mx-auto px-6 lg:px-12">
+    <div class="container mx-auto px-4 lg:px-12">
       <p class="text-orange-600 font-semibold uppercase tracking-widest text-sm mb-4">Sostenibilidad</p>
-      <h1 class="text-6xl lg:text-8xl font-black text-white leading-tight mb-6">
+      <h1 class="text-4xl lg:text-8xl font-black text-white leading-tight mb-4 lg:mb-6">
         Minería<br><span class="text-orange-600">Responsable</span>
       </h1>
       <div class="flex items-start gap-4 max-w-xl">
-        <div class="w-1 h-16 bg-orange-600 flex-shrink-0 mt-1"></div>
-        <p class="text-gray-300 text-lg leading-relaxed">
+        <div class="w-1 h-12 lg:h-16 bg-orange-600 flex-shrink-0 mt-1"></div>
+        <p class="text-gray-300 text-base lg:text-lg leading-relaxed">
           Operamos con los más altos estándares ambientales, sociales y de gobernanza en
           la zona minera de Camilo Ponce Enríquez, Azuay, Ecuador.
         </p>
@@ -31,23 +31,9 @@
   </div>
 </section>
 
-<!-- MÉTRICAS ESG -->
-<section class="py-16 bg-zinc-900">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
-      <div *ngFor="let m of metricas" class="text-center">
-        <div class="text-5xl font-black mb-2" [ngClass]="m.color">{{ m.valor }}</div>
-        <div class="w-8 h-1 bg-orange-600 mx-auto mb-2"></div>
-        <div class="text-white font-bold mb-1">{{ m.unidad }}</div>
-        <div class="text-gray-500 text-sm">{{ m.periodo }}</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- PILARES -->
-<section class="py-20 bg-black">
-  <div class="container mx-auto px-6 lg:px-12">
+<section class="py-12 lg:py-20 bg-zinc-900">
+  <div class="container mx-auto px-4 lg:px-12">
     <div class="mb-14">
       <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-3">Nuestros Pilares</p>
       <h2 class="text-5xl font-black text-white">
@@ -57,8 +43,8 @@
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       <a *ngFor="let p of pilares" [routerLink]="p.link"
-         class="group bg-zinc-900 border border-zinc-800 rounded-xl p-8
-                hover:border-orange-600 hover:bg-zinc-800/50 transition-all duration-300">
+         class="group bg-black border border-zinc-800 rounded-xl p-8
+                hover:border-orange-600 hover:bg-zinc-900/50 transition-all duration-300">
         <div class="w-12 h-12 rounded-lg bg-orange-600/10 border border-orange-600/30
                     flex items-center justify-center mb-6 group-hover:bg-orange-600/20 transition-colors">
           <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,8 +65,8 @@
 </section>
 
 <!-- GALERÍA CLOUDINARY -->
-<section class="py-20 bg-zinc-900">
-  <div class="container mx-auto px-6 lg:px-12">
+<section class="py-12 lg:py-20 bg-black">
+  <div class="container mx-auto px-4 lg:px-12">
     <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-3">Operaciones en Terreno</p>
     <h2 class="text-4xl font-black text-white mb-10">Camilo Ponce Enríquez, <span class="text-orange-600">Azuay</span></h2>
 
@@ -114,11 +100,11 @@
 </section>
 
 <!-- REPORTES CTA -->
-<section class="py-20 bg-black">
-  <div class="container mx-auto px-6 lg:px-12">
+<section class="py-12 lg:py-20 bg-zinc-900">
+  <div class="container mx-auto px-4 lg:px-12">
     <div class="grid md:grid-cols-3 gap-6">
       <a routerLink="/mineria-responsable/reportes-sostenibilidad"
-         class="group bg-zinc-900 border border-zinc-800 hover:border-orange-600 rounded-xl p-8 transition-all">
+         class="group bg-black border border-zinc-800 hover:border-orange-600 rounded-xl p-8 transition-all">
         <div class="text-orange-600 mb-4">
           <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -129,7 +115,7 @@
         <p class="text-gray-400 text-sm">Informe anual GRI con indicadores ambientales, sociales y de gobernanza.</p>
       </a>
       <a routerLink="/mineria-responsable/estrategia-5-anos"
-         class="group bg-zinc-900 border border-zinc-800 hover:border-orange-600 rounded-xl p-8 transition-all">
+         class="group bg-black border border-zinc-800 hover:border-orange-600 rounded-xl p-8 transition-all">
         <div class="text-orange-600 mb-4">
           <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -140,7 +126,7 @@
         <p class="text-gray-400 text-sm">Hoja de ruta ESG con metas y KPIs para los próximos cinco años.</p>
       </a>
       <a routerLink="/mineria-responsable/compromisos-membresias"
-         class="group bg-zinc-900 border border-zinc-800 hover:border-orange-600 rounded-xl p-8 transition-all">
+         class="group bg-black border border-zinc-800 hover:border-orange-600 rounded-xl p-8 transition-all">
         <div class="text-orange-600 mb-4">
           <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -148,7 +134,7 @@
           </svg>
         </div>
         <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-500 transition-colors">Compromisos y Membresías</h3>
-        <p class="text-gray-400 text-sm">Iniciativas internacionales a las que PLAMPROMIN se ha adherido.</p>
+        <p class="text-gray-400 text-sm">Iniciativas internacionales a las que PLANPROMIN se ha adherido.</p>
       </a>
     </div>
   </div>

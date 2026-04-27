@@ -44,60 +44,61 @@ export class ProyeccionesComponent implements OnInit {
   proyecciones: ProyeccionAnual[] = [
     {
       year: 2026,
-      produccion: '60,000 - 65,000',
-      capitalSustaining: '8 - 10',
-      costoOperativo: '850 - 900',
-      aisc: '1,050 - 1,100',
-      throughput: 5000,
-      leyPromedio: 8.3,
-      recuperacion: '91%'
+      produccion: '38,000 - 45,000',
+      capitalSustaining: '2 - 3',
+      costoOperativo: '400 - 450',
+      aisc: '520 - 580',
+      throughput: 1400,
+      leyPromedio: 3.0,
+      recuperacion: '88%'
     },
     {
       year: 2027,
-      produccion: '62,000 - 67,000',
-      capitalSustaining: '10 - 12',
-      costoOperativo: '840 - 890',
-      aisc: '1,080 - 1,150',
-      throughput: 5000,
-      leyPromedio: 8.5,
-      recuperacion: '91%'
+      produccion: '40,000 - 47,000',
+      capitalSustaining: '3 - 4',
+      costoOperativo: '390 - 440',
+      aisc: '510 - 570',
+      throughput: 1400,
+      leyPromedio: 3.2,
+      recuperacion: '89%'
     },
     {
       year: 2028,
-      produccion: '65,000 - 70,000',
-      capitalSustaining: '7 - 9',
-      costoOperativo: '830 - 880',
-      aisc: '980 - 1,050',
-      throughput: 5500,
-      leyPromedio: 8.6,
-      recuperacion: '92%'
+      produccion: '43,000 - 52,000',
+      capitalSustaining: '2 - 3',
+      costoOperativo: '380 - 430',
+      aisc: '490 - 550',
+      throughput: 1600,
+      leyPromedio: 3.4,
+      recuperacion: '90%'
     }
   ];
 
   // Notas de proyecciones
   notasProyecciones = [
-    'Los supuestos de precio de oro/plata por onza son $2,100/$26.00 respectivamente',
-    'Los costos operativos incluyen minado, procesamiento, administración general y transporte',
-    'AISC (All-In Sustaining Cost) incluye costos operativos, capital sustentante y regalías',
-    'Las proyecciones están sujetas a condiciones de mercado y operativas'
+    'Supuesto de precio de oro: $2,100/oz. Producción expresada en onzas troy de oro recuperado',
+    'Los costos operativos incluyen procesamiento, reactivos, mano de obra, administración y transporte',
+    'AISC incluye costos operativos, capital sustentante y regalías regulatorias',
+    'Ley promedio variable según el lote de mineral y relaves recibidos del sector artesanal',
+    'Las proyecciones están sujetas a condiciones de mercado, disponibilidad de mineral y operativas'
   ];
 
-  // Programa de exploración
+  // Programas de inversión y mejora
   programaExploracion: ProgramaExploracion[] = [
     {
-      nombre: 'Exploración Near-Mine',
-      presupuesto: '$5.5M',
-      objetivo: 'Extensión de recursos minerales en vetas conocidas y exploración de estructuras paralelas dentro del área de concesión'
+      nombre: 'Ampliación de Capacidad',
+      presupuesto: '$3.5M',
+      objetivo: 'Incremento de la capacidad de procesamiento de 1,400 a 2,000 TPD mediante la incorporación de nuevos molinos de bolas y circuitos de flotación adicionales'
     },
     {
-      nombre: 'Exploración Regional',
-      presupuesto: '$2.8M',
-      objetivo: 'Identificación de nuevos blancos exploratorios en el distrito minero Ponce Enríquez y evaluación de anomalías geoquímicas'
+      nombre: 'Modernización de Circuitos',
+      presupuesto: '$2.2M',
+      objetivo: 'Actualización de concentradores gravimétricos centrífugos y equipos de flotación para mejorar la eficiencia metalúrgica y reducir el consumo de reactivos'
     },
     {
-      nombre: 'Perforación de Definición',
-      presupuesto: '$4.2M',
-      objetivo: 'Conversión de recursos inferidos a medidos e indicados en zonas de alta ley identificadas'
+      nombre: 'Gestión de Relaves',
+      presupuesto: '$1.8M',
+      objetivo: 'Expansión de la relavera y mejora del sistema de recuperación y recirculación de agua para incrementar la capacidad de almacenamiento seguro de relaves'
     }
   ];
 
@@ -105,23 +106,23 @@ export class ProyeccionesComponent implements OnInit {
   inversionCapital = {
     titulo: 'Plan de Inversión de Capital 2026-2028',
     sustaining: {
-      total: '$25 - 31 Millones',
-      descripcion: 'Inversión en mantenimiento de infraestructura, reemplazo de equipos, desarrollos mineros y gestión de colas',
+      total: '$4 - 6 Millones',
+      descripcion: 'Inversión en mantenimiento de infraestructura del complejo beneficiador, reemplazo de equipos críticos y cumplimiento ambiental',
       items: [
-        'Desarrollo y preparación de nuevas áreas de minado',
-        'Mantenimiento mayor de equipos críticos',
-        'Mejoras en planta de procesamiento',
-        'Gestión de relaves y monitoreo ambiental'
+        'Mantenimiento mayor de molinos y concentradores',
+        'Reemplazo de partes críticas en circuito CIL',
+        'Mejoras en planta de detoxificación de colas',
+        'Monitoreo ambiental y gestión de relaves'
       ]
     },
     expansion: {
-      total: '$12 - 15 Millones',
-      descripcion: 'Proyectos de expansión y optimización',
+      total: '$7 - 9 Millones',
+      descripcion: 'Proyectos de expansión de capacidad y optimización de procesos para atender la creciente demanda del sector artesanal',
       items: [
-        'Incremento de capacidad de molienda a 5,500 tpd',
-        'Optimización del circuito de flotación',
-        'Sistema de recuperación de agua mejorado',
-        'Infraestructura de acceso a zonas profundas'
+        'Nueva línea de molienda (molinos de bolas)',
+        'Concentradores gravimétricos adicionales',
+        'Expansión del circuito CIL y tanques de lixiviación',
+        'Modernización del laboratorio de análisis metalúrgico'
       ]
     }
   };
@@ -129,30 +130,31 @@ export class ProyeccionesComponent implements OnInit {
   // Objetivos estratégicos
   objetivosEstrategicos = [
     {
-      titulo: 'Crecimiento de Producción',
-      descripcion: 'Incrementar producción anual de 60,000 oz (2026) a 70,000 oz (2028) mediante optimización operativa y expansión de capacidad'
+      titulo: 'Incremento de Tonelaje Procesado',
+      descripcion: 'Aumentar la capacidad de procesamiento de 1,400 TPD a 2,000 TPD para atender la creciente demanda del sector minero artesanal y de pequeña escala de la zona'
     },
     {
-      titulo: 'Reducción de Costos',
-      descripcion: 'Reducir AISC de $1,100/oz a $1,050/oz mediante mejoras en eficiencia, optimización de procesos y economías de escala'
+      titulo: 'Mejora de Recuperación Metalúrgica',
+      descripcion: 'Elevar la recuperación promedio al 90% mediante optimización de procesos gravimétricos, flotación y CIL, y renovación de equipos clave del complejo'
     },
     {
-      titulo: 'Extensión de Recursos',
-      descripcion: 'Incrementar recursos minerales mediante exploración near-mine y conversión de recursos inferidos a medidos/indicados'
+      titulo: 'Expansión del Programa de Relaves',
+      descripcion: 'Ampliar el circuito de reprocesamiento de relaves para tratar volúmenes históricos adicionales del sector, recuperando oro residual y contribuyendo a la remediación ambiental'
     },
     {
-      titulo: 'Sostenibilidad',
-      descripcion: 'Mantener certificación ISO 14001, reducir consumo de agua en 15% y neutralizar emisiones de carbono al 2030'
+      titulo: 'Gestión Ambiental Certificada',
+      descripcion: 'Obtener certificación ISO 14001, adherirse al Código Internacional de Manejo del Cianuro y reducir el consumo de agua mediante mejoras en el sistema de recirculación'
     }
   ];
 
   // Factores de riesgo
   factoresRiesgo = [
     'Variaciones en precios internacionales de oro y metales base',
-    'Condiciones geotécnicas en zonas profundas de la mina',
-    'Disponibilidad de agua durante época seca',
+    'Disponibilidad y regularidad del flujo de mineral proveniente del sector artesanal',
+    'Variaciones en el precio de reactivos (cianuro, cal, floculantes) y energía eléctrica',
     'Cambios regulatorios en el marco legal minero ecuatoriano',
-    'Condiciones de seguridad y operacionales en el distrito'
+    'Condiciones de seguridad y operacionales en el distrito de Camilo Ponce Enríquez',
+    'Disponibilidad de agua durante época seca para el proceso de lixiviación'
   ];
 
   constructor(

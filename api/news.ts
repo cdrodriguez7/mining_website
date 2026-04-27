@@ -32,7 +32,7 @@ function fetchUrl(url: string, timeoutMs = 8000, redirects = 4): Promise<string>
 
     const req = (client as typeof https).get(url, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; MiningNewsBot/1.0; +https://plampromin.ec)',
+        'User-Agent': 'Mozilla/5.0 (compatible; MiningNewsBot/1.0; +https://planpromin.ec)',
         'Accept': 'text/html,application/xhtml+xml,application/xml,*/*'
       }
     }, (res) => {

@@ -5,7 +5,7 @@ import { CloudinaryBackendService } from './cloudinary-backend.service';
 // Cache en sessionStorage: persiste durante la sesión (navegación interna),
 // pero se borra automáticamente con F5 o al cerrar la pestaña.
 // Esto garantiza que las imágenes se recargan desde Cloudinary en cada visita nueva.
-const STORAGE_PREFIX = 'plampromin_gallery_v1_';
+const STORAGE_PREFIX = 'planpromin_gallery_v1_';
 
 @Injectable({
   providedIn: 'root'

@@ -5,7 +5,8 @@
   <!-- Background Image DINÁMICA -->
   <div class="absolute inset-0 flex items-center">
     <div *ngIf="heroImage" class="absolute inset-0">
-      <img [src]="mapImagePath" alt="Mapa" class="rounded-lg shadow-lg w-full">
+      <img [src]="mapImagePath" alt="Planpromin S.A." class="w-full h-full object-cover"
+        style="object-position: center 25%;">
     </div>
     <div class="absolute inset-0 bg-gradient-to-b from-black via-black/0 to-black"></div>
   </div>
@@ -50,16 +51,16 @@
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- METAL PRICES SECTION — nueva sección -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="metals-section py-20 bg-black">
-  <div class="container mx-auto px-6 lg:px-12">
+<section class="metals-section py-12 lg:py-20 bg-black">
+  <div class="container mx-auto px-4 lg:px-12">
 
     <!-- Header -->
-    <div class="metals-header mb-12">
+    <div class="metals-header mb-8 lg:mb-12">
       <div class="text-orange-600 font-semibold mb-3 uppercase tracking-wider text-sm">
         Mercado Internacional
       </div>
       <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
-        <h2 class="text-5xl font-black text-white leading-tight">
+        <h2 class="text-3xl lg:text-5xl font-black text-white leading-tight">
           Precio de <span class="text-orange-600">Metales</span>
         </h2>
         <div class="flex items-center gap-4">
@@ -114,20 +115,20 @@
             <div>
               <div class="mdc-label">{{ activeMetalData.label }} · {{ activeMetalData.symbol }}</div>
               <div class="mdc-price">${{ activeMetalData.price | number:'1.2-2' }}</div>
-              <div class="mdc-change" [class.positive]="activeMetalData.change >= 0"
-                [class.negative]="activeMetalData.change < 0">
-                <span class="change-arrow">{{ activeMetalData.change >= 0 ? '▲' : '▼' }}</span>
-                {{ activeMetalData.change >= 0 ? '+' : '' }}{{ activeMetalData.change | number:'1.2-2' }}
-                ({{ activeMetalData.change >= 0 ? '+' : '' }}{{ activeMetalData.changePct | number:'1.2-2' }}%)
+              <!-- Cambio real vs. ayer cuando hay historial; guión el primer día -->
+              <div *ngIf="activeMetalData.change !== null" class="mdc-change"
+                [class.positive]="activeMetalData.change! >= 0" [class.negative]="activeMetalData.change! < 0">
+                <span class="change-arrow">{{ activeMetalData.change! >= 0 ? '▲' : '▼' }}</span>
+                {{ activeMetalData.change! >= 0 ? '+' : '' }}{{ activeMetalData.change! | number:'1.2-2' }}
+                ({{ activeMetalData.changePct! >= 0 ? '+' : '' }}{{ activeMetalData.changePct! | number:'1.2-2' }}%)
+              </div>
+              <div *ngIf="activeMetalData.change === null" class="mdc-change neutral">
+                <span class="text-gray-500 text-sm">Variación disponible mañana</span>
               </div>
             </div>
           </div>
 
           <div class="mdc-rows">
-            <div class="mdc-row">
-              <span class="r-label">Apertura</span>
-              <span class="r-val">${{ activeMetalData.open | number:'1.2-2' }}</span>
-            </div>
             <div class="mdc-row">
               <span class="r-label">Máximo del día</span>
               <span class="r-val">${{ activeMetalData.high | number:'1.2-2' }}</span>
@@ -137,20 +138,11 @@
               <span class="r-val">${{ activeMetalData.low | number:'1.2-2' }}</span>
             </div>
             <div class="mdc-row">
-              <span class="r-label">Bid</span>
-              <span class="r-val">${{ activeMetalData.bid | number:'1.2-2' }}</span>
-            </div>
-            <div class="mdc-row">
-              <span class="r-label">Ask</span>
-              <span class="r-val">${{ activeMetalData.ask | number:'1.2-2' }}</span>
-            </div>
-            <div class="mdc-row highlight">
-              <span class="r-label">Máx. 52 sem.</span>
-              <span class="r-val">${{ activeMetalData.yearHigh | number:'1.2-2' }}</span>
-            </div>
-            <div class="mdc-row highlight">
-              <span class="r-label">Mín. 52 sem.</span>
-              <span class="r-val">${{ activeMetalData.yearLow | number:'1.2-2' }}</span>
+              <span class="r-label">Día anterior</span>
+              <span class="r-val" *ngIf="activeMetalData.change !== null">
+                ${{ (activeMetalData.price - activeMetalData.change!) | number:'1.2-2' }}
+              </span>
+              <span class="r-val text-gray-600" *ngIf="activeMetalData.change === null">—</span>
             </div>
           </div>
 
@@ -175,7 +167,12 @@
           </div>
 
           <div class="chart-footnote">
-            Gráfico histórico simulado · Para datos históricos reales se requiere plan premium de la API
+            <ng-container *ngIf="usingRealHistory">
+              Datos históricos reales · {{ historyDays }} día{{ historyDays === 1 ? '' : 's' }} registrados (máx. 30)
+            </ng-container>
+            <ng-container *ngIf="!usingRealHistory">
+              Gráfico referencial · El historial real se acumula a partir de mañana
+            </ng-container>
           </div>
         </div>
       </div>
@@ -185,11 +182,11 @@
 <!-- ═══════════════════════════════════════════════════════ -->
 
 <!-- STATS SECTION -->
-<section class="py-20 bg-zinc-900">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="grid grid-cols-2 lg:grid-cols-3 gap-8">
+<section class="py-12 lg:py-20 bg-zinc-900">
+  <div class="container mx-auto px-4 lg:px-12">
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
       <!-- <div class="text-center">
-        <div class="text-6xl font-black text-white mb-2">3</div>
+        <div class="text-4xl lg:text-6xl font-black text-white mb-2">3</div>
         <div class="flex items-center justify-center mb-2">
           <div class="w-8 h-1 bg-orange-600"></div>
         </div>
@@ -197,15 +194,7 @@
         <div class="text-gray-400 text-sm">Activas</div>
       </div> -->
       <div class="text-center">
-        <div class="text-6xl font-black text-white mb-2">5</div>
-        <div class="flex items-center justify-center mb-2">
-          <div class="w-8 h-1 bg-orange-600"></div>
-        </div>
-        <div class="text-orange-600 font-semibold mb-1">Proyectos</div>
-        <div class="text-gray-400 text-sm">Completos</div>
-      </div>
-      <div class="text-center">
-        <div class="text-6xl font-black text-white mb-2">15</div>
+        <div class="text-4xl lg:text-6xl font-black text-white mb-2">15</div>
         <div class="flex items-center justify-center mb-2">
           <div class="w-8 h-1 bg-orange-600"></div>
         </div>
@@ -213,7 +202,15 @@
         <div class="text-gray-400 text-sm">Experiencia</div>
       </div>
       <div class="text-center">
-        <div class="text-6xl font-black text-white mb-2">120+</div>
+        <div class="text-4xl lg:text-6xl font-black text-white mb-2">6</div>
+        <div class="flex items-center justify-center mb-2">
+          <div class="w-8 h-1 bg-orange-600"></div>
+        </div>
+        <div class="text-orange-600 font-semibold mb-1">Relaveras</div>
+        <div class="text-gray-400 text-sm">Funcionando</div>
+      </div>
+      <div class="text-center">
+        <div class="text-4xl lg:text-6xl font-black text-white mb-2">120+</div>
         <div class="flex items-center justify-center mb-2">
           <div class="w-8 h-1 bg-orange-600"></div>
         </div>
@@ -226,27 +223,27 @@
 
 
 <!-- ABOUT SECTION - Con imagen dinámica -->
-<section class="py-20 bg-black">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
+<section class="py-12 lg:py-20 bg-black">
+  <div class="container mx-auto px-4 lg:px-12">
+    <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
       <!-- Left Content -->
       <div>
         <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
           Sobre nosotros
         </div>
-        <h2 class="text-5xl font-black text-white mb-6 leading-tight">
+        <h2 class="text-3xl lg:text-5xl font-black text-white mb-6 leading-tight">
           Extracción Responsable,<br>
           <span class="text-orange-600">Desarrollo Sostenible</span>
         </h2>
         <p class="text-gray-400 mb-6 leading-relaxed">
-          PLAMPROMIN S.A. opera en el cantón Camilo Ponce Enríquez, el principal distrito aurífero
-          del Ecuador, responsable del 72% de la producción nacional de oro. Con más de 25 años de
+          PLANPROMIN S.A. opera en el cantón Camilo Ponce Enríquez, el principal distrito aurífero
+          del Ecuador, responsable del 72% de la producción nacional de oro. Con más de 15 años de
           trayectoria, combinamos técnica minera de vanguardia con un compromiso firme hacia el
           cuidado del medio ambiente y el bienestar de las comunidades locales.
         </p>
         <p class="text-gray-400 mb-8 leading-relaxed">
-          Nuestras 82 concesiones activas abarcan desde la exploración geológica hasta el beneficio
-          y comercialización del mineral, generando empleo directo para más de 123 trabajadores —
+          Abarcan desde la exploración geológica hasta el beneficio
+          y comercialización del mineral, generando empleo directo para más de 120 trabajadores —
           el 75% provenientes de las comunidades del área de influencia de la operación.
         </p>
         <div class="flex items-center space-x-4">
@@ -258,7 +255,7 @@
         <div *ngIf="aboutImage" class="relative cursor-pointer"
           (click)="openPreview(getAboutImageUrl(), aboutImage.title)">
           <img [src]="getAboutImageUrl()" [alt]="aboutImage.title"
-            class="rounded-lg shadow-2xl w-full h-[600px] object-cover" />
+            class="rounded-lg shadow-2xl w-full h-56 md:h-80 lg:h-[600px] object-cover" />
           <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
 
           <!-- Info de la imagen -->
@@ -269,7 +266,7 @@
         </div>
 
         <!-- Fallback si no hay imagen -->
-        <div *ngIf="!aboutImage" class="bg-gray-800 rounded-lg h-[600px] flex items-center justify-center">
+        <div *ngIf="!aboutImage" class="bg-gray-800 rounded-lg h-56 md:h-80 lg:h-[600px] flex items-center justify-center">
           <div class="text-center">
             <div class="text-6xl mb-4"></div>
             <p class="text-gray-500">Cargando imagen...</p>
@@ -281,20 +278,21 @@
 </section>
 
 <!-- SERVICES SECTION — Planta de Beneficio -->
-<section class="py-24 bg-zinc-900 relative">
-  <div class="container mx-auto px-6 lg:px-12 relative z-10">
+<section class="py-14 lg:py-24 bg-zinc-900 relative">
+  <div class="container mx-auto px-4 lg:px-12 relative z-10">
 
     <!-- ── Encabezado ── -->
-    <div class="flex items-start gap-6 mb-16">
-      <div class="w-1 h-28 bg-orange-600 flex-shrink-0 mt-1"></div>
+    <div class="flex items-start gap-4 lg:gap-6 mb-8 lg:mb-16">
+      <div class="w-1 h-20 lg:h-28 bg-orange-600 flex-shrink-0 mt-1"></div>
       <div class="flex-1">
         <span class="text-orange-600 font-semibold uppercase tracking-wider text-sm">Nuestros Servicios</span>
-        <h2 class="text-5xl lg:text-6xl font-black text-white leading-tight mt-2 mb-4">
+        <h2 class="text-3xl lg:text-6xl font-black text-white leading-tight mt-2 mb-4">
           Planta de <span class="text-orange-600">Beneficio</span>
         </h2>
         <p class="text-gray-400 leading-relaxed text-justify">
-          Instalación industrial destinada al procesamiento integral de minerales, abarcando desde la reducción de
-          tamaño
+          Instalación industrial destinada al procesamiento integral de minerales, abarcando desde el acopio del mineral
+          y
+          la reducción de tamaño
           mediante etapas de conminución hasta la aplicación de procesos de concentración y extracción, como la
           flotación
           y la cianuración, con el propósito de obtener concentrados o valores metálicos. Su operación se enfoca en
@@ -305,48 +303,50 @@
       </div>
     </div>
 
-    <!-- ── Bloque 1 + 2: Planta y Terceros en dos columnas ── -->
-    <div class="grid lg:grid-cols-2 gap-8 mb-8">
+    <div class="grid lg:grid-cols-2 gap-6 lg:gap-8 mb-6 lg:mb-8">
 
       <!-- Bloque 1 — Planta de Beneficio -->
-      <!-- Fuente imagen: https://www.infomine.com/minesite/images/MineralProcessing.jpg -->
-      <div class="service-card group relative overflow-hidden rounded-2xl" style="min-height: 360px;">
-        <!-- Imagen desde internet — planta de procesamiento de minerales -->
+      <div
+        class="service-card group relative overflow-hidden rounded-2xl border border-white/10 hover:border-white/30 transition-all duration-500 cursor-pointer min-h-[240px] lg:min-h-[360px]">
+
+        <!-- Imagen -->
         <img
           src="https://nuevamineria01.akamaized.net/revista/wp-content/uploads/2019/08/Trabajadores-miner%C3%ADa-subterr%C3%A1nea-mujer.jpg"
           alt="Planta de Beneficio — procesamiento de minerales"
-          class="absolute inset-0 w-full h-full object-cover scale-105 blur-[2px] group-hover:blur-[6px] group-hover:scale-110 transition-all duration-500">
-        <!-- Overlay — degradado negro leve en reposo, se intensifica en hover -->
-        <div
-          class="absolute inset-0 bg-gradient-to-t from-black/[0.99] via-black/95 to-black/88 transition-all duration-500">
+          class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+
+        <div class="absolute inset-0 bg-black/80 group-hover:bg-black/85 transition-all duration-500">
         </div>
-        <div class="absolute left-0 top-0 bottom-0 w-1 bg-orange-600"></div>
-        <div class="relative z-10 p-8 flex flex-col justify-end h-full">
+
+        <!-- Contenido -->
+        <div class="relative z-10 p-5 lg:p-8 flex flex-col justify-end h-full">
           <div class="text-orange-500 text-xs font-bold uppercase tracking-widest mb-3">01.</div>
-          <h3 class="text-2xl font-black text-white mb-3 leading-tight">Procesamiento Industrial</h3>
+          <h3 class="text-xl lg:text-2xl font-black text-white mb-3 leading-tight">Procesamiento Industrial</h3>
           <p class="text-gray-200 text-sm leading-relaxed text-justify">
             Su operación se enfoca en optimizar la liberación mineralógica y maximizar la recuperación metalúrgica,
-            mediante el control de variables operativas y la aplicación de criterios técnicos que garantizan
-            eficiencia, estabilidad del proceso y sostenibilidad en el tratamiento del mineral.
+            mediante el control de variables operativas y la aplicación de criterios técnicos dentro de las ramas de la
+            Metalurgia, Minas, Ambiental, Civil,
+            que garantizan eficiencia, estabilidad del proceso y sostenibilidad en el tratamiento del mineral.
           </p>
         </div>
+
       </div>
 
+
+
+
       <!-- Bloque 2 — Tratamiento a Terceros -->
-      <!-- Fuente imagen: https://commons.wikimedia.org/wiki/File:Gold_Mine_South_Africa.jpg -->
-      <div class="service-card group relative overflow-hidden rounded-2xl" style="min-height: 360px;">
-        <!-- Imagen desde internet — operaciones mineras / recepción de material -->
+      <div
+        class="service-card group relative overflow-hidden rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-500 cursor-pointer min-h-[240px] lg:min-h-[360px]">
         <img src="https://www.promineria.com/assets/images/notas/fotos/procesamiento_minerales.jpg"
           alt="Tratamiento de Material a Terceros — recepción de mineral externo"
-          class="absolute inset-0 w-full h-full object-cover scale-105 blur-[2px] group-hover:blur-[6px] group-hover:scale-110 transition-all duration-500">
-        <!-- Overlay — degradado negro leve en reposo, se intensifica en hover -->
-        <div
-          class="absolute inset-0 bg-gradient-to-t from-black/[0.99] via-black/95 to-black/88 transition-all duration-500">
+          class="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700">
+
+        <div class="absolute inset-0 bg-black/80 group-hover:bg-black/85 transition-all duration-500">
         </div>
-        <div class="absolute left-0 top-0 bottom-0 w-1 bg-orange-600"></div>
-        <div class="relative z-10 p-8 flex flex-col justify-end h-full">
+        <div class="relative z-10 p-5 lg:p-8 flex flex-col justify-end h-full">
           <div class="text-orange-500 text-xs font-bold uppercase tracking-widest mb-3">02.</div>
-          <h3 class="text-2xl font-black text-white mb-3 leading-tight">Tratamiento de Material a Terceros</h3>
+          <h3 class="text-xl lg:text-2xl font-black text-white mb-3 leading-tight">Tratamiento de Material a Terceros</h3>
           <p class="text-gray-200 text-sm leading-relaxed text-justify">
             Autorización legal que permite a la planta de beneficio procesar mineral proveniente de concesiones
             externas,
@@ -363,9 +363,34 @@
     <div class="rounded-2xl overflow-hidden border border-white/5" style="background: rgba(0,0,0,0.35);">
 
       <!-- Cabecera del bloque -->
-      <div class="px-8 pt-10 pb-6 border-b border-white/10">
-        <span class="text-orange-600 text-xs font-bold uppercase tracking-widest">03 · Procesos Metalúrgicos</span>
-        <h3 class="text-3xl font-black text-white mt-2 mb-3">Procesos de Tratamiento de Material</h3>
+      <div class="px-5 lg:px-8 pt-7 lg:pt-10 pb-5 lg:pb-6 border-b border-white/10">
+        <span class="text-orange-600 text-xs font-bold uppercase tracking-widest">03. </span>
+        <h3 class="text-xl lg:text-3xl font-black text-white mt-2 mb-3">Procesos de Tratamiento de Material</h3>
+      </div>
+
+      <!-- Literal horizontal — Acopio de Material -->
+      <div class="group relative overflow-hidden border-b border-white/10">
+        <img src="https://www.ingecivil.net/wp-content/uploads/2018/01/Acopio-de-material-chancado.jpeg"
+          alt="Acopio de material — zona de almacenamiento y recepción de mineral"
+          class="absolute inset-0 w-full h-full object-cover opacity-25 blur-[2px] group-hover:opacity-15 group-hover:blur-[4px] transition-all duration-500">
+        <div class="absolute inset-0 bg-black/25 group-hover:bg-black/55 transition-all duration-500"></div>
+        <div class="relative z-10 p-5 lg:p-8">
+          <div class="flex items-center gap-3 mb-4">
+            <span
+              class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">A</span>
+            <h4 class="text-white font-black text-base lg:text-lg leading-tight">Acopio de Material</h4>
+          </div>
+          <p class="text-gray-300 text-sm leading-relaxed text-justify">
+            El proceso inicia con la llegada de camiones volcadores que transportan el mineral extraído desde las
+            labores mineras hasta la zona de acopio, donde el material es almacenado y homogeneizado previo a su
+            ingreso a planta. Desde el acopio, el mineral pasa por trituración para reducir su tamaño grueso,
+            seguida de molienda en molinos de bolas para alcanzar la granulometría requerida por los circuitos
+            metalúrgicos. El material molido avanza hacia las etapas de concentración, cianuración, cementación
+            y reproceso de colas. De forma complementaria, los relaves generados en planta son conducidos mediante
+            el relaveducto — sistema de tuberías HDPE de alta densidad — hasta la presa de relaves, desde donde
+            pueden ser recirculados para su reprocesamiento y maximizar la recuperación metálica.
+          </p>
+        </div>
       </div>
 
       <!-- Tres procesos en columnas -->
@@ -383,8 +408,8 @@
           <div class="relative z-10 p-8">
             <div class="flex items-center gap-3 mb-4">
               <span
-                class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">A</span>
-              <h4 class="text-white font-black text-lg leading-tight">Conminución y Clasificación Granulométrica</h4>
+                class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">B</span>
+              <h4 class="text-white font-black text-lg leading-tight">trituración y Clasificación Granulométrica</h4>
             </div>
             <p class="text-gray-300 text-sm leading-relaxed mb-4 text-justify">
               El procesamiento del mineral inicia con la reducción progresiva de su tamaño mediante trituración y
@@ -413,7 +438,7 @@
           <div class="relative z-10 p-8">
             <div class="flex items-center gap-3 mb-4">
               <span
-                class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">B</span>
+                class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">C</span>
               <h4 class="text-white font-black text-lg leading-tight">Cianuración (Lixiviación Metalúrgica)</h4>
             </div>
             <p class="text-gray-300 text-sm leading-relaxed mb-4 text-justify">
@@ -442,7 +467,7 @@
           <div class="relative z-10 p-8">
             <div class="flex items-center gap-3 mb-4">
               <span
-                class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">C</span>
+                class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">D</span>
               <h4 class="text-white font-black text-lg leading-tight">Flotación de Minerales Sulfurados</h4>
             </div>
             <p class="text-gray-300 text-sm leading-relaxed mb-4 text-justify">
@@ -467,11 +492,11 @@
 </section>
 
 <!-- NUESTRO TRABAJO — 3 sub-secciones con 3 imágenes cada una -->
-<section class="py-24 bg-black">
-  <div class="container mx-auto px-6 lg:px-12">
+<section class="py-14 lg:py-24 bg-black">
+  <div class="container mx-auto px-4 lg:px-12">
 
     <!-- Encabezado principal -->
-    <div class="flex items-center mb-20">
+    <div class="flex items-center mb-10 lg:mb-20">
       <p class="text-orange-600 font-semibold uppercase tracking-widest text-sm mb-4">Nuestro Trabajo</p>
     </div>
 
@@ -500,7 +525,7 @@
             Operamos 6 relaveras para el reproceso en el cantón Camilo Ponce Enríquez con los más altos estándares
             técnicos. Nuestra planta de beneficio procesa 1000 toneladas para el reproceso y 280 toneladas para
             materiales nuevos por dia combinando eficiencia
-            operativa con control ambiental, posicionando a PLAMPROMIN como
+            operativa con control ambiental, posicionando a PLANPROMIN como
             referente de producción aurífera de reprocesos responsables en Ecuador.
           </p>
         </div>
@@ -543,7 +568,7 @@
             </div>
           </div>
           <p class="text-gray-400 leading-relaxed ml-5">
-            Más de 25 años de operación continua nos han permitido perfeccionar cada etapa del proceso
+            Más de 15 años de operación continua nos han permitido perfeccionar cada etapa del proceso
             minero: desde la exploración geológica y el diseño de nuestras plantas de beneficio con los mas altos
             estandares de las normas ecuatorianas. asi mismo, toda nuestra infraestructura cuenta con modelados 3D con
             estudios de prefactibilidad para ser mas eficiente nuestro Trabajo
@@ -590,7 +615,7 @@
             </div>
           </div>
           <p class="text-gray-400 leading-relaxed ml-5">
-            PLAMPROMIN es pionera en Ecuador en el reprocesamiento de relaves históricos — residuos
+            PLANPROMIN es pionera en Ecuador en el reprocesamiento de relaves históricos — residuos
             de procesos mineros anteriores que aún contienen concentraciones recuperables de oro.
             A través de tecnología de cianuración y flotación avanzada, transformamos material
             descartado en producción valiosa, reduciendo el pasivo ambiental y extendiendo la
@@ -638,14 +663,14 @@
 </section>
 
 <!-- NOTICIAS PREVIEW -->
-<section class="py-24 bg-zinc-900">
-  <div class="container mx-auto px-6 lg:px-12">
+<section class="py-14 lg:py-24 bg-zinc-900">
+  <div class="container mx-auto px-4 lg:px-12">
 
     <!-- Header -->
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 lg:gap-6 mb-8 lg:mb-14">
       <div>
         <p class="text-orange-600 font-semibold uppercase tracking-widest text-sm mb-3">Sector Minero</p>
-        <h2 class="text-4xl lg:text-5xl font-black text-white leading-tight">
+        <h2 class="text-3xl lg:text-5xl font-black text-white leading-tight">
           Últimas <span class="text-orange-600">Noticias</span>
         </h2>
       </div>
@@ -743,7 +768,7 @@
 </section>
 
 <!-- CTA SECTION -->
-<section class="py-24 bg-orange-600 relative overflow-hidden">
+<section class="py-14 lg:py-24 bg-orange-600 relative overflow-hidden">
   <!-- Pattern Background -->
   <div class="absolute inset-0 opacity-10">
     <div class="absolute inset-0"
@@ -751,11 +776,11 @@
     </div>
   </div>
 
-  <div class="container mx-auto px-6 lg:px-12 relative z-10 text-center">
-    <h2 class="text-5xl font-black text-white mb-6">
+  <div class="container mx-auto px-4 lg:px-12 relative z-10 text-center">
+    <h2 class="text-3xl lg:text-5xl font-black text-white mb-4 lg:mb-6">
       Conoce más sobre nosotros
     </h2>
-    <p class="text-white/90 text-xl mb-10 max-w-3xl mx-auto">
+    <p class="text-white/90 text-base lg:text-xl mb-7 lg:mb-10 max-w-3xl mx-auto">
       Contáctenos hoy para una consulta sobre sus necesidades mineras y requisitos de cumplimiento legal.
     </p>
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4">

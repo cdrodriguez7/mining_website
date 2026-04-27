@@ -8,6 +8,7 @@ import { GalleryService } from '../../core/services/gallery.service';
 import { ImageSelectorService } from '../../core/services/image-selector.service';
 import { CloudinaryImage, SECTION_FOLDERS } from '../../core/models/gallery.model';
 import { MetalsService, MetalPricesState, MetalData } from '../../core/services/metal.service';
+import { MetalHistoryService } from '../../core/services/metal-history.service';
 import { NewsService, NewsItem } from '../../core/services/news.service';
 import { Subscription } from 'rxjs';
 import { ImagePreviewComponent } from '../../shared/components/image-preview/image-preview.component';
@@ -61,6 +62,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private galleryService = inject(GalleryService);
   private imageSelectorService = inject(ImageSelectorService);
   private metalsService = inject(MetalsService);
+  private metalHistoryService = inject(MetalHistoryService);
   private newsService = inject(NewsService);
   private cdr = inject(ChangeDetectorRef);
 
@@ -85,10 +87,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   activePeriod = 30;
 
   periods = [
-    { label: '1M', days: 30 },
-    { label: '3M', days: 90 },
-    { label: '6M', days: 180 },
-    { label: '1A', days: 365 }
+    { label: '7D', days: 7 },
+    { label: '14D', days: 14 },
+    { label: '1M', days: 30 }
   ];
 
   metalsList: MetalTab[] = [
@@ -128,6 +129,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   get activeMetalColor(): string {
     return this.metalsList.find(m => m.key === this.activeMetal)?.color ?? '#EA580C';
+  }
+
+  /** true cuando tenemos al menos 2 puntos reales para el período activo */
+  get usingRealHistory(): boolean {
+    return this.metalHistoryService.getHistory(this.activeMetal, this.activePeriod).length >= 2;
+  }
+
+  /** Días registrados en el historial (para mostrar en footnote) */
+  get historyDays(): number {
+    return this.metalHistoryService.recordCount();
   }
 
   // ── Lifecycle ─────────────────────────────────────────────────────────────
@@ -199,32 +210,33 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private generateHistory(
-    base: number,
-    days: number,
-    volatility: number
-  ): { label: string; value: number }[] {
+  /**
+   * Devuelve datos para el gráfico. Prioriza el historial real almacenado.
+   * Si hay menos de 2 puntos reales, genera datos simulados como fallback
+   * para que el gráfico siempre muestre algo desde el primer día.
+   */
+  private getChartData(): { label: string; value: number }[] {
+    if (!this.metalPrices) return [];
+
+    const real = this.metalHistoryService.getHistory(this.activeMetal, this.activePeriod);
+    if (real.length >= 2) return real;
+
+    // Fallback simulado — solo hasta que haya suficiente historial real
+    const base = this.metalPrices[this.activeMetal].price;
+    const volatility = this.activeMetal === 'copper' ? 0.08 : this.activeMetal === 'silver' ? 0.07 : 0.05;
     const pts: { label: string; value: number }[] = [];
     let v = base * (1 - volatility * 0.4);
     const now = new Date();
-
-    for (let i = days; i >= 0; i--) {
+    for (let i = this.activePeriod; i >= 0; i--) {
       const d = new Date(now);
       d.setDate(d.getDate() - i);
       if (d.getDay() !== 0 && d.getDay() !== 6) {
         v = v + (Math.random() - 0.47) * base * volatility * 0.05;
         v = Math.max(base * 0.82, Math.min(base * 1.18, v));
-        pts.push({
-          label: d.toLocaleDateString('es-EC', { month: 'short', day: 'numeric' }),
-          value: +v.toFixed(4)
-        });
+        pts.push({ label: d.toLocaleDateString('es-EC', { month: 'short', day: 'numeric' }), value: +v.toFixed(4) });
       }
     }
-
-    if (pts.length > 0 && this.metalPrices) {
-      pts[pts.length - 1].value = this.metalPrices[this.activeMetal].price;
-    }
-
+    if (pts.length > 0) pts[pts.length - 1].value = base;
     return pts;
   }
 
@@ -239,11 +251,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.destroyChart();
 
-    const volatility =
-      this.activeMetal === 'copper' ? 0.08 :
-        this.activeMetal === 'silver' ? 0.07 : 0.05;
-
-    const pts = this.generateHistory(this.metalPrices[this.activeMetal].price, this.activePeriod, volatility);
+    const pts = this.getChartData();
     const color = this.activeMetalColor;
 
     this.chartInstance = new Chart(canvas, {

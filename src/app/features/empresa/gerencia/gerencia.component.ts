@@ -37,7 +37,7 @@ export class GerenciaComponent {
       trayectoria: 'Ingeniero de Minas por la ESPOL. Lideró la obtención del EIA institucional ante el MAATE, la implementación del sistema QHSE corporativo y la expansión de la planta de beneficio a 220 t/día. Miembro del Directorio Técnico de la Cámara de Minería del Ecuador.',
       certificaciones: ['MBA — Universidad Andina Simón Bolívar', 'Ing. Minas ESPOL — Promoción 2002', 'Certificado CRIRSCO — Recursos Minerales'],
       especialidades: ['Planificación minera estratégica', 'Gestión de proyectos EPC', 'Relaciones con organismos de control', 'Liderazgo de equipos técnicos'],
-      email: 'jrodriguez@plampromin.ec',
+      email: 'jrodriguez@planpromin.ec',
       linkedin: '#'
     },
     {
@@ -49,7 +49,7 @@ export class GerenciaComponent {
       trayectoria: 'Ingeniera Geóloga con especialización en Minería a Cielo Abierto. Supervisó la ampliación de la planta de beneficio y el diseño del sistema de relaves. Docente invitada en la Universidad de Cuenca. Anteriormente en Kinross Gold Ecuador y CODELCO Chile.',
       certificaciones: ['Ing. Geóloga — Universidad de Cuenca', 'MSc. Ingeniería de Minas — U. de Chile', 'Certificación PERC — Exploración Europa'],
       especialidades: ['Optimización de plantas de beneficio', 'Diseño de sistemas de relaves', 'Planificación de pit a largo plazo', 'Control de dilución y recuperación'],
-      email: 'msuarez@plampromin.ec',
+      email: 'msuarez@planpromin.ec',
       linkedin: '#'
     }
   ];
@@ -63,7 +63,7 @@ export class GerenciaComponent {
       foto: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80&fit=crop&crop=faces,top',
       bio: 'CPA con MBA en Finanzas Corporativas (USFQ). Especialista en estructuración financiera de proyectos mineros, compliance tributario y auditoría.',
       especialidades: ['Finanzas corporativas', 'Auditoría y compliance', 'Gestión de riesgos financieros'],
-      email: 'cmendoza@plampromin.ec',
+      email: 'cmendoza@planpromin.ec',
       linkedin: '#'
     },
     {
@@ -72,9 +72,9 @@ export class GerenciaComponent {
       area: 'Seguridad, Salud y Ambiente',
       experiencia: '12 años',
       foto: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80&fit=crop&crop=faces,top',
-      bio: 'Ingeniera Ambiental (FLACSO). Arquitecta del sistema ISO 14001 de PLAMPROMIN. Responsable del programa de 0 fatalidades, activo por tercer año consecutivo.',
+      bio: 'Ingeniera Ambiental (FLACSO). Arquitecta del sistema ISO 14001 de PLANPROMIN. Responsable del programa de 0 fatalidades, activo por tercer año consecutivo.',
       especialidades: ['ISO 14001 / ISO 45001', 'Gestión de emergencias', 'Monitoreo ambiental'],
-      email: 'atorres@plampromin.ec',
+      email: 'atorres@planpromin.ec',
       linkedin: '#'
     },
     {
@@ -85,7 +85,7 @@ export class GerenciaComponent {
       foto: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80&fit=crop&crop=faces,top',
       bio: 'Doctor en Ciencias Geológicas (U. Complutense de Madrid). Dirige la estimación de recursos minerales y los programas de exploración en el cinturón aurífero del Azuay.',
       especialidades: ['Exploración de recursos auríferos', 'Modelado geológico 3D', 'Estimación de reservas (NI 43-101)'],
-      email: 'respinoza@plampromin.ec',
+      email: 'respinoza@planpromin.ec',
       linkedin: '#'
     },
     {
@@ -96,7 +96,7 @@ export class GerenciaComponent {
       foto: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=80&fit=crop&crop=faces,top',
       bio: 'Socióloga especializada en Desarrollo Comunitario y Consulta Previa. Gestiona la inversión social en las 8 comunidades del área de influencia del proyecto.',
       especialidades: ['Consulta previa libre e informada', 'Programas de inversión social', 'Gestión de conflictos sociales'],
-      email: 'dherrera@plampromin.ec',
+      email: 'dherrera@planpromin.ec',
       linkedin: '#'
     }
   ];

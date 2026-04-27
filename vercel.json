@@ -3,6 +3,14 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist/galery-web-front/browser",
   "framework": "angular",
+  "functions": {
+    "api/news.ts": {
+      "maxDuration": 30
+    },
+    "api/contact.ts": {
+      "maxDuration": 15
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -23,7 +31,7 @@
         },
         {
           "key": "Access-Control-Allow-Methods",
-          "value": "GET, OPTIONS"
+          "value": "GET, POST, OPTIONS"
         },
         {
           "key": "Access-Control-Allow-Headers",

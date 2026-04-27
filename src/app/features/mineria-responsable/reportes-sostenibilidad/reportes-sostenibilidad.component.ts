@@ -16,6 +16,6 @@ export class ReportesSostenibilidadComponent {
     { titulo: 'Reporte de Sostenibilidad 2024', subtitulo: 'GRI Standards 2021 · Verificado por tercero independiente', paginas: '68 págs.', estado: 'Publicado' },
     { titulo: 'Reporte de Sostenibilidad 2023', subtitulo: 'GRI Standards 2021 · Primer reporte verificado externamente', paginas: '54 págs.', estado: 'Publicado' },
     { titulo: 'Reporte de Sostenibilidad 2022', subtitulo: 'GRI Standards · Línea base para estrategia 2026–2030', paginas: '48 págs.', estado: 'Publicado' },
-    { titulo: 'Reporte de Sostenibilidad 2021', subtitulo: 'Primer reporte de sostenibilidad de PLAMPROMIN', paginas: '36 págs.', estado: 'Publicado' },
+    { titulo: 'Reporte de Sostenibilidad 2021', subtitulo: 'Primer reporte de sostenibilidad de PLANPROMIN', paginas: '36 págs.', estado: 'Publicado' },
   ];
 }

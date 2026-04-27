@@ -60,7 +60,7 @@ export class PoliticasComponent implements OnInit {
       titulo: 'Política de Conflictos de Interés',
       categoria: 'Ética',
       descripcion: 'Procedimientos para identificar, declarar, gestionar y resolver situaciones donde intereses personales puedan comprometer decisiones corporativas.',
-      alcance: 'Todo el personal de PLAMPROMIN S.A.',
+      alcance: 'Todo el personal de PLANPROMIN S.A.',
       objetivos: [
         'Identificar conflictos de interés reales o potenciales',
         'Establecer mecanismos de declaración obligatoria',
@@ -266,7 +266,7 @@ export class PoliticasComponent implements OnInit {
       titulo: 'Política de Capacitación y Desarrollo',
       categoria: 'Laboral',
       descripcion: 'Compromiso con el desarrollo continuo de competencias técnicas y blandas del capital humano.',
-      alcance: 'Todo el personal de PLAMPROMIN S.A.',
+      alcance: 'Todo el personal de PLANPROMIN S.A.',
       objetivos: [
         'Cerrar brechas de competencias identificadas',
         'Preparar sucesores para posiciones críticas',

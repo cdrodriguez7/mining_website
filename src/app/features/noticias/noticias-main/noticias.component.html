@@ -1,11 +1,11 @@
 <app-navbar></app-navbar>
 
-<section class="py-20 bg-black min-h-screen">
-  <div class="container mx-auto px-6 lg:px-12">
+<section class="py-14 lg:py-20 bg-black min-h-screen">
+  <div class="container mx-auto px-4 lg:px-12">
 
     <!-- Header -->
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-10 gap-4">
-      <h1 class="text-5xl font-black text-white">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-8 lg:mb-10 gap-4">
+      <h1 class="text-3xl lg:text-5xl font-black text-white">
         <span class="text-orange-600">Noticias</span> del Sector
       </h1>
       <button (click)="refresh()" [disabled]="isLoading"
@@ -53,7 +53,7 @@
               <img [src]="imgSrc"
                    [alt]="item.title"
                    (error)="item.image = ''"
-                   class="w-full h-48 md:h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                   class="w-full h-40 md:h-full object-cover group-hover:scale-105 transition-transform duration-500"
                    loading="lazy" />
             </ng-container>
             <span *ngIf="!item.image"
@@ -63,7 +63,7 @@
           </div>
 
           <!-- Contenido -->
-          <div class="p-6 flex flex-col justify-between flex-1">
+          <div class="p-4 lg:p-6 flex flex-col justify-between flex-1">
             <div>
               <div class="flex flex-wrap items-center gap-3 mb-3">
                 <span class="px-3 py-1 bg-orange-600/20 text-orange-600 text-xs font-semibold rounded">
