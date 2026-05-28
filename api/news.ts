@@ -57,26 +57,6 @@ function fetchUrl(url: string, timeoutMs = 8000, redirects = 4): Promise<string>
   });
 }
 
-// ─── Scraping de og:image desde la página del artículo ───────────────────────
-async function scrapeOgImage(articleUrl: string): Promise<string | undefined> {
-  try {
-    const html = await fetchUrl(articleUrl, 4000); // timeout corto — caché lo paga una vez/semana
-
-    // og:image (formato estándar y variantes)
-    const og = /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i.exec(html)
-            || /<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i.exec(html);
-    if (og && og[1].startsWith('http')) return og[1];
-
-    // twitter:image como fallback secundario
-    const tw = /<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i.exec(html)
-            || /<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i.exec(html);
-    if (tw && tw[1].startsWith('http')) return tw[1];
-
-    return undefined;
-  } catch {
-    return undefined;
-  }
-}
 
 // ─── Parser RSS ───────────────────────────────────────────────────────────────
 function parseRSS(xml: string, source: string, category: string): NewsItem[] {
@@ -171,45 +151,31 @@ module.exports = async (req: any, res: any) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  // Cache 7 días en CDN de Vercel → la función solo corre ~1 vez/semana por región
   res.setHeader('Cache-Control', 's-maxage=604800, stale-while-revalidate=86400');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    // 1. Fetch y parseo de todos los feeds en paralelo
+    // Fetch y parseo de todos los feeds en paralelo
+    // Timeout corto (6s) para no superar el límite de Vercel Free (10s)
     const settled = await Promise.allSettled(
       NEWS_SOURCES.map(src =>
-        fetchUrl(src.url, 8000)
+        fetchUrl(src.url, 6000)
           .then(xml => parseRSS(xml, src.source, src.category))
           .catch(() => [] as NewsItem[])
       )
     );
 
-    let allNews: NewsItem[] = (settled as PromiseSettledResult<NewsItem[]>[])
+    const allNews: NewsItem[] = (settled as PromiseSettledResult<NewsItem[]>[])
       .flatMap(r => r.status === 'fulfilled' ? r.value : [])
       .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
-      .slice(0, 24);
+      .slice(0, 20);
 
-    // 2. Para noticias sin imagen: scraping de og:image en paralelo
-    //    Timeout por artículo: 4s — el caché de 7 días hace que solo ocurra una vez/semana
-    const withoutImage = allNews.filter(n => !n.image);
-
-    if (withoutImage.length > 0) {
-      const ogResults = await Promise.allSettled(
-        withoutImage.map(n => scrapeOgImage(n.link))
-      );
-
-      withoutImage.forEach((item, i) => {
-        const r = ogResults[i];
-        if (r.status === 'fulfilled' && r.value) {
-          item.image = r.value;
-        }
-      });
-    }
-
-    // Limitar a 20 noticias finales
-    allNews = allNews.slice(0, 20);
+    // NOTA: El scraping de og:image se ha eliminado para mantener la función
+    // dentro del límite de tiempo de Vercel Free (10s).
+    // Las imágenes se extraen únicamente de los metadatos del feed RSS.
 
     return res.status(200).json({
       success: true,
