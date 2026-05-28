@@ -14,7 +14,8 @@
 
   <!-- Orange Accent Bar (derecha) -->
   <div
-    class="absolute top-0 right-0 w-96 h-full bg-gradient-to-b from-orange-600 to-orange-700 transform skew-x-[-15deg] translate-x-48 hidden lg:block">
+    class="absolute top-0 right-0 w-96 h-full transform skew-x-[-15deg] translate-x-48 hidden lg:block"
+    style="background: linear-gradient(to bottom, #e29120, #bc7311);">
   </div>
 
   <!-- Hero Content -->
@@ -47,8 +48,8 @@
       <!-- Live badge -->
       <div class="flex items-center gap-1.5 px-2.5 py-1 bg-black/50 backdrop-blur-sm border border-white/10 rounded-full">
         <span class="w-1.5 h-1.5 rounded-full animate-pulse"
-          [ngClass]="metalPrices?.isLive ? 'bg-green-400' : 'bg-yellow-500'"></span>
-        <span class="text-gray-400 text-xs font-medium">{{ metalPrices?.isLive ? 'En vivo' : 'Referencial' }} · USD</span>
+          [ngClass]="metalPrices.isLive ? 'bg-green-400' : 'bg-yellow-500'"></span>
+        <span class="text-gray-400 text-xs font-medium">{{ metalPrices.isLive ? 'En vivo' : 'Referencial' }} · USD</span>
       </div>
 
       <!-- Oro -->
@@ -265,7 +266,7 @@
         class="service-card group relative overflow-hidden rounded-2xl border border-white/10 hover:border-orange-500/30 transition-all duration-500 cursor-pointer min-h-[240px] lg:min-h-[360px]">
         
         <!-- Imagen -->
-        <img src="https://www.promineria.com/assets/images/notas/fotos/procesamiento_minerales.jpg"
+        <img src="https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=1200&q=80"
           alt="Tratamiento de Relaves y Relaveras"
           class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 

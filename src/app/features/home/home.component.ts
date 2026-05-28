@@ -255,7 +255,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const canvas = document.getElementById('metalPriceChart') as HTMLCanvasElement | null;
     if (!canvas) {
-      console.warn('[MetalsChart] Canvas #metalPriceChart no encontrado en el DOM');
       return;
     }
 

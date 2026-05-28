@@ -53,7 +53,6 @@ export class ImageSelectorService {
     filtered = this.filterByAspectRatio(filtered, requirements.aspectRatio);
 
     if (filtered.length === 0) {
-      console.warn('⚠️ No se encontraron imágenes que cumplan los requisitos:', requirements);
       return null;
     }
 

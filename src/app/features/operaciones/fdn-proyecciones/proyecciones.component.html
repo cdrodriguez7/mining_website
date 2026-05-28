@@ -3,7 +3,7 @@
 <!-- Hero -->
 <section class="relative bg-black py-20 lg:py-32 overflow-hidden">
   <div class="absolute inset-0">
-    <div *ngIf="heroImage" class="absolute inset-0 cursor-pointer" (click)="openPreview(getHeroImageUrl(), heroImage?.title || 'Imagen')">
+    <div *ngIf="heroImage" class="absolute inset-0 cursor-pointer" (click)="openPreview(getHeroImageUrl(), heroImage.title || 'Imagen')">
       <img [src]="getHeroImageUrl()" [alt]="heroImage.title" class="w-full h-full object-cover opacity-20">
     </div>
     <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
@@ -164,7 +164,7 @@
     <h2 class="text-3xl font-black text-white mb-10 text-center">Objetivos Estratégicos <span class="text-orange-600">2026–2028</span></h2>
 
     <div class="grid md:grid-cols-2 gap-6">
-      <div *ngFor="let objetivo de objetivosEstrategicos"
+      <div *ngFor="let objetivo of objetivosEstrategicos"
            class="bg-zinc-900 border-l-4 border-orange-600 p-6 rounded-r-xl border-t border-r border-b border-zinc-800 hover:border-orange-600 transition-colors">
         <h3 class="text-lg font-bold text-white mb-3">{{ objetivo.titulo }}</h3>
         <p class="text-gray-400 leading-relaxed text-sm">{{ objetivo.descripcion }}</p>
