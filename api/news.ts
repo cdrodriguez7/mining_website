@@ -1,6 +1,7 @@
-import https from 'https';
-import http from 'http';
-import { URL } from 'url';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const https = require('https') as typeof import('https');
+const http  = require('http')  as typeof import('http');
+const { URL } = require('url') as typeof import('url');
 
 // ─── Fuentes RSS ──────────────────────────────────────────────────────────────
 const NEWS_SOURCES = [
