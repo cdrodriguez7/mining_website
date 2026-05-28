@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for f:*)",
+      "Bash(do)",
+      "Bash(echo \"=== $f ===\")",
+      "Read(//c/Users/crixx/Desktop/Joseo/Mineria/versiones/mining_website_fixed/**)",
+      "Bash(done)"
+    ]
+  }
+}
