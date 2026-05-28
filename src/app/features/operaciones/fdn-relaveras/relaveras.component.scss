@@ -1,0 +1,149 @@
+$primary-orange: #ea580c;
+$primary-blue: #2563eb;
+$primary-cyan: #06b6d4;
+
+$bg-dark: #09090b;
+$bg-medium: #18181b;
+$border-color: #27272a;
+
+// ===== ANIMACIONES DE ENTRADA =====
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0% {
+    r: 8px;
+    opacity: 1;
+  }
+  100% {
+    r: 16px;
+    opacity: 0;
+  }
+}
+
+main {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+// ===== DIQUE INTERACTIVO SVG =====
+svg {
+  // Anillo de ping para telemetría activa
+  .animate-ping {
+    animation: pulseGlow 1.8s infinite ease-out;
+    transform-origin: center;
+  }
+
+  // Hover en sensores
+  circle {
+    transition: all 0.3s ease;
+    
+    &:hover {
+      r: 7px;
+      filter: drop-shadow(0 0 4px currentColor);
+    }
+  }
+
+  // Núcleo de arcilla color tierra
+  polygon {
+    transition: all 0.3s ease;
+  }
+
+  text {
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+}
+
+// ===== SELECTOR LATERAL =====
+.group {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    background-color: rgba(39, 39, 42, 0.4);
+    border-color: rgba(234, 88, 12, 0.3);
+  }
+}
+
+// ===== TABS ANIMATION =====
+button {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: $primary-orange;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  
+  &.border-orange-600::after {
+    transform: scaleX(1);
+  }
+}
+
+// ===== CAPACIDAD DASHBOARD =====
+.w-full.bg-zinc-800 {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.h-full.rounded-full {
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 2s infinite linear;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// ===== RESPONSIVE AJUSTES =====
+@media (max-width: 768px) {
+  svg text {
+    font-size: 10px; // Aumentar tamaño para legibilidad móvil
+  }
+}
+
+// ===== ACCESIBILIDAD =====
+*:focus-visible {
+  outline: 2px solid $primary-orange;
+  outline-offset: 2px;
+}

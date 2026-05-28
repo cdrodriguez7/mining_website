@@ -125,3 +125,138 @@
     padding: 1rem;
   }
 }
+
+// ── Carrusel y Navegación ──────────────────────────────────────────────────────
+.ip-carousel-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.ip-nav-btn {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0 1.5rem;
+  flex-shrink: 0;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &:hover {
+    background: #ea580c;
+    border-color: #ea580c;
+    color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(234, 88, 12, 0.4);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// ── Footer y Descripción ────────────────────────────────────────────────────────
+.ip-footer {
+  flex-shrink: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.5rem 2rem 2.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 5;
+}
+
+.ip-footer-content {
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ip-footer-title {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.ip-description {
+  color: #94a3b8;
+  font-size: 0.925rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+// ── Indicadores del Carrusel ───────────────────────────────────────────────────
+.ip-indicators {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.ip-indicator-dot {
+  width: 1.5rem;
+  height: 0.25rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  &.ip-dot-active {
+    background: #ea580c;
+    width: 2.5rem;
+    box-shadow: 0 0 8px rgba(234, 88, 12, 0.6);
+  }
+}
+
+// Adaptaciones móviles adicionales
+@media (max-width: 768px) {
+  .ip-nav-btn {
+    width: 2.75rem;
+    height: 2.75rem;
+    margin: 0 0.5rem;
+    background: rgba(0, 0, 0, 0.6);
+    
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+
+  .ip-footer {
+    padding: 1rem 1rem 1.5rem;
+  }
+
+  .ip-description {
+    font-size: 0.85rem;
+  }
+}
+

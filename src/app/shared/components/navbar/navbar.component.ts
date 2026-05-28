@@ -29,6 +29,7 @@ export class NavbarComponent {
         { label: 'Acerca de Nosotros', route: '/empresa/acerca-de' },
         { label: 'Gerencia', route: '/empresa/gerencia' },
         { label: 'Directorio', route: '/empresa/directorio' },
+        { label: 'Empresas Asociadas', route: '/empresa/empresas-asociadas' },
         {
           label: 'Gobierno Corporativo',
           children: [
@@ -47,6 +48,7 @@ export class NavbarComponent {
         { label: 'Historia', route: '/operaciones/ponce-enriquez/historia' },
         { label: 'Geología y Mineralización', route: '/operaciones/ponce-enriquez/geologia' },
         { label: 'Estado Operativo', route: '/operaciones/ponce-enriquez/operativo' },
+        { label: 'Gestión de Relaveras', route: '/operaciones/ponce-enriquez/relaveras' },
         { label: 'Guía de Producción', route: '/operaciones/ponce-enriquez/proyecciones' }
         // { label: 'Exploración', route: '/operaciones/exploracion' },
         // { label: 'Reservas y Recursos', route: '/operaciones/reservas-recursos' },

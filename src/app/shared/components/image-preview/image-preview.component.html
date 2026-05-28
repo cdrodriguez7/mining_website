@@ -7,7 +7,7 @@
         <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
         <polyline points="21 15 16 10 5 21"/>
       </svg>
-      {{ imageTitle }}
+      {{ activeTitle }}
     </span>
 
     <button class="ip-close" (click)="closed.emit()" aria-label="Cerrar previsualización">
@@ -18,9 +18,44 @@
     </button>
   </div>
 
-  <!-- Imagen centrada -->
-  <div class="ip-image-wrapper" (click)="onBackdropClick($event)">
-    <img [src]="imageUrl" [alt]="imageTitle" class="ip-image" (click)="$event.stopPropagation()" />
+  <!-- Imagen centrada + Controles de Carrusel -->
+  <div class="ip-carousel-container" (click)="onBackdropClick($event)">
+    <!-- Botón Anterior -->
+    <button *ngIf="images && images.length > 1" class="ip-nav-btn ip-prev" (click)="prev($event)" aria-label="Imagen anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+
+    <div class="ip-image-wrapper" (click)="onBackdropClick($event)">
+      <img [src]="activeUrl" [alt]="activeTitle" class="ip-image" (click)="$event.stopPropagation()" />
+    </div>
+
+    <!-- Botón Siguiente -->
+    <button *ngIf="images && images.length > 1" class="ip-nav-btn ip-next" (click)="next($event)" aria-label="Siguiente imagen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Panel de Descripción y Navegación Inferior -->
+  <div class="ip-footer" *ngIf="activeDescription || (images && images.length > 1)">
+    <div class="ip-footer-content">
+      <h4 class="ip-footer-title" *ngIf="images && images.length > 1">{{ activeTitle }}</h4>
+      <p class="ip-description" *ngIf="activeDescription">{{ activeDescription }}</p>
+      
+      <!-- Indicadores de puntos -->
+      <div class="ip-indicators" *ngIf="images && images.length > 1">
+        <button *ngFor="let img of images; let idx = index" 
+                class="ip-indicator-dot" 
+                [class.ip-dot-active]="idx === activeIndex" 
+                (click)="selectIndex(idx, $event)"
+                [attr.aria-label]="'Ir a la imagen ' + (idx + 1)">
+        </button>
+      </div>
+    </div>
   </div>
 
 </div>
+

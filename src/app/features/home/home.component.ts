@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef, inject, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
@@ -72,12 +72,22 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   previewVisible = false;
   previewUrl = '';
   previewTitle = '';
+  previewImages: { url: string; title: string; description?: string }[] = [];
+  previewIndex = 0;
 
   // ── Imágenes dinámicas ────────────────────────────────────────────────────
   isLoading = true;
   heroImage: CloudinaryImage | null = null;
   aboutImage: CloudinaryImage | null = null;
   galleryPreviewImages: CloudinaryImage[] = [];
+
+  // ── Proyectos de Nuestro Trabajo ──────────────────────────────────────────
+  projectModalVisible = false;
+  activeProject: any | null = null;
+  projectActiveImageIndex = 0;
+  projects: any[] = [];
+
+
 
   // ── Metales ───────────────────────────────────────────────────────────────
   metalsLoading   = true;
@@ -413,6 +423,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
     );
     this.galleryPreviewImages = sorted.slice(0, 9);
+    this.initializeProjects();
   }
 
 
@@ -436,13 +447,203 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.cloudinaryService.getCardUrl(image.publicId, 600);
   }
 
-  openPreview(url: string, title: string): void {
-    this.previewUrl   = url;
-    this.previewTitle = title;
+  openPreview(url: string, title: string, index?: number): void {
+    if (index !== undefined && this.galleryPreviewImages.length > 0) {
+      this.previewImages = this.galleryPreviewImages.map(img => ({
+        url: this.getGalleryPreviewUrl(img),
+        title: img.title || '',
+        description: img.description || ''
+      }));
+      this.previewIndex = index;
+    } else {
+      this.previewImages = [];
+      this.previewUrl = url;
+      this.previewTitle = title;
+    }
     this.previewVisible = true;
   }
 
   closePreview(): void {
     this.previewVisible = false;
+    this.previewImages = [];
+  }
+
+  // ── Proyectos de Nuestro Trabajo ──────────────────────────────────────────
+  initializeProjects(): void {
+    const rawProjects = [
+      {
+        id: 'planta-beneficio',
+        title: 'Planta de Beneficio Ponce Enríquez',
+        category: 'Minería de Excelencia',
+        shortDescription: 'Procesamiento diario de 1000 toneladas de material de reproceso y 280 toneladas de materiales nuevos.',
+        detailedDescription: 'Nuestra planta principal en el cantón Camilo Ponce Enríquez cuenta con tecnología de punta para la molienda, clasificación y concentración. Operamos bajo estrictas normas de seguridad industrial y eficiencia metalúrgica, maximizando la recuperación aurífera y optimizando el consumo energético de las operaciones diarias.',
+        location: 'Cantón Camilo Ponce Enríquez, Azuay',
+        status: 'Operativo',
+        metrics: '1,280 Ton/día de capacidad total | Eficiencia del 92%',
+        mainImageIndex: 0
+      },
+      {
+        id: 'opt-relaveras',
+        title: 'Optimización de Relaveras Activas',
+        category: 'Minería de Excelencia',
+        shortDescription: 'Gestión de 6 relaveras de almacenamiento y reproceso bajo los estándares técnicos más exigentes.',
+        detailedDescription: 'Operamos y gestionamos 6 depósitos de relaves activos, utilizando ingeniería geotécnica de precisión para garantizar la estabilidad física y química de los depósitos. Este proyecto se enfoca en el control continuo de filtraciones, análisis de taludes y preparación para el reprocesamiento masivo de residuos históricos.',
+        location: 'Complejo Operativo Ponce Enríquez',
+        status: 'Monitoreo Activo',
+        metrics: '6 Relaveras controladas | Monitoreo geotécnico 24/7',
+        mainImageIndex: 1
+      },
+      {
+        id: 'calidad-ambiental',
+        title: 'Control y Calidad Ambiental',
+        category: 'Minería de Excelencia',
+        shortDescription: 'Monitoreo en tiempo real de efluentes y aire en todas nuestras operaciones de beneficio.',
+        detailedDescription: 'Comprometidos con la minería responsable, implementamos laboratorios locales y sensores automáticos para medir la calidad del agua, el aire y la estabilidad del suelo. Cada proceso de descarga es tratado químicamente para neutralizar componentes antes de cualquier interacción ambiental.',
+        location: 'Ponce Enríquez y zonas de influencia',
+        status: 'Cumplimiento Continuo',
+        metrics: '0 incidentes ambientales | 100% de cumplimiento de normas ecuatorianas',
+        mainImageIndex: 2
+      },
+      {
+        id: 'modelado-3d',
+        title: 'Modelado 3D y Planificación Minera',
+        category: 'Modelando la Industria',
+        shortDescription: 'Simulación tridimensional avanzada de toda nuestra infraestructura y depósitos.',
+        detailedDescription: 'Empleamos softwares de última generación para recrear gemelos digitales en 3D de las plantas de beneficio, relaveras y túneles. Esto nos permite simular comportamientos geomecánicos, optimizar rutas de transporte de materiales y prever riesgos antes de la fase de ejecución física.',
+        location: 'Departamento de Ingeniería y Proyectos',
+        status: 'Planificación e Ingeniería',
+        metrics: 'Precisión milimétrica | Simulación de riesgos 3D',
+        mainImageIndex: 3
+      },
+      {
+        id: 'exploracion-geologica',
+        title: 'Exploración Geológica y Sondeos',
+        category: 'Modelando la Industria',
+        shortDescription: 'Perforación diamantina e identificación de reservas auríferas de alto grado.',
+        detailedDescription: 'Llevamos a cabo campañas de exploración geológica sistemática, utilizando perforaciones diamantinas para extraer núcleos y mapear la mineralización profunda. Los datos obtenidos alimentan directamente nuestros estudios de prefactibilidad y estimación de recursos futuros.',
+        location: 'Zonas de Concesión Planpromin',
+        status: 'Fase de Sondeo',
+        metrics: '15,000+ metros de sondeo analizados | Base de datos georeferenciada',
+        mainImageIndex: 4
+      },
+      {
+        id: 'prefactibilidad-ingenieria',
+        title: 'Prefactibilidad e Ingeniería de Detalle',
+        category: 'Modelando la Industria',
+        shortDescription: 'Estudios de viabilidad técnica, económica y ambiental para la expansión operativa.',
+        detailedDescription: 'Desarrollamos la ingeniería básica y de detalle bajo normativas internacionales. Este proyecto integra el modelamiento económico con análisis de impacto socioambiental, garantizando que cada expansión de infraestructura cuente con viabilidad financiera a largo plazo.',
+        location: 'Oficinas Corporativas y de Ingeniería',
+        status: 'Aprobado y en Ejecución',
+        metrics: 'Estándares NI 43-101 | Diseños aprobados por entes de control',
+        mainImageIndex: 5
+      },
+      {
+        id: 'recuperacion-metalurgica',
+        title: 'Recuperación Metalúrgica de Relaves',
+        category: 'Reprocesamiento de Relaves',
+        shortDescription: 'Extracción de oro residual en relaves históricos mediante cianuración y flotación.',
+        detailedDescription: 'Pioneros en la recuperación secundaria de metales preciosos. Mediante la optimización de procesos físicos y químicos de flotación y cianuración en circuito cerrado, logramos extraer el oro fino atrapado en relaves antiguos, dando un valor económico real a lo que antes se consideraba desperdicio o residuo.',
+        location: 'Circuito de Flotación Avanzada',
+        status: 'Operativo',
+        metrics: 'Recuperación optimizada | Economía circular',
+        mainImageIndex: 6
+      },
+      {
+        id: 'mitigacion-pasivos',
+        title: 'Mitigación y Cierre de Pasivos Ambientales',
+        category: 'Reprocesamiento de Relaves',
+        shortDescription: 'Restauración de depósitos mineros históricos desatendidos en la región.',
+        detailedDescription: 'Nos encargamos de mitigar y estabilizar pasivos ambientales generados por la minería histórica informal o de antigua data. Este proyecto incluye la revegetación de taludes, la neutralización de aguas ácidas y la contención definitiva de relaves antiguos para devolver la armonía al ecosistema local.',
+        location: 'Áreas históricas de Ponce Enríquez',
+        status: 'Mitigación en Proceso',
+        metrics: '12 hectáreas recuperadas | Cero drenaje ácido',
+        mainImageIndex: 7
+      },
+      {
+        id: 'centralizacion-segura',
+        title: 'Centralización Segura y Transporte de Material',
+        category: 'Reprocesamiento de Relaves',
+        shortDescription: 'Movilización de relaves históricos dispersos hacia un único punto de control seguro.',
+        detailedDescription: 'Transportamos de forma segura los relaves dispersos en la geografía del cantón hacia nuestro centro de reprocesamiento centralizado. Con esto, reducimos el número de puntos con impacto ambiental potencial en la región, unificando la contención y facilitando un monitoreo de seguridad altamente eficiente.',
+        location: 'Red logística regional',
+        status: 'Logística Activa',
+        metrics: '100% de transporte cubierto y seguro | Centralización integrada',
+        mainImageIndex: 8
+      }
+    ];
+
+    this.projects = rawProjects.map(proj => {
+      const mainImg = this.galleryPreviewImages[proj.mainImageIndex];
+      const carouselImages: string[] = [];
+      
+      if (mainImg) {
+        carouselImages.push(this.getGalleryPreviewUrl(mainImg));
+      }
+      
+      // Agregamos imágenes vecinas del mismo bloque como parte de su carrusel
+      const blockStart = Math.floor(proj.mainImageIndex / 3) * 3;
+      for (let i = 0; i < 3; i++) {
+        const neighborIdx = blockStart + i;
+        if (neighborIdx !== proj.mainImageIndex && this.galleryPreviewImages[neighborIdx]) {
+          carouselImages.push(this.getGalleryPreviewUrl(this.galleryPreviewImages[neighborIdx]));
+        }
+      }
+      
+      return {
+        ...proj,
+        coverUrl: mainImg ? this.getGalleryPreviewUrl(mainImg) : '',
+        carouselImages
+      };
+    });
+  }
+
+  openProjectDetails(project: any): void {
+    this.activeProject = project;
+    this.projectActiveImageIndex = 0;
+    this.projectModalVisible = true;
+  }
+
+  closeProjectDetails(): void {
+    this.projectModalVisible = false;
+    this.activeProject = null;
+  }
+
+  nextProjectImage(event?: Event): void {
+    if (event) event.stopPropagation();
+    if (!this.activeProject || !this.activeProject.carouselImages.length) return;
+    this.projectActiveImageIndex = (this.projectActiveImageIndex + 1) % this.activeProject.carouselImages.length;
+  }
+
+  prevProjectImage(event?: Event): void {
+    if (event) event.stopPropagation();
+    if (!this.activeProject || !this.activeProject.carouselImages.length) return;
+    this.projectActiveImageIndex = (this.projectActiveImageIndex - 1 + this.activeProject.carouselImages.length) % this.activeProject.carouselImages.length;
+  }
+
+  selectProjectImage(index: number, event?: Event): void {
+    if (event) event.stopPropagation();
+    this.projectActiveImageIndex = index;
+  }
+
+
+  @HostListener('document:keydown.arrowRight')
+  onProjectArrowRight(): void {
+    if (this.projectModalVisible) {
+      this.nextProjectImage();
+    }
+  }
+
+  @HostListener('document:keydown.arrowLeft')
+  onProjectArrowLeft(): void {
+    if (this.projectModalVisible) {
+      this.prevProjectImage();
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onProjectEscape(): void {
+    if (this.projectModalVisible) {
+      this.closeProjectDetails();
+    }
   }
 }

@@ -206,7 +206,7 @@
   </div>
 </section>
 
-<!-- SERVICES SECTION — Planta de Beneficio -->
+<!-- SERVICES SECTION — Nuestras Instalaciones -->
 <section class="py-14 lg:py-24 bg-zinc-900 relative">
   <div class="container mx-auto px-4 lg:px-12 relative z-10">
 
@@ -214,29 +214,22 @@
     <div class="flex items-start gap-4 lg:gap-6 mb-8 lg:mb-16">
       <div class="w-1 h-20 lg:h-28 bg-orange-600 flex-shrink-0 mt-1"></div>
       <div class="flex-1">
-        <span class="text-orange-600 font-semibold uppercase tracking-wider text-sm">Nuestros Servicios</span>
+        <span class="text-orange-600 font-semibold uppercase tracking-wider text-sm">Nuestra Infraestructura</span>
         <h2 class="text-3xl lg:text-6xl font-black text-white leading-tight mt-2 mb-4">
-          Planta de <span class="text-orange-600">Beneficio</span>
+          Nuestras <span class="text-orange-600">Instalaciones</span>
         </h2>
         <p class="text-gray-400 leading-relaxed text-justify">
-          Instalación industrial destinada al procesamiento integral de minerales, abarcando desde el acopio del mineral
-          y
-          la reducción de tamaño
-          mediante etapas de conminución hasta la aplicación de procesos de concentración y extracción, como la
-          flotación
-          y la cianuración, con el propósito de obtener concentrados o valores metálicos. Su operación se enfoca en
-          optimizar la liberación mineralógica y maximizar la recuperación metalúrgica, mediante el control de variables
-          operativas y la aplicación de criterios técnicos que garantizan eficiencia, estabilidad del proceso y
-          sostenibilidad en el tratamiento del mineral.
+          Disponemos de infraestructura de primer nivel en el cantón Camilo Ponce Enríquez destinada tanto al procesamiento integral de minerales como a la gestión segura de relaves activos e históricos. Nuestras operaciones combinan tecnología metalúrgica de flotación y cianuración con los más estrictos criterios de estabilidad física, monitoreo geotécnico y control de efluentes para garantizar una producción sostenible.
         </p>
       </div>
     </div>
 
     <div class="grid lg:grid-cols-2 gap-6 lg:gap-8 mb-6 lg:mb-8">
 
-      <!-- Bloque 1 — Planta de Beneficio -->
+      <!-- Bloque 1 — Plantas de Beneficio -->
       <div
-        class="service-card group relative overflow-hidden rounded-2xl border border-white/10 hover:border-white/30 transition-all duration-500 cursor-pointer min-h-[240px] lg:min-h-[360px]">
+        [routerLink]="['/operaciones/ponce-enriquez/operativo']"
+        class="service-card group relative overflow-hidden rounded-2xl border border-white/10 hover:border-orange-500/30 transition-all duration-500 cursor-pointer min-h-[240px] lg:min-h-[360px]">
 
         <!-- Imagen -->
         <img
@@ -248,41 +241,52 @@
         </div>
 
         <!-- Contenido -->
-        <div class="relative z-10 p-5 lg:p-8 flex flex-col justify-end h-full">
+        <div class="relative z-10 p-6 lg:p-8 flex flex-col justify-end h-full">
           <div class="text-orange-500 text-xs font-bold uppercase tracking-widest mb-3">01.</div>
-          <h3 class="text-xl lg:text-2xl font-black text-white mb-3 leading-tight">Procesamiento Industrial</h3>
-          <p class="text-gray-200 text-sm leading-relaxed text-justify">
-            Su operación se enfoca en optimizar la liberación mineralógica y maximizar la recuperación metalúrgica,
-            mediante el control de variables operativas y la aplicación de criterios técnicos dentro de las ramas de la
-            Metalurgia, Minas, Ambiental, Civil,
-            que garantizan eficiencia, estabilidad del proceso y sostenibilidad en el tratamiento del mineral.
+          <h3 class="text-xl lg:text-2xl font-black text-white mb-3 leading-tight group-hover:text-orange-500 transition-colors">Plantas de Beneficio</h3>
+          <p class="text-gray-350 text-xs lg:text-sm leading-relaxed text-justify mb-4">
+            Instalaciones destinadas a la conminución, flotación y cianuración en circuito cerrado. Optimizamos la liberación mineralógica y maximizamos la recuperación metalúrgica mediante un monitoreo riguroso y automatizado de variables físicas y químicas.
           </p>
+          <div class="flex items-center">
+            <span class="text-xs font-bold uppercase tracking-wider text-orange-500 hover:text-orange-400 flex items-center gap-1 transition-colors">
+              <span>Ver Detalles Operativos</span>
+              <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </div>
         </div>
 
       </div>
 
-
-
-
-      <!-- Bloque 2 — Tratamiento a Terceros -->
+      <!-- Bloque 2 — Gestión de Relaveras -->
       <div
-        class="service-card group relative overflow-hidden rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-500 cursor-pointer min-h-[240px] lg:min-h-[360px]">
+        [routerLink]="['/operaciones/ponce-enriquez/relaveras']"
+        class="service-card group relative overflow-hidden rounded-2xl border border-white/10 hover:border-orange-500/30 transition-all duration-500 cursor-pointer min-h-[240px] lg:min-h-[360px]">
+        
+        <!-- Imagen -->
         <img src="https://www.promineria.com/assets/images/notas/fotos/procesamiento_minerales.jpg"
-          alt="Tratamiento de Material a Terceros — recepción de mineral externo"
-          class="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-700">
+          alt="Tratamiento de Relaves y Relaveras"
+          class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
         <div class="absolute inset-0 bg-black/80 group-hover:bg-black/85 transition-all duration-500">
         </div>
-        <div class="relative z-10 p-5 lg:p-8 flex flex-col justify-end h-full">
+        
+        <!-- Contenido -->
+        <div class="relative z-10 p-6 lg:p-8 flex flex-col justify-end h-full">
           <div class="text-orange-500 text-xs font-bold uppercase tracking-widest mb-3">02.</div>
-          <h3 class="text-xl lg:text-2xl font-black text-white mb-3 leading-tight">Tratamiento de Material a Terceros</h3>
-          <p class="text-gray-200 text-sm leading-relaxed text-justify">
-            Autorización legal que permite a la planta de beneficio procesar mineral proveniente de concesiones
-            externas,
-            en cumplimiento de la normativa minera vigente. Contempla recepción, control y procesamiento bajo
-            condiciones
-            técnicas establecidas, garantizando trazabilidad, cumplimiento ambiental y eficiencia metalúrgica.
+          <h3 class="text-xl lg:text-2xl font-black text-white mb-3 leading-tight group-hover:text-orange-500 transition-colors">Gestión de Relaveras</h3>
+          <p class="text-gray-350 text-xs lg:text-sm leading-relaxed text-justify mb-4">
+            Operación y control geotécnico de nuestros 6 depósitos de relaves activos e históricos. Diseñados bajo estándares internacionales con geomembranas impermeables, inclinómetros continuos y sistemas de tratamiento de lodos para economía circular.
           </p>
+          <div class="flex items-center">
+            <span class="text-xs font-bold uppercase tracking-wider text-orange-500 hover:text-orange-400 flex items-center gap-1 transition-colors">
+              <span>Visualizar Relaveras Desarrolladas</span>
+              <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </div>
         </div>
       </div>
 
@@ -466,25 +470,31 @@
           </p>
         </div>
         <div class="grid md:grid-cols-3 gap-4">
-          <div *ngFor="let image of galleryPreviewImages.slice(0,3); let i = index"
-            class="group relative overflow-hidden rounded-xl aspect-video cursor-pointer"
-            (click)="openPreview(getGalleryPreviewUrl(image), image.title)">
-            <img [src]="getGalleryPreviewUrl(image)" [alt]="image.title"
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-              loading="lazy" />
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
-              <span class="text-white font-semibold text-sm">{{ image.title }}</span>
+          <!-- Si los proyectos están cargados -->
+          <ng-container *ngIf="projects && projects.length >= 3; else placeholdersBlock1">
+            <div *ngFor="let proj of projects.slice(0,3)"
+              class="group relative overflow-hidden rounded-xl aspect-video cursor-pointer border border-zinc-800/50 hover:border-orange-500/30 transition-all duration-300 shadow-md hover:shadow-lg"
+              (click)="openProjectDetails(proj)">
+              <img [src]="proj.coverUrl" [alt]="proj.title"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                loading="lazy" />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-95 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+                <span class="text-orange-500 text-[10px] font-semibold uppercase tracking-widest mb-1">{{ proj.category }}</span>
+                <span class="text-white font-extrabold text-base leading-snug">{{ proj.title }}</span>
+              </div>
             </div>
-          </div>
-          <!-- Placeholders si faltan imágenes -->
-          <div *ngFor="let p of [].constructor(3 - (galleryPreviewImages.slice(0,3).length))"
-            class="bg-zinc-900 rounded-xl aspect-video flex items-center justify-center border border-dashed border-zinc-700">
-            <svg class="w-10 h-10 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          </div>
+          </ng-container>
+          <!-- Placeholders si faltan o cargan -->
+          <ng-template #placeholdersBlock1>
+            <div *ngFor="let p of [1, 2, 3]"
+              class="bg-zinc-900 rounded-xl aspect-video flex items-center justify-center border border-dashed border-zinc-700 animate-pulse">
+              <svg class="w-10 h-10 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+          </ng-template>
         </div>
       </div>
 
@@ -513,24 +523,31 @@
           </p>
         </div>
         <div class="grid md:grid-cols-3 gap-4">
-          <div *ngFor="let image of galleryPreviewImages.slice(3,6); let i = index"
-            class="group relative overflow-hidden rounded-xl aspect-video cursor-pointer"
-            (click)="openPreview(getGalleryPreviewUrl(image), image.title)">
-            <img [src]="getGalleryPreviewUrl(image)" [alt]="image.title"
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-              loading="lazy" />
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
-              <span class="text-white font-semibold text-sm">{{ image.title }}</span>
+          <!-- Si los proyectos están cargados -->
+          <ng-container *ngIf="projects && projects.length >= 6; else placeholdersBlock2">
+            <div *ngFor="let proj of projects.slice(3,6)"
+              class="group relative overflow-hidden rounded-xl aspect-video cursor-pointer border border-zinc-800/50 hover:border-orange-500/30 transition-all duration-300 shadow-md hover:shadow-lg"
+              (click)="openProjectDetails(proj)">
+              <img [src]="proj.coverUrl" [alt]="proj.title"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                loading="lazy" />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-95 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+                <span class="text-orange-500 text-[10px] font-semibold uppercase tracking-widest mb-1">{{ proj.category }}</span>
+                <span class="text-white font-extrabold text-base leading-snug">{{ proj.title }}</span>
+              </div>
             </div>
-          </div>
-          <div *ngFor="let p of [].constructor(3 - (galleryPreviewImages.slice(3,6).length))"
-            class="bg-zinc-900 rounded-xl aspect-video flex items-center justify-center border border-dashed border-zinc-700">
-            <svg class="w-10 h-10 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          </div>
+          </ng-container>
+          <!-- Placeholders si faltan o cargan -->
+          <ng-template #placeholdersBlock2>
+            <div *ngFor="let p of [1, 2, 3]"
+              class="bg-zinc-900 rounded-xl aspect-video flex items-center justify-center border border-dashed border-zinc-700 animate-pulse">
+              <svg class="w-10 h-10 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+          </ng-template>
         </div>
       </div>
 
@@ -561,24 +578,31 @@
           </p>
         </div>
         <div class="grid md:grid-cols-3 gap-4">
-          <div *ngFor="let image of galleryPreviewImages.slice(6,9); let i = index"
-            class="group relative overflow-hidden rounded-xl aspect-video cursor-pointer"
-            (click)="openPreview(getGalleryPreviewUrl(image), image.title)">
-            <img [src]="getGalleryPreviewUrl(image)" [alt]="image.title"
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-              loading="lazy" />
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
-              <span class="text-white font-semibold text-sm">{{ image.title }}</span>
+          <!-- Si los proyectos están cargados -->
+          <ng-container *ngIf="projects && projects.length >= 9; else placeholdersBlock3">
+            <div *ngFor="let proj of projects.slice(6,9)"
+              class="group relative overflow-hidden rounded-xl aspect-video cursor-pointer border border-zinc-800/50 hover:border-orange-500/30 transition-all duration-300 shadow-md hover:shadow-lg"
+              (click)="openProjectDetails(proj)">
+              <img [src]="proj.coverUrl" [alt]="proj.title"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                loading="lazy" />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-95 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+                <span class="text-orange-500 text-[10px] font-semibold uppercase tracking-widest mb-1">{{ proj.category }}</span>
+                <span class="text-white font-extrabold text-base leading-snug">{{ proj.title }}</span>
+              </div>
             </div>
-          </div>
-          <div *ngFor="let p of [].constructor(3 - (galleryPreviewImages.slice(6,9).length))"
-            class="bg-zinc-900 rounded-xl aspect-video flex items-center justify-center border border-dashed border-zinc-700">
-            <svg class="w-10 h-10 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          </div>
+          </ng-container>
+          <!-- Placeholders si faltan o cargan -->
+          <ng-template #placeholdersBlock3>
+            <div *ngFor="let p of [1, 2, 3]"
+              class="bg-zinc-900 rounded-xl aspect-video flex items-center justify-center border border-dashed border-zinc-700 animate-pulse">
+              <svg class="w-10 h-10 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+          </ng-template>
         </div>
       </div>
 
@@ -631,64 +655,85 @@
     </div>
 
     <!-- Loading -->
-    <div *ngIf="newsLoading" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-      <div *ngFor="let s of [1,2,3,4,5,6]" class="bg-black border border-zinc-800 rounded-xl p-6 animate-pulse">
-        <div class="h-3 bg-zinc-700 rounded w-1/3 mb-4"></div>
-        <div class="h-5 bg-zinc-700 rounded w-full mb-2"></div>
-        <div class="h-5 bg-zinc-700 rounded w-4/5 mb-4"></div>
-        <div class="h-3 bg-zinc-800 rounded w-full mb-2"></div>
-        <div class="h-3 bg-zinc-800 rounded w-3/4"></div>
+    <div *ngIf="newsLoading" class="flex overflow-x-auto gap-5 pb-6 scrollbar-hide" style="scrollbar-width: none; -ms-overflow-style: none;">
+      <div *ngFor="let s of [1,2,3,4]" class="flex-shrink-0 w-[290px] sm:w-[320px] md:w-[360px] bg-zinc-950 border border-zinc-800 rounded-xl p-6 animate-pulse">
+        <div class="h-3 bg-zinc-800 rounded w-1/3 mb-4"></div>
+        <div class="h-5 bg-zinc-800 rounded w-full mb-2"></div>
+        <div class="h-5 bg-zinc-800 rounded w-4/5 mb-4"></div>
+        <div class="h-3 bg-zinc-900 rounded w-full mb-2"></div>
+        <div class="h-3 bg-zinc-900 rounded w-3/4"></div>
       </div>
     </div>
 
-    <!-- Grid de noticias -->
-    <div *ngIf="!newsLoading && previewNews.length > 0" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-      <a *ngFor="let item of previewNews; let i = index" [href]="item.link" target="_blank" rel="noopener noreferrer"
-        class="group flex flex-col bg-black border border-zinc-800 hover:border-orange-600/60 rounded-xl overflow-hidden transition-all hover:-translate-y-1">
+    <!-- Netflix-style news slider -->
+    <div *ngIf="!newsLoading && previewNews.length > 0" class="relative group/slider">
+      
+      <!-- Botón Deslizar Izquierda -->
+      <button (click)="newsSlider.scrollLeft = newsSlider.scrollLeft - 380"
+        class="absolute left-0 top-0 bottom-6 z-20 w-12 bg-gradient-to-r from-black/90 to-transparent text-white flex items-center justify-center transition-all opacity-0 group-hover/slider:opacity-100 border-none hover:from-black/95">
+        <svg class="w-8 h-8 text-orange-500 hover:scale-115 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
 
-        <!-- Imagen: real (RSS/og:image) o fallback temático por índice -->
-        <div class="relative overflow-hidden h-44 flex-shrink-0">
-          <img [src]="item.image || getFallbackImage(i)" [alt]="item.title" (error)="item.image = getFallbackImage(i)"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-          <span *ngIf="!item.image"
-            class="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-sm text-gray-400 text-xs rounded-full">
-            Referencial
-          </span>
-        </div>
+      <!-- Deslizador -->
+      <div #newsSlider class="flex overflow-x-auto gap-5 pb-6 scroll-smooth snap-x snap-mandatory scrollbar-hide" style="scrollbar-width: none; -ms-overflow-style: none;">
+        <a *ngFor="let item of previewNews; let i = index" [href]="item.link" target="_blank" rel="noopener noreferrer"
+          class="flex-shrink-0 w-[290px] sm:w-[320px] md:w-[360px] snap-start group flex flex-col bg-zinc-950 border border-zinc-800/80 hover:border-orange-600/60 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1">
 
-        <!-- Contenido -->
-        <div class="flex flex-col flex-1 p-5">
-          <!-- Fuente + fecha -->
-          <div class="flex items-center justify-between mb-3">
-            <span
-              class="px-2.5 py-0.5 bg-orange-600/10 border border-orange-600/20 text-orange-500 text-xs font-semibold rounded-full">
-              {{ item.source }}
+          <!-- Imagen: real (RSS/og:image) o fallback temático por índice -->
+          <div class="relative overflow-hidden h-44 flex-shrink-0">
+            <img [src]="item.image || getFallbackImage(i)" [alt]="item.title" (error)="item.image = getFallbackImage(i)"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+            <span *ngIf="!item.image"
+              class="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-sm text-gray-400 text-xs rounded-full">
+              Referencial
             </span>
-            <span class="text-gray-600 text-xs">{{ formatNewsDate(item.pubDate) }}</span>
           </div>
 
-          <!-- Título -->
-          <h4
-            class="text-white font-bold text-sm leading-snug mb-3 group-hover:text-orange-500 transition-colors line-clamp-2">
-            {{ item.title }}
-          </h4>
+          <!-- Contenido -->
+          <div class="flex flex-col flex-1 p-5">
+            <!-- Fuente + fecha -->
+            <div class="flex items-center justify-between mb-3">
+              <span
+                class="px-2.5 py-0.5 bg-orange-600/10 border border-orange-600/20 text-orange-500 text-xs font-semibold rounded-full">
+                {{ item.source }}
+              </span>
+              <span class="text-gray-600 text-xs">{{ formatNewsDate(item.pubDate) }}</span>
+            </div>
 
-          <!-- Descripción truncada -->
-          <p class="text-gray-500 text-xs leading-relaxed flex-1">
-            {{ truncate(item.description, 115) }}
-          </p>
+            <!-- Título -->
+            <h4
+              class="text-white font-bold text-sm leading-snug mb-3 group-hover:text-orange-500 transition-colors line-clamp-2">
+              {{ item.title }}
+            </h4>
 
-          <!-- Leer más -->
-          <div
-            class="flex items-center gap-1 mt-4 text-orange-600 text-xs font-semibold group-hover:gap-2 transition-all">
-            Leer nota completa
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
+            <!-- Descripción truncada -->
+            <p class="text-gray-500 text-xs leading-relaxed flex-1 line-clamp-3">
+              {{ truncate(item.description, 115) }}
+            </p>
+
+            <!-- Leer más -->
+            <div
+              class="flex items-center gap-1 mt-4 text-orange-600 text-xs font-semibold group-hover:gap-2 transition-all">
+              Leer nota completa
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
+
+      <!-- Botón Deslizar Derecha -->
+      <button (click)="newsSlider.scrollLeft = newsSlider.scrollLeft + 380"
+        class="absolute right-0 top-0 bottom-6 z-20 w-12 bg-gradient-to-l from-black/90 to-transparent text-white flex items-center justify-center transition-all opacity-0 group-hover/slider:opacity-100 border-none hover:from-black/95">
+        <svg class="w-8 h-8 text-orange-500 hover:scale-115 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
     </div>
 
     <!-- Estado vacío -->
@@ -738,4 +783,122 @@
 <app-footer></app-footer>
 
 <app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle"
-  (closed)="closePreview()"></app-image-preview>
+  [images]="previewImages" [currentIndex]="previewIndex" (closed)="closePreview()"></app-image-preview>
+
+<!-- MODAL DE DETALLE DE PROYECTO -->
+<div class="fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center z-50 p-4 md:p-6 lg:p-10 transition-opacity duration-300"
+     *ngIf="projectModalVisible && activeProject"
+     (click)="closeProjectDetails()">
+  
+  <div class="relative w-full max-w-5xl bg-zinc-950/95 border border-zinc-800/80 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row transform scale-100 transition-transform duration-300 max-h-[90vh] md:max-h-[85vh]"
+       (click)="$event.stopPropagation()">
+    
+    <!-- Botón Cerrar -->
+    <button class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-black/55 hover:bg-orange-600 text-white flex items-center justify-center transition-colors border border-zinc-800/60"
+            (click)="closeProjectDetails()"
+            aria-label="Cerrar ventana de detalles">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    
+    <!-- Lado Izquierdo: Carrusel de Fotos del Proyecto -->
+    <div class="w-full md:w-1/2 relative bg-black flex items-center justify-center min-h-[250px] md:min-h-0 overflow-hidden">
+      <!-- Botón Anterior -->
+      <button *ngIf="activeProject.carouselImages.length > 1"
+              class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/60 hover:bg-orange-600 text-white border border-zinc-800 flex items-center justify-center transition-all hover:scale-105"
+              (click)="prevProjectImage($event)"
+              aria-label="Imagen anterior">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <!-- Imagen Activa -->
+      <div class="w-full h-full flex items-center justify-center">
+        <img [src]="activeProject.carouselImages[projectActiveImageIndex]" 
+             [alt]="activeProject.title"
+             class="w-full h-full object-cover min-h-[250px] md:absolute md:inset-0 select-none pointer-events-none transition-all duration-500 ease-in-out" />
+      </div>
+
+      <!-- Botón Siguiente -->
+      <button *ngIf="activeProject.carouselImages.length > 1"
+              class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/60 hover:bg-orange-600 text-white border border-zinc-800 flex items-center justify-center transition-all hover:scale-105"
+              (click)="nextProjectImage($event)"
+              aria-label="Siguiente imagen">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+      <!-- Indicadores de puntos -->
+      <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-1.5 z-10" *ngIf="activeProject.carouselImages.length > 1">
+        <button *ngFor="let img of activeProject.carouselImages; let idx = index"
+                class="h-1 rounded-full bg-white transition-all duration-300"
+                [class.bg-orange-600]="idx === projectActiveImageIndex"
+                [class.w-6]="idx === projectActiveImageIndex"
+                [class.opacity-100]="idx === projectActiveImageIndex"
+                [class.w-3]="idx !== projectActiveImageIndex"
+                [class.opacity-40]="idx !== projectActiveImageIndex"
+                (click)="selectProjectImage(idx, $event)"
+                [attr.aria-label]="'Ir a la imagen del proyecto ' + (idx + 1)">
+        </button>
+      </div>
+    </div>
+
+    <!-- Lado Derecho: Detalles de Información del Proyecto -->
+    <div class="w-full md:w-1/2 p-6 md:p-8 lg:p-10 flex flex-col justify-between overflow-y-auto bg-gradient-to-br from-zinc-950 to-zinc-900">
+      <div>
+        <div class="text-orange-500 font-extrabold text-[10px] uppercase tracking-widest mb-2 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-orange-600 animate-ping"></span>
+          {{ activeProject.category }}
+        </div>
+        <h3 class="text-xl md:text-2xl lg:text-3xl font-black text-white leading-tight mb-4">
+          {{ activeProject.title }}
+        </h3>
+        <div class="h-[2px] w-12 bg-orange-600 mb-6"></div>
+        <p class="text-zinc-300 leading-relaxed text-sm md:text-base mb-8">
+          {{ activeProject.detailedDescription }}
+        </p>
+      </div>
+
+      <!-- Ficha de Especificaciones / Metadatos -->
+      <div class="border-t border-zinc-800/80 pt-6 space-y-4">
+        <div class="flex items-start gap-3">
+          <svg class="w-4 h-4 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <div>
+            <span class="text-zinc-500 text-[10px] block font-bold uppercase tracking-wider">Ubicación de Obra</span>
+            <span class="text-zinc-100 text-xs md:text-sm font-semibold">{{ activeProject.location }}</span>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <svg class="w-4 h-4 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          <div>
+            <span class="text-zinc-500 text-[10px] block font-bold uppercase tracking-wider">Estado Operativo</span>
+            <span class="text-zinc-100 text-xs md:text-sm font-semibold">{{ activeProject.status }}</span>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <svg class="w-4 h-4 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          <div>
+            <span class="text-zinc-500 text-[10px] block font-bold uppercase tracking-wider">Métricas e Impacto</span>
+            <span class="text-zinc-100 text-xs md:text-sm font-semibold">{{ activeProject.metrics }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+

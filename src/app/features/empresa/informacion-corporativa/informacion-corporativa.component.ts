@@ -14,13 +14,13 @@ import { FooterComponent } from '../../../shared/components/footer/footer.compon
 export class InformacionCorporativaComponent {
   datosLegales = [
     { etiqueta: 'Razón Social', valor: 'PLANPROMIN S.A.' },
-    { etiqueta: 'RUC', valor: '0190458321001' },
+    { etiqueta: 'RUC', valor: '0791754690001' },
     { etiqueta: 'Tipo de Sociedad', valor: 'Sociedad Anónima' },
-    { etiqueta: 'Fecha de Constitución', valor: '14 de marzo de 1998' },
-    { etiqueta: 'Domicilio Principal', valor: 'Camilo Ponce Enríquez, Cantón Camilo Ponce Enríquez, Provincia del Azuay, Ecuador' },
+    { etiqueta: 'Fecha de Constitución', valor: '23 de mayo de 2011' },
+    { etiqueta: 'Domicilio Principal', valor: 'Ciudad Daule, Cantón Daule, Provincia del Guayas, Ecuador' },
     { etiqueta: 'Objeto Social', valor: 'Exploración, explotación, beneficio y comercialización de minerales metálicos y no metálicos' },
-    { etiqueta: 'Capital Suscrito', valor: 'USD 4.800.000' },
-    { etiqueta: 'Registro Mercantil', valor: 'Notaría Segunda del Cantón Cuenca, Tomo XII, Folio 287' },
+    { etiqueta: 'Capital Suscrito', valor: 'USD 400.000,00' },
+    { etiqueta: 'Registro Mercantil', valor: 'Notario Sexto del Cantón Machala, Tomo 1203, Número 643' },
     { etiqueta: 'Supervisión', valor: 'Agencia de Regulación y Control Minero (ARCOM) — Expediente MIN-CPE-2003-0041' },
     { etiqueta: 'Régimen Tributario', valor: 'Contribuyente Especial — Servicio de Rentas Internas (SRI)' },
   ];

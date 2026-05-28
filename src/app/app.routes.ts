@@ -55,6 +55,10 @@ export const routes: Routes = [
       {
         path: 'informacion-corporativa',
         loadComponent: () => import('./features/empresa/informacion-corporativa/informacion-corporativa.component').then(m => m.InformacionCorporativaComponent)
+      },
+      {
+        path: 'empresas-asociadas',
+        loadComponent: () => import('./features/empresa/empresas-asociadas/empresas-asociadas.component').then(m => m.EmpresasAsociadasComponent)
       }
     ]
   },
@@ -142,6 +146,10 @@ export const routes: Routes = [
           {
             path: 'operativo',
             loadComponent: () => import('./features/operaciones/fdn-operativo/operativo.component').then(m => m.OperativoComponent)
+          },
+          {
+            path: 'relaveras',
+            loadComponent: () => import('./features/operaciones/fdn-relaveras/relaveras.component').then(m => m.RelaverasComponent)
           },
           {
             path: 'proyecciones',

@@ -1,0 +1,429 @@
+<app-navbar></app-navbar>
+
+<main class="bg-zinc-950 text-white min-h-screen pt-24 pb-16 relative overflow-hidden">
+  <!-- Fondos decorativos abstractos -->
+  <div class="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+    <div class="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-orange-600/5 blur-[120px]"></div>
+    <div class="absolute bottom-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-amber-500/5 blur-[120px]"></div>
+  </div>
+
+  <div class="container mx-auto px-4 lg:px-12 relative z-10">
+    <!-- Hero Banner -->
+    <div class="flex items-start gap-4 lg:gap-6 mb-12">
+      <div class="w-1.5 h-20 lg:h-28 bg-orange-600 flex-shrink-0 mt-1"></div>
+      <div class="flex-1">
+        <span class="text-orange-600 font-semibold uppercase tracking-wider text-sm">Camilo Ponce Enríquez</span>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-none mt-2 mb-4">
+          Gestión de <span class="text-orange-600">Relaveras</span>
+        </h1>
+        <p class="text-gray-400 leading-relaxed text-justify max-w-4xl text-sm lg:text-base">
+          Operamos y monitoreamos de forma continua seis depósitos de relaves activos, estabilizados y clausurados. 
+          Nuestras instalaciones combinan recubrimientos impermeables de geosintéticos, sistemas de drenaje por gravedad en circuito cerrado 
+          e instrumentación geotécnica satelital en tiempo real para garantizar el máximo nivel de seguridad y cumplimiento ambiental de acuerdo a normativas nacionales e internacionales.
+        </p>
+      </div>
+    </div>
+
+    <!-- Dashboard Layout Grid -->
+    <div class="grid lg:grid-cols-12 gap-8 items-start">
+      <!-- Selector Lateral (Izquierda): 4 columnas -->
+      <div class="lg:col-span-4 space-y-4">
+        <div class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-5 backdrop-blur-sm">
+          <span class="text-zinc-500 text-[10px] font-black uppercase tracking-widest block mb-4">Instalaciones Controladas</span>
+          
+          <div class="space-y-3">
+            <div *ngFor="let rel of relaveras; let idx = index" 
+                 (click)="selectRelavera(idx)"
+                 class="p-4 bg-zinc-950/40 hover:bg-zinc-900/80 border rounded-xl cursor-pointer transition-all duration-300 flex flex-col gap-3 group relative overflow-hidden"
+                 [class.border-orange-600]="idx === activeRelaveraIndex"
+                 [class.shadow-[0_0_15px_rgba(234,88,12,0.15)]]="idx === activeRelaveraIndex">
+              
+              <!-- Glow lateral activo -->
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-orange-600 transition-transform duration-300"
+                   [class.scale-y-100]="idx === activeRelaveraIndex"
+                   [class.scale-y-0]="idx !== activeRelaveraIndex"></div>
+
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <!-- Indicador de color según estado -->
+                  <div class="relative flex h-2.5 w-2.5 flex-shrink-0">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" [ngClass]="rel.statusClass"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5" [ngClass]="rel.statusClass"></span>
+                  </div>
+                  <span class="text-sm font-bold text-gray-200 group-hover:text-white transition-colors">
+                    {{ rel.name }}
+                  </span>
+                </div>
+                <svg class="w-4 h-4 text-zinc-500 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+
+              <!-- Mini Dashboard de Capacidad -->
+              <div class="space-y-1.5 pl-5">
+                <div class="flex justify-between items-center text-[10px] text-zinc-400 font-semibold">
+                  <span>Capacidad Ocupada:</span>
+                  <span class="text-zinc-200 font-bold">{{ rel.occupancy }}%</span>
+                </div>
+                <div class="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+                  <div class="h-full rounded-full transition-all duration-700 ease-out"
+                       [style.width.%]="rel.occupancy"
+                       [ngClass]="{
+                         'bg-green-500': rel.occupancy < 75,
+                         'bg-yellow-500': rel.occupancy >= 75 && rel.occupancy < 90,
+                         'bg-red-500': rel.occupancy >= 90
+                       }">
+                  </div>
+                </div>
+                <div class="flex justify-between items-center text-[9px] text-zinc-500 font-medium">
+                  <span>Total: {{ rel.capacity }}</span>
+                  <span class="uppercase">{{ rel.status }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ficha de Operación Principal (Derecha): 8 columnas -->
+      <div class="lg:col-span-8 space-y-6">
+        <div class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 lg:p-8 backdrop-blur-sm relative overflow-hidden flex flex-col min-h-[500px]">
+          
+          <!-- Encabezado de la Relavera Activa -->
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800/80 pb-6 mb-6">
+            <div>
+              <div class="flex items-center gap-2 mb-2 text-xs font-semibold text-zinc-400">
+                <div class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" [ngClass]="activeRelavera.statusClass"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2" [ngClass]="activeRelavera.statusClass"></span>
+                </div>
+                <span>Estado Operativo:</span>
+                <span class="text-white font-bold">{{ activeRelavera.status }}</span>
+              </div>
+              <h2 class="text-2xl lg:text-3xl font-black text-white leading-tight">
+                {{ activeRelavera.name }}
+              </h2>
+            </div>
+            
+            <!-- Coordenadas UTM -->
+            <div class="bg-black/40 border border-zinc-800/50 rounded-xl px-4 py-2 text-left md:text-right">
+              <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider">Ubicación UTM</span>
+              <span class="text-orange-500 text-xs font-mono font-bold">{{ activeRelavera.coordinates }}</span>
+            </div>
+          </div>
+
+          <!-- Pestañas del Panel de Detalle -->
+          <div class="flex border-b border-zinc-800/50 mb-6">
+            <button (click)="changeTab('blueprint')"
+                    class="pb-3 px-4 font-bold text-xs uppercase tracking-wider border-b-2 transition-all duration-300"
+                    [class.border-orange-600]="activeTab === 'blueprint'"
+                    [class.text-white]="activeTab === 'blueprint'"
+                    [class.border-transparent]="activeTab !== 'blueprint'"
+                    [class.text-zinc-500]="activeTab !== 'blueprint'"
+                    [class.hover:text-zinc-300]="activeTab !== 'blueprint'">
+              Plano de Presa
+            </button>
+            <button (click)="changeTab('specs')"
+                    class="pb-3 px-4 font-bold text-xs uppercase tracking-wider border-b-2 transition-all duration-300"
+                    [class.border-orange-600]="activeTab === 'specs'"
+                    [class.text-white]="activeTab === 'specs'"
+                    [class.border-transparent]="activeTab !== 'specs'"
+                    [class.text-zinc-500]="activeTab !== 'specs'"
+                    [class.hover:text-zinc-300]="activeTab !== 'specs'">
+              Ficha Técnica
+            </button>
+            <button (click)="changeTab('gallery')"
+                    class="pb-3 px-4 font-bold text-xs uppercase tracking-wider border-b-2 transition-all duration-300"
+                    [class.border-orange-600]="activeTab === 'gallery'"
+                    [class.text-white]="activeTab === 'gallery'"
+                    [class.border-transparent]="activeTab !== 'gallery'"
+                    [class.text-zinc-500]="activeTab !== 'gallery'"
+                    [class.hover:text-zinc-300]="activeTab !== 'gallery'">
+              Galería de Obra
+            </button>
+          </div>
+
+          <!-- CONTENIDO TAB 1: PLANO ESTRUCTURAL (SVG INTERACTIVO) -->
+          <div *ngIf="activeTab === 'blueprint'" class="space-y-6 flex-1 flex flex-col justify-between">
+            <div class="text-zinc-400 text-xs md:text-sm leading-relaxed">
+              Haz clic en los sensores geotécnicos representados en el plano (círculos intermitentes) para consultar las lecturas telemétricas actuales del dique de contención.
+            </div>
+
+            <!-- Contenedor del SVG -->
+            <div class="relative bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-4 overflow-hidden flex items-center justify-center min-h-[220px]">
+              <svg viewBox="0 0 500 250" class="w-full h-auto max-h-[320px] select-none text-orange-600">
+                <!-- Leyendas técnicas del dibujo -->
+                <text x="15" y="25" fill="#52525b" font-size="8" font-family="monospace">ESCALA: S/E (Corte Transversal)</text>
+                <text x="15" y="38" fill="#52525b" font-size="8" font-family="monospace">ESTRUCTURA: {{ activeRelavera.height }}</text>
+
+                <!-- Basamento Rocoso (Cimiento) -->
+                <polygon points="0,210 500,210 500,250 0,250" fill="#18181b" stroke="#27272a" stroke-width="1.5" />
+                <path d="M 50,215 L 60,230 M 120,215 L 130,230 M 250,215 L 260,230 M 380,215 L 390,230 M 440,215 L 450,230" stroke="#27272a" stroke-width="1" />
+                <text x="350" y="235" fill="#3f3f46" font-size="10" font-weight="bold" font-family="monospace">Cimiento Rocoso</text>
+
+                <!-- Vaso de Relaves (Lodos consolidados) -->
+                <polygon points="0,100 200,100 240,210 0,210" fill="#2d2d30" stroke="#3f3f46" stroke-width="1" stroke-dasharray="2 2" />
+                <text x="35" y="150" fill="#52525b" font-size="10" font-weight="bold" font-family="monospace">Relave Consolidado</text>
+
+                <!-- Espejo de Agua Sobrenadante (Cyan) -->
+                <polygon points="120,100 200,100 210,120 120,120" fill="rgba(6, 182, 212, 0.25)" stroke="#06b6d4" stroke-width="1" />
+                <text x="110" y="93" fill="#06b6d4" font-size="8" font-weight="bold" font-family="monospace">Agua Sobrenadante</text>
+
+                <!-- Geomembrana de Impermeabilización (HDPE Naranja) -->
+                <line x1="200" y1="100" x2="240" y2="210" stroke="#ea580c" stroke-width="3.5" stroke-linecap="round" />
+                <text x="210" y="85" fill="#ea580c" font-size="8" font-weight="bold" font-family="monospace">Geomembrana HDPE</text>
+
+                <!-- Cuerpo del Dique Principal (Trapezoide Gris Oscuro) -->
+                <polygon points="200,100 380,210 240,210" fill="#27272a" stroke="#3f3f46" stroke-width="1.5" />
+                <text x="260" y="160" fill="#71717a" font-size="9" font-weight="bold" font-family="monospace">Cuerpo del Dique</text>
+
+                <!-- Núcleo de la presa (Arcilla/Core) -->
+                <polygon points="215,100 230,100 252,210 237,210" fill="rgba(120, 53, 15, 0.4)" stroke="#78350f" stroke-width="1" />
+                <text x="200" y="180" fill="#78350f" font-size="8" font-family="monospace" transform="rotate(-70 200 180)">Núcleo de Arcilla</text>
+
+                <!-- Filtros de Grava / Geotextil (Dashed line en talud externo) -->
+                <line x1="230" y1="100" x2="380" y2="210" stroke="#a1a1aa" stroke-width="1.5" stroke-dasharray="3 3" />
+                <line x1="380" y1="210" x2="410" y2="210" stroke="#2563eb" stroke-width="2" />
+                
+                <!-- Drenes / Colectores de escorrentía -->
+                <circle cx="410" cy="210" r="3" fill="#2563eb" />
+                <text x="390" y="222" fill="#2563eb" font-size="8" font-family="monospace">Drenaje Principal</text>
+
+                <!-- Sensores Interactivos -->
+                <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                  <!-- Anillo pulsante (ping) si el sensor está activo -->
+                  <circle [attr.cx]="sensor.x + '%'" 
+                          [attr.cy]="sensor.y + '%'" 
+                          r="9" 
+                          fill="none" 
+                          stroke-width="2"
+                          class="animate-ping"
+                          [class.stroke-green-500]="sensor.status === 'normal'"
+                          [class.stroke-yellow-500]="sensor.status === 'alerta'"
+                          [class.stroke-zinc-600]="sensor.status === 'inactivo'">
+                  </circle>
+                  <!-- Centro interactivo -->
+                  <circle [attr.cx]="sensor.x + '%'" 
+                          [attr.cy]="sensor.y + '%'" 
+                          r="5.5" 
+                          [class.fill-green-500]="sensor.status === 'normal'"
+                          [class.fill-yellow-500]="sensor.status === 'alerta'"
+                          [class.fill-zinc-600]="sensor.status === 'inactivo'"
+                          [class.stroke-white]="selectedSensor?.id === sensor.id"
+                          [class.stroke-transparent]="selectedSensor?.id !== sensor.id"
+                          stroke-width="1.5"
+                          (click)="selectSensor(sensor)">
+                  </circle>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Ficha de Sensor Seleccionado -->
+            <div class="bg-black/40 border border-zinc-800/80 rounded-2xl p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition-all duration-300">
+              <div *ngIf="selectedSensor; else noSensorSelected" class="flex items-start gap-4">
+                <!-- Icono de Sensor -->
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center border border-zinc-800/80 flex-shrink-0"
+                     [ngClass]="{
+                       'bg-green-500/10': selectedSensor.status === 'normal',
+                       'bg-yellow-500/10': selectedSensor.status === 'alerta',
+                       'bg-zinc-800/20': selectedSensor.status === 'inactivo'
+                     }">
+                  
+                  <!-- Piezómetro -->
+                  <svg *ngIf="selectedSensor.type === 'piezometro'" class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path d="M12 2v20M17 5H7M19 12H5M17 19H7"></path>
+                  </svg>
+                  
+                  <!-- Inclinómetro -->
+                  <svg *ngIf="selectedSensor.type === 'inclinometro'" class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <line x1="12" y1="2" x2="12" y2="22"></line>
+                    <path d="M12 18l6 3M12 18l-6 3M12 6l4-3M12 6l-4-3"></path>
+                  </svg>
+
+                  <!-- Drenaje / Caudal -->
+                  <svg *ngIf="selectedSensor.type === 'drenaje'" class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path d="M12 22a7 7 0 0 0 7-7c0-4.3-7-11-7-11S5 10.7 5 15a7 7 0 0 0 7 7z"></path>
+                  </svg>
+
+                  <!-- Acelerómetro -->
+                  <svg *ngIf="selectedSensor.type === 'acelerometro'" class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                  </svg>
+                </div>
+
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-zinc-500 text-[10px] font-bold uppercase tracking-wider">Telemetría Geotécnica</span>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full font-black uppercase tracking-wider"
+                          [ngClass]="{
+                            'bg-green-500/25 text-green-400': selectedSensor.status === 'normal',
+                            'bg-yellow-500/25 text-yellow-400': selectedSensor.status === 'alerta',
+                            'bg-zinc-800 text-zinc-400': selectedSensor.status === 'inactivo'
+                          }">
+                      {{ selectedSensor.status }}
+                    </span>
+                  </div>
+                  <h4 class="text-base font-extrabold text-white mt-1">{{ selectedSensor.name }}</h4>
+                  <span class="text-zinc-400 text-xs mt-1 block">Lectura remota automática de variables críticas.</span>
+                </div>
+              </div>
+
+              <!-- Lectura de Datos -->
+              <div *ngIf="selectedSensor" class="bg-zinc-950/60 border border-zinc-800/80 rounded-xl px-5 py-3 w-full md:w-auto text-left md:text-right">
+                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider">Valor Registrado</span>
+                <span class="text-white font-mono font-black text-base md:text-lg">{{ selectedSensor.value }}</span>
+              </div>
+
+              <!-- Placeholder si no hay seleccionado -->
+              <ng-template #noSensorSelected>
+                <div class="text-zinc-500 text-xs py-2 w-full text-center">
+                  Selecciona cualquier piezómetro o inclinómetro del dique para visualizar lecturas.
+                </div>
+              </ng-template>
+            </div>
+          </div>
+
+          <!-- CONTENIDO TAB 2: FICHA TÉCNICA (ESPECIFICACIONES) -->
+          <div *ngIf="activeTab === 'specs'" class="space-y-6 flex-1">
+            <div class="text-zinc-400 text-xs md:text-sm leading-relaxed">
+              Detalle de los parámetros de diseño geotécnico, obras civiles de impermeabilización y coeficientes de seguridad de la infraestructura estructural.
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+              <!-- Item 1 -->
+              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Tipo de Presa</span>
+                <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.damType }}</span>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Altura Máxima del Dique</span>
+                <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.height }}</span>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Factor de Seguridad de Diseño (FSD)</span>
+                <div class="flex items-center gap-2 mt-1">
+                  <span class="text-orange-500 font-mono font-black text-base">{{ activeRelavera.fsd }}</span>
+                  <span class="text-[9px] px-2 py-0.5 rounded bg-green-500/20 text-green-400 font-bold uppercase tracking-wider">Estabilidad Conforme</span>
+                </div>
+              </div>
+
+              <!-- Item 4 -->
+              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Geología del Cimiento</span>
+                <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.foundation }}</span>
+              </div>
+
+              <!-- Item 5 -->
+              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Recirculación de Agua de Retorno</span>
+                <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.waterReclamation }}</span>
+              </div>
+
+              <!-- Item 6 -->
+              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Año de Construcción / Habilitación</span>
+                <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.constructionYear }}</span>
+              </div>
+            </div>
+
+            <!-- Ficha Técnica Contención -->
+            <div class="bg-black/40 border border-zinc-800/80 rounded-2xl p-5">
+              <div class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <div>
+                  <h4 class="text-white font-bold text-sm mb-1">Barreras de Contención & Tecnología</h4>
+                  <p class="text-zinc-400 text-xs md:text-sm leading-relaxed">{{ activeRelavera.technology }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONTENIDO TAB 3: GALERÍA DE IMÁGENES (CAROUSEL) -->
+          <div *ngIf="activeTab === 'gallery'" class="space-y-6 flex-1 flex flex-col justify-between">
+            <div class="text-zinc-400 text-xs md:text-sm leading-relaxed">
+              Imágenes reales de las obras de ingeniería civil, instalación de geomembranas e infraestructura de drenajes perimetrales del depósito.
+            </div>
+
+            <div *ngIf="activeRelavera.images && activeRelavera.images.length > 0; else noImagesBlock" class="space-y-4">
+              <!-- Carrusel Grande -->
+              <div class="relative overflow-hidden rounded-2xl aspect-[16/9] border border-zinc-800/80 bg-black flex items-center justify-center">
+                <!-- Imagen Activa -->
+                <img [src]="activeRelavera.images[carouselIndex].url" 
+                     [alt]="activeRelavera.images[carouselIndex].caption"
+                     class="w-full h-full object-cover cursor-pointer hover:scale-[1.02] transition-transform duration-500"
+                     (click)="openPreview(activeRelavera.images[carouselIndex].url, activeRelavera.name)" />
+
+                <!-- Degradado de fondo para la leyenda -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex flex-col justify-end p-5">
+                  <p class="text-white text-xs md:text-sm font-semibold">{{ activeRelavera.images[carouselIndex].caption }}</p>
+                </div>
+
+                <!-- Botones Atrás/Adelante -->
+                <button (click)="prevImage()" 
+                        class="absolute left-4 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-orange-600 text-white flex items-center justify-center transition-colors border border-zinc-800/60"
+                        aria-label="Imagen anterior">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                <button (click)="nextImage()" 
+                        class="absolute right-4 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-orange-600 text-white flex items-center justify-center transition-colors border border-zinc-800/60"
+                        aria-label="Imagen siguiente">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Indicadores del Carrusel -->
+              <div class="flex justify-center items-center gap-2">
+                <button *ngFor="let img of activeRelavera.images; let i = index"
+                        (click)="setCarouselIndex(i)"
+                        class="w-2.5 h-2.5 rounded-full transition-all duration-300"
+                        [class.bg-orange-600]="i === carouselIndex"
+                        [class.w-6]="i === carouselIndex"
+                        [class.bg-zinc-700]="i !== carouselIndex">
+                </button>
+              </div>
+            </div>
+
+            <!-- Fallback si no hay fotos cargadas -->
+            <ng-template #noImagesBlock>
+              <div class="flex-1 bg-zinc-950/40 border border-zinc-800/80 rounded-2xl p-10 flex flex-col items-center justify-center text-center">
+                <svg class="w-12 h-12 text-zinc-700 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-zinc-500 text-xs">No hay imágenes disponibles para este proyecto en este momento.</span>
+              </div>
+            </ng-template>
+          </div>
+
+          <!-- PROCESO OPERATIVO / DESCRIPCIÓN DETALLADA -->
+          <div class="border-t border-zinc-800/80 pt-6 mt-8 space-y-4">
+            <h3 class="text-base font-black text-white">Método Operativo y Procesos Metalúrgicos</h3>
+            <p class="text-zinc-300 leading-relaxed text-xs lg:text-sm text-justify">
+              {{ activeRelavera.process }}
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Componente compartido para Zoom de Imagen -->
+<app-image-preview [visible]="previewVisible"
+                    [imageUrl]="previewUrl"
+                    [imageTitle]="previewTitle"
+                    (closed)="closePreview()">
+</app-image-preview>
+
+<app-footer></app-footer>
