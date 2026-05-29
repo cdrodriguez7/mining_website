@@ -1,0 +1,135 @@
+$primary-orange: #ea580c;
+$primary-yellow: #eab308;
+$primary-cyan: #38bdf8;
+$bg-dark: #09090b;
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseIndicator {
+  0% {
+    r: 2px;
+    opacity: 0.8;
+  }
+  50% {
+    r: 4px;
+    opacity: 1;
+  }
+  100% {
+    r: 2px;
+    opacity: 0.8;
+  }
+}
+
+main {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+// ===== FLOW DIAGRAM SVG INTERACTIVE =====
+svg {
+  rect {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover {
+      filter: drop-shadow(0 0 5px rgba(234, 88, 12, 0.5));
+    }
+  }
+
+  line, path {
+    transition: all 0.5s ease;
+  }
+
+  text {
+    letter-spacing: 0.03em;
+  }
+
+  .animate-pulse {
+    animation: pulseIndicator 2s infinite ease-in-out;
+  }
+}
+
+// ===== SELECTOR LATERAL =====
+.group {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    background-color: rgba(39, 39, 42, 0.4);
+    border-color: rgba(234, 88, 12, 0.3);
+  }
+}
+
+// ===== TABS ANIMATION =====
+button {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: $primary-orange;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  
+  &.border-orange-600::after {
+    transform: scaleX(1);
+  }
+}
+
+// ===== SHIMMER FOR PROGRESS BARS =====
+.w-full.bg-zinc-800 {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.h-full.rounded-full {
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 2s infinite linear;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// ===== ACCESIBILIDAD =====
+*:focus-visible {
+  outline: 2px solid $primary-orange;
+  outline-offset: 2px;
+}

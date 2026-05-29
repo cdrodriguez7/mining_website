@@ -95,6 +95,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   metalPrices: MetalPricesState | null = null;
   activeMetal: 'gold' | 'silver' | 'copper' = 'gold';
   activePeriod = 30;
+  showMetalsModal = false;
 
   periods = [
     { label: '7D', days: 7 },
@@ -202,6 +203,19 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   // ── Metales: interacción ──────────────────────────────────────────────────
+  openMetalsModal(key: 'gold' | 'silver' | 'copper'): void {
+    this.showMetalsModal = true;
+    this.activeMetal = key;
+    this.cdr.detectChanges(); // Asegurar que el canvas esté en el DOM
+    setTimeout(() => this.renderChart(), 80);
+  }
+
+  closeMetalsModal(): void {
+    this.showMetalsModal = false;
+    this.destroyChart();
+    this.cdr.detectChanges();
+  }
+
   selectMetal(key: 'gold' | 'silver' | 'copper'): void {
     this.activeMetal = key;
     setTimeout(() => this.renderChart(), 50);

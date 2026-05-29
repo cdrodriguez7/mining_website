@@ -1,0 +1,509 @@
+<app-navbar></app-navbar>
+
+<main class="bg-zinc-950 text-white min-h-screen pt-24 pb-16 relative overflow-hidden">
+  <!-- Fondos decorativos abstractos -->
+  <div class="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+    <div class="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-orange-600/5 blur-[120px]"></div>
+    <div class="absolute bottom-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-amber-500/5 blur-[120px]"></div>
+  </div>
+
+  <div class="container mx-auto px-4 lg:px-12 relative z-10">
+    <!-- Hero Banner -->
+    <div class="flex items-start gap-4 lg:gap-6 mb-12">
+      <div class="w-1.5 h-20 lg:h-28 bg-orange-600 flex-shrink-0 mt-1"></div>
+      <div class="flex-1">
+        <span class="text-orange-600 font-semibold uppercase tracking-wider text-sm">Camilo Ponce Enríquez</span>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-none mt-2 mb-4">
+          Plantas de <span class="text-orange-600">Beneficio</span>
+        </h1>
+        <p class="text-gray-400 leading-relaxed text-justify max-w-4xl text-sm lg:text-base">
+          Operamos infraestructura de punta para el procesamiento de minerales y la recuperación metalúrgica. 
+          Nuestras instalaciones integran procesos físicos y químicos controlados automáticamente mediante sistemas SCADA, 
+          optimizando la molienda, concentración gravimétrica, flotación y lixiviación (CIL) en circuito cerrado, garantizando un estricto cumplimiento ambiental y eficiencia operativa.
+        </p>
+      </div>
+    </div>
+
+    <!-- Dashboard Layout Grid -->
+    <div class="grid lg:grid-cols-12 gap-8 items-start">
+      <!-- Selector Lateral (Izquierda): 4 columnas -->
+      <div class="lg:col-span-4 space-y-4">
+        <div class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-5 backdrop-blur-sm">
+          <span class="text-zinc-500 text-[10px] font-black uppercase tracking-widest block mb-4">Plantas Operativas</span>
+          
+          <div class="space-y-3">
+            <div *ngFor="let plt of plantas; let idx = index" 
+                 (click)="selectPlanta(idx)"
+                 class="p-4 bg-zinc-950/40 hover:bg-zinc-900/80 border rounded-xl cursor-pointer transition-all duration-300 flex flex-col gap-3 group relative overflow-hidden"
+                 [class.border-orange-600]="idx === activePlantaIndex"
+                 [class.shadow-[0_0_15px_rgba(234,88,12,0.15)]]="idx === activePlantaIndex">
+              
+              <!-- Glow lateral activo -->
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-orange-600 transition-transform duration-300"
+                   [class.scale-y-100]="idx === activePlantaIndex"
+                   [class.scale-y-0]="idx !== activePlantaIndex"></div>
+
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <!-- Indicador de color según estado -->
+                  <div class="relative flex h-2.5 w-2.5 flex-shrink-0">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" [ngClass]="plt.statusClass"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5" [ngClass]="plt.statusClass"></span>
+                  </div>
+                  <span class="text-sm font-bold text-gray-200 group-hover:text-white transition-colors">
+                    {{ plt.name }}
+                  </span>
+                </div>
+                <svg class="w-4 h-4 text-zinc-500 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+
+              <!-- Mini Dashboard de Capacidad -->
+              <div class="space-y-1.5 pl-5">
+                <div class="flex justify-between items-center text-[10px] text-zinc-400 font-semibold">
+                  <span>Porcentaje de Uso:</span>
+                  <span class="text-zinc-200 font-bold">{{ plt.occupancy }}%</span>
+                </div>
+                <div class="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+                  <div class="h-full rounded-full transition-all duration-700 ease-out"
+                       [style.width.%]="plt.occupancy"
+                       [ngClass]="{
+                         'bg-green-500': plt.occupancy < 75,
+                         'bg-yellow-500': plt.occupancy >= 75 && plt.occupancy < 90,
+                         'bg-red-500': plt.occupancy >= 90
+                       }">
+                  </div>
+                </div>
+                <div class="flex justify-between items-center text-[9px] text-zinc-500 font-medium">
+                  <span>Capacidad: {{ plt.capacity }}</span>
+                  <span class="uppercase text-orange-500 font-semibold">{{ plt.status }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ficha de Operación Principal (Derecha): 8 columnas -->
+      <div class="lg:col-span-8 space-y-6">
+        <div class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 lg:p-8 backdrop-blur-sm relative overflow-hidden flex flex-col min-h-[500px]">
+          
+          <!-- Encabezado de la Planta Activa -->
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800/80 pb-6 mb-6">
+            <div>
+              <div class="flex items-center gap-2 mb-2 text-xs font-semibold text-zinc-400">
+                <div class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" [ngClass]="activePlanta.statusClass"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2" [ngClass]="activePlanta.statusClass"></span>
+                </div>
+                <span>Estado Planta:</span>
+                <span class="text-white font-bold">{{ activePlanta.status }}</span>
+              </div>
+              <h2 class="text-2xl lg:text-3xl font-black text-white leading-tight">
+                {{ activePlanta.name }}
+              </h2>
+            </div>
+            
+            <!-- Coordenadas UTM -->
+            <div class="bg-black/40 border border-zinc-800/50 rounded-xl px-4 py-2 text-left md:text-right">
+              <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider">CATASTRO / UBICACIÓN</span>
+              <span class="text-orange-500 text-xs font-mono font-bold">{{ activePlanta.permitCode }}</span>
+            </div>
+          </div>
+
+          <!-- Pestañas del Panel de Detalle -->
+          <div class="flex border-b border-zinc-800/50 mb-6">
+            <button (click)="changeTab('blueprint')"
+                    class="pb-3 px-4 font-bold text-xs uppercase tracking-wider border-b-2 transition-all duration-300"
+                    [class.border-orange-600]="activeTab === 'blueprint'"
+                    [class.text-white]="activeTab === 'blueprint'"
+                    [class.border-transparent]="activeTab !== 'blueprint'"
+                    [class.text-zinc-500]="activeTab !== 'blueprint'"
+                    [class.hover:text-zinc-300]="activeTab !== 'blueprint'">
+              Flujograma de Procesos
+            </button>
+            <button (click)="changeTab('specs')"
+                    class="pb-3 px-4 font-bold text-xs uppercase tracking-wider border-b-2 transition-all duration-300"
+                    [class.border-orange-600]="activeTab === 'specs'"
+                    [class.text-white]="activeTab === 'specs'"
+                    [class.border-transparent]="activeTab !== 'specs'"
+                    [class.text-zinc-500]="activeTab !== 'specs'"
+                    [class.hover:text-zinc-300]="activeTab !== 'specs'">
+              Ficha Técnica
+            </button>
+            <button (click)="changeTab('gallery')"
+                    class="pb-3 px-4 font-bold text-xs uppercase tracking-wider border-b-2 transition-all duration-300"
+                    [class.border-orange-600]="activeTab === 'gallery'"
+                    [class.text-white]="activeTab === 'gallery'"
+                    [class.border-transparent]="activeTab !== 'gallery'"
+                    [class.text-zinc-500]="activeTab !== 'gallery'"
+                    [class.hover:text-zinc-300]="activeTab !== 'gallery'">
+              Registro de Obras
+            </button>
+          </div>
+
+          <!-- CONTENIDO TAB 1: PLANO ESTRUCTURAL / FLUJOGRAMA INTERACTIVO -->
+          <div *ngIf="activeTab === 'blueprint'" class="space-y-6 flex-1 flex flex-col justify-between">
+            <div class="text-zinc-400 text-xs md:text-sm leading-relaxed">
+              Haz clic en los bloques del flujograma de procesamiento para consultar la función de cada etapa y sus lecturas operativas e instrumentales en tiempo real.
+            </div>
+
+            <!-- Contenedor del SVG -->
+            <div class="relative bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-4 overflow-hidden flex items-center justify-center min-h-[220px]">
+              
+              <!-- SVG Complejo Shumiral -->
+              <svg *ngIf="activePlanta.id === 'shumiral'" viewBox="0 0 500 250" class="w-full h-auto max-h-[320px] select-none text-orange-600">
+                <defs>
+                  <pattern id="grid-shumiral" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid-shumiral)" />
+
+                <!-- Leyendas técnicas del dibujo -->
+                <text x="15" y="25" fill="#52525b" font-size="7" font-family="monospace">ESCALA: DIAGRAMA DE FLUJO METALÚRGICO</text>
+                <text x="15" y="35" fill="#52525b" font-size="7" font-family="monospace">TECNOLOGÍA: GRAVIMETRÍA + FLOTACIÓN + CIL</text>
+
+                <!-- Conectores y Líneas de flujo -->
+                <line x1="20" y1="125" x2="60" y2="125" stroke="#ea580c" stroke-width="2" stroke-dasharray="3 3" />
+                <line x1="110" y1="125" x2="140" y2="125" stroke="#ea580c" stroke-width="2" />
+                
+                <!-- Salida Molienda bifurca a Gravimetría (arriba) y Flotación (frente) -->
+                <path d="M 190,125 L 205,125 L 205,75 L 220,75" fill="none" stroke="#ea580c" stroke-width="2" />
+                <path d="M 190,125 L 220,125" fill="none" stroke="#ea580c" stroke-width="2" />
+
+                <!-- Retorno de Gravimetría vuelve a molienda o va a CIL/Flotación -->
+                <path d="M 270,75 L 285,75 L 285,125 L 300,125" fill="none" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="2 2" />
+
+                <!-- Flotación -> Lixiviación CIL -->
+                <line x1="270" y1="125" x2="300" y2="125" stroke="#ea580c" stroke-width="2" />
+
+                <!-- CIL -> Desorción/Fundición -->
+                <line x1="350" y1="125" x2="380" y2="125" stroke="#ea580c" stroke-width="2" />
+
+                <!-- Fundición -> Salida Doré (subida) -->
+                <path d="M 430,125 L 445,125 L 445,75 L 460,75" fill="none" stroke="#eab308" stroke-width="2" />
+                
+                <!-- CIL colas -> Detoxificación (abajo) -->
+                <path d="M 325,145 L 325,195 L 380,195" fill="none" stroke="#ef4444" stroke-width="2" />
+                <line x1="430" y1="195" x2="460" y2="195" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 3" />
+
+                <!-- Nodos interactivos (Etapas) -->
+                <!-- Trituración -->
+                <g class="cursor-pointer" (click)="selectStage(activePlanta.stages[0])">
+                  <rect x="60" y="105" width="50" height="40" rx="6" fill="#121214" stroke="#3f3f46" stroke-width="1.5"
+                        [class.stroke-orange-500]="selectedStage?.id === 'tri-shumiral'"
+                        [class.fill-zinc-900]="selectedStage?.id === 'tri-shumiral'" />
+                  <text x="85" y="128" fill="#e4e4e7" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">TRITURA.</text>
+                  <circle cx="85" cy="138" r="2.5" fill="#22c55e" class="animate-pulse"></circle>
+                </g>
+
+                <!-- Molienda -->
+                <g class="cursor-pointer" (click)="selectStage(activePlanta.stages[1])">
+                  <rect x="140" y="105" width="50" height="40" rx="6" fill="#121214" stroke="#3f3f46" stroke-width="1.5"
+                        [class.stroke-orange-500]="selectedStage?.id === 'mol-shumiral'"
+                        [class.fill-zinc-900]="selectedStage?.id === 'mol-shumiral'" />
+                  <text x="165" y="128" fill="#e4e4e7" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">MOLIEN.</text>
+                  <circle cx="165" cy="138" r="2.5" fill="#22c55e" class="animate-pulse"></circle>
+                </g>
+
+                <!-- Concentración Gravimétrica -->
+                <g class="cursor-pointer" (click)="selectStage(activePlanta.stages[2])">
+                  <rect x="220" y="55" width="50" height="40" rx="6" fill="#121214" stroke="#3f3f46" stroke-width="1.5"
+                        [class.stroke-orange-500]="selectedStage?.id === 'gra-shumiral'"
+                        [class.fill-zinc-900]="selectedStage?.id === 'gra-shumiral'" />
+                  <text x="245" y="78" fill="#e4e4e7" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">GRAVIM.</text>
+                  <circle cx="245" cy="88" r="2.5" fill="#22c55e" class="animate-pulse"></circle>
+                </g>
+
+                <!-- Flotación -->
+                <g class="cursor-pointer" (click)="selectStage(activePlanta.stages[3])">
+                  <rect x="220" y="105" width="50" height="40" rx="6" fill="#121214" stroke="#3f3f46" stroke-width="1.5"
+                        [class.stroke-orange-500]="selectedStage?.id === 'flo-shumiral'"
+                        [class.fill-zinc-900]="selectedStage?.id === 'flo-shumiral'" />
+                  <text x="245" y="128" fill="#e4e4e7" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">FLOTAC.</text>
+                  <circle cx="245" cy="138" r="2.5" fill="#22c55e" class="animate-pulse"></circle>
+                </g>
+
+                <!-- Lixiviación CIL -->
+                <g class="cursor-pointer" (click)="selectStage(activePlanta.stages[4])">
+                  <rect x="300" y="105" width="50" height="40" rx="6" fill="#121214" stroke="#3f3f46" stroke-width="1.5"
+                        [class.stroke-orange-500]="selectedStage?.id === 'cil-shumiral'"
+                        [class.fill-zinc-900]="selectedStage?.id === 'cil-shumiral'" />
+                  <text x="325" y="128" fill="#e4e4e7" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">CIL (Au)</text>
+                  <circle cx="325" cy="138" r="2.5" fill="#22c55e" class="animate-pulse"></circle>
+                </g>
+
+                <!-- Desorción & Fundición -->
+                <g class="cursor-pointer" (click)="selectStage(activePlanta.stages[5])">
+                  <rect x="380" y="105" width="50" height="40" rx="6" fill="#121214" stroke="#3f3f46" stroke-width="1.5"
+                        [class.stroke-orange-500]="selectedStage?.id === 'fun-shumiral'"
+                        [class.fill-zinc-900]="selectedStage?.id === 'fun-shumiral'" />
+                  <text x="405" y="128" fill="#e4e4e7" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">FUNDIC.</text>
+                  <circle cx="405" cy="138" r="2.5" fill="#22c55e" class="animate-pulse"></circle>
+                </g>
+
+                <!-- Detoxificación -->
+                <g class="cursor-pointer" (click)="selectStage(activePlanta.stages[6])">
+                  <rect x="380" y="175" width="50" height="40" rx="6" fill="#121214" stroke="#3f3f46" stroke-width="1.5"
+                        [class.stroke-orange-500]="selectedStage?.id === 'det-shumiral'"
+                        [class.fill-zinc-900]="selectedStage?.id === 'det-shumiral'" />
+                  <text x="405" y="198" fill="#ef4444" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">DETOX.</text>
+                  <circle cx="405" cy="208" r="2.5" fill="#22c55e" class="animate-pulse"></circle>
+                </g>
+
+                <!-- Etiquetas de texto decorativas -->
+                <text x="465" y="65" fill="#eab308" font-size="7" font-family="monospace" font-weight="bold">Barras Doré</text>
+                <text x="15" y="115" fill="#a1a1aa" font-size="7" font-family="monospace">Alimentación</text>
+                <text x="465" y="185" fill="#ef4444" font-size="7" font-family="monospace">A Relaveras</text>
+              </svg>
+
+              <!-- SVG Planta Lajo -->
+              <svg *ngIf="activePlanta.id === 'lajo'" viewBox="0 0 500 250" class="w-full h-auto max-h-[320px] select-none text-orange-600">
+                <defs>
+                  <pattern id="grid-lajo-pat" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid-lajo-pat)" />
+
+                <!-- Leyendas técnicas del dibujo -->
+                <text x="15" y="25" fill="#52525b" font-size="7" font-family="monospace">ESCALA: DIAGRAMA DE PROCESO SATÉLITE</text>
+                <text x="15" y="35" fill="#52525b" font-size="7" font-family="monospace">TECNOLOGÍA: TRITURACIÓN + MOLIENDA + FLOTACIÓN BULK</text>
+
+                <!-- Líneas de flujo -->
+                <line x1="20" y1="125" x2="70" y2="125" stroke="#ea580c" stroke-width="2" stroke-dasharray="3 3" />
+                <line x1="130" y1="125" x2="180" y2="125" stroke="#ea580c" stroke-width="2" />
+                
+                <path d="M 230,125 L 250,125 L 250,85 L 270,85" fill="none" stroke="#ea580c" stroke-width="2" />
+                <path d="M 230,125 L 270,125" fill="none" stroke="#ea580c" stroke-width="2" />
+                
+                <line x1="330" y1="125" x2="380" y2="125" stroke="#ea580c" stroke-width="2" />
+                <line x1="440" y1="125" x2="470" y2="125" stroke="#38bdf8" stroke-width="2" stroke-dasharray="2 2" />
+
+                <!-- Nodos interactivos -->
+                <!-- Alimentación -->
+                <g class="cursor-pointer" (click)="selectStage(activePlanta.stages[0])">
+                  <rect x="70" y="105" width="60" height="40" rx="6" fill="#121214" stroke="#3f3f46" stroke-width="1.5"
+                        [class.stroke-orange-500]="selectedStage?.id === 'ali-lajo'"
+                        [class.fill-zinc-900]="selectedStage?.id === 'ali-lajo'" />
+                  <text x="100" y="128" fill="#e4e4e7" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">ALIMENT.</text>
+                  <circle cx="100" cy="138" r="2.5" fill="#22c55e" class="animate-pulse"></circle>
+                </g>
+
+                <!-- Molienda -->
+                <g class="cursor-pointer" (click)="selectStage(activePlanta.stages[1])">
+                  <rect x="180" y="105" width="50" height="40" rx="6" fill="#121214" stroke="#3f3f46" stroke-width="1.5"
+                        [class.stroke-orange-500]="selectedStage?.id === 'mol-lajo'"
+                        [class.fill-zinc-900]="selectedStage?.id === 'mol-lajo'" />
+                  <text x="205" y="128" fill="#e4e4e7" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">MOLIEN.</text>
+                  <circle cx="205" cy="138" r="2.5" fill="#22c55e" class="animate-pulse"></circle>
+                </g>
+
+                <!-- Concentración -->
+                <g class="cursor-pointer" (click)="selectStage(activePlanta.stages[2])">
+                  <rect x="270" y="65" width="60" height="40" rx="6" fill="#121214" stroke="#3f3f46" stroke-width="1.5"
+                        [class.stroke-orange-500]="selectedStage?.id === 'con-lajo'"
+                        [class.fill-zinc-900]="selectedStage?.id === 'con-lajo'" />
+                  <text x="300" y="88" fill="#e4e4e7" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">CONCENT.</text>
+                  <circle cx="300" cy="98" r="2.5" fill="#22c55e" class="animate-pulse"></circle>
+                </g>
+
+                <!-- Flotación -->
+                <g class="cursor-pointer" (click)="selectStage(activePlanta.stages[3])">
+                  <rect x="270" y="105" width="60" height="40" rx="6" fill="#121214" stroke="#3f3f46" stroke-width="1.5"
+                        [class.stroke-orange-500]="selectedStage?.id === 'flo-lajo'"
+                        [class.fill-zinc-900]="selectedStage?.id === 'flo-lajo'" />
+                  <text x="300" y="128" fill="#e4e4e7" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">FLOTAC.</text>
+                  <circle cx="300" cy="138" r="2.5" fill="#22c55e" class="animate-pulse"></circle>
+                </g>
+
+                <!-- Espesamiento & Filtro -->
+                <g class="cursor-pointer" (click)="selectStage(activePlanta.stages[4])">
+                  <rect x="380" y="105" width="60" height="40" rx="6" fill="#121214" stroke="#3f3f46" stroke-width="1.5"
+                        [class.stroke-orange-500]="selectedStage?.id === 'esp-lajo'"
+                        [class.fill-zinc-900]="selectedStage?.id === 'esp-lajo'" />
+                  <text x="410" y="128" fill="#e4e4e7" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">FILTRADO</text>
+                  <circle cx="410" cy="138" r="2.5" fill="#22c55e" class="animate-pulse"></circle>
+                </g>
+
+                <!-- Textos -->
+                <text x="15" y="115" fill="#a1a1aa" font-size="7" font-family="monospace">Alimentación</text>
+                <text x="340" y="75" fill="#eab308" font-size="7" font-family="monospace">Oro Fino</text>
+                <text x="445" y="115" fill="#38bdf8" font-size="7" font-family="monospace">Concentrado Bulk</text>
+              </svg>
+
+            </div>
+
+            <!-- Ficha de Etapa Seleccionada -->
+            <div class="bg-black/40 border border-zinc-800/80 rounded-2xl p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition-all duration-300">
+              <div *ngIf="selectedStage; else noStageSelected" class="flex items-start gap-4">
+                <!-- Icono representativo -->
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center border border-zinc-800/80 bg-orange-600/10 flex-shrink-0">
+                  <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.656 48.656 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3M3 12c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M3 12l-3 3m3-3 3 3M12 3v18M12 3l-3 3m3-3 3 3M12 21l-3-3m3 3 3-3" />
+                  </svg>
+                </div>
+
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-zinc-500 text-[10px] font-bold uppercase tracking-wider">Telemetría de Proceso</span>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full font-black uppercase tracking-wider bg-green-500/25 text-green-400">
+                      {{ selectedStage.status }}
+                    </span>
+                  </div>
+                  <h4 class="text-base font-extrabold text-white mt-1">{{ selectedStage.name }}</h4>
+                  <span class="text-zinc-400 text-xs mt-1 block max-w-lg">{{ selectedStage.description }}</span>
+                </div>
+              </div>
+
+              <!-- Rejilla de Variables / Métricas de Telemetría -->
+              <div *ngIf="selectedStage" class="grid grid-cols-2 md:flex md:items-center gap-4 bg-zinc-950/60 border border-zinc-800/80 rounded-xl px-5 py-3 w-full md:w-auto">
+                <div *ngFor="let met of selectedStage.metrics" class="text-left md:text-right md:border-l md:border-zinc-800 md:pl-4 first:border-0 first:pl-0">
+                  <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider">{{ met.label }}</span>
+                  <span class="text-white font-mono font-black text-sm md:text-base block">{{ met.value }}</span>
+                </div>
+              </div>
+
+              <!-- Placeholder si no hay seleccionado -->
+              <ng-template #noStageSelected>
+                <div class="text-zinc-500 text-xs py-2 w-full text-center">
+                  Selecciona cualquier etapa del flujograma de arriba para inspeccionar los datos instrumentales.
+                </div>
+              </ng-template>
+            </div>
+          </div>
+
+          <!-- CONTENIDO TAB 2: FICHA TÉCNICA (ESPECIFICACIONES) -->
+          <div *ngIf="activeTab === 'specs'" class="space-y-6 flex-1">
+            <div class="text-zinc-400 text-xs md:text-sm leading-relaxed">
+              Resumen de parámetros técnicos, tasas de recuperación y tecnologías operativas de la planta de beneficio.
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+              <!-- Item 1 -->
+              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Capacidad Autorizada</span>
+                <span class="text-zinc-100 text-sm font-semibold">{{ activePlanta.capacity }}</span>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Tasa de Recuperación Aurífera</span>
+                <div class="flex items-center gap-2 mt-1">
+                  <span class="text-orange-500 font-mono font-black text-base">{{ activePlanta.recoveryRate }}</span>
+                  <span class="text-[9px] px-2 py-0.5 rounded bg-green-500/20 text-green-400 font-bold uppercase tracking-wider">Cumplimiento Óptimo</span>
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Recirculación de Agua</span>
+                <span class="text-zinc-100 text-sm font-semibold">{{ activePlanta.recycledWater }}</span>
+              </div>
+
+              <!-- Item 4 -->
+              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Año de Habilitación / Cesión</span>
+                <span class="text-zinc-100 text-sm font-semibold">{{ activePlanta.establishedYear }}</span>
+              </div>
+            </div>
+
+            <!-- Ficha Técnica Completa -->
+            <div class="bg-black/40 border border-zinc-800/80 rounded-2xl p-5">
+              <div class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.68-.69-1.07-1.62-1.07-2.59s.39-1.9 1.07-2.59C12.19 8.8 15.22 8.8 17.07 10.65c.69.68 1.08 1.61 1.08 2.59s-.39 1.9-1.08 2.59c-1.85 1.85-4.88 1.85-6.73 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18H4a2 2 0 0 1-2-2v-2m14-8h2a2 2 0 0 1 2 2v2M6 6H4a2 2 0 0 0-2 2v2m14 8h2a2 2 0 0 0 2-2v-2" />
+                </svg>
+                <div>
+                  <h4 class="text-white font-bold text-sm mb-1">Tecnología de Concentración & Conminución</h4>
+                  <p class="text-zinc-400 text-xs md:text-sm leading-relaxed">{{ activePlanta.technology }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONTENIDO TAB 3: GALERÍA DE IMÁGENES (CAROUSEL) -->
+          <div *ngIf="activeTab === 'gallery'" class="space-y-6 flex-1 flex flex-col justify-between">
+            <div class="text-zinc-400 text-xs md:text-sm leading-relaxed">
+              Imágenes de las operaciones internas, molienda, celdas de flotación e infraestructura metalúrgica.
+            </div>
+
+            <div *ngIf="activePlanta.images && activePlanta.images.length > 0; else noImagesBlock" class="space-y-4">
+              <!-- Carrusel -->
+              <div class="relative overflow-hidden rounded-2xl aspect-[16/9] border border-zinc-800/80 bg-black flex items-center justify-center">
+                <!-- Imagen Activa -->
+                <img [src]="activePlanta.images[carouselIndex].url" 
+                     [alt]="activePlanta.images[carouselIndex].caption"
+                     class="w-full h-full object-cover cursor-pointer hover:scale-[1.02] transition-transform duration-500"
+                     (click)="openPreview(activePlanta.images[carouselIndex].url, activePlanta.name)" />
+
+                <!-- Degradado de fondo para la leyenda -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex flex-col justify-end p-5">
+                  <p class="text-white text-xs md:text-sm font-semibold">{{ activePlanta.images[carouselIndex].caption }}</p>
+                </div>
+
+                <!-- Botones Atrás/Adelante -->
+                <button (click)="prevImage()" 
+                        class="absolute left-4 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-orange-600 text-white flex items-center justify-center transition-colors border border-zinc-800/60"
+                        aria-label="Imagen anterior">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                <button (click)="nextImage()" 
+                        class="absolute right-4 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-orange-600 text-white flex items-center justify-center transition-colors border border-zinc-800/60"
+                        aria-label="Imagen siguiente">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Indicadores del Carrusel -->
+              <div class="flex justify-center items-center gap-2">
+                <button *ngFor="let img of activePlanta.images; let i = index"
+                        (click)="setCarouselIndex(i)"
+                        class="w-2.5 h-2.5 rounded-full transition-all duration-300"
+                        [class.bg-orange-600]="i === carouselIndex"
+                        [class.w-6]="i === carouselIndex"
+                        [class.bg-zinc-700]="i !== carouselIndex">
+                </button>
+              </div>
+            </div>
+
+            <!-- Fallback si no hay fotos cargadas -->
+            <ng-template #noImagesBlock>
+              <div class="flex-1 bg-zinc-950/40 border border-zinc-800/80 rounded-2xl p-10 flex flex-col items-center justify-center text-center">
+                <svg class="w-12 h-12 text-zinc-700 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-zinc-500 text-xs">No hay imágenes disponibles para esta planta en este momento.</span>
+              </div>
+            </ng-template>
+          </div>
+
+          <!-- PROCESO OPERATIVO / DESCRIPCIÓN DETALLADA -->
+          <div class="border-t border-zinc-800/80 pt-6 mt-8 space-y-4">
+            <h3 class="text-base font-black text-white">Gestión Operativa y Monitoreo de Parámetros</h3>
+            <p class="text-zinc-300 leading-relaxed text-xs lg:text-sm text-justify">
+              {{ activePlanta.description }}
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Componente compartido para Zoom de Imagen -->
+<app-image-preview [visible]="previewVisible"
+                    [imageUrl]="previewUrl"
+                    [imageTitle]="previewTitle"
+                    (closed)="closePreview()">
+</app-image-preview>
+
+<app-footer></app-footer>

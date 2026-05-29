@@ -47,6 +47,8 @@ export class NavbarComponent {
         { label: 'Visión General', route: '/operaciones/ponce-enriquez/overview' },
         { label: 'Historia', route: '/operaciones/ponce-enriquez/historia' },
         { label: 'Geología y Mineralización', route: '/operaciones/ponce-enriquez/geologia' },
+        { label: 'Plantas de Beneficio', route: '/operaciones/ponce-enriquez/plantas' },
+        { label: 'Servicios a Terceros', route: '/operaciones/ponce-enriquez/influencia' },
         { label: 'Estado Operativo', route: '/operaciones/ponce-enriquez/operativo' },
         { label: 'Gestión de Relaveras', route: '/operaciones/ponce-enriquez/relaveras' },
         { label: 'Guía de Producción', route: '/operaciones/ponce-enriquez/proyecciones' }

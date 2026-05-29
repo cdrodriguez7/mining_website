@@ -1,0 +1,227 @@
+// Custom scrollbar
+.scrollbar-thin {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #27272a;
+    border-radius: 9999px;
+    &:hover {
+      background: #ea580c;
+    }
+  }
+}
+
+// Estilos de Leaflet personalizados
+::ng-deep {
+  .leaflet-custom-icon {
+    background: transparent;
+    border: none;
+  }
+
+  .custom-marker {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #18181b;
+    border: 2px solid #14b8a6; // Teal ecológico
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 0 4px rgba(20, 184, 166, 0.2);
+    transition: all 0.3s ease;
+    animation: marker-pulse 2.5s infinite;
+
+    &.marker-central {
+      background: #064e3b; // Verde oscuro
+      border-color: #10b981; // Esmeralda
+      color: #10b981;
+      font-size: 18px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 0 6px rgba(16, 185, 129, 0.35);
+      animation: central-pulse 2s infinite;
+    }
+
+    &.marker-concesion {
+      background: #0f766e; // Verde azulado
+      border-color: #ffffff;
+      color: #ffffff;
+    }
+
+    &.marker-relavera {
+      background: #064e3b; // Verde bosque profundo
+      border-color: #34d399; // Esmeralda claro/sostenible
+      color: #34d399;
+      font-size: 11px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 0 4px rgba(52, 211, 153, 0.25);
+    }
+
+    &:hover {
+      transform: scale(1.15);
+      background: #10b981 !important;
+      border-color: #ffffff !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.7);
+    }
+  }
+
+  @keyframes marker-pulse {
+    0% {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 0 0px rgba(20, 184, 166, 0.4);
+    }
+    70% {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 0 8px rgba(20, 184, 166, 0);
+    }
+    100% {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 0 0px rgba(20, 184, 166, 0);
+    }
+  }
+
+  @keyframes central-pulse {
+    0% {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 0 0px rgba(16, 185, 129, 0.6);
+    }
+    70% {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+    100% {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 0 0px rgba(16, 185, 129, 0);
+    }
+  }
+
+  // Popups Leaflet Dark Mode
+  .leaflet-popup-content-wrapper {
+    background: #09090b !important;
+    color: #f4f4f5 !important;
+    border: 1px solid #27272a !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8) !important;
+    padding: 2px !important;
+  }
+
+  .leaflet-popup-tip {
+    background: #09090b !important;
+    border: 1px solid #27272a !important;
+  }
+
+  .leaflet-popup-close-button {
+    color: #a1a1aa !important;
+    padding: 6px !important;
+    &:hover {
+      color: #ffffff !important;
+    }
+  }
+
+  .map-popup-card {
+    padding: 6px;
+    font-family: 'Inter', sans-serif;
+    min-width: 185px;
+    
+    .popup-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 3px;
+      line-height: 1.3;
+    }
+
+    .popup-role {
+      font-size: 10px;
+      color: #14b8a6;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .popup-address {
+      font-size: 11px;
+      color: #a1a1aa;
+      line-height: 1.4;
+      margin: 0;
+    }
+  }
+
+  // Leyenda personalizada del Mapa en el rincón
+  .map-legend {
+    background: rgba(9, 9, 11, 0.95) !important;
+    border: 1px solid rgba(39, 39, 42, 0.9) !important;
+    padding: 10px 12px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.75) !important;
+    color: #e4e4e7 !important;
+    font-family: 'Inter', sans-serif !important;
+    min-width: 175px;
+    backdrop-filter: blur(6px);
+    margin-right: 10px !important;
+    margin-bottom: 10px !important;
+
+    .legend-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0 0 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 4px;
+    }
+
+    .legend-items {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-symbol {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 900;
+      color: #ffffff;
+      
+      &.symbol-central {
+        background: #064e3b;
+        border: 1px solid #10b981;
+        color: #10b981;
+        font-size: 10px;
+      }
+      &.symbol-relavera {
+        background: #064e3b;
+        border: 1px solid #34d399;
+        color: #34d399;
+      }
+      &.symbol-concesion {
+        background: #0f766e;
+        border: 1px solid #ffffff;
+      }
+    }
+
+    .legend-route {
+      width: 18px;
+      height: 2px;
+      border-top: 2px dashed #14b8a6;
+      display: inline-block;
+    }
+
+    .legend-text {
+      font-size: 10px;
+      color: #a1a1aa;
+    }
+  }
+}

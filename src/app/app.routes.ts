@@ -148,6 +148,14 @@ export const routes: Routes = [
             loadComponent: () => import('./features/operaciones/fdn-operativo/operativo.component').then(m => m.OperativoComponent)
           },
           {
+            path: 'plantas',
+            loadComponent: () => import('./features/operaciones/fdn-plantas/plantas.component').then(m => m.PlantasComponent)
+          },
+          {
+            path: 'influencia',
+            loadComponent: () => import('./features/operaciones/fdn-influencia/influencia.component').then(m => m.InfluenciaComponent)
+          },
+          {
             path: 'relaveras',
             loadComponent: () => import('./features/operaciones/fdn-relaveras/relaveras.component').then(m => m.RelaverasComponent)
           },
