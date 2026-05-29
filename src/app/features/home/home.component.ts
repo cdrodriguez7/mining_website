@@ -139,7 +139,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   get activeMetalColor(): string {
-    return this.metalsList.find(m => m.key === this.activeMetal)?.color ?? '#EA580C';
+    return this.metalsList.find(m => m.key === this.activeMetal)?.color ?? '#E88A1E';
   }
 
   /** true cuando tenemos al menos 2 puntos reales para el período activo */

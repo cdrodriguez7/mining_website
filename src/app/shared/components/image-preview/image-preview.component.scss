@@ -49,7 +49,7 @@
   width: 1.1rem;
   height: 1.1rem;
   flex-shrink: 0;
-  color: #ea580c;
+  color: #E88A1E;
 }
 
 // ── Botón cerrar ───────────────────────────────────────────────────────────────
@@ -73,8 +73,8 @@
   }
 
   &:hover {
-    background: #ea580c;
-    border-color: #ea580c;
+    background: #E88A1E;
+    border-color: #E88A1E;
     color: #fff;
     transform: scale(1.1);
   }
@@ -160,8 +160,8 @@
   }
 
   &:hover {
-    background: #ea580c;
-    border-color: #ea580c;
+    background: #E88A1E;
+    border-color: #E88A1E;
     color: #fff;
     transform: scale(1.1);
     box-shadow: 0 0 20px rgba(234, 88, 12, 0.4);
@@ -231,7 +231,7 @@
   }
 
   &.ip-dot-active {
-    background: #ea580c;
+    background: #E88A1E;
     width: 2.5rem;
     box-shadow: 0 0 8px rgba(234, 88, 12, 0.6);
   }

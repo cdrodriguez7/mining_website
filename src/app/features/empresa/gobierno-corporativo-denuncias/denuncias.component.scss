@@ -38,7 +38,7 @@ input[type="checkbox"] {
   cursor: pointer;
   
   &:checked {
-    background-color: #ea580c;
+    background-color: #E88A1E;
   }
 }
 
@@ -89,12 +89,12 @@ button {
 
 // ===== ACCESIBILIDAD =====
 *:focus-visible {
-  outline: 2px solid #ea580c;
+  outline: 2px solid #E88A1E;
   outline-offset: 2px;
 }
 
 // ===== HOVER EFFECTS =====
 .hover\:border-orange-600:hover {
-  border-color: #ea580c;
+  border-color: #E88A1E;
   box-shadow: 0 0 15px rgba(234, 88, 12, 0.4);
 }

@@ -55,7 +55,7 @@
   cursor: pointer;
 
   &:hover {
-    border-color: #ea580c;
+    border-color: #E88A1E;
     transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(234, 88, 12, 0.3);
 
@@ -148,7 +148,7 @@
   font-size: 0.75rem;
   padding: 0.25rem 0.75rem;
   background: rgba(234, 88, 12, 0.2);
-  border: 1px solid #ea580c;
+  border: 1px solid #E88A1E;
   color: #fb923c;
   border-radius: 9999px;
   font-weight: 600;
@@ -237,13 +237,13 @@
   cursor: pointer;
 
   &:hover {
-    border-color: #ea580c;
+    border-color: #E88A1E;
     color: white;
   }
 
   &.active {
-    background: #ea580c;
-    border-color: #ea580c;
+    background: #E88A1E;
+    border-color: #E88A1E;
     color: white;
 
     .filter-count {
@@ -331,7 +331,7 @@
   position: absolute;
   top: -3rem;
   right: 0;
-  background: #ea580c;
+  background: #E88A1E;
   color: white;
   border: none;
   width: 2.5rem;
@@ -357,14 +357,14 @@
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   background: #18181b;
-  border: 2px solid #ea580c;
+  border: 2px solid #E88A1E;
   border-radius: 9999px;
   color: white;
   font-weight: 600;
   margin-bottom: 1.5rem;
 
   .counter-icon {
-    color: #ea580c;
+    color: #E88A1E;
     font-size: 1.25rem;
   }
 }

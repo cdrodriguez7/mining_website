@@ -12,10 +12,9 @@
   </div>
 
 
-  <!-- Orange Accent Bar (derecha) -->
-  <div
-    class="absolute top-0 right-0 w-96 h-full transform skew-x-[-15deg] translate-x-48 hidden lg:block"
-    style="background: linear-gradient(to bottom, #e29120, #bc7311);">
+  <!-- Brand Accent Bar (derecha) -->
+  <div class="absolute top-0 right-0 w-96 h-full transform skew-x-[-15deg] translate-x-48 hidden lg:block"
+    style="background: linear-gradient(to bottom, #F7A13D);">
   </div>
 
   <!-- Hero Content -->
@@ -42,20 +41,20 @@
 
   <!-- Metal Price Ticker — bottom of hero -->
   <div *ngIf="!metalsLoading && metalPrices"
-    class="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-10 w-full max-w-4xl px-4">
-    <div class="flex items-center justify-center gap-3 sm:gap-5 flex-wrap">
+    class="absolute bottom-16 md:bottom-24 left-0 right-0 md:left-1/2 md:transform md:-translate-x-1/2 z-10 w-full max-w-4xl px-4">
+    <div class="flex items-center justify-start md:justify-center gap-3 sm:gap-5 overflow-x-auto pb-4 md:pb-0 scrollbar-hide flex-nowrap md:flex-wrap">
 
       <!-- Live badge -->
-      <div class="flex items-center gap-2 px-3.5 py-1.5 bg-black/60 backdrop-blur-md border border-white/15 rounded-full shadow-lg">
+      <div
+        class="flex items-center gap-2 px-3.5 py-1.5 bg-black/60 backdrop-blur-md border border-white/15 rounded-full shadow-lg">
         <span class="w-2 h-2 rounded-full animate-pulse"
           [ngClass]="metalPrices.isLive ? 'bg-green-400' : 'bg-yellow-500'"></span>
-        <span class="text-gray-300 text-xs font-bold uppercase tracking-wider">{{ metalPrices.isLive ? 'En vivo' : 'Referencial' }} · USD</span>
+        <span class="text-gray-300 text-xs font-bold uppercase tracking-wider">{{ metalPrices.isLive ? 'En vivo' :
+          'Referencial' }} · USD</span>
       </div>
 
       <!-- Oro -->
-      <a *ngIf="metalPrices?.gold"
-        (click)="openMetalsModal('gold')"
-        title="Ver gráfico histórico del precio del Oro"
+      <a *ngIf="metalPrices?.gold" (click)="openMetalsModal('gold')" title="Ver gráfico histórico del precio del Oro"
         class="cursor-pointer group flex items-center gap-2.5 px-5 py-2.5 bg-black/60 backdrop-blur-md border border-white/15 rounded-full hover:border-yellow-500/60 transition-all duration-300 hover:scale-105 shadow-lg">
         <span class="text-yellow-500 text-sm font-black uppercase tracking-wider">XAU</span>
         <span class="w-px h-4 bg-white/20"></span>
@@ -66,14 +65,15 @@
           {{ metalPrices.gold.change >= 0 ? '▲' : '▼' }}
           {{ metalPrices.gold.changePct | number:'1.2-2' }}%
         </span>
-        <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-yellow-500 transition-colors ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+        <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-yellow-500 transition-colors ml-0.5" fill="none"
+          stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
         </svg>
       </a>
 
       <!-- Plata -->
-      <a *ngIf="metalPrices?.silver"
-        (click)="openMetalsModal('silver')"
+      <a *ngIf="metalPrices?.silver" (click)="openMetalsModal('silver')"
         title="Ver gráfico histórico del precio de la Plata"
         class="cursor-pointer group flex items-center gap-2.5 px-5 py-2.5 bg-black/60 backdrop-blur-md border border-white/15 rounded-full hover:border-gray-400/60 transition-all duration-300 hover:scale-105 shadow-lg">
         <span class="text-gray-300 text-sm font-black uppercase tracking-wider">XAG</span>
@@ -85,14 +85,15 @@
           {{ metalPrices.silver.change >= 0 ? '▲' : '▼' }}
           {{ metalPrices.silver.changePct | number:'1.2-2' }}%
         </span>
-        <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-300 transition-colors ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+        <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-300 transition-colors ml-0.5" fill="none"
+          stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
         </svg>
       </a>
 
       <!-- Cobre -->
-      <a *ngIf="metalPrices?.copper"
-        (click)="openMetalsModal('copper')"
+      <a *ngIf="metalPrices?.copper" (click)="openMetalsModal('copper')"
         title="Ver gráfico histórico del precio del Cobre"
         class="cursor-pointer group flex items-center gap-2.5 px-5 py-2.5 bg-black/60 backdrop-blur-md border border-white/15 rounded-full hover:border-orange-500/60 transition-all duration-300 hover:scale-105 shadow-lg">
         <span class="text-orange-400 text-sm font-black uppercase tracking-wider">XCU</span>
@@ -104,8 +105,10 @@
           {{ metalPrices.copper.change >= 0 ? '▲' : '▼' }}
           {{ metalPrices.copper.changePct | number:'1.2-2' }}%
         </span>
-        <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-orange-500 transition-colors ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+        <svg class="w-3.5 h-3.5 text-gray-400 group-hover:text-orange-500 transition-colors ml-0.5" fill="none"
+          stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
         </svg>
       </a>
 
@@ -120,40 +123,32 @@
   </div>
 </section>
 <!-- STATS SECTION -->
-<section class="py-12 lg:py-20 bg-zinc-900">
-  <div class="container mx-auto px-4 lg:px-12">
-    <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-      <!-- <div class="text-center">
-        <div class="text-4xl lg:text-6xl font-black text-white mb-2">3</div>
-        <div class="flex items-center justify-center mb-2">
-          <div class="w-8 h-1 bg-orange-600"></div>
-        </div>
-        <div class="text-orange-600 font-semibold mb-1">Contratos de operación</div>
-        <div class="text-gray-400 text-sm">Activas</div>
-      </div> -->
+<section class="py-8 md:py-12 bg-zinc-900">
+  <div class="w-full max-w-[90%] xl:max-w-[85%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6">
+    <div class="grid grid-cols-3 gap-3 md:gap-8 3xl:gap-12">
       <div class="text-center">
-        <div class="text-4xl lg:text-6xl font-black text-white mb-2">15</div>
-        <div class="flex items-center justify-center mb-2">
-          <div class="w-8 h-1 bg-orange-600"></div>
+        <div class="text-3xl sm:text-4xl lg:text-6xl 3xl:text-7xl font-black text-white mb-1 md:mb-2">15</div>
+        <div class="flex items-center justify-center mb-1 md:mb-2">
+          <div class="w-6 h-0.5 md:w-8 md:h-1 bg-orange-600"></div>
         </div>
-        <div class="text-orange-600 font-semibold mb-1">Años</div>
-        <div class="text-gray-400 text-sm">Experiencia</div>
+        <div class="text-orange-600 font-bold text-xs sm:text-sm md:text-base mb-0.5">Años</div>
+        <div class="text-gray-400 text-[10px] sm:text-xs md:text-sm">Experiencia</div>
       </div>
       <div class="text-center">
-        <div class="text-4xl lg:text-6xl font-black text-white mb-2">6</div>
-        <div class="flex items-center justify-center mb-2">
-          <div class="w-8 h-1 bg-orange-600"></div>
+        <div class="text-3xl sm:text-4xl lg:text-6xl 3xl:text-7xl font-black text-white mb-1 md:mb-2">6</div>
+        <div class="flex items-center justify-center mb-1 md:mb-2">
+          <div class="w-6 h-0.5 md:w-8 md:h-1 bg-orange-600"></div>
         </div>
-        <div class="text-orange-600 font-semibold mb-1">Relaveras</div>
-        <div class="text-gray-400 text-sm">Funcionando</div>
+        <div class="text-orange-600 font-bold text-xs sm:text-sm md:text-base mb-0.5">Relaveras</div>
+        <div class="text-gray-400 text-[10px] sm:text-xs md:text-sm">Funcionando</div>
       </div>
       <div class="text-center">
-        <div class="text-4xl lg:text-6xl font-black text-white mb-2">120+</div>
-        <div class="flex items-center justify-center mb-2">
-          <div class="w-8 h-1 bg-orange-600"></div>
+        <div class="text-3xl sm:text-4xl lg:text-6xl 3xl:text-7xl font-black text-white mb-1 md:mb-2">120+</div>
+        <div class="flex items-center justify-center mb-1 md:mb-2">
+          <div class="w-6 h-0.5 md:w-8 md:h-1 bg-orange-600"></div>
         </div>
-        <div class="text-orange-600 font-semibold mb-1">Trabajadores</div>
-        <div class="text-gray-400 text-sm">Activos</div>
+        <div class="text-orange-600 font-bold text-xs sm:text-sm md:text-base mb-0.5">Trabajadores</div>
+        <div class="text-gray-400 text-[10px] sm:text-xs md:text-sm">Activos</div>
       </div>
     </div>
   </div>
@@ -161,9 +156,9 @@
 
 
 <!-- ABOUT SECTION - Con imagen dinámica -->
-<section class="py-12 lg:py-20 bg-black">
-  <div class="container mx-auto px-4 lg:px-12">
-    <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+<section class="py-10 md:py-14 lg:py-20 bg-black">
+  <div class="w-full max-w-[90%] xl:max-w-[85%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6">
+    <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 3xl:gap-24 items-center">
       <!-- Left Content -->
       <div>
         <div class="text-orange-600 font-semibold mb-4 uppercase tracking-wider text-sm">
@@ -211,7 +206,8 @@
         </div>
 
         <!-- Fallback si no hay imagen -->
-        <div *ngIf="!aboutImage" class="bg-gray-800 rounded-lg h-56 md:h-80 lg:h-[600px] flex items-center justify-center">
+        <div *ngIf="!aboutImage"
+          class="bg-gray-800 rounded-lg h-56 md:h-80 lg:h-[600px] flex items-center justify-center">
           <div class="text-center">
             <div class="text-6xl mb-4"></div>
             <p class="text-gray-500">Cargando imagen...</p>
@@ -223,19 +219,22 @@
 </section>
 
 <!-- SERVICES SECTION — Nuestras Instalaciones -->
-<section class="py-14 lg:py-24 bg-zinc-900 relative">
-  <div class="container mx-auto px-4 lg:px-12 relative z-10">
+<section class="py-10 md:py-16 lg:py-20 bg-zinc-900 relative">
+  <div class="w-full max-w-[90%] xl:max-w-[85%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6 relative z-10">
 
     <!-- ── Encabezado ── -->
-    <div class="flex items-start gap-4 lg:gap-6 mb-8 lg:mb-16">
-      <div class="w-1 h-20 lg:h-28 bg-orange-600 flex-shrink-0 mt-1"></div>
+    <div class="flex items-stretch gap-4 lg:gap-6 mb-8 lg:mb-16">
+      <div class="w-1 bg-orange-600 flex-shrink-0 rounded-full"></div>
       <div class="flex-1">
         <span class="text-orange-600 font-semibold uppercase tracking-wider text-sm">Nuestra Infraestructura</span>
         <h2 class="text-3xl lg:text-6xl font-black text-white leading-tight mt-2 mb-4">
           Nuestras <span class="text-orange-600">Instalaciones</span>
         </h2>
         <p class="text-gray-400 leading-relaxed text-justify">
-          Disponemos de infraestructura de primer nivel en el cantón Camilo Ponce Enríquez destinada tanto al procesamiento integral de minerales como a la gestión segura de relaves activos e históricos. Nuestras operaciones combinan tecnología metalúrgica de flotación y cianuración con los más estrictos criterios de estabilidad física, monitoreo geotécnico y control de efluentes para garantizar una producción sostenible.
+          Disponemos de infraestructura de primer nivel en el cantón Camilo Ponce Enríquez destinada tanto al
+          procesamiento integral de minerales como a la gestión segura de relaves activos e históricos. Nuestras
+          operaciones combinan tecnología metalúrgica de flotación y cianuración con los más estrictos criterios de
+          estabilidad física, monitoreo geotécnico y control de efluentes para garantizar una producción sostenible.
         </p>
       </div>
     </div>
@@ -243,9 +242,8 @@
     <div class="grid lg:grid-cols-2 gap-6 lg:gap-8 mb-6 lg:mb-8">
 
       <!-- Bloque 1 — Plantas de Beneficio -->
-      <div
-        [routerLink]="['/operaciones/ponce-enriquez/plantas']"
-        class="service-card group relative overflow-hidden rounded-2xl border border-white/10 hover:border-orange-500/30 transition-all duration-500 cursor-pointer min-h-[240px] lg:min-h-[360px]">
+      <div [routerLink]="['/operaciones/ponce-enriquez/plantas']"
+        class="service-card group relative overflow-hidden rounded-2xl border border-white/10 hover:border-orange-500/30 transition-all duration-500 cursor-pointer min-h-[280px] sm:min-h-[320px] lg:min-h-[360px]">
 
         <!-- Imagen -->
         <img
@@ -259,14 +257,20 @@
         <!-- Contenido -->
         <div class="relative z-10 p-6 lg:p-8 flex flex-col justify-end h-full">
           <div class="text-orange-500 text-xs font-bold uppercase tracking-widest mb-3">01.</div>
-          <h3 class="text-xl lg:text-2xl font-black text-white mb-3 leading-tight group-hover:text-orange-500 transition-colors">Plantas de Beneficio</h3>
+          <h3
+            class="text-xl lg:text-2xl font-black text-white mb-3 leading-tight group-hover:text-orange-500 transition-colors">
+            Plantas de Beneficio</h3>
           <p class="text-gray-350 text-xs lg:text-sm leading-relaxed text-justify mb-4">
-            Instalaciones destinadas a la conminución, flotación y cianuración en circuito cerrado. Optimizamos la liberación mineralógica y maximizamos la recuperación metalúrgica mediante un monitoreo riguroso y automatizado de variables físicas y químicas.
+            Instalaciones destinadas a la conminución, flotación y cianuración en circuito cerrado. Optimizamos la
+            liberación mineralógica y maximizamos la recuperación metalúrgica mediante un monitoreo riguroso y
+            automatizado de variables físicas y químicas.
           </p>
           <div class="flex items-center">
-            <span class="text-xs font-bold uppercase tracking-wider text-orange-500 hover:text-orange-400 flex items-center gap-1 transition-colors">
+            <span
+              class="text-xs font-bold uppercase tracking-wider text-orange-500 hover:text-orange-400 flex items-center gap-1 transition-colors">
               <span>Visualizar Fichas y Planos</span>
-              <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+              <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                 <polyline points="9 18 15 12 9 6"></polyline>
               </svg>
             </span>
@@ -276,10 +280,9 @@
       </div>
 
       <!-- Bloque 2 — Gestión de Relaveras -->
-      <div
-        [routerLink]="['/operaciones/ponce-enriquez/relaveras']"
-        class="service-card group relative overflow-hidden rounded-2xl border border-white/10 hover:border-orange-500/30 transition-all duration-500 cursor-pointer min-h-[240px] lg:min-h-[360px]">
-        
+      <div [routerLink]="['/operaciones/ponce-enriquez/relaveras']"
+        class="service-card group relative overflow-hidden rounded-2xl border border-white/10 hover:border-orange-500/30 transition-all duration-500 cursor-pointer min-h-[280px] sm:min-h-[320px] lg:min-h-[360px]">
+
         <!-- Imagen -->
         <img src="https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=1200&q=80"
           alt="Tratamiento de Relaves y Relaveras"
@@ -287,18 +290,24 @@
 
         <div class="absolute inset-0 bg-black/80 group-hover:bg-black/85 transition-all duration-500">
         </div>
-        
+
         <!-- Contenido -->
         <div class="relative z-10 p-6 lg:p-8 flex flex-col justify-end h-full">
           <div class="text-orange-500 text-xs font-bold uppercase tracking-widest mb-3">02.</div>
-          <h3 class="text-xl lg:text-2xl font-black text-white mb-3 leading-tight group-hover:text-orange-500 transition-colors">Gestión de Relaveras</h3>
+          <h3
+            class="text-xl lg:text-2xl font-black text-white mb-3 leading-tight group-hover:text-orange-500 transition-colors">
+            Gestión de Relaveras</h3>
           <p class="text-gray-350 text-xs lg:text-sm leading-relaxed text-justify mb-4">
-            Operación y control geotécnico de nuestros 6 depósitos de relaves activos e históricos. Diseñados bajo estándares internacionales con geomembranas impermeables, inclinómetros continuos y sistemas de tratamiento de lodos para economía circular.
+            Operación y control geotécnico de nuestros 6 depósitos de relaves activos e históricos. Diseñados bajo
+            estándares internacionales con geomembranas impermeables, inclinómetros continuos y sistemas de tratamiento
+            de lodos para economía circular.
           </p>
           <div class="flex items-center">
-            <span class="text-xs font-bold uppercase tracking-wider text-orange-500 hover:text-orange-400 flex items-center gap-1 transition-colors">
+            <span
+              class="text-xs font-bold uppercase tracking-wider text-orange-500 hover:text-orange-400 flex items-center gap-1 transition-colors">
               <span>Visualizar Relaveras Desarrolladas</span>
-              <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+              <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                 <polyline points="9 18 15 12 9 6"></polyline>
               </svg>
             </span>
@@ -311,9 +320,8 @@
   </div>
 </section>
 
-<!-- SERVICES SECTION 2 — Procesos de Tratamiento -->
-<section class="py-14 lg:py-24 bg-black relative">
-  <div class="container mx-auto px-4 lg:px-12 relative z-10">
+<section class="py-10 md:py-16 lg:py-20 bg-black relative">
+  <div class="w-full max-w-[90%] xl:max-w-[85%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6 relative z-10">
 
     <!-- ── Bloque 3: Procesos de Tratamiento ── -->
     <div class="rounded-2xl overflow-hidden border border-white/5" style="background: rgba(0,0,0,0.35);">
@@ -330,7 +338,7 @@
           alt="Acopio de material — zona de almacenamiento y recepción de mineral"
           class="absolute inset-0 w-full h-full object-cover opacity-25 blur-[2px] group-hover:opacity-15 group-hover:blur-[4px] transition-all duration-500">
         <div class="absolute inset-0 bg-black/25 group-hover:bg-black/55 transition-all duration-500"></div>
-        <div class="relative z-10 p-5 lg:p-8">
+        <div class="relative z-10 p-6 sm:p-8 3xl:p-12">
           <div class="flex items-center gap-3 mb-4">
             <span
               class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">A</span>
@@ -361,11 +369,11 @@
             class="absolute inset-0 w-full h-full object-cover opacity-35 blur-[2px] group-hover:opacity-20 group-hover:blur-[5px] transition-all duration-500">
           <!-- Overlay adicional en hover -->
           <div class="absolute inset-0 bg-black/20 group-hover:bg-black/55 transition-all duration-500"></div>
-          <div class="relative z-10 p-8">
+          <div class="relative z-10 p-6 sm:p-8 3xl:p-12">
             <div class="flex items-center gap-3 mb-4">
               <span
                 class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">B</span>
-              <h4 class="text-white font-black text-lg leading-tight">trituración y Clasificación Granulométrica</h4>
+              <h4 class="text-white font-black text-lg leading-tight">Trituración y Clasificación Granulométrica</h4>
             </div>
             <p class="text-gray-300 text-sm leading-relaxed mb-4 text-justify">
               El procesamiento del mineral inicia con la reducción progresiva de su tamaño mediante trituración y
@@ -391,7 +399,7 @@
             alt="Cianuración — tanques de lixiviación metalúrgica"
             class="absolute inset-0 w-full h-full object-cover opacity-35 blur-[2px] group-hover:opacity-20 group-hover:blur-[5px] transition-all duration-500">
           <div class="absolute inset-0 bg-black/20 group-hover:bg-black/55 transition-all duration-500"></div>
-          <div class="relative z-10 p-8">
+          <div class="relative z-10 p-6 sm:p-8 3xl:p-12">
             <div class="flex items-center gap-3 mb-4">
               <span
                 class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">C</span>
@@ -420,7 +428,7 @@
             alt="Flotación — celdas de flotación de minerales sulfurados"
             class="absolute inset-0 w-full h-full object-cover opacity-35 blur-[2px] group-hover:opacity-20 group-hover:blur-[5px] transition-all duration-500">
           <div class="absolute inset-0 bg-black/20 group-hover:bg-black/55 transition-all duration-500"></div>
-          <div class="relative z-10 p-8">
+          <div class="relative z-10 p-6 sm:p-8 3xl:p-12">
             <div class="flex items-center gap-3 mb-4">
               <span
                 class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">D</span>
@@ -448,8 +456,8 @@
 </section>
 
 <!-- SERVICIOS A TERCEROS — 3 sub-secciones con 3 imágenes cada una -->
-<section class="py-14 lg:py-24 bg-zinc-900">
-  <div class="container mx-auto px-4 lg:px-12">
+<section class="py-10 md:py-16 lg:py-20 bg-zinc-900">
+  <div class="w-full max-w-[90%] xl:max-w-[85%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6">
 
     <!-- Encabezado principal -->
     <div class="flex flex-col mb-10 lg:mb-16 max-w-4xl">
@@ -458,7 +466,9 @@
         Soluciones de Maquila y <span class="text-orange-600">Procesamiento</span>
       </h2>
       <p class="text-gray-400 text-sm lg:text-base leading-relaxed">
-        Brindamos servicios metalúrgicos avanzados de Toll Milling (maquila) para pequeños mineros y concesiones aliadas en el cantón Camilo Ponce Enríquez. Ofrecemos trazabilidad analítica de leyes, alta recuperación de oro y disposición ambiental segura de relaves.
+        Brindamos servicios metalúrgicos avanzados de Toll Milling (maquila) para pequeños mineros y concesiones aliadas
+        en el cantón Camilo Ponce Enríquez. Ofrecemos trazabilidad analítica de leyes, alta recuperación de oro y
+        disposición ambiental segura de relaves.
       </p>
     </div>
 
@@ -469,13 +479,13 @@
       <p class="text-gray-500 mt-4 text-sm">Cargando galería...</p>
     </div>
 
-    <div *ngIf="!isLoading" class="space-y-12">
+    <div *ngIf="!isLoading" class="flex flex-col gap-8 lg:gap-12">
 
       <!-- ── BLOQUE 1: Maquila Metalúrgica Avanzada ── -->
       <div>
         <div class="mb-8">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-1 h-12 bg-orange-600"></div>
+          <div class="flex items-stretch gap-4 mb-4">
+            <div class="w-1 bg-orange-600 flex-shrink-0 rounded-full"></div>
             <div>
               <span class="flex items-center text-orange-600 font-semibold uppercase tracking-wider text-xs">01</span>
               <h3 class="text-3xl lg:text-4xl font-black text-white leading-tight">
@@ -484,21 +494,24 @@
             </div>
           </div>
           <p class="text-gray-400 leading-relaxed ml-5">
-            Procesamos lotes de mineral fresco aurífero mediante trituración, molienda fina y concentración por gravimetría, flotación o cianuración CIL. Configuramos nuestros circuitos metalúrgicos de forma customizada según la caracterización del mineral de cada concesión cliente para maximizar la recuperación de valores.
+            Procesamos lotes de mineral fresco aurífero mediante trituración, molienda fina y concentración por
+            gravimetría, flotación o cianuración CIL. Configuramos nuestros circuitos metalúrgicos de forma customizada
+            según la caracterización del mineral de cada concesión cliente para maximizar la recuperación de valores.
           </p>
         </div>
-        <div class="grid md:grid-cols-3 gap-4">
+        <div class="grid md:grid-cols-3 gap-4 3xl:gap-8">
           <!-- Si los proyectos están cargados -->
           <ng-container *ngIf="projects && projects.length >= 3; else placeholdersBlock1">
             <div *ngFor="let proj of projects.slice(0,3)"
-              class="group relative overflow-hidden rounded-xl aspect-video cursor-pointer border border-zinc-800/50 hover:border-orange-500/30 transition-all duration-300 shadow-md hover:shadow-lg"
+               class="group relative overflow-hidden rounded-xl aspect-video cursor-pointer border border-zinc-800/50 hover:border-orange-500/30 transition-all duration-300 shadow-md hover:shadow-lg"
               (click)="openProjectDetails(proj)">
               <img [src]="proj.coverUrl" [alt]="proj.title"
                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 loading="lazy" />
               <div
                 class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-95 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
-                <span class="text-orange-500 text-[10px] font-semibold uppercase tracking-widest mb-1">{{ proj.category }}</span>
+                <span class="text-orange-500 text-[10px] font-semibold uppercase tracking-widest mb-1">{{ proj.category
+                  }}</span>
                 <span class="text-white font-extrabold text-base leading-snug">{{ proj.title }}</span>
               </div>
             </div>
@@ -517,13 +530,13 @@
       </div>
 
       <!-- Divider -->
-      <div class="h-px bg-zinc-900"></div>
+      <div class="h-px bg-white/10"></div>
 
       <!-- ── BLOQUE 2: Logística y Transporte Seguro ── -->
       <div>
         <div class="mb-8">
-          <div class="flex items-center gap-2 mb-2">
-            <div class="w-1 h-12 bg-orange-600"></div>
+          <div class="flex items-stretch gap-4 mb-4">
+            <div class="w-1 bg-orange-600 flex-shrink-0 rounded-full"></div>
             <div>
               <span class="flex items-center text-orange-600 font-semibold uppercase tracking-wider text-xs">02</span>
               <h3 class="text-3xl lg:text-4xl font-black text-white leading-tight">
@@ -532,10 +545,12 @@
             </div>
           </div>
           <p class="text-gray-400 leading-relaxed ml-5">
-            Garantizamos una estricta cadena de custodia desde la boca de mina de las concesiones asociadas hasta nuestras tolvas de recepción en Shumiral. Coordinamos flotas de volquetas habilitadas y equipadas con seguimiento satelital para asegurar el transporte eficiente y seguro del material minero.
+            Garantizamos una estricta cadena de custodia desde la boca de mina de las concesiones asociadas hasta
+            nuestras tolvas de recepción en Shumiral. Coordinamos flotas de volquetas habilitadas y equipadas con
+            seguimiento satelital para asegurar el transporte eficiente y seguro del material minero.
           </p>
         </div>
-        <div class="grid md:grid-cols-3 gap-4">
+        <div class="grid md:grid-cols-3 gap-4 3xl:gap-8">
           <!-- Si los proyectos están cargados -->
           <ng-container *ngIf="projects && projects.length >= 6; else placeholdersBlock2">
             <div *ngFor="let proj of projects.slice(3,6)"
@@ -546,7 +561,8 @@
                 loading="lazy" />
               <div
                 class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-95 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
-                <span class="text-orange-500 text-[10px] font-semibold uppercase tracking-widest mb-1">{{ proj.category }}</span>
+                <span class="text-orange-500 text-[10px] font-semibold uppercase tracking-widest mb-1">{{ proj.category
+                  }}</span>
                 <span class="text-white font-extrabold text-base leading-snug">{{ proj.title }}</span>
               </div>
             </div>
@@ -565,13 +581,13 @@
       </div>
 
       <!-- Divider -->
-      <div class="h-px bg-zinc-900"></div>
+      <div class="h-px bg-white/10"></div>
 
       <!-- ── BLOQUE 3: Sostenibilidad Compartida ── -->
       <div>
         <div class="mb-8">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-1 h-12 bg-orange-600"></div>
+          <div class="flex items-stretch gap-4 mb-4">
+            <div class="w-1 bg-orange-600 flex-shrink-0 rounded-full"></div>
             <div>
               <span class="flex items-center text-orange-600 font-semibold uppercase tracking-wider text-xs">03</span>
               <h3 class="text-3xl lg:text-4xl font-black text-white leading-tight">
@@ -580,10 +596,12 @@
             </div>
           </div>
           <p class="text-gray-400 leading-relaxed ml-5">
-            Reducimos el impacto ambiental regional mediante el reprocesamiento de colas y arenas de relave de terceros. Centralizamos la contención final en nuestros depósitos tecnológicamente impermeabilizados y recirculamos hasta el 92% de las aguas de proceso, mitigando pasivos ambientales históricos del cantón.
+            Reducimos el impacto ambiental regional mediante el reprocesamiento de colas y arenas de relave de terceros.
+            Centralizamos la contención final en nuestros depósitos tecnológicamente impermeabilizados y recirculamos
+            hasta el 92% de las aguas de proceso, mitigando pasivos ambientales históricos del cantón.
           </p>
         </div>
-        <div class="grid md:grid-cols-3 gap-4">
+        <div class="grid md:grid-cols-3 gap-4 3xl:gap-8">
           <!-- Si los proyectos están cargados -->
           <ng-container *ngIf="projects && projects.length >= 9; else placeholdersBlock3">
             <div *ngFor="let proj of projects.slice(6,9)"
@@ -594,7 +612,8 @@
                 loading="lazy" />
               <div
                 class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-95 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
-                <span class="text-orange-500 text-[10px] font-semibold uppercase tracking-widest mb-1">{{ proj.category }}</span>
+                <span class="text-orange-500 text-[10px] font-semibold uppercase tracking-widest mb-1">{{ proj.category
+                  }}</span>
                 <span class="text-white font-extrabold text-base leading-snug">{{ proj.title }}</span>
               </div>
             </div>
@@ -615,7 +634,7 @@
     </div>
 
     <!-- CTA -->
-    <div class="text-center mt-20">
+    <div class="text-center mt-8 lg:mt-12">
       <a [routerLink]="['/operaciones/ponce-enriquez/influencia']"
         class="inline-flex items-center px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors gap-2">
         Ver Área de Influencia y Logística
@@ -629,8 +648,8 @@
 </section>
 
 <!-- NOTICIAS PREVIEW -->
-<section class="py-14 lg:py-24 bg-black">
-  <div class="container mx-auto px-4 lg:px-12">
+<section class="py-10 md:py-16 lg:py-20 bg-black">
+  <div class="w-full max-w-[90%] xl:max-w-[85%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6">
 
     <!-- Header -->
     <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 lg:gap-6 mb-8 lg:mb-14">
@@ -661,8 +680,10 @@
     </div>
 
     <!-- Loading -->
-    <div *ngIf="newsLoading" class="flex overflow-x-auto gap-5 pb-6 scrollbar-hide" style="scrollbar-width: none; -ms-overflow-style: none;">
-      <div *ngFor="let s of [1,2,3,4]" class="flex-shrink-0 w-[290px] sm:w-[320px] md:w-[360px] bg-zinc-950 border border-zinc-800 rounded-xl p-6 animate-pulse">
+    <div *ngIf="newsLoading" class="flex overflow-x-auto gap-5 pb-6 scrollbar-hide"
+      style="scrollbar-width: none; -ms-overflow-style: none;">
+      <div *ngFor="let s of [1,2,3,4]"
+        class="flex-shrink-0 w-[290px] sm:w-[320px] md:w-[360px] bg-zinc-950 border border-zinc-800 rounded-xl p-6 animate-pulse">
         <div class="h-3 bg-zinc-800 rounded w-1/3 mb-4"></div>
         <div class="h-5 bg-zinc-800 rounded w-full mb-2"></div>
         <div class="h-5 bg-zinc-800 rounded w-4/5 mb-4"></div>
@@ -673,17 +694,19 @@
 
     <!-- Netflix-style news slider -->
     <div *ngIf="!newsLoading && previewNews.length > 0" class="relative group/slider">
-      
+
       <!-- Botón Deslizar Izquierda -->
       <button (click)="newsSlider.scrollLeft = newsSlider.scrollLeft - 380"
-        class="absolute left-0 top-0 bottom-6 z-20 w-12 bg-gradient-to-r from-black/90 to-transparent text-white flex items-center justify-center transition-all opacity-0 group-hover/slider:opacity-100 border-none hover:from-black/95">
-        <svg class="w-8 h-8 text-orange-500 hover:scale-115 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+        class="absolute left-0 top-0 bottom-6 z-20 w-12 bg-gradient-to-r from-black/90 to-transparent text-white hidden md:flex items-center justify-center transition-all opacity-0 group-hover/slider:opacity-100 border-none hover:from-black/95">
+        <svg class="w-8 h-8 text-orange-500 hover:scale-115 transition-transform" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24" stroke-width="3">
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </button>
 
       <!-- Deslizador -->
-      <div #newsSlider class="flex overflow-x-auto gap-5 pb-6 scroll-smooth snap-x snap-mandatory scrollbar-hide" style="scrollbar-width: none; -ms-overflow-style: none;">
+      <div #newsSlider class="flex overflow-x-auto gap-5 pb-6 scroll-smooth snap-x snap-mandatory scrollbar-hide"
+        style="scrollbar-width: none; -ms-overflow-style: none;">
         <a *ngFor="let item of previewNews; let i = index" [href]="item.link" target="_blank" rel="noopener noreferrer"
           class="flex-shrink-0 w-[290px] sm:w-[320px] md:w-[360px] snap-start group flex flex-col bg-zinc-950 border border-zinc-800/80 hover:border-orange-600/60 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1">
 
@@ -734,8 +757,9 @@
 
       <!-- Botón Deslizar Derecha -->
       <button (click)="newsSlider.scrollLeft = newsSlider.scrollLeft + 380"
-        class="absolute right-0 top-0 bottom-6 z-20 w-12 bg-gradient-to-l from-black/90 to-transparent text-white flex items-center justify-center transition-all opacity-0 group-hover/slider:opacity-100 border-none hover:from-black/95">
-        <svg class="w-8 h-8 text-orange-500 hover:scale-115 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+        class="absolute right-0 top-0 bottom-6 z-20 w-12 bg-gradient-to-l from-black/90 to-transparent text-white hidden md:flex items-center justify-center transition-all opacity-0 group-hover/slider:opacity-100 border-none hover:from-black/95">
+        <svg class="w-8 h-8 text-orange-500 hover:scale-115 transition-transform" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24" stroke-width="3">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
       </button>
@@ -755,7 +779,7 @@
 </section>
 
 <!-- CTA SECTION -->
-<section class="py-14 lg:py-24 bg-orange-600 relative overflow-hidden">
+<section class="py-12 lg:py-16 bg-orange-600 relative overflow-hidden">
   <!-- Pattern Background -->
   <div class="absolute inset-0 opacity-10">
     <div class="absolute inset-0"
@@ -763,7 +787,7 @@
     </div>
   </div>
 
-  <div class="container mx-auto px-4 lg:px-12 relative z-10 text-center">
+  <div class="w-full max-w-[90%] xl:max-w-[85%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6 relative z-10 text-center">
     <h2 class="text-3xl lg:text-5xl font-black text-white mb-4 lg:mb-6">
       Conoce más sobre nosotros
     </h2>
@@ -792,69 +816,70 @@
   [images]="previewImages" [currentIndex]="previewIndex" (closed)="closePreview()"></app-image-preview>
 
 <!-- MODAL DE DETALLE DE PROYECTO -->
-<div class="fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center z-50 p-4 md:p-6 lg:p-10 transition-opacity duration-300"
-     *ngIf="projectModalVisible && activeProject"
-     (click)="closeProjectDetails()">
-  
-  <div class="relative w-full max-w-5xl bg-zinc-950/95 border border-zinc-800/80 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row transform scale-100 transition-transform duration-300 max-h-[90vh] md:max-h-[85vh]"
-       (click)="$event.stopPropagation()">
-    
+<div
+  class="fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center z-50 p-4 md:p-6 lg:p-10 transition-opacity duration-300"
+  *ngIf="projectModalVisible && activeProject" (click)="closeProjectDetails()">
+
+  <div
+    class="relative w-full max-w-5xl bg-zinc-950/95 border border-zinc-800/80 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row transform scale-100 transition-transform duration-300 max-h-[90vh] md:max-h-[85vh]"
+    (click)="$event.stopPropagation()">
+
     <!-- Botón Cerrar -->
-    <button class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-black/55 hover:bg-orange-600 text-white flex items-center justify-center transition-colors border border-zinc-800/60"
-            (click)="closeProjectDetails()"
-            aria-label="Cerrar ventana de detalles">
-      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <button
+      class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-black/55 hover:bg-orange-600 text-white flex items-center justify-center transition-colors border border-zinc-800/60"
+      (click)="closeProjectDetails()" aria-label="Cerrar ventana de detalles">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+        stroke-linecap="round" stroke-linejoin="round">
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
     </button>
-    
+
     <!-- Lado Izquierdo: Carrusel de Fotos del Proyecto -->
-    <div class="w-full md:w-1/2 relative bg-black flex items-center justify-center min-h-[250px] md:min-h-0 overflow-hidden">
+    <div
+      class="w-full md:w-1/2 relative bg-black flex items-center justify-center min-h-[250px] md:min-h-0 overflow-hidden">
       <!-- Botón Anterior -->
       <button *ngIf="activeProject.carouselImages.length > 1"
-              class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/60 hover:bg-orange-600 text-white border border-zinc-800 flex items-center justify-center transition-all hover:scale-105"
-              (click)="prevProjectImage($event)"
-              aria-label="Imagen anterior">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/60 hover:bg-orange-600 text-white border border-zinc-800 flex items-center justify-center transition-all hover:scale-105"
+        (click)="prevProjectImage($event)" aria-label="Imagen anterior">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"
+          stroke-linecap="round" stroke-linejoin="round">
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </button>
 
       <!-- Imagen Activa -->
       <div class="w-full h-full flex items-center justify-center">
-        <img [src]="activeProject.carouselImages[projectActiveImageIndex]" 
-             [alt]="activeProject.title"
-             class="w-full h-full object-cover min-h-[250px] md:absolute md:inset-0 select-none pointer-events-none transition-all duration-500 ease-in-out" />
+        <img [src]="activeProject.carouselImages[projectActiveImageIndex]" [alt]="activeProject.title"
+          class="w-full h-full object-cover min-h-[250px] md:absolute md:inset-0 select-none pointer-events-none transition-all duration-500 ease-in-out" />
       </div>
 
       <!-- Botón Siguiente -->
       <button *ngIf="activeProject.carouselImages.length > 1"
-              class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/60 hover:bg-orange-600 text-white border border-zinc-800 flex items-center justify-center transition-all hover:scale-105"
-              (click)="nextProjectImage($event)"
-              aria-label="Siguiente imagen">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/60 hover:bg-orange-600 text-white border border-zinc-800 flex items-center justify-center transition-all hover:scale-105"
+        (click)="nextProjectImage($event)" aria-label="Siguiente imagen">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"
+          stroke-linecap="round" stroke-linejoin="round">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
       </button>
 
       <!-- Indicadores de puntos -->
-      <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-1.5 z-10" *ngIf="activeProject.carouselImages.length > 1">
+      <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-1.5 z-10"
+        *ngIf="activeProject.carouselImages.length > 1">
         <button *ngFor="let img of activeProject.carouselImages; let idx = index"
-                class="h-1 rounded-full bg-white transition-all duration-300"
-                [class.bg-orange-600]="idx === projectActiveImageIndex"
-                [class.w-6]="idx === projectActiveImageIndex"
-                [class.opacity-100]="idx === projectActiveImageIndex"
-                [class.w-3]="idx !== projectActiveImageIndex"
-                [class.opacity-40]="idx !== projectActiveImageIndex"
-                (click)="selectProjectImage(idx, $event)"
-                [attr.aria-label]="'Ir a la imagen del proyecto ' + (idx + 1)">
+          class="h-1 rounded-full bg-white transition-all duration-300"
+          [class.bg-orange-600]="idx === projectActiveImageIndex" [class.w-6]="idx === projectActiveImageIndex"
+          [class.opacity-100]="idx === projectActiveImageIndex" [class.w-3]="idx !== projectActiveImageIndex"
+          [class.opacity-40]="idx !== projectActiveImageIndex" (click)="selectProjectImage(idx, $event)"
+          [attr.aria-label]="'Ir a la imagen del proyecto ' + (idx + 1)">
         </button>
       </div>
     </div>
 
     <!-- Lado Derecho: Detalles de Información del Proyecto -->
-    <div class="w-full md:w-1/2 p-6 md:p-8 lg:p-10 flex flex-col justify-between overflow-y-auto bg-gradient-to-br from-zinc-950 to-zinc-900">
+    <div
+      class="w-full md:w-1/2 p-6 md:p-8 lg:p-10 flex flex-col justify-between overflow-y-auto bg-gradient-to-br from-zinc-950 to-zinc-900">
       <div>
         <div class="text-orange-500 font-extrabold text-[10px] uppercase tracking-widest mb-2 flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-orange-600 animate-ping"></span>
@@ -872,7 +897,8 @@
       <!-- Ficha de Especificaciones / Metadatos -->
       <div class="border-t border-zinc-800/80 pt-6 space-y-4">
         <div class="flex items-start gap-3">
-          <svg class="w-4 h-4 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="w-4 h-4 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
             <circle cx="12" cy="10" r="3"></circle>
           </svg>
@@ -883,7 +909,8 @@
         </div>
 
         <div class="flex items-start gap-3">
-          <svg class="w-4 h-4 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="w-4 h-4 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
             <polyline points="22 4 12 14.01 9 11.01"></polyline>
           </svg>
@@ -894,7 +921,8 @@
         </div>
 
         <div class="flex items-start gap-3">
-          <svg class="w-4 h-4 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="w-4 h-4 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
           </svg>
           <div>
@@ -904,25 +932,30 @@
         </div>
       </div>
     </div>
-    
+
   </div>
 </div>
 
 <!-- Modal de Gráfico de Historial de Metales -->
-<div *ngIf="showMetalsModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md transition-all duration-300">
-  <div class="bg-zinc-950 border border-zinc-800 rounded-2xl w-full max-w-2xl mx-4 overflow-hidden shadow-2xl animate-fadeIn">
-    
+<div *ngIf="showMetalsModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md transition-all duration-300">
+  <div
+    class="bg-zinc-950 border border-zinc-800 rounded-2xl w-full max-w-2xl mx-4 overflow-hidden shadow-2xl animate-fadeIn">
+
     <!-- Cabecera -->
     <div class="flex items-start justify-between p-6 border-b border-zinc-800">
       <div>
         <span class="text-zinc-500 text-xs font-bold uppercase tracking-widest">Historial de Mercado</span>
         <h3 class="text-2xl font-black text-white mt-1 flex items-center gap-2">
-          <span [style.color]="activeMetalColor">{{ activeMetal === 'gold' ? 'Oro' : activeMetal === 'silver' ? 'Plata' : 'Cobre' }}</span>
-          <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 rounded font-mono">{{ activeMetal === 'gold' ? 'XAU' : activeMetal === 'silver' ? 'XAG' : 'XCU' }}</span>
+          <span [style.color]="activeMetalColor">{{ activeMetal === 'gold' ? 'Oro' : activeMetal === 'silver' ? 'Plata'
+            : 'Cobre' }}</span>
+          <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 rounded font-mono">{{ activeMetal === 'gold' ?
+            'XAU' : activeMetal === 'silver' ? 'XAG' : 'XCU' }}</span>
         </h3>
       </div>
-      
-      <button (click)="closeMetalsModal()" class="text-zinc-400 hover:text-white transition-colors p-2 -mr-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800">
+
+      <button (click)="closeMetalsModal()"
+        class="text-zinc-400 hover:text-white transition-colors p-2 -mr-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
@@ -931,25 +964,22 @@
 
     <!-- Contenido del modal -->
     <div class="p-6">
-      
+
       <!-- Selector de Metal (Pestañas en el modal) -->
       <div class="flex items-center gap-2 p-1 bg-zinc-900 border border-zinc-800/80 rounded-xl mb-6">
-        <button 
-          (click)="selectMetal('gold')"
+        <button (click)="selectMetal('gold')"
           class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-black uppercase tracking-wider transition-all duration-300"
           [style.backgroundColor]="activeMetal === 'gold' ? '#D4A017' : 'transparent'"
           [style.color]="activeMetal === 'gold' ? '#000000' : '#8A9DB5'">
           <span>Oro (XAU)</span>
         </button>
-        <button 
-          (click)="selectMetal('silver')"
+        <button (click)="selectMetal('silver')"
           class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-black uppercase tracking-wider transition-all duration-300"
           [style.backgroundColor]="activeMetal === 'silver' ? '#A8B5C0' : 'transparent'"
           [style.color]="activeMetal === 'silver' ? '#000000' : '#8A9DB5'">
           <span>Plata (XAG)</span>
         </button>
-        <button 
-          (click)="selectMetal('copper')"
+        <button (click)="selectMetal('copper')"
           class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-black uppercase tracking-wider transition-all duration-300"
           [style.backgroundColor]="activeMetal === 'copper' ? '#C47B3A' : 'transparent'"
           [style.color]="activeMetal === 'copper' ? '#000000' : '#8A9DB5'">
@@ -965,7 +995,8 @@
         </div>
         <div class="text-right" *ngIf="activeMetalData.change !== null">
           <span class="text-gray-400 text-xs uppercase tracking-wider block mb-1">Variación Diario</span>
-          <span class="text-base font-bold px-2.5 py-1 rounded" [ngClass]="activeMetalData.change >= 0 ? 'text-green-400 bg-green-500/10' : 'text-red-400 bg-red-500/10'">
+          <span class="text-base font-bold px-2.5 py-1 rounded"
+            [ngClass]="activeMetalData.change >= 0 ? 'text-green-400 bg-green-500/10' : 'text-red-400 bg-red-500/10'">
             {{ activeMetalData.change >= 0 ? '▲' : '▼' }}
             {{ activeMetalData.changePct | number:'1.2-2' }}%
           </span>
@@ -976,10 +1007,7 @@
       <div class="flex items-center justify-between mb-4">
         <span class="text-xs font-semibold text-zinc-400">Rango de tiempo:</span>
         <div class="chart-period-row m-0">
-          <button
-            *ngFor="let p of periods"
-            (click)="selectPeriod(p.days)"
-            [class.active]="activePeriod === p.days"
+          <button *ngFor="let p of periods" (click)="selectPeriod(p.days)" [class.active]="activePeriod === p.days"
             [style.backgroundColor]="activePeriod === p.days ? activeMetalColor : 'transparent'"
             [style.borderColor]="activePeriod === p.days ? activeMetalColor : 'rgba(255,255,255,0.08)'"
             [style.color]="activePeriod === p.days ? '#000000' : '#8A9DB5'"
@@ -990,18 +1018,19 @@
       </div>
 
       <!-- Gráfico Sparkline Canvas -->
-      <div class="chart-canvas-wrapper bg-black/40 border border-zinc-800/40 rounded-xl p-4 flex items-center justify-center">
+      <div
+        class="chart-canvas-wrapper bg-black/40 border border-zinc-800/40 rounded-xl p-4 flex items-center justify-center">
         <canvas id="metalPriceChart"></canvas>
       </div>
 
       <!-- Pie de Gráfico -->
       <div class="flex items-center justify-between mt-4 text-[10px] text-zinc-500 tracking-wider uppercase">
         <span>Fuente: Metales en Vivo (Cache &lt; 24h)</span>
-        <span>{{ activePeriod === 7 ? 'Última semana' : activePeriod === 14 ? 'Últimas 2 semanas' : 'Último mes' }}</span>
+        <span>{{ activePeriod === 7 ? 'Última semana' : activePeriod === 14 ? 'Últimas 2 semanas' : 'Último mes'
+          }}</span>
       </div>
 
     </div>
 
   </div>
 </div>
-

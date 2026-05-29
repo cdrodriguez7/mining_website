@@ -11,9 +11,24 @@ module.exports = {
       'lg': '1024px',
       'xl': '1280px',
       '2xl': '1536px',
+      '3xl': '1920px',
     },
     extend: {
       colors: {
+        // ── PALETA DE MARCA: #F7A13D como color base (brand amber) ──
+        orange: {
+          50:  '#FFF8EE',
+          100: '#FEEFD6',
+          200: '#FDDCAA',
+          300: '#FCC578',
+          400: '#F9B356',
+          500: '#F7A13D', // ← Color de marca exacto
+          600: '#E88A1E', // ← Tono oscuro principal (reemplaza ea580c)
+          700: '#C46E10',
+          800: '#9A5209',
+          900: '#6B3605',
+          950: '#3D1E02',
+        },
         primary: {
           50: '#F5F7FA',
           100: '#E4E9F2',
@@ -52,4 +67,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+}
