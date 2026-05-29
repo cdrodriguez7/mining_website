@@ -320,11 +320,18 @@
   </div>
 </section>
 
-<section class="py-10 md:py-16 lg:py-20 bg-black relative">
+<section class="py-10 md:py-16 lg:py-20 bg-black relative overflow-hidden">
+  <!-- Video de fondo que abarca toda la ventana de esta sección, resaltado -->
+  <video autoplay loop muted playsinline
+    class="absolute inset-0 w-full h-full object-cover opacity-35 pointer-events-none z-0">
+    <source src="assets/PAG WEB 3.mp4" type="video/mp4">
+  </video>
+  <div class="absolute inset-0 bg-black/30 z-0 pointer-events-none"></div>
+
   <div class="w-full max-w-[90%] xl:max-w-[85%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6 relative z-10">
 
     <!-- ── Bloque 3: Procesos de Tratamiento ── -->
-    <div class="rounded-2xl overflow-hidden border border-white/5" style="background: rgba(0,0,0,0.35);">
+    <div class="rounded-2xl overflow-hidden border border-white/10 backdrop-blur-md" style="background: rgba(0,0,0,0.45);">
 
       <!-- Cabecera del bloque -->
       <div class="px-5 lg:px-8 pt-7 lg:pt-10 pb-5 lg:pb-6 border-b border-white/10">
@@ -334,10 +341,7 @@
 
       <!-- Literal horizontal — Acopio de Material -->
       <div class="group relative overflow-hidden border-b border-white/10">
-        <img src="https://www.ingecivil.net/wp-content/uploads/2018/01/Acopio-de-material-chancado.jpeg"
-          alt="Acopio de material — zona de almacenamiento y recepción de mineral"
-          class="absolute inset-0 w-full h-full object-cover opacity-25 blur-[2px] group-hover:opacity-15 group-hover:blur-[4px] transition-all duration-500">
-        <div class="absolute inset-0 bg-black/25 group-hover:bg-black/55 transition-all duration-500"></div>
+        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-all duration-500"></div>
         <div class="relative z-10 p-6 sm:p-8 3xl:p-12">
           <div class="flex items-center gap-3 mb-4">
             <span
@@ -345,14 +349,7 @@
             <h4 class="text-white font-black text-base lg:text-lg leading-tight">Acopio de Material</h4>
           </div>
           <p class="text-gray-300 text-sm leading-relaxed text-justify">
-            El proceso inicia con la llegada de camiones volcadores que transportan el mineral extraído desde las
-            labores mineras hasta la zona de acopio, donde el material es almacenado y homogeneizado previo a su
-            ingreso a planta. Desde el acopio, el mineral pasa por trituración para reducir su tamaño grueso,
-            seguida de molienda en molinos de bolas para alcanzar la granulometría requerida por los circuitos
-            metalúrgicos. El material molido avanza hacia las etapas de concentración, cianuración, cementación
-            y reproceso de colas. De forma complementaria, los relaves generados en planta son conducidos mediante
-            el relaveducto — sistema de tuberías HDPE de alta densidad — hasta la presa de relaves, desde donde
-            pueden ser recirculados para su reprocesamiento y maximizar la recuperación metálica.
+            Recepción, homogeneización y preparación del mineral. El material extraído se tritura y muele en molinos de bolas para alcanzar la granulometría óptima requerida antes de ingresar a los circuitos de recuperación metalúrgica.
           </p>
         </div>
       </div>
@@ -361,90 +358,47 @@
       <div class="grid lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
 
         <!-- Proceso A — Conminución -->
-        <!-- Fuente imagen: https://commons.wikimedia.org/wiki/File:Ball_mill.jpg -->
         <div class="group relative overflow-hidden">
-          <!-- Imagen desde internet — molinos de bolas / trituración -->
-          <img src="https://www.minejxsc.com/wp-content/uploads/2025/05/how-does-a-rock-crusher-work2.webp"
-            alt="Conminución — molinos y trituración de mineral"
-            class="absolute inset-0 w-full h-full object-cover opacity-35 blur-[2px] group-hover:opacity-20 group-hover:blur-[5px] transition-all duration-500">
           <!-- Overlay adicional en hover -->
-          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/55 transition-all duration-500"></div>
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-all duration-500"></div>
           <div class="relative z-10 p-6 sm:p-8 3xl:p-12">
             <div class="flex items-center gap-3 mb-4">
               <span
                 class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">B</span>
-              <h4 class="text-white font-black text-lg leading-tight">Trituración y Clasificación Granulométrica</h4>
+              <h4 class="text-white font-black text-lg leading-tight">Trituración y Clasificación</h4>
             </div>
-            <p class="text-gray-300 text-sm leading-relaxed mb-4 text-justify">
-              El procesamiento del mineral inicia con la reducción progresiva de su tamaño mediante trituración y
-              molienda,
-              operaciones desarrolladas en circuito cerrado junto con sistemas de clasificación granulométrica que
-              emplean
-              cribas (zarandas) para controlar la distribución de tamaños.
-            </p>
-            <p class="text-gray-400 text-sm leading-relaxed text-justify">
-              Las cribas separan eficientemente el material grueso del fino: el sobredimensionado retorna al circuito de
-              molienda, mientras el material que cumple la granulometría requerida (P80) avanza a las etapas siguientes.
-              Esta etapa es clave porque la liberación mineralógica que se logra aquí condiciona directamente la
-              eficiencia de los procesos de concentración y extracción posteriores.
+            <p class="text-gray-300 text-sm leading-relaxed text-justify">
+              Reducción progresiva del tamaño del mineral mediante trituración y clasificación granulométrica con cribas en circuito cerrado. Controlamos la granulometría ideal (P80) para maximizar la liberación mineralógica y asegurar la máxima eficiencia.
             </p>
           </div>
         </div>
 
         <!-- Proceso B — Cianuración -->
-        <!-- Fuente imagen: https://commons.wikimedia.org/wiki/File:Leaching_tanks_gold_mine.jpg -->
         <div class="group relative overflow-hidden">
-          <!-- Imagen desde internet — tanques de lixiviación / cianuración -->
-          <img src="https://i.ytimg.com/vi/kgVPO2WLr3k/maxresdefault.jpg"
-            alt="Cianuración — tanques de lixiviación metalúrgica"
-            class="absolute inset-0 w-full h-full object-cover opacity-35 blur-[2px] group-hover:opacity-20 group-hover:blur-[5px] transition-all duration-500">
-          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/55 transition-all duration-500"></div>
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-all duration-500"></div>
           <div class="relative z-10 p-6 sm:p-8 3xl:p-12">
             <div class="flex items-center gap-3 mb-4">
               <span
                 class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">C</span>
-              <h4 class="text-white font-black text-lg leading-tight">Cianuración (Lixiviación Metalúrgica)</h4>
+              <h4 class="text-white font-black text-lg leading-tight">Cianuración (Lixiviación)</h4>
             </div>
-            <p class="text-gray-300 text-sm leading-relaxed mb-4 text-justify">
-              La cianuración es el proceso mediante el cual se disuelve el oro presente en el mineral usando soluciones
-              alcalinas de cianuro. Antes de iniciar la lixiviación, la pulpa es acondicionada controlando su densidad,
-              pH y nivel de oxidación. La disolución ocurre en tanques de agitación donde se monitorean parámetros como
-              cianuro libre, oxígeno disuelto, potencial redox y tiempo de residencia para asegurar la máxima
-              recuperación del metal.
-            </p>
-            <p class="text-gray-400 text-sm leading-relaxed text-justify">
-              La solución cargada con oro es luego capturada en carbón activado (adsorción), el metal se extrae del
-              carbón mediante elución y se recupera por electrodeposición. El proceso culmina con la fundición para
-              obtener doré, un aleación metálica de oro y plata lista para su refinación final.
+            <p class="text-gray-300 text-sm leading-relaxed text-justify">
+              Disolución química controlada del oro en tanques de agitación alcalinos. La solución cargada con metales valiosos es recuperada mediante adsorción en carbón activado, elución y electrodeposición, culminando en la fundición de lingotes doré.
             </p>
           </div>
         </div>
 
         <!-- Proceso C — Flotación -->
-        <!-- Fuente imagen: https://commons.wikimedia.org/wiki/File:Flotation_cell.jpg -->
         <div class="group relative overflow-hidden">
-          <!-- Imagen desde internet — celdas de flotación de minerales sulfurados -->
-          <img src="https://amvconsultoresperu.com/wp-content/uploads/2021/02/flotacion-2-1024x651-1-1023x650.webp"
-            alt="Flotación — celdas de flotación de minerales sulfurados"
-            class="absolute inset-0 w-full h-full object-cover opacity-35 blur-[2px] group-hover:opacity-20 group-hover:blur-[5px] transition-all duration-500">
-          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/55 transition-all duration-500"></div>
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-all duration-500"></div>
           <div class="relative z-10 p-6 sm:p-8 3xl:p-12">
             <div class="flex items-center gap-3 mb-4">
               <span
                 class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">D</span>
-              <h4 class="text-white font-black text-lg leading-tight">Flotación de Minerales Sulfurados</h4>
+              <h4 class="text-white font-black text-lg leading-tight">Flotación de Minerales</h4>
             </div>
-            <p class="text-gray-300 text-sm leading-relaxed mb-4 text-justify">
-              La flotación separa los minerales de interés del material estéril aprovechando las diferencias en la
-              superficie de las partículas. En las celdas de flotación se inyecta aire controladamente generando
-              burbujas a las que se adhieren selectivamente los minerales, gracias a reactivos químicos como colectores
-              (xantatos, ditiofosfatos), espumantes y modificadores de pH, depresores y activadores que controlan
-              la selectividad del sistema.
-            </p>
-            <p class="text-gray-400 text-sm leading-relaxed text-justify">
-              Se monitorean continuamente la granulometría (P80), dosificación de reactivos, aireación
-              y estabilidad de la espuma. El concentrado obtenido es acondicionado para su comercialización; los
-              relaves son gestionados bajo criterios técnicos y ambientales que garantizan el cumplimiento normativo.
+            <p class="text-gray-300 text-sm leading-relaxed text-justify">
+              Separación física y selectiva de sulfuros de valor mediante burbujas de aire y reactivos químicos específicos. Monitoreamos continuamente la dosificación, aireación y estabilidad de la espuma para producir concentrados comerciales de alta ley.
             </p>
           </div>
         </div>

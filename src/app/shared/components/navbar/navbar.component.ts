@@ -29,7 +29,6 @@ export class NavbarComponent {
         { label: 'Acerca de Nosotros', route: '/empresa/acerca-de' },
         { label: 'Gerencia', route: '/empresa/gerencia' },
         { label: 'Directorio', route: '/empresa/directorio' },
-        { label: 'Empresas Asociadas', route: '/empresa/empresas-asociadas' },
         {
           label: 'Gobierno Corporativo',
           children: [
