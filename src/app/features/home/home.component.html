@@ -323,83 +323,139 @@
 <section class="py-10 md:py-16 lg:py-20 bg-black relative overflow-hidden">
   <!-- Video de fondo que abarca toda la ventana de esta sección, resaltado -->
   <video autoplay loop muted playsinline
-    class="absolute inset-0 w-full h-full object-cover opacity-35 pointer-events-none z-0">
+    class="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none z-0">
     <source src="assets/pag-web-3.mp4" type="video/mp4">
   </video>
-  <div class="absolute inset-0 bg-black/30 z-0 pointer-events-none"></div>
+  <div class="absolute inset-0 bg-black/40 z-0 pointer-events-none"></div>
 
   <div class="w-full max-w-[90%] xl:max-w-[85%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6 relative z-10">
 
-    <!-- ── Bloque 3: Procesos de Tratamiento ── -->
-    <div class="rounded-2xl overflow-hidden border border-white/10 backdrop-blur-md" style="background: rgba(0,0,0,0.45);">
+    <!-- ── Bloque 3: Procesos de Tratamiento Interactivos ── -->
+    <div class="rounded-2xl overflow-hidden border border-white/10 backdrop-blur-md animate-fade-in" style="background: rgba(0,0,0,0.55);">
 
       <!-- Cabecera del bloque -->
-      <div class="px-5 lg:px-8 pt-7 lg:pt-10 pb-5 lg:pb-6 border-b border-white/10">
-        <span class="text-orange-600 text-xs font-bold uppercase tracking-widest">03. </span>
-        <h3 class="text-xl lg:text-3xl font-black text-white mt-2 mb-3">Procesos de Tratamiento de Material</h3>
-      </div>
-
-      <!-- Literal horizontal — Acopio de Material -->
-      <div class="group relative overflow-hidden border-b border-white/10">
-        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-all duration-500"></div>
-        <div class="relative z-10 p-6 sm:p-8 3xl:p-12">
-          <div class="flex items-center gap-3 mb-4">
-            <span
-              class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">A</span>
-            <h4 class="text-white font-black text-base lg:text-lg leading-tight">Acopio de Material</h4>
-          </div>
-          <p class="text-gray-300 text-sm leading-relaxed text-justify">
-            Recepción, homogeneización y preparación del mineral. El material extraído se tritura y muele en molinos de bolas para alcanzar la granulometría óptima requerida antes de ingresar a los circuitos de recuperación metalúrgica.
-          </p>
+      <div class="px-5 lg:px-8 pt-7 lg:pt-10 pb-5 lg:pb-6 border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span class="text-orange-600 text-xs font-bold uppercase tracking-widest">03. Monitoreo Operativo</span>
+          <h3 class="text-xl lg:text-3xl font-black text-white mt-1">Procesos de Tratamiento de Material</h3>
+        </div>
+        
+        <!-- Live status badge simulado -->
+        <div class="flex items-center gap-2 px-3.5 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full w-fit">
+          <span class="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"></span>
+          <span class="text-green-400 text-[10px] font-black uppercase tracking-wider">Telemetría Online SCADA</span>
         </div>
       </div>
 
-      <!-- Tres procesos en columnas -->
-      <div class="grid lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
+      <!-- ── STEPPER / PROCESO LINEAL INTERACTIVO ── -->
+      <div class="p-6 border-b border-white/10 bg-black/30">
+        <div class="relative flex items-center justify-between max-w-4xl mx-auto px-2">
+          <!-- Línea gris de fondo -->
+          <div class="absolute left-0 right-0 top-[20px] h-[2px] bg-zinc-800 z-0"></div>
+          
+          <!-- Línea naranja de progreso activo -->
+          <div class="absolute left-0 top-[20px] h-[2px] bg-orange-600 transition-all duration-500 z-0"
+               [style.width.%]="
+                 activeProcessTab === 'acopio' ? 0 : 
+                 activeProcessTab === 'trituracion' ? 33.3 : 
+                 activeProcessTab === 'cianuracion' ? 66.6 : 100">
+          </div>
 
-        <!-- Proceso A — Conminución -->
-        <div class="group relative overflow-hidden">
-          <!-- Overlay adicional en hover -->
-          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-all duration-500"></div>
-          <div class="relative z-10 p-6 sm:p-8 3xl:p-12">
-            <div class="flex items-center gap-3 mb-4">
-              <span
-                class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">B</span>
-              <h4 class="text-white font-black text-lg leading-tight">Trituración y Clasificación</h4>
+          <!-- Botones de Paso (A, B, C, D) -->
+          <button (click)="activeProcessTab = 'acopio'" class="relative z-10 flex flex-col items-center group focus:outline-none">
+            <span class="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm transition-all duration-300 cursor-pointer"
+                  [ngClass]="activeProcessTab === 'acopio' ? 'bg-orange-600 text-white shadow-[0_0_15px_rgba(234,88,12,0.6)] scale-110' : 'bg-zinc-900 border border-zinc-700 text-gray-400 group-hover:text-white group-hover:border-zinc-500'">A</span>
+            <span class="text-[10px] font-bold mt-2 uppercase tracking-wider transition-colors duration-300"
+                  [ngClass]="activeProcessTab === 'acopio' ? 'text-orange-500' : 'text-zinc-500 group-hover:text-zinc-300'">Acopio</span>
+          </button>
+
+          <button (click)="activeProcessTab = 'trituracion'" class="relative z-10 flex flex-col items-center group focus:outline-none">
+            <span class="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm transition-all duration-300 cursor-pointer"
+                  [ngClass]="activeProcessTab === 'trituracion' ? 'bg-orange-600 text-white shadow-[0_0_15px_rgba(234,88,12,0.6)] scale-110' : 'bg-zinc-900 border border-zinc-700 text-gray-400 group-hover:text-white group-hover:border-zinc-500'">B</span>
+            <span class="text-[10px] font-bold mt-2 uppercase tracking-wider transition-colors duration-300"
+                  [ngClass]="activeProcessTab === 'trituracion' ? 'text-orange-500' : 'text-zinc-500 group-hover:text-zinc-300'">Trituración</span>
+          </button>
+
+          <button (click)="activeProcessTab = 'cianuracion'" class="relative z-10 flex flex-col items-center group focus:outline-none">
+            <span class="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm transition-all duration-300 cursor-pointer"
+                  [ngClass]="activeProcessTab === 'cianuracion' ? 'bg-orange-600 text-white shadow-[0_0_15px_rgba(234,88,12,0.6)] scale-110' : 'bg-zinc-900 border border-zinc-700 text-gray-400 group-hover:text-white group-hover:border-zinc-500'">C</span>
+            <span class="text-[10px] font-bold mt-2 uppercase tracking-wider transition-colors duration-300"
+                  [ngClass]="activeProcessTab === 'cianuracion' ? 'text-orange-500' : 'text-zinc-500 group-hover:text-zinc-300'">Cianuración</span>
+          </button>
+
+          <button (click)="activeProcessTab = 'flotacion'" class="relative z-10 flex flex-col items-center group focus:outline-none">
+            <span class="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm transition-all duration-300 cursor-pointer"
+                  [ngClass]="activeProcessTab === 'flotacion' ? 'bg-orange-600 text-white shadow-[0_0_15px_rgba(234,88,12,0.6)] scale-110' : 'bg-zinc-900 border border-zinc-700 text-gray-400 group-hover:text-white group-hover:border-zinc-500'">D</span>
+            <span class="text-[10px] font-bold mt-2 uppercase tracking-wider transition-colors duration-300"
+                  [ngClass]="activeProcessTab === 'flotacion' ? 'text-orange-500' : 'text-zinc-500 group-hover:text-zinc-300'">Flotación</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── CONTENIDO DINÁMICO DE PROCESO SELECCIONADO ── -->
+      <div class="grid lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
+        
+        <!-- Ficha de Datos (Izquierda) -->
+        <div class="p-6 sm:p-8 lg:p-12 flex flex-col justify-between min-h-[360px] lg:min-h-[460px]">
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-orange-600/10 border border-orange-600 flex items-center justify-center text-orange-500 font-black text-xs">
+                {{ procesosTratamiento[activeProcessTab].letter }}
+              </span>
+              <h4 class="text-white font-black text-lg lg:text-2xl leading-none">
+                {{ procesosTratamiento[activeProcessTab].title }}
+              </h4>
             </div>
-            <p class="text-gray-300 text-sm leading-relaxed text-justify">
-              Reducción progresiva del tamaño del mineral mediante trituración y clasificación granulométrica con cribas en circuito cerrado. Controlamos la granulometría ideal (P80) para maximizar la liberación mineralógica y asegurar la máxima eficiencia.
+
+            <p class="text-gray-300 text-sm leading-relaxed text-justify mt-4">
+              {{ procesosTratamiento[activeProcessTab].description }}
             </p>
+
+            <div class="bg-black/30 border border-white/5 rounded-xl p-4 mt-6">
+              <span class="text-zinc-500 text-[10px] font-black uppercase tracking-wider block mb-1">Equipamiento Clave</span>
+              <span class="text-gray-300 text-xs font-semibold leading-relaxed">
+                {{ procesosTratamiento[activeProcessTab].equipos }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Botón de Acción Principal (Actionable Banner) -->
+          <div class="mt-8 pt-6 border-t border-white/5">
+            <a [routerLink]="['/operaciones/ponce-enriquez/plantas']"
+               [queryParams]="{ stage: procesosTratamiento[activeProcessTab].stageId }"
+               class="inline-flex items-center gap-2.5 px-6 py-3.5 bg-orange-600 hover:bg-orange-700 text-white text-xs font-black uppercase tracking-wider rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(234,88,12,0.4)] group">
+              <span>Inspeccionar Telemetría de Planta</span>
+              <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
           </div>
         </div>
 
-        <!-- Proceso B — Cianuración -->
-        <div class="group relative overflow-hidden">
-          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-all duration-500"></div>
-          <div class="relative z-10 p-6 sm:p-8 3xl:p-12">
-            <div class="flex items-center gap-3 mb-4">
-              <span
-                class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">C</span>
-              <h4 class="text-white font-black text-lg leading-tight">Cianuración (Lixiviación)</h4>
-            </div>
-            <p class="text-gray-300 text-sm leading-relaxed text-justify">
-              Disolución química controlada del oro en tanques de agitación alcalinos. La solución cargada con metales valiosos es recuperada mediante adsorción en carbón activado, elución y electrodeposición, culminando en la fundición de lingotes doré.
-            </p>
-          </div>
-        </div>
+        <!-- Pantalla Digital / Monitoreo (Derecha) -->
+        <div class="relative overflow-hidden group min-h-[320px] lg:min-h-full">
+          <!-- Imagen de la maquinaria de fondo con efecto zoom -->
+          <img [src]="procesosTratamiento[activeProcessTab].imagen" 
+               [alt]="procesosTratamiento[activeProcessTab].title"
+               class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+          
+          <!-- Capa oscura e iluminación neón -->
+          <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-black/40 z-0"></div>
 
-        <!-- Proceso C — Flotación -->
-        <div class="group relative overflow-hidden">
-          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-all duration-500"></div>
-          <div class="relative z-10 p-6 sm:p-8 3xl:p-12">
-            <div class="flex items-center gap-3 mb-4">
-              <span
-                class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-black text-xs flex-shrink-0">D</span>
-              <h4 class="text-white font-black text-lg leading-tight">Flotación de Minerales</h4>
+          <!-- Variables Digitales Instrumentales (Telemetría Simulada) -->
+          <div class="absolute inset-0 z-10 p-6 sm:p-8 flex flex-col justify-end gap-4">
+            <span class="text-zinc-400 text-[10px] font-black uppercase tracking-widest border-b border-white/10 pb-2">
+              Lecturas de Instrumentación (Módulo Shumiral-1)
+            </span>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div *ngFor="let metric of procesosTratamiento[activeProcessTab].metrics" 
+                   class="bg-black/75 backdrop-blur-md border border-white/10 rounded-xl p-3.5 flex flex-col">
+                <span class="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">{{ metric.label }}</span>
+                <span class="text-white font-mono font-black text-sm sm:text-base mt-1 text-orange-500">{{ metric.value }}</span>
+              </div>
             </div>
-            <p class="text-gray-300 text-sm leading-relaxed text-justify">
-              Separación física y selectiva de sulfuros de valor mediante burbujas de aire y reactivos químicos específicos. Monitoreamos continuamente la dosificación, aireación y estabilidad de la espuma para producir concentrados comerciales de alta ley.
-            </p>
           </div>
         </div>
 

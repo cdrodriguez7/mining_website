@@ -121,7 +121,7 @@
                     [class.border-transparent]="activeTab !== 'blueprint'"
                     [class.text-zinc-500]="activeTab !== 'blueprint'"
                     [class.hover:text-zinc-300]="activeTab !== 'blueprint'">
-              Plano de Presa
+              Factor de Seguridad
             </button>
             <button (click)="changeTab('specs')"
                     class="pb-3 px-4 font-bold text-xs uppercase tracking-wider border-b-2 transition-all duration-300"
@@ -143,145 +143,365 @@
             </button>
           </div>
 
-          <!-- CONTENIDO TAB 1: PLANO ESTRUCTURAL (SVG INTERACTIVO) -->
-          <div *ngIf="activeTab === 'blueprint'" class="space-y-6 flex-1 flex flex-col justify-between">
+          <!-- CONTENIDO TAB 1: FACTOR DE SEGURIDAD (ANÁLISIS DE ESTABILIDAD DE TALUDES) -->
+          <div *ngIf="activeTab === 'blueprint'" class="space-y-5 flex-1 flex flex-col">
             <div class="text-zinc-400 text-xs md:text-sm leading-relaxed">
-              Haz clic en los sensores geotécnicos representados en el plano (círculos intermitentes) para consultar las lecturas telemétricas actuales del dique de contención.
+              Haz clic en las <span class="text-orange-400 font-semibold">zonas coloreadas</span> del perfil (corona, talud o pie) para consultar el factor de seguridad por zona, o en los <span class="text-green-400 font-semibold">sensores pulsantes</span> para ver las lecturas geotécnicas en tiempo real.
             </div>
 
-            <!-- Contenedor del SVG -->
-            <div class="relative bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-4 overflow-hidden flex items-center justify-center min-h-[220px]">
-              <svg viewBox="0 0 500 250" class="w-full h-auto max-h-[320px] select-none text-orange-600">
-                <!-- Leyendas técnicas del dibujo -->
-                <text x="15" y="25" fill="#52525b" font-size="8" font-family="monospace">ESCALA: S/E (Corte Transversal)</text>
-                <text x="15" y="38" fill="#52525b" font-size="8" font-family="monospace">ESTRUCTURA: {{ activeRelavera.height }}</text>
+            <!-- Grid: SVG + Panel de Leyenda -->
+            <div class="grid lg:grid-cols-[1fr_210px] gap-4">
 
-                <!-- Basamento Rocoso (Cimiento) -->
-                <polygon points="0,210 500,210 500,250 0,250" fill="#18181b" stroke="#27272a" stroke-width="1.5" />
-                <path d="M 50,215 L 60,230 M 120,215 L 130,230 M 250,215 L 260,230 M 380,215 L 390,230 M 440,215 L 450,230" stroke="#27272a" stroke-width="1" />
-                <text x="350" y="235" fill="#3f3f46" font-size="10" font-weight="bold" font-family="monospace">Cimiento Rocoso</text>
+              <!-- SVG Perfil Transversal con Zonas de Estabilidad -->
+              <div class="relative bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-4 overflow-hidden flex items-center justify-center min-h-[200px]">
+                <svg viewBox="0 0 500 260" class="w-full h-auto max-h-[340px] select-none">
 
-                <!-- Vaso de Relaves (Lodos consolidados) -->
-                <polygon points="0,100 200,100 240,210 0,210" fill="#2d2d30" stroke="#3f3f46" stroke-width="1" stroke-dasharray="2 2" />
-                <text x="35" y="150" fill="#52525b" font-size="10" font-weight="bold" font-family="monospace">Relave Consolidado</text>
+                  <!-- Leyendas técnicas -->
+                  <text x="15" y="18" fill="#52525b" font-size="7" font-family="monospace">ANÁLISIS DE ESTABILIDAD DE TALUDES — BISHOP SIMPLIFICADO</text>
+                  <text x="15" y="28" fill="#52525b" font-size="7" font-family="monospace">ESTRUCTURA: {{ activeRelavera.height }} · FSD GLOBAL: {{ activeRelavera.fsd }}</text>
 
-                <!-- Espejo de Agua Sobrenadante (Cyan) -->
-                <polygon points="120,100 200,100 210,120 120,120" fill="rgba(6, 182, 212, 0.25)" stroke="#06b6d4" stroke-width="1" />
-                <text x="110" y="93" fill="#06b6d4" font-size="8" font-weight="bold" font-family="monospace">Agua Sobrenadante</text>
+                  <!-- Basamento Rocoso -->
+                  <polygon points="0,215 500,215 500,260 0,260" fill="#18181b" stroke="#27272a" stroke-width="1.5"/>
+                  <path d="M 50,220 L 60,235 M 120,220 L 130,235 M 250,220 L 260,235 M 380,220 L 390,235 M 440,220 L 450,235" stroke="#27272a" stroke-width="1"/>
+                  <text x="340" y="242" fill="#3f3f46" font-size="9" font-weight="bold" font-family="monospace">Cimiento Rocoso</text>
 
-                <!-- Geomembrana de Impermeabilización (HDPE Naranja) -->
-                <line x1="200" y1="100" x2="240" y2="210" stroke="#E88A1E" stroke-width="3.5" stroke-linecap="round" />
-                <text x="210" y="85" fill="#E88A1E" font-size="8" font-weight="bold" font-family="monospace">Geomembrana HDPE</text>
+                  <!-- Vaso de Relaves -->
+                  <polygon points="0,105 200,105 242,215 0,215" fill="#2d2d30" stroke="#3f3f46" stroke-width="1" stroke-dasharray="2 2"/>
+                  <text x="30" y="155" fill="#52525b" font-size="9" font-weight="bold" font-family="monospace">Relave</text>
+                  <text x="30" y="167" fill="#52525b" font-size="9" font-family="monospace">Consolidado</text>
 
-                <!-- Cuerpo del Dique Principal (Trapezoide Gris Oscuro) -->
-                <polygon points="200,100 380,210 240,210" fill="#27272a" stroke="#3f3f46" stroke-width="1.5" />
-                <text x="260" y="160" fill="#71717a" font-size="9" font-weight="bold" font-family="monospace">Cuerpo del Dique</text>
+                  <!-- Espejo de Agua Sobrenadante -->
+                  <polygon points="120,105 200,105 212,125 120,125" fill="rgba(6,182,212,0.25)" stroke="#06b6d4" stroke-width="1"/>
+                  <text x="108" y="98" fill="#06b6d4" font-size="7" font-weight="bold" font-family="monospace">Agua Sobrenadante</text>
 
-                <!-- Núcleo de la presa (Arcilla/Core) -->
-                <polygon points="215,100 230,100 252,210 237,210" fill="rgba(120, 53, 15, 0.4)" stroke="#78350f" stroke-width="1" />
-                <text x="200" y="180" fill="#78350f" font-size="8" font-family="monospace" transform="rotate(-70 200 180)">Núcleo de Arcilla</text>
+                  <!-- Geomembrana HDPE -->
+                  <line x1="200" y1="105" x2="242" y2="215" stroke="#E88A1E" stroke-width="3" stroke-linecap="round"/>
+                  <text x="207" y="90" fill="#E88A1E" font-size="7" font-weight="bold" font-family="monospace">Geomembrana HDPE</text>
 
-                <!-- Filtros de Grava / Geotextil (Dashed line en talud externo) -->
-                <line x1="230" y1="100" x2="380" y2="210" stroke="#a1a1aa" stroke-width="1.5" stroke-dasharray="3 3" />
-                <line x1="380" y1="210" x2="410" y2="210" stroke="#2563eb" stroke-width="2" />
-                
-                <!-- Drenes / Colectores de escorrentía -->
-                <circle cx="410" cy="210" r="3" fill="#2563eb" />
-                <text x="390" y="222" fill="#2563eb" font-size="8" font-family="monospace">Drenaje Principal</text>
+                  <!-- Cuerpo del Dique -->
+                  <polygon points="200,105 382,215 242,215" fill="#27272a" stroke="#3f3f46" stroke-width="1.5"/>
 
-                <!-- Sensores Interactivos -->
-                <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
-                  <!-- Anillo pulsante (ping) si el sensor está activo -->
-                  <circle [attr.cx]="sensor.x + '%'" 
-                          [attr.cy]="sensor.y + '%'" 
-                          r="9" 
-                          fill="none" 
-                          stroke-width="2"
-                          class="animate-ping"
-                          [class.stroke-green-500]="sensor.status === 'normal'"
-                          [class.stroke-yellow-500]="sensor.status === 'alerta'"
-                          [class.stroke-zinc-600]="sensor.status === 'inactivo'">
-                  </circle>
-                  <!-- Centro interactivo -->
-                  <circle [attr.cx]="sensor.x + '%'" 
-                          [attr.cy]="sensor.y + '%'" 
-                          r="5.5" 
-                          [class.fill-green-500]="sensor.status === 'normal'"
-                          [class.fill-yellow-500]="sensor.status === 'alerta'"
-                          [class.fill-zinc-600]="sensor.status === 'inactivo'"
-                          [class.stroke-white]="selectedSensor?.id === sensor.id"
-                          [class.stroke-transparent]="selectedSensor?.id !== sensor.id"
-                          stroke-width="1.5"
-                          (click)="selectSensor(sensor)">
-                  </circle>
-                </g>
-              </svg>
-            </div>
+                  <!-- Núcleo de Arcilla -->
+                  <polygon points="215,105 230,105 252,215 238,215" fill="rgba(120,53,15,0.4)" stroke="#78350f" stroke-width="1"/>
 
-            <!-- Ficha de Sensor Seleccionado -->
-            <div class="bg-black/40 border border-zinc-800/80 rounded-2xl p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 transition-all duration-300">
-              <div *ngIf="selectedSensor; else noSensorSelected" class="flex items-start gap-4">
-                <!-- Icono de Sensor -->
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center border border-zinc-800/80 flex-shrink-0"
-                     [ngClass]="{
-                       'bg-green-500/10': selectedSensor.status === 'normal',
-                       'bg-yellow-500/10': selectedSensor.status === 'alerta',
-                       'bg-zinc-800/20': selectedSensor.status === 'inactivo'
-                     }">
-                  
-                  <!-- Piezómetro -->
-                  <svg *ngIf="selectedSensor.type === 'piezometro'" class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path d="M12 2v20M17 5H7M19 12H5M17 19H7"></path>
-                  </svg>
-                  
-                  <!-- Inclinómetro -->
-                  <svg *ngIf="selectedSensor.type === 'inclinometro'" class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <line x1="12" y1="2" x2="12" y2="22"></line>
-                    <path d="M12 18l6 3M12 18l-6 3M12 6l4-3M12 6l-4-3"></path>
-                  </svg>
+                  <!-- Filtros de Grava y Drenaje -->
+                  <line x1="230" y1="105" x2="382" y2="215" stroke="#a1a1aa" stroke-width="1" stroke-dasharray="3 3"/>
+                  <line x1="382" y1="215" x2="412" y2="215" stroke="#2563eb" stroke-width="2"/>
+                  <circle cx="412" cy="215" r="3" fill="#2563eb"/>
+                  <text x="393" y="228" fill="#2563eb" font-size="7" font-family="monospace">Drenaje</text>
 
-                  <!-- Drenaje / Caudal -->
-                  <svg *ngIf="selectedSensor.type === 'drenaje'" class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path d="M12 22a7 7 0 0 0 7-7c0-4.3-7-11-7-11S5 10.7 5 15a7 7 0 0 0 7 7z"></path>
-                  </svg>
+                  <!-- Curva de falla circular de Bishop (decorativa) -->
+                  <path d="M 205,108 Q 290,182 382,215" fill="none" stroke="#ef4444" stroke-width="1" stroke-dasharray="5 3" opacity="0.35"/>
 
-                  <!-- Acelerómetro -->
-                  <svg *ngIf="selectedSensor.type === 'acelerometro'" class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                  </svg>
-                </div>
+                  <!-- ═══════ ZONA CORONA ═══════ -->
+                  <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
+                    <polygon points="198,103 244,103 250,126 206,126"
+                             [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
+                             [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
+                             [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'"
+                             stroke-dasharray="4 2"/>
+                    <text x="221" y="119" font-size="7" font-family="monospace" font-weight="bold" text-anchor="middle"
+                          [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
+                    <text x="221" y="110" font-size="5.5" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
+                  </g>
 
+                  <!-- ═══════ ZONA TALUD ═══════ -->
+                  <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
+                    <polygon points="206,126 250,126 355,206 313,206"
+                             [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
+                             [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
+                             [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'"
+                             stroke-dasharray="4 2"/>
+                    <text x="282" y="168" font-size="7" font-family="monospace" font-weight="bold" text-anchor="middle"
+                          [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
+                    <text x="282" y="158" font-size="5.5" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD EXT.</text>
+                  </g>
+
+                  <!-- ═══════ ZONA PIE ═══════ -->
+                  <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
+                    <polygon points="313,206 382,215 388,225 309,225"
+                             [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
+                             [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
+                             [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'"
+                             stroke-dasharray="4 2"/>
+                    <text x="350" y="220" font-size="7" font-family="monospace" font-weight="bold" text-anchor="middle"
+                          [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
+                    <text x="350" y="210" font-size="5.5" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
+                  </g>
+
+                  <!-- ═══════ SENSORES GEOTÉCNICOS INTERACTIVOS ═══════ -->
+                  <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                    <circle [attr.cx]="sensor.x + '%'"
+                            [attr.cy]="sensor.y + '%'"
+                            r="9"
+                            fill="none"
+                            stroke-width="2"
+                            class="animate-ping"
+                            [class.stroke-green-500]="sensor.status === 'normal'"
+                            [class.stroke-yellow-500]="sensor.status === 'alerta'"
+                            [class.stroke-zinc-600]="sensor.status === 'inactivo'">
+                    </circle>
+                    <circle [attr.cx]="sensor.x + '%'"
+                            [attr.cy]="sensor.y + '%'"
+                            r="5.5"
+                            [class.fill-green-500]="sensor.status === 'normal'"
+                            [class.fill-yellow-500]="sensor.status === 'alerta'"
+                            [class.fill-zinc-600]="sensor.status === 'inactivo'"
+                            [class.stroke-white]="selectedSensor?.id === sensor.id"
+                            [class.stroke-transparent]="selectedSensor?.id !== sensor.id"
+                            stroke-width="1.5"
+                            (click)="selectSensor(sensor)">
+                    </circle>
+                  </g>
+
+                </svg>
+              </div>
+
+              <!-- Panel de Leyenda y FS por Zona -->
+              <div class="bg-black/40 border border-zinc-800/60 rounded-2xl p-4 flex flex-col gap-3">
+
+                <!-- FSD Global -->
                 <div>
+                  <span class="text-zinc-500 text-[9px] font-black uppercase tracking-widest block mb-2">FSD Global del Dique</span>
                   <div class="flex items-center gap-2">
-                    <span class="text-zinc-500 text-[10px] font-bold uppercase tracking-wider">Telemetría Geotécnica</span>
-                    <span class="text-[9px] px-2 py-0.5 rounded-full font-black uppercase tracking-wider"
+                    <span class="text-2xl font-black font-mono"
                           [ngClass]="{
-                            'bg-green-500/25 text-green-400': selectedSensor.status === 'normal',
-                            'bg-yellow-500/25 text-yellow-400': selectedSensor.status === 'alerta',
-                            'bg-zinc-800 text-zinc-400': selectedSensor.status === 'inactivo'
-                          }">
-                      {{ selectedSensor.status }}
-                    </span>
+                            'text-green-400': activeRelavera.fsd >= 1.5,
+                            'text-yellow-400': activeRelavera.fsd >= 1.3 && activeRelavera.fsd < 1.5,
+                            'text-red-400': activeRelavera.fsd < 1.3
+                          }">{{ activeRelavera.fsd }}</span>
+                    <span class="text-[9px] px-2 py-0.5 rounded font-black uppercase tracking-wider"
+                          [ngClass]="{
+                            'bg-green-500/20 text-green-400': activeRelavera.fsd >= 1.5,
+                            'bg-yellow-500/20 text-yellow-400': activeRelavera.fsd >= 1.3 && activeRelavera.fsd < 1.5,
+                            'bg-red-500/20 text-red-400': activeRelavera.fsd < 1.3
+                          }">{{ activeRelavera.fsd >= 1.5 ? 'Estable' : activeRelavera.fsd >= 1.3 ? 'Aceptable' : 'Crítico' }}</span>
                   </div>
-                  <h4 class="text-base font-extrabold text-white mt-1">{{ selectedSensor.name }}</h4>
-                  <span class="text-zinc-400 text-xs mt-1 block">Lectura remota automática de variables críticas.</span>
+                  <span class="text-zinc-600 text-[8px] font-mono mt-1 block">Norma mín. FS ≥ 1.30 (estático)</span>
                 </div>
-              </div>
 
-              <!-- Lectura de Datos -->
-              <div *ngIf="selectedSensor" class="bg-zinc-950/60 border border-zinc-800/80 rounded-xl px-5 py-3 w-full md:w-auto text-left md:text-right">
-                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider">Valor Registrado</span>
-                <span class="text-white font-mono font-black text-base md:text-lg">{{ selectedSensor.value }}</span>
-              </div>
+                <div class="h-px bg-zinc-800/60"></div>
 
-              <!-- Placeholder si no hay seleccionado -->
-              <ng-template #noSensorSelected>
-                <div class="text-zinc-500 text-xs py-2 w-full text-center">
-                  Selecciona cualquier piezómetro o inclinómetro del dique para visualizar lecturas.
+                <!-- FS por Zona -->
+                <div>
+                  <span class="text-zinc-500 text-[9px] font-black uppercase tracking-widest block mb-2">FS por Zona de Falla</span>
+                  <div class="space-y-1.5">
+
+                    <!-- Corona -->
+                    <button (click)="selectZone(activeFailureZones.corona)"
+                            class="w-full flex items-center justify-between px-2.5 py-2 rounded-lg border transition-all duration-200 text-left"
+                            [ngClass]="selectedZone?.id === 'corona' ? 'border-white/20 bg-white/5' : 'border-zinc-800/40 hover:bg-zinc-800/20'">
+                      <div class="flex items-center gap-2">
+                        <div class="w-2.5 h-2.5 rounded-sm flex-shrink-0"
+                             [ngClass]="{
+                               'bg-green-500': activeFailureZones.corona.fs >= 1.5,
+                               'bg-yellow-500': activeFailureZones.corona.fs >= 1.3 && activeFailureZones.corona.fs < 1.5,
+                               'bg-red-500': activeFailureZones.corona.fs < 1.3
+                             }"></div>
+                        <span class="text-[10px] text-zinc-300 font-semibold">Corona</span>
+                      </div>
+                      <span class="text-xs font-mono font-black"
+                            [ngClass]="{
+                              'text-green-400': activeFailureZones.corona.fs >= 1.5,
+                              'text-yellow-400': activeFailureZones.corona.fs >= 1.3 && activeFailureZones.corona.fs < 1.5,
+                              'text-red-400': activeFailureZones.corona.fs < 1.3
+                            }">{{ activeFailureZones.corona.fs }}</span>
+                    </button>
+
+                    <!-- Talud -->
+                    <button (click)="selectZone(activeFailureZones.talud)"
+                            class="w-full flex items-center justify-between px-2.5 py-2 rounded-lg border transition-all duration-200 text-left"
+                            [ngClass]="selectedZone?.id === 'talud' ? 'border-white/20 bg-white/5' : 'border-zinc-800/40 hover:bg-zinc-800/20'">
+                      <div class="flex items-center gap-2">
+                        <div class="w-2.5 h-2.5 rounded-sm flex-shrink-0"
+                             [ngClass]="{
+                               'bg-green-500': activeFailureZones.talud.fs >= 1.5,
+                               'bg-yellow-500': activeFailureZones.talud.fs >= 1.3 && activeFailureZones.talud.fs < 1.5,
+                               'bg-red-500': activeFailureZones.talud.fs < 1.3
+                             }"></div>
+                        <span class="text-[10px] text-zinc-300 font-semibold">Talud Ext.</span>
+                      </div>
+                      <span class="text-xs font-mono font-black"
+                            [ngClass]="{
+                              'text-green-400': activeFailureZones.talud.fs >= 1.5,
+                              'text-yellow-400': activeFailureZones.talud.fs >= 1.3 && activeFailureZones.talud.fs < 1.5,
+                              'text-red-400': activeFailureZones.talud.fs < 1.3
+                            }">{{ activeFailureZones.talud.fs }}</span>
+                    </button>
+
+                    <!-- Pie -->
+                    <button (click)="selectZone(activeFailureZones.pie)"
+                            class="w-full flex items-center justify-between px-2.5 py-2 rounded-lg border transition-all duration-200 text-left"
+                            [ngClass]="selectedZone?.id === 'pie' ? 'border-white/20 bg-white/5' : 'border-zinc-800/40 hover:bg-zinc-800/20'">
+                      <div class="flex items-center gap-2">
+                        <div class="w-2.5 h-2.5 rounded-sm flex-shrink-0"
+                             [ngClass]="{
+                               'bg-green-500': activeFailureZones.pie.fs >= 1.5,
+                               'bg-yellow-500': activeFailureZones.pie.fs >= 1.3 && activeFailureZones.pie.fs < 1.5,
+                               'bg-red-500': activeFailureZones.pie.fs < 1.3
+                             }"></div>
+                        <span class="text-[10px] text-zinc-300 font-semibold">Pie del Dique</span>
+                      </div>
+                      <span class="text-xs font-mono font-black"
+                            [ngClass]="{
+                              'text-green-400': activeFailureZones.pie.fs >= 1.5,
+                              'text-yellow-400': activeFailureZones.pie.fs >= 1.3 && activeFailureZones.pie.fs < 1.5,
+                              'text-red-400': activeFailureZones.pie.fs < 1.3
+                            }">{{ activeFailureZones.pie.fs }}</span>
+                    </button>
+                  </div>
                 </div>
-              </ng-template>
+
+                <div class="h-px bg-zinc-800/60"></div>
+
+                <!-- Escala cromática FS -->
+                <div>
+                  <span class="text-zinc-500 text-[9px] font-black uppercase tracking-widest block mb-2">Escala FS</span>
+                  <div class="space-y-1.5">
+                    <div class="flex items-center gap-2">
+                      <div class="w-5 h-3 rounded-sm bg-green-500/70 flex-shrink-0"></div>
+                      <span class="text-[9px] text-zinc-400">≥ 1.50 — Seguro</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="w-5 h-3 rounded-sm bg-yellow-500/70 flex-shrink-0"></div>
+                      <span class="text-[9px] text-zinc-400">1.30–1.49 — Aceptable</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="w-5 h-3 rounded-sm bg-red-500/70 flex-shrink-0"></div>
+                      <span class="text-[9px] text-zinc-400">&lt; 1.30 — Monitoreo</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             </div>
+
+            <!-- Tarjeta de Información: Zona de Falla o Sensor -->
+            <div class="bg-black/40 border border-zinc-800/80 rounded-2xl p-5 transition-all duration-300">
+
+              <!-- Info Zona de Falla -->
+              <div *ngIf="selectedZone" class="flex flex-col md:flex-row justify-between items-start md:items-start gap-4">
+                <div class="flex items-start gap-4 flex-1 min-w-0">
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center border border-zinc-800/80 flex-shrink-0"
+                       [ngClass]="{
+                         'bg-green-500/10': selectedZone.risk === 'bajo',
+                         'bg-yellow-500/10': selectedZone.risk === 'moderado',
+                         'bg-red-500/10': selectedZone.risk === 'alto'
+                       }">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"
+                         [ngClass]="{
+                           'text-green-500': selectedZone.risk === 'bajo',
+                           'text-yellow-500': selectedZone.risk === 'moderado',
+                           'text-red-500': selectedZone.risk === 'alto'
+                         }">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+                    </svg>
+                  </div>
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class="text-zinc-500 text-[10px] font-bold uppercase tracking-wider">{{ selectedZone.analysis }}</span>
+                      <span class="text-[9px] px-2 py-0.5 rounded-full font-black uppercase tracking-wider"
+                            [ngClass]="{
+                              'bg-green-500/25 text-green-400': selectedZone.risk === 'bajo',
+                              'bg-yellow-500/25 text-yellow-400': selectedZone.risk === 'moderado',
+                              'bg-red-500/25 text-red-400': selectedZone.risk === 'alto'
+                            }">FS = {{ selectedZone.fs }} · {{ selectedZone.risk === 'bajo' ? 'Estable' : selectedZone.risk === 'moderado' ? 'Monitoreo' : 'Crítico' }}</span>
+                    </div>
+                    <h4 class="text-base font-extrabold text-white mt-1">{{ selectedZone.name }}</h4>
+                    <span class="text-zinc-400 text-xs mt-1 block leading-relaxed">{{ selectedZone.description }}</span>
+                  </div>
+                </div>
+                <!-- Variables Geotécnicas -->
+                <div class="grid grid-cols-3 md:flex md:items-center gap-3 bg-zinc-950/60 border border-zinc-800/80 rounded-xl px-4 py-3 w-full md:w-auto flex-shrink-0">
+                  <div *ngFor="let v of selectedZone.variables" class="text-left md:text-right md:border-l md:border-zinc-800 md:pl-3 first:border-0 first:pl-0">
+                    <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider whitespace-nowrap">{{ v.label }}</span>
+                    <span class="text-white font-mono font-black text-sm block mt-0.5">{{ v.value }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Info Sensor Geotécnico -->
+              <div *ngIf="selectedSensor && !selectedZone" class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center border border-zinc-800/80 flex-shrink-0"
+                       [ngClass]="{
+                         'bg-green-500/10': selectedSensor.status === 'normal',
+                         'bg-yellow-500/10': selectedSensor.status === 'alerta',
+                         'bg-zinc-800/20': selectedSensor.status === 'inactivo'
+                       }">
+                    <svg *ngIf="selectedSensor.type === 'piezometro'" class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                      <path d="M12 2v20M17 5H7M19 12H5M17 19H7"></path>
+                    </svg>
+                    <svg *ngIf="selectedSensor.type === 'inclinometro'" class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                      <line x1="12" y1="2" x2="12" y2="22"></line>
+                      <path d="M12 18l6 3M12 18l-6 3M12 6l4-3M12 6l-4-3"></path>
+                    </svg>
+                    <svg *ngIf="selectedSensor.type === 'drenaje'" class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                      <path d="M12 22a7 7 0 0 0 7-7c0-4.3-7-11-7-11S5 10.7 5 15a7 7 0 0 0 7 7z"></path>
+                    </svg>
+                    <svg *ngIf="selectedSensor.type === 'acelerometro'" class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                      <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="text-zinc-500 text-[10px] font-bold uppercase tracking-wider">Telemetría Geotécnica</span>
+                      <span class="text-[9px] px-2 py-0.5 rounded-full font-black uppercase tracking-wider"
+                            [ngClass]="{
+                              'bg-green-500/25 text-green-400': selectedSensor.status === 'normal',
+                              'bg-yellow-500/25 text-yellow-400': selectedSensor.status === 'alerta',
+                              'bg-zinc-800 text-zinc-400': selectedSensor.status === 'inactivo'
+                            }">{{ selectedSensor.status }}</span>
+                    </div>
+                    <h4 class="text-base font-extrabold text-white mt-1">{{ selectedSensor.name }}</h4>
+                    <span class="text-zinc-400 text-xs mt-1 block">Lectura remota automática de variables críticas del dique.</span>
+                  </div>
+                </div>
+                <div class="bg-zinc-950/60 border border-zinc-800/80 rounded-xl px-5 py-3 w-full md:w-auto text-left md:text-right flex-shrink-0">
+                  <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider">Valor Registrado</span>
+                  <span class="text-white font-mono font-black text-base md:text-lg">{{ selectedSensor.value }}</span>
+                </div>
+              </div>
+
+              <!-- Placeholder -->
+              <div *ngIf="!selectedZone && !selectedSensor" class="text-zinc-500 text-xs py-3 w-full text-center">
+                Selecciona una <span class="text-orange-400 font-semibold">zona de análisis</span> o un <span class="text-green-400 font-semibold">sensor geotécnico</span> del perfil para ver sus parámetros de estabilidad.
+              </div>
+
+            </div>
+
+            <!-- Bloque de Contexto Técnico -->
+            <div class="bg-zinc-950/60 border border-zinc-800/50 rounded-2xl p-5">
+              <div class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+                </svg>
+                <div class="flex-1">
+                  <h4 class="text-white font-bold text-sm mb-2">Metodología de Análisis de Estabilidad de Taludes</h4>
+                  <p class="text-zinc-400 text-xs md:text-sm leading-relaxed text-justify">
+                    Los datos expuestos en el perfil longitudinal de la presa de relave conllevan al análisis y estabilidad de taludes, cumpliendo con factores de seguridad que cumplen con los estándares normativos. Esto se calcula para evitar falla tanto en el <span class="text-orange-400 font-semibold">pie</span>, <span class="text-yellow-400 font-semibold">talud</span> y <span class="text-green-400 font-semibold">corona</span> del dique, considerando que los empujes y presión del relave son un punto crítico para su diseño.
+                  </p>
+                  <div class="mt-3 grid grid-cols-2 md:grid-cols-3 gap-2">
+                    <div class="bg-black/30 rounded-lg px-3 py-2 border border-zinc-800/40">
+                      <span class="text-[9px] text-zinc-500 font-bold uppercase tracking-wider block">Método</span>
+                      <span class="text-xs text-zinc-200 font-semibold">Bishop Simplificado</span>
+                    </div>
+                    <div class="bg-black/30 rounded-lg px-3 py-2 border border-zinc-800/40">
+                      <span class="text-[9px] text-zinc-500 font-bold uppercase tracking-wider block">FS Mín. Estático</span>
+                      <span class="text-xs text-green-400 font-semibold font-mono">≥ 1.30</span>
+                    </div>
+                    <div class="bg-black/30 rounded-lg px-3 py-2 border border-zinc-800/40">
+                      <span class="text-[9px] text-zinc-500 font-bold uppercase tracking-wider block">FS Mín. Sísmico</span>
+                      <span class="text-xs text-yellow-400 font-semibold font-mono">≥ 1.05</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
+
+
 
           <!-- CONTENIDO TAB 2: FICHA TÉCNICA (ESPECIFICACIONES) -->
           <div *ngIf="activeTab === 'specs'" class="space-y-6 flex-1">

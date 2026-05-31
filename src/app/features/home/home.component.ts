@@ -121,6 +121,71 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   // ── Tarjetas de servicio ──────────────────────────────────────────────────
   serviceCardImages: CloudinaryImage[] = [];
 
+  activeProcessTab: 'acopio' | 'trituracion' | 'cianuracion' | 'flotacion' = 'acopio';
+
+  procesosTratamiento: Record<'acopio' | 'trituracion' | 'cianuracion' | 'flotacion', {
+    letter: string;
+    title: string;
+    stageId: string;
+    description: string;
+    equipos: string;
+    imagen: string;
+    metrics: { label: string; value: string }[];
+  }> = {
+    acopio: {
+      letter: 'A',
+      title: 'Acopio de Material',
+      stageId: 'tri-shumiral',
+      description: 'Recepción, homogeneización y preparación del mineral. El material extraído se tritura y muele en molinos de bolas para alcanzar la granulometría óptima requerida antes de ingresar a los circuitos de recuperación metalúrgica.',
+      equipos: 'Tolvas de recepción, homogenizadores, cargadores frontales.',
+      imagen: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80',
+      metrics: [
+        { label: 'Capacidad de Acopio', value: '1,280 Ton/día' },
+        { label: 'Humedad de Control', value: '6.5% promedio' },
+        { label: 'Homogeneidad de Ley', value: 'Estable' }
+      ]
+    },
+    trituracion: {
+      letter: 'B',
+      title: 'Trituración y Clasificación',
+      stageId: 'mol-shumiral',
+      description: 'Reducción progresiva del tamaño del mineral mediante trituración y clasificación granulométrica con cribas en circuito cerrado. Controlamos la granulometría ideal (P80) para maximizar la liberación mineralógica y asegurar la máxima eficiencia.',
+      equipos: 'Trituradoras de mandíbula, cribas vibratorias, molinos de bolas.',
+      imagen: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=600&q=80',
+      metrics: [
+        { label: 'Granulometría Ideal (P80)', value: '< 12 mm' },
+        { label: 'Finura (-200 mesh)', value: '78.2%' },
+        { label: 'Módulos Activos', value: '4/4 Módulos' }
+      ]
+    },
+    cianuracion: {
+      letter: 'C',
+      title: 'Cianuración (Lixiviación CIL)',
+      stageId: 'cil-shumiral',
+      description: 'Disolución química controlada del oro en tanques de agitación alcalinos. La solución cargada con metales valiosos es recuperada mediante adsorción en carbón activado, elución (proceso Zadra) y electrodeposición, culminando en la fundición de lingotes doré.',
+      equipos: 'Tanques de lixiviación, celdas de electrodeposición, hornos de fundición.',
+      imagen: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=600&q=80',
+      metrics: [
+        { label: 'Tiempo de Residencia', value: '28 Horas' },
+        { label: 'Eficiencia de Adsorción', value: '98.8%' },
+        { label: 'Detoxificación CN- WAD', value: '< 1.0 ppm' }
+      ]
+    },
+    flotacion: {
+      letter: 'D',
+      title: 'Flotación de Minerales',
+      stageId: 'flo-shumiral',
+      description: 'Separación física y selectiva de sulfuros de valor mediante burbujas de aire y reactivos químicos específicos (xantatos y espumantes). Monitoreamos continuamente la dosificación, aireación y estabilidad de la espuma para producir concentrados comerciales de alta ley.',
+      equipos: 'Celdas de flotación Rougher y Scavenger, sopladores industriales, espesadores.',
+      imagen: 'https://images.unsplash.com/photo-158109288338-2314dddb7ecc?auto=format&fit=crop&w=600&q=80',
+      metrics: [
+        { label: 'Recuperación de Sulfuros', value: '92.1%' },
+        { label: 'Ley de Concentrado', value: '45.2 g/t Au' },
+        { label: 'Sistema de Control', value: 'SCADA Automático' }
+      ]
+    }
+  };
+
   // ── Noticias ──────────────────────────────────────────────────────────────
   previewNews: NewsItem[] = [];
   newsLoading    = true;

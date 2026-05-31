@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { ImagePreviewComponent } from '../../../shared/components/image-preview/image-preview.component';
@@ -39,6 +39,8 @@ interface Planta {
   styleUrls: ['./plantas.component.scss']
 })
 export class PlantasComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   isLoading = false;
   activePlantaIndex = 0;
   activeTab: 'specs' | 'blueprint' | 'gallery' = 'blueprint';
@@ -241,6 +243,23 @@ export class PlantasComponent implements OnInit {
   ngOnInit(): void {
     // Inicializar con la primera etapa de la planta activa
     this.selectedStage = this.activePlanta.stages[0] || null;
+
+    // Escuchar parámetros de consulta (ej: ?stage=flo-shumiral)
+    this.route.queryParams.subscribe(params => {
+      const stageId = params['stage'];
+      if (stageId) {
+        // Buscar a qué planta pertenece este stage y seleccionarla
+        for (let i = 0; i < this.plantas.length; i++) {
+          const stage = this.plantas[i].stages.find(s => s.id === stageId);
+          if (stage) {
+            this.activePlantaIndex = i;
+            this.selectedStage = stage;
+            this.activeTab = 'blueprint'; // Forzar la pestaña de flujograma
+            break;
+          }
+        }
+      }
+    });
   }
 
   get activePlanta(): Planta {

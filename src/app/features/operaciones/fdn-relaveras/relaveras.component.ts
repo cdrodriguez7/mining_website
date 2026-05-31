@@ -15,6 +15,16 @@ interface SensorInfo {
   y: number;
 }
 
+interface FailureZone {
+  id: 'pie' | 'talud' | 'corona';
+  name: string;
+  fs: number;
+  risk: 'bajo' | 'moderado' | 'alto';
+  description: string;
+  analysis: string;
+  variables: { label: string; value: string }[];
+}
+
 interface RelaveraImage {
   url: string;
   caption: string;
@@ -54,6 +64,7 @@ export class RelaverasComponent implements OnInit {
   
   // Detalle del sensor seleccionado en el SVG
   selectedSensor: SensorInfo | null = null;
+  selectedZone: FailureZone | null = null;
   
   // Control de zoom de imagen
   previewVisible = false;
@@ -274,6 +285,7 @@ export class RelaverasComponent implements OnInit {
     this.activeRelaveraIndex = index;
     this.carouselIndex = 0;
     this.selectedSensor = this.activeRelavera.sensors[0] || null;
+    this.selectedZone = null;
   }
 
   changeTab(tab: 'specs' | 'blueprint' | 'gallery'): void {
@@ -282,6 +294,74 @@ export class RelaverasComponent implements OnInit {
 
   selectSensor(sensor: SensorInfo): void {
     this.selectedSensor = sensor;
+    this.selectedZone = null;
+  }
+
+  selectZone(zone: FailureZone): void {
+    this.selectedZone = zone;
+    this.selectedSensor = null;
+  }
+
+  getZoneFill(fs: number): string {
+    if (fs >= 1.5) return 'rgba(34,197,94,0.18)';
+    if (fs >= 1.3) return 'rgba(234,179,8,0.22)';
+    return 'rgba(239,68,68,0.25)';
+  }
+
+  getZoneStroke(fs: number): string {
+    if (fs >= 1.5) return '#22c55e';
+    if (fs >= 1.3) return '#eab308';
+    return '#ef4444';
+  }
+
+  get activeFailureZones(): { pie: FailureZone; talud: FailureZone; corona: FailureZone } {
+    const rel = this.activeRelavera;
+    const g = rel.fsd;
+    const pieFs    = Math.round(g * 0.92 * 100) / 100;
+    const coronaFs = Math.round(g * 1.08 * 100) / 100;
+    const risk = (fs: number): 'bajo' | 'moderado' | 'alto' =>
+      fs >= 1.5 ? 'bajo' : fs >= 1.3 ? 'moderado' : 'alto';
+    return {
+      pie: {
+        id: 'pie',
+        name: 'Pie del Dique',
+        fs: pieFs,
+        risk: risk(pieFs),
+        description: 'Zona de mayor concentración de esfuerzos hidrostáticos. El empuje del relave saturado genera una presión activa crítica en la base del talud externo que debe controlarse para evitar la falla por deslizamiento del cuerpo del dique.',
+        analysis: 'Bishop Simplificado · Equilibrio Límite',
+        variables: [
+          { label: 'Presión de Poros (u)', value: `${(pieFs * 18.5).toFixed(1)} kPa` },
+          { label: "Cohesión (c')", value: `${(18 + g * 3).toFixed(0)} kN/m²` },
+          { label: "Fricción (φ')", value: `${(28 + g * 2).toFixed(0)}°` }
+        ]
+      },
+      talud: {
+        id: 'talud',
+        name: 'Talud Externo',
+        fs: g,
+        risk: risk(g),
+        description: 'Superficie de falla circular crítica modelada por Bishop. Zona de transición entre el material de relleno compactado y la geomembrana interior. Sujeto a análisis de superficies de deslizamiento circulares de Fellenius.',
+        analysis: 'Fellenius · Superficies Circulares',
+        variables: [
+          { label: 'Relación H:V', value: `${(1.5 + g * 0.1).toFixed(1)}H:1V` },
+          { label: 'Densidad Relave', value: '1.65 t/m³' },
+          { label: 'Altura Dique', value: rel.height }
+        ]
+      },
+      corona: {
+        id: 'corona',
+        name: 'Corona del Dique',
+        fs: coronaFs,
+        risk: risk(coronaFs),
+        description: 'Zona superior de la coronación del dique. Bajo carga dinámica sísmica es susceptible a asiento diferencial y erosión superficial. El gradiente hidráulico determina el nivel freático interno y la estabilidad a largo plazo.',
+        analysis: 'Pseudo-estático · Ley de Darcy',
+        variables: [
+          { label: 'Ancho Corona', value: `${(3 + g * 1.2).toFixed(1)} m` },
+          { label: 'Gradiente Hidr. (i)', value: `${(0.15 + g * 0.05).toFixed(2)}` },
+          { label: 'FS Sísmico', value: `${(coronaFs * 0.75).toFixed(2)}` }
+        ]
+      }
+    };
   }
 
   // Métodos del carrusel interno
