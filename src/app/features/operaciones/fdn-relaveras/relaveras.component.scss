@@ -147,3 +147,67 @@ button {
   outline: 2px solid $primary-orange;
   outline-offset: 2px;
 }
+
+// ===== VISOR CAD EN FICHA TÉCNICA =====
+.cad-grid-bg {
+  background-color: #020204;
+  background-image: 
+    linear-gradient(rgba(232, 138, 30, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 138, 30, 0.04) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-position: center;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px dashed rgba(232, 138, 30, 0.12);
+    margin: 8px;
+    pointer-events: none;
+    border-radius: 6px;
+  }
+}
+
+.group\/cad {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    border-color: rgba(232, 138, 30, 0.35) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.group\/img {
+  position: relative;
+  
+  img {
+    filter: contrast(1.05) brightness(0.85) saturate(0.8);
+  }
+}
+
+// ===== SLIDE DE ESTABILIDAD DE TALUD DE CADA ZONA =====
+.stability-slide-container {
+  animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  
+  img {
+    transition: transform 0.5s ease, filter 0.5s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+      filter: brightness(1.05) contrast(1.05);
+    }
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+

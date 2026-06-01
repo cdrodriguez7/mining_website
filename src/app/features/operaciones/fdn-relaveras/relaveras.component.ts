@@ -23,6 +23,7 @@ interface FailureZone {
   description: string;
   analysis: string;
   variables: { label: string; value: string }[];
+  stabilityImageUrl?: string;
 }
 
 interface RelaveraImage {
@@ -48,6 +49,7 @@ interface Relavera {
   waterReclamation: string; // % de agua recirculada
   sensors: SensorInfo[];
   images: RelaveraImage[];
+  blueprints?: RelaveraImage[];
 }
 
 @Component({
@@ -73,8 +75,7 @@ export class RelaverasComponent implements OnInit {
   
   // Carrusel index por relavera
   carouselIndex = 0;
-
-  relaveras: Relavera[] = [
+  blueprintCarouselIndex = 0;  relaveras: Relavera[] = [
     {
       id: 'fdn-1',
       name: 'Relavera FDN-1 (Principal)',
@@ -92,10 +93,10 @@ export class RelaverasComponent implements OnInit {
       constructionYear: 2018,
       waterReclamation: '92%',
       sensors: [
-        { id: 'pz-1-1', name: 'Piezómetro PZ-01 (Núcleo)', type: 'piezometro', value: '24.3 kPa (Normal)', status: 'normal', x: 45, y: 55 },
-        { id: 'pz-1-2', name: 'Piezómetro PZ-02 (Cimiento)', type: 'piezometro', value: '28.1 kPa (Normal)', status: 'normal', x: 42, y: 82 },
-        { id: 'inc-1-1', name: 'Inclinómetro INC-01 (Talud)', type: 'inclinometro', value: '0.12 mm (Estable)', status: 'normal', x: 62, y: 45 },
-        { id: 'dr-1-1', name: 'Medidor de Drenaje D-01', type: 'drenaje', value: '0.85 L/s (Normal)', status: 'normal', x: 80, y: 78 }
+        { id: 'pz-1-1', name: 'Piezómetro PZ-01 (Núcleo)', type: 'piezometro', value: '24.3 kPa (Normal)', status: 'normal', x: 50, y: 40 },
+        { id: 'pz-1-2', name: 'Piezómetro PZ-02 (Cimiento)', type: 'piezometro', value: '28.1 kPa (Normal)', status: 'normal', x: 44, y: 73 },
+        { id: 'inc-1-1', name: 'Inclinómetro INC-01 (Talud)', type: 'inclinometro', value: '0.12 mm (Estable)', status: 'normal', x: 28, y: 57 },
+        { id: 'dr-1-1', name: 'Medidor de Drenaje D-01', type: 'drenaje', value: '0.85 L/s (Normal)', status: 'normal', x: 56, y: 67 }
       ],
       images: [
         {
@@ -105,6 +106,20 @@ export class RelaverasComponent implements OnInit {
         {
           url: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=80',
           caption: 'Construcción y compactación mecánica del dique de tierra y filtros de grava.'
+        }
+      ],
+      blueprints: [
+        {
+          url: 'https://images.unsplash.com/photo-1503387762-592dec58ef4e?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Plano de Distribución General y Curvas de Nivel del vaso del depósito FDN-1.'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Detalle estructural de la presa de tierra y cimentación en andesita.'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Esquema del sistema de instrumentación y distribución de piezómetros.'
         }
       ]
     },
@@ -125,19 +140,29 @@ export class RelaverasComponent implements OnInit {
       constructionYear: 2021,
       waterReclamation: '88%',
       sensors: [
-        { id: 'pz-2-1', name: 'Piezómetro PZ-03 (Núcleo)', type: 'piezometro', value: '18.5 kPa (Normal)', status: 'normal', x: 45, y: 55 },
-        { id: 'inc-2-1', name: 'Inclinómetro INC-02 (Coronación)', type: 'inclinometro', value: '0.05 mm (Estable)', status: 'normal', x: 50, y: 25 },
-        { id: 'ac-2-1', name: 'Sismógrafo Acel-01', type: 'acelerometro', value: '0.002g (Sin actividad sísmica)', status: 'normal', x: 25, y: 90 },
-        { id: 'dr-2-1', name: 'Medidor de Drenaje D-02', type: 'drenaje', value: '0.45 L/s (Normal)', status: 'normal', x: 80, y: 78 }
+        { id: 'pz-2-1', name: 'Piezómetro PZ-03 (Núcleo)', type: 'piezometro', value: '18.5 kPa (Normal)', status: 'normal', x: 50, y: 40 },
+        { id: 'inc-2-1', name: 'Inclinómetro INC-02 (Coronación)', type: 'inclinometro', value: '0.05 mm (Estable)', status: 'normal', x: 50, y: 22 },
+        { id: 'ac-2-1', name: 'Sismógrafo Acel-01', type: 'acelerometro', value: '0.002g (Sin actividad sísmica)', status: 'normal', x: 28, y: 57 },
+        { id: 'dr-2-1', name: 'Medidor de Drenaje D-02', type: 'drenaje', value: '0.45 L/s (Normal)', status: 'normal', x: 56, y: 67 }
       ],
       images: [
         {
-          url: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&w=1200&q=80',
+          url: 'https://images.unsplash.com/photo-1581092288338-2314dddb7ecc?auto=format&fit=crop&w=1200&q=80',
           caption: 'Instalación de geodrenes tridimensionales para disipación de la presión de poros.'
         },
         {
           url: 'https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=1200&q=80',
           caption: 'Vista del espejo de agua y el sistema de bombeo flotante para recirculación.'
+        }
+      ],
+      blueprints: [
+        {
+          url: 'https://images.unsplash.com/photo-1503387762-592dec58ef4e?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Plano de zonificación del dique de escollera de Ponce Sur.'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Plano técnico del canal de coronación y vertederos de demasías.'
         }
       ]
     },
@@ -158,10 +183,10 @@ export class RelaverasComponent implements OnInit {
       constructionYear: 2015,
       waterReclamation: '95%',
       sensors: [
-        { id: 'pz-3-1', name: 'Piezómetro PZ-04 (Núcleo)', type: 'piezometro', value: '42.1 kPa (Bajo Monitoreo)', status: 'alerta', x: 45, y: 55 },
-        { id: 'pz-3-2', name: 'Piezómetro PZ-05 (Filtro)', type: 'piezometro', value: '45.3 kPa (Bajo Monitoreo)', status: 'alerta', x: 55, y: 65 },
-        { id: 'inc-3-1', name: 'Inclinómetro INC-03 (Talud)', type: 'inclinometro', value: '0.88 mm (Bajo Monitoreo)', status: 'alerta', x: 62, y: 45 },
-        { id: 'dr-3-1', name: 'Medidor de Drenaje D-03', type: 'drenaje', value: '1.90 L/s (Estable)', status: 'normal', x: 80, y: 78 }
+        { id: 'pz-3-1', name: 'Piezómetro PZ-04 (Núcleo)', type: 'piezometro', value: '42.1 kPa (Bajo Monitoreo)', status: 'alerta', x: 50, y: 40 },
+        { id: 'pz-3-2', name: 'Piezómetro PZ-05 (Filtro)', type: 'piezometro', value: '45.3 kPa (Bajo Monitoreo)', status: 'alerta', x: 44, y: 73 },
+        { id: 'inc-3-1', name: 'Inclinómetro INC-03 (Talud)', type: 'inclinometro', value: '0.88 mm (Bajo Monitoreo)', status: 'alerta', x: 28, y: 57 },
+        { id: 'dr-3-1', name: 'Medidor de Drenaje D-03', type: 'drenaje', value: '1.90 L/s (Estable)', status: 'normal', x: 56, y: 67 }
       ],
       images: [
         {
@@ -171,6 +196,16 @@ export class RelaverasComponent implements OnInit {
         {
           url: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=1200&q=80',
           caption: 'Estación telemétrica de sensores de nivel y presión instalada en el dique.'
+        }
+      ],
+      blueprints: [
+        {
+          url: 'https://images.unsplash.com/photo-1503387762-592dec58ef4e?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Plano transversal del dique de El Salto mostrando la pantalla de concreto (CFRD).'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Esquema de disipación de presión de poros mediante drenes de chimenea.'
         }
       ]
     },
@@ -191,9 +226,9 @@ export class RelaverasComponent implements OnInit {
       constructionYear: 2012,
       waterReclamation: '100% (Efluente Cero)',
       sensors: [
-        { id: 'pz-4-1', name: 'Piezómetro PZ-06 (Seco)', type: 'piezometro', value: '5.2 kPa (Inactivo/Seco)', status: 'inactivo', x: 45, y: 55 },
-        { id: 'inc-4-1', name: 'Inclinómetro INC-04 (Estable)', type: 'inclinometro', value: '0.01 mm (Sin movimiento)', status: 'normal', x: 62, y: 45 },
-        { id: 'dr-4-1', name: 'Dren Principal D-04', type: 'drenaje', value: '0.05 L/s (Efluente Cero)', status: 'normal', x: 80, y: 78 }
+        { id: 'pz-4-1', name: 'Piezómetro PZ-06 (Seco)', type: 'piezometro', value: '5.2 kPa (Inactivo/Seco)', status: 'inactivo', x: 50, y: 40 },
+        { id: 'inc-4-1', name: 'Inclinómetro INC-04 (Estable)', type: 'inclinometro', value: '0.01 mm (Sin movimiento)', status: 'normal', x: 28, y: 57 },
+        { id: 'dr-4-1', name: 'Dren Principal D-04', type: 'drenaje', value: '0.05 L/s (Efluente Cero)', status: 'normal', x: 56, y: 67 }
       ],
       images: [
         {
@@ -203,6 +238,16 @@ export class RelaverasComponent implements OnInit {
         {
           url: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=1200&q=80',
           caption: 'Reforestación experimental con especies nativas para mitigar la erosión eólica e hídrica.'
+        }
+      ],
+      blueprints: [
+        {
+          url: 'https://images.unsplash.com/photo-1503387762-592dec58ef4e?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Plano final de clausura y cobertura multicapa del depósito Mirador.'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Plano del sistema de subdrenaje y canales de escorrentía pluvial perimetral.'
         }
       ]
     },
@@ -223,9 +268,9 @@ export class RelaverasComponent implements OnInit {
       constructionYear: 2025,
       waterReclamation: 'En fase de pruebas',
       sensors: [
-        { id: 'pz-5-1', name: 'Piezómetro PZ-07', type: 'piezometro', value: '0.0 kPa (En calibración)', status: 'inactivo', x: 45, y: 55 },
-        { id: 'inc-5-1', name: 'Inclinómetro INC-05', type: 'inclinometro', value: '0.00 mm (En calibración)', status: 'inactivo', x: 62, y: 45 },
-        { id: 'dr-5-1', name: 'Medidor de Drenaje D-05', type: 'drenaje', value: '0.00 L/s (Seco)', status: 'inactivo', x: 80, y: 78 }
+        { id: 'pz-5-1', name: 'Piezómetro PZ-07', type: 'piezometro', value: '0.0 kPa (En calibración)', status: 'inactivo', x: 50, y: 40 },
+        { id: 'inc-5-1', name: 'Inclinómetro INC-05', type: 'inclinometro', value: '0.00 mm (En calibración)', status: 'inactivo', x: 28, y: 57 },
+        { id: 'dr-5-1', name: 'Medidor de Drenaje D-05', type: 'drenaje', value: '0.00 L/s (Seco)', status: 'inactivo', x: 56, y: 67 }
       ],
       images: [
         {
@@ -235,6 +280,16 @@ export class RelaverasComponent implements OnInit {
         {
           url: 'https://images.unsplash.com/photo-1605647540924-852290f6b0d5?auto=format&fit=crop&w=1200&q=80',
           caption: 'Integración del sistema telemétrico SCADA en la sala de control de operaciones de PLANPROMIN.'
+        }
+      ],
+      blueprints: [
+        {
+          url: 'https://images.unsplash.com/photo-1503387762-592dec58ef4e?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Plano de diseño de la corona y núcleo geosintético de Ponce Norte.'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Esquema de tendido de fibra óptica para sensores SCADA en tiempo real.'
         }
       ]
     },
@@ -255,9 +310,9 @@ export class RelaverasComponent implements OnInit {
       constructionYear: 2013,
       waterReclamation: '90%',
       sensors: [
-        { id: 'pz-6-1', name: 'Piezómetro PZ-08', type: 'piezometro', value: '33.2 kPa (Normal)', status: 'normal', x: 45, y: 55 },
-        { id: 'inc-6-1', name: 'Inclinómetro INC-06', type: 'inclinometro', value: '0.24 mm (Estable)', status: 'normal', x: 62, y: 45 },
-        { id: 'dr-6-1', name: 'Medidor de Drenaje D-06', type: 'drenaje', value: '1.15 L/s (Normal)', status: 'normal', x: 80, y: 78 }
+        { id: 'pz-6-1', name: 'Piezómetro PZ-08', type: 'piezometro', value: '33.2 kPa (Normal)', status: 'normal', x: 50, y: 40 },
+        { id: 'inc-6-1', name: 'Inclinómetro INC-06', type: 'inclinometro', value: '0.24 mm (Estable)', status: 'normal', x: 28, y: 57 },
+        { id: 'dr-6-1', name: 'Medidor de Drenaje D-06', type: 'drenaje', value: '1.15 L/s (Normal)', status: 'normal', x: 56, y: 67 }
       ],
       images: [
         {
@@ -267,6 +322,16 @@ export class RelaverasComponent implements OnInit {
         {
           url: 'https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?auto=format&fit=crop&w=1200&q=80',
           caption: 'Detalle de los filtros de absorción instalados para retención de metales disueltos.'
+        }
+      ],
+      blueprints: [
+        {
+          url: 'https://images.unsplash.com/photo-1503387762-592dec58ef4e?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Plano de la presa y ubicación de contrafuertes de escollera de Río Chico.'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Diagrama de flujo del sistema de cascadas de neutralización ácida.'
         }
       ]
     }
@@ -284,6 +349,7 @@ export class RelaverasComponent implements OnInit {
   selectRelavera(index: number): void {
     this.activeRelaveraIndex = index;
     this.carouselIndex = 0;
+    this.blueprintCarouselIndex = 0;
     this.selectedSensor = this.activeRelavera.sensors[0] || null;
     this.selectedZone = null;
   }
@@ -333,7 +399,8 @@ export class RelaverasComponent implements OnInit {
           { label: 'Presión de Poros (u)', value: `${(pieFs * 18.5).toFixed(1)} kPa` },
           { label: "Cohesión (c')", value: `${(18 + g * 3).toFixed(0)} kN/m²` },
           { label: "Fricción (φ')", value: `${(28 + g * 2).toFixed(0)}°` }
-        ]
+        ],
+        stabilityImageUrl: 'assets/pie-estabilidad.png'
       },
       talud: {
         id: 'talud',
@@ -346,7 +413,8 @@ export class RelaverasComponent implements OnInit {
           { label: 'Relación H:V', value: `${(1.5 + g * 0.1).toFixed(1)}H:1V` },
           { label: 'Densidad Relave', value: '1.65 t/m³' },
           { label: 'Altura Dique', value: rel.height }
-        ]
+        ],
+        stabilityImageUrl: 'assets/talud-estabilidad.png'
       },
       corona: {
         id: 'corona',
@@ -359,7 +427,8 @@ export class RelaverasComponent implements OnInit {
           { label: 'Ancho Corona', value: `${(3 + g * 1.2).toFixed(1)} m` },
           { label: 'Gradiente Hidr. (i)', value: `${(0.15 + g * 0.05).toFixed(2)}` },
           { label: 'FS Sísmico', value: `${(coronaFs * 0.75).toFixed(2)}` }
-        ]
+        ],
+        stabilityImageUrl: 'assets/corona-estabilidad.png'
       }
     };
   }
@@ -377,6 +446,23 @@ export class RelaverasComponent implements OnInit {
 
   setCarouselIndex(index: number): void {
     this.carouselIndex = index;
+  }
+
+  // Métodos del carrusel de planos en Ficha Técnica
+  prevBlueprint(): void {
+    const blueprints = this.activeRelavera.blueprints || [];
+    if (blueprints.length === 0) return;
+    this.blueprintCarouselIndex = (this.blueprintCarouselIndex - 1 + blueprints.length) % blueprints.length;
+  }
+
+  nextBlueprint(): void {
+    const blueprints = this.activeRelavera.blueprints || [];
+    if (blueprints.length === 0) return;
+    this.blueprintCarouselIndex = (this.blueprintCarouselIndex + 1) % blueprints.length;
+  }
+
+  setBlueprintIndex(index: number): void {
+    this.blueprintCarouselIndex = index;
   }
 
   // Métodos de zoom de imagen con ImagePreviewComponent

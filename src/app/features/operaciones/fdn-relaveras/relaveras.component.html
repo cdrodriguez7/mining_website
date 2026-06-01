@@ -7,7 +7,7 @@
     <div class="absolute bottom-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-amber-500/5 blur-[120px]"></div>
   </div>
 
-  <div class="container mx-auto px-4 lg:px-12 relative z-10">
+  <div class="w-full max-w-[95%] sm:max-w-[92%] xl:max-w-[88%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6 relative z-10">
     <!-- Hero Banner -->
     <div class="flex items-start gap-4 lg:gap-6 mb-12">
       <div class="w-1.5 h-20 lg:h-28 bg-orange-600 flex-shrink-0 mt-1"></div>
@@ -152,81 +152,125 @@
             <!-- Grid: SVG + Panel de Leyenda -->
             <div class="grid lg:grid-cols-[1fr_210px] gap-4">
 
-              <!-- SVG Perfil Transversal con Zonas de Estabilidad -->
+              <!-- SVG Perfil Transversal con Zonas de Estabilidad (Relavera con dique aguas arriba) -->
               <div class="relative bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-4 overflow-hidden flex items-center justify-center min-h-[200px]">
-                <svg viewBox="0 0 500 260" class="w-full h-auto max-h-[340px] select-none">
+                <svg viewBox="0 0 800 300" class="w-full h-auto max-h-[380px] select-none">
+                  
+                  <defs>
+                    <!-- Cuadrícula técnica CAD de fondo -->
+                    <pattern id="svg-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5" />
+                    </pattern>
+                    <!-- Trama para el dique (arena/grava compacta) -->
+                    <pattern id="dique-hatch" width="12" height="12" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+                      <line x1="0" y1="0" x2="0" y2="12" stroke="rgba(232,138,30,0.15)" stroke-width="0.8" />
+                      <line x1="0" y1="0" x2="12" y2="0" stroke="rgba(232,138,30,0.15)" stroke-width="0.8" />
+                    </pattern>
+                    <!-- Trama para los relaves (puntos finos compactados) -->
+                    <pattern id="relaves-hatch" width="8" height="8" patternUnits="userSpaceOnUse">
+                      <circle cx="2" cy="2" r="0.8" fill="rgba(202,138,4,0.18)" />
+                      <circle cx="6" cy="6" r="0.8" fill="rgba(202,138,4,0.18)" />
+                    </pattern>
+                  </defs>
+
+                  <!-- Cuadrícula de Fondo -->
+                  <rect width="100%" height="100%" fill="url(#svg-grid)" />
 
                   <!-- Leyendas técnicas -->
-                  <text x="15" y="18" fill="#52525b" font-size="7" font-family="monospace">ANÁLISIS DE ESTABILIDAD DE TALUDES — BISHOP SIMPLIFICADO</text>
-                  <text x="15" y="28" fill="#52525b" font-size="7" font-family="monospace">ESTRUCTURA: {{ activeRelavera.height }} · FSD GLOBAL: {{ activeRelavera.fsd }}</text>
+                  <text x="15" y="18" fill="#52525b" font-size="8" font-family="monospace">ANÁLISIS DE ESTABILIDAD — SECCIÓN DIQUE AGUAS ARRIBA</text>
+                  <text x="15" y="28" fill="#52525b" font-size="8" font-family="monospace">ESTRUCTURA: {{ activeRelavera.height }} · FSD GLOBAL: {{ activeRelavera.fsd }}</text>
 
-                  <!-- Basamento Rocoso -->
-                  <polygon points="0,215 500,215 500,260 0,260" fill="#18181b" stroke="#27272a" stroke-width="1.5"/>
-                  <path d="M 50,220 L 60,235 M 120,220 L 130,235 M 250,220 L 260,235 M 380,220 L 390,235 M 440,220 L 450,235" stroke="#27272a" stroke-width="1"/>
-                  <text x="340" y="242" fill="#3f3f46" font-size="9" font-weight="bold" font-family="monospace">Cimiento Rocoso</text>
+                  <!-- ═══════ CAPAS DE SUELO / INFRAESTRUCTURA ═══════ -->
 
-                  <!-- Vaso de Relaves -->
-                  <polygon points="0,105 200,105 242,215 0,215" fill="#2d2d30" stroke="#3f3f46" stroke-width="1" stroke-dasharray="2 2"/>
-                  <text x="30" y="155" fill="#52525b" font-size="9" font-weight="bold" font-family="monospace">Relave</text>
-                  <text x="30" y="167" fill="#52525b" font-size="9" font-family="monospace">Consolidado</text>
+                  <!-- Basamento Rocoso (Cimiento) -->
+                  <polygon points="0,270 90,260 430,175 530,250 580,250 680,110 740,70 800,70 800,300 0,300" fill="#141416" stroke="#27272a" stroke-width="1"/>
+                  <polyline points="0,270 90,260 430,175 530,250 580,250 680,110 740,70 800,70" fill="none" stroke="#22c55e" stroke-width="2"/>
+                  <text x="700" y="280" fill="#3f3f46" font-size="10" font-weight="bold" font-family="monospace">Cimiento Rocoso</text>
+
+                  <!-- Relaves (Tailings) -->
+                  <polygon points="450,125 475,170 530,250 580,250 680,110 740,70 600,125" fill="rgba(161,161,170,0.1)" />
+                  <polygon points="450,125 475,170 530,250 580,250 680,110 740,70 600,125" fill="url(#relaves-hatch)" stroke="rgba(202,138,4,0.3)" stroke-width="1" />
+                  <text x="590" y="180" fill="#71717a" font-size="11" font-weight="bold" font-family="monospace">RELAVES</text>
 
                   <!-- Espejo de Agua Sobrenadante -->
-                  <polygon points="120,105 200,105 212,125 120,125" fill="rgba(6,182,212,0.25)" stroke="#06b6d4" stroke-width="1"/>
-                  <text x="108" y="98" fill="#06b6d4" font-size="7" font-weight="bold" font-family="monospace">Agua Sobrenadante</text>
-
-                  <!-- Geomembrana HDPE -->
-                  <line x1="200" y1="105" x2="242" y2="215" stroke="#E88A1E" stroke-width="3" stroke-linecap="round"/>
-                  <text x="207" y="90" fill="#E88A1E" font-size="7" font-weight="bold" font-family="monospace">Geomembrana HDPE</text>
+                  <polygon points="440,110 680,110 600,125 450,125" fill="rgba(6,182,212,0.22)" stroke="#06b6d4" stroke-width="1.2"/>
 
                   <!-- Cuerpo del Dique -->
-                  <polygon points="200,105 382,215 242,215" fill="#27272a" stroke="#3f3f46" stroke-width="1.5"/>
+                  <polygon points="90,260 390,70 420,70 475,170 430,175" fill="rgba(232,138,30,0.06)" />
+                  <polygon points="90,260 390,70 420,70 475,170 430,175" fill="url(#dique-hatch)" stroke="#E88A1E" stroke-width="1.8" />
+                  <text x="270" y="150" fill="#e4e4e7" font-size="11" font-weight="bold" font-family="monospace">DIQUE</text>
 
-                  <!-- Núcleo de Arcilla -->
-                  <polygon points="215,105 230,105 252,215 238,215" fill="rgba(120,53,15,0.4)" stroke="#78350f" stroke-width="1"/>
+                  <!-- ═══════ LÍNEAS DE REFERENCIA Y LEYENDAS GEOMÉTRICAS ═══════ -->
+                  
+                  <!-- Corona de Dique -->
+                  <line x1="390" y1="70" x2="420" y2="70" stroke="#ffffff" stroke-width="2" />
+                  <polyline points="405,70 370,40 300,40" fill="none" stroke="#52525b" stroke-width="0.8" stroke-dasharray="2 2" />
+                  <text x="295" y="36" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="end">Corona de Dique: 140 m</text>
 
-                  <!-- Filtros de Grava y Drenaje -->
-                  <line x1="230" y1="105" x2="382" y2="215" stroke="#a1a1aa" stroke-width="1" stroke-dasharray="3 3"/>
-                  <line x1="382" y1="215" x2="412" y2="215" stroke="#2563eb" stroke-width="2"/>
-                  <circle cx="412" cy="215" r="3" fill="#2563eb"/>
-                  <text x="393" y="228" fill="#2563eb" font-size="7" font-family="monospace">Drenaje</text>
+                  <!-- Nivel de Fundación (Izquierda) -->
+                  <polyline points="250,212 210,235 150,235" fill="none" stroke="#52525b" stroke-width="0.8" stroke-dasharray="2 2" />
+                  <circle cx="250" cy="212" r="2" fill="#22c55e" />
+                  <text x="145" y="231" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="end">Nivel de Fundación</text>
 
-                  <!-- Curva de falla circular de Bishop (decorativa) -->
-                  <path d="M 205,108 Q 290,182 382,215" fill="none" stroke="#ef4444" stroke-width="1" stroke-dasharray="5 3" opacity="0.35"/>
+                  <!-- Nivel de Fundación (Derecha / Fondo) -->
+                  <polyline points="555,250 590,270 650,270" fill="none" stroke="#52525b" stroke-width="0.8" stroke-dasharray="2 2" />
+                  <circle cx="555" cy="250" r="2" fill="#22c55e" />
+                  <text x="655" y="266" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="start">Nivel de Fundación</text>
 
-                  <!-- ═══════ ZONA CORONA ═══════ -->
+                  <!-- Nivel Máximo de Relave -->
+                  <polyline points="560,110 520,85 450,85" fill="none" stroke="#52525b" stroke-width="0.8" stroke-dasharray="2 2" />
+                  <circle cx="560" cy="110" r="2" fill="#06b6d4" />
+                  <text x="445" y="81" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="end">Nivel Máximo de Relave: 136 m</text>
+
+                  <!-- Fondo -->
+                  <polyline points="555,250 520,270 460,270" fill="none" stroke="#52525b" stroke-width="0.8" stroke-dasharray="2 2" />
+                  <text x="455" y="266" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="end">Fondo: 110 m</text>
+
+                  <!-- Pendiente 2H:1V (Izquierda) -->
+                  <text x="210" y="150" fill="#a1a1aa" font-size="9" font-family="monospace" font-weight="bold">2H:1V</text>
+
+                  <!-- Pendiente 1H:1V (Derecha) -->
+                  <text x="465" y="130" fill="#a1a1aa" font-size="9" font-family="monospace" font-weight="bold">1H:1V</text>
+
+                  <!-- Curva de falla circular de Bishop (decorativa adaptada) -->
+                  <path d="M 125,238 Q 280,180 415,70" fill="none" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.4"/>
+
+                  <!-- ═══════ ZONAS DE FALLA CLICKABLES (OVERLAYS) ═══════ -->
+
+                  <!-- ZONA CORONA -->
                   <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
-                    <polygon points="198,103 244,103 250,126 206,126"
+                    <polygon points="385,65 425,65 430,85 390,85"
                              [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
                              [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
                              [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'"
                              stroke-dasharray="4 2"/>
-                    <text x="221" y="119" font-size="7" font-family="monospace" font-weight="bold" text-anchor="middle"
+                    <text x="408" y="80" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle"
                           [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
-                    <text x="221" y="110" font-size="5.5" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
+                    <text x="408" y="60" font-size="6" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
                   </g>
 
-                  <!-- ═══════ ZONA TALUD ═══════ -->
+                  <!-- ZONA TALUD -->
                   <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
-                    <polygon points="206,126 250,126 355,206 313,206"
+                    <polygon points="130,230 380,75 390,95 140,250"
                              [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
                              [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
                              [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'"
                              stroke-dasharray="4 2"/>
-                    <text x="282" y="168" font-size="7" font-family="monospace" font-weight="bold" text-anchor="middle"
+                    <text x="260" y="165" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle"
                           [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
-                    <text x="282" y="158" font-size="5.5" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD EXT.</text>
+                    <text x="260" y="153" font-size="6" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD EXT.</text>
                   </g>
 
-                  <!-- ═══════ ZONA PIE ═══════ -->
+                  <!-- ZONA PIE -->
                   <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
-                    <polygon points="313,206 382,215 388,225 309,225"
+                    <polygon points="85,250 140,220 150,240 95,270"
                              [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
                              [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
                              [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'"
                              stroke-dasharray="4 2"/>
-                    <text x="350" y="220" font-size="7" font-family="monospace" font-weight="bold" text-anchor="middle"
+                    <text x="117" y="248" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle"
                           [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
-                    <text x="350" y="210" font-size="5.5" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
+                    <text x="117" y="235" font-size="6" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
                   </g>
 
                   <!-- ═══════ SENSORES GEOTÉCNICOS INTERACTIVOS ═══════ -->
@@ -249,13 +293,13 @@
                             [class.fill-zinc-600]="sensor.status === 'inactivo'"
                             [class.stroke-white]="selectedSensor?.id === sensor.id"
                             [class.stroke-transparent]="selectedSensor?.id !== sensor.id"
-                            stroke-width="1.5"
-                            (click)="selectSensor(sensor)">
+                            stroke-width="1.5">
                     </circle>
                   </g>
 
                 </svg>
               </div>
+
 
               <!-- Panel de Leyenda y FS por Zona -->
               <div class="bg-black/40 border border-zinc-800/60 rounded-2xl p-4 flex flex-col gap-3">
@@ -380,45 +424,78 @@
             <div class="bg-black/40 border border-zinc-800/80 rounded-2xl p-5 transition-all duration-300">
 
               <!-- Info Zona de Falla -->
-              <div *ngIf="selectedZone" class="flex flex-col md:flex-row justify-between items-start md:items-start gap-4">
-                <div class="flex items-start gap-4 flex-1 min-w-0">
-                  <div class="w-10 h-10 rounded-xl flex items-center justify-center border border-zinc-800/80 flex-shrink-0"
-                       [ngClass]="{
-                         'bg-green-500/10': selectedZone.risk === 'bajo',
-                         'bg-yellow-500/10': selectedZone.risk === 'moderado',
-                         'bg-red-500/10': selectedZone.risk === 'alto'
-                       }">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"
+              <div *ngIf="selectedZone" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                <!-- Info & Variables Column -->
+                <div class="lg:col-span-7 flex flex-col justify-between gap-4">
+                  <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center border border-zinc-800/80 flex-shrink-0"
                          [ngClass]="{
-                           'text-green-500': selectedZone.risk === 'bajo',
-                           'text-yellow-500': selectedZone.risk === 'moderado',
-                           'text-red-500': selectedZone.risk === 'alto'
+                           'bg-green-500/10': selectedZone.risk === 'bajo',
+                           'bg-yellow-500/10': selectedZone.risk === 'moderado',
+                           'bg-red-500/10': selectedZone.risk === 'alto'
                          }">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
-                    </svg>
-                  </div>
-                  <div class="min-w-0">
-                    <div class="flex items-center gap-2 flex-wrap">
-                      <span class="text-zinc-500 text-[10px] font-bold uppercase tracking-wider">{{ selectedZone.analysis }}</span>
-                      <span class="text-[9px] px-2 py-0.5 rounded-full font-black uppercase tracking-wider"
-                            [ngClass]="{
-                              'bg-green-500/25 text-green-400': selectedZone.risk === 'bajo',
-                              'bg-yellow-500/25 text-yellow-400': selectedZone.risk === 'moderado',
-                              'bg-red-500/25 text-red-400': selectedZone.risk === 'alto'
-                            }">FS = {{ selectedZone.fs }} · {{ selectedZone.risk === 'bajo' ? 'Estable' : selectedZone.risk === 'moderado' ? 'Monitoreo' : 'Crítico' }}</span>
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"
+                           [ngClass]="{
+                             'text-green-500': selectedZone.risk === 'bajo',
+                             'text-yellow-500': selectedZone.risk === 'moderado',
+                             'text-red-500': selectedZone.risk === 'alto'
+                           }">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+                      </svg>
                     </div>
-                    <h4 class="text-base font-extrabold text-white mt-1">{{ selectedZone.name }}</h4>
-                    <span class="text-zinc-400 text-xs mt-1 block leading-relaxed">{{ selectedZone.description }}</span>
+                    <div class="min-w-0">
+                      <div class="flex items-center gap-2 flex-wrap">
+                        <span class="text-zinc-500 text-[10px] font-bold uppercase tracking-wider">{{ selectedZone.analysis }}</span>
+                        <span class="text-[9px] px-2 py-0.5 rounded-full font-black uppercase tracking-wider"
+                              [ngClass]="{
+                                'bg-green-500/25 text-green-400': selectedZone.risk === 'bajo',
+                                'bg-yellow-500/25 text-yellow-400': selectedZone.risk === 'moderado',
+                                'bg-red-500/25 text-red-400': selectedZone.risk === 'alto'
+                              }">FS = {{ selectedZone.fs }} · {{ selectedZone.risk === 'bajo' ? 'Estable' : selectedZone.risk === 'moderado' ? 'Monitoreo' : 'Crítico' }}</span>
+                      </div>
+                      <h4 class="text-base font-extrabold text-white mt-1">{{ selectedZone.name }}</h4>
+                      <span class="text-zinc-400 text-xs mt-1 block leading-relaxed text-justify">{{ selectedZone.description }}</span>
+                    </div>
+                  </div>
+                  <!-- Variables Geotécnicas -->
+                  <div class="grid grid-cols-3 gap-3 bg-zinc-950/60 border border-zinc-800/80 rounded-xl px-4 py-3 w-full">
+                    <div *ngFor="let v of selectedZone.variables" class="text-left border-r border-zinc-800/60 last:border-0 pr-2">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider whitespace-nowrap">{{ v.label }}</span>
+                      <span class="text-white font-mono font-black text-xs md:text-sm block mt-0.5">{{ v.value }}</span>
+                    </div>
                   </div>
                 </div>
-                <!-- Variables Geotécnicas -->
-                <div class="grid grid-cols-3 md:flex md:items-center gap-3 bg-zinc-950/60 border border-zinc-800/80 rounded-xl px-4 py-3 w-full md:w-auto flex-shrink-0">
-                  <div *ngFor="let v of selectedZone.variables" class="text-left md:text-right md:border-l md:border-zinc-800 md:pl-3 first:border-0 first:pl-0">
-                    <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider whitespace-nowrap">{{ v.label }}</span>
-                    <span class="text-white font-mono font-black text-sm block mt-0.5">{{ v.value }}</span>
+
+                <!-- Geotechnical Stability Slide Panel -->
+                <div *ngIf="selectedZone.stabilityImageUrl" class="lg:col-span-5 flex flex-col justify-between overflow-hidden relative group/stability bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-3 stability-slide-container">
+                  <div class="flex items-center justify-between border-b border-zinc-800/60 pb-2 mb-2">
+                    <span class="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                      <span class="w-1.5 h-1.5 rounded-full animate-pulse" 
+                            [ngClass]="{
+                              'bg-green-500': selectedZone.risk === 'bajo',
+                              'bg-yellow-500': selectedZone.risk === 'moderado',
+                              'bg-red-500': selectedZone.risk === 'alto'
+                            }"></span>
+                      DIAGRAMA DE ESTABILIDAD
+                    </span>
+                    <button class="text-[8px] font-mono text-orange-500 hover:text-orange-400 transition-colors uppercase tracking-wider flex items-center gap-0.5" 
+                            (click)="openPreview(selectedZone.stabilityImageUrl, selectedZone.name + ' - Análisis de Estabilidad')">
+                      Ampliar ↗
+                    </button>
+                  </div>
+                  <div class="relative rounded-lg overflow-hidden flex-1 min-h-[200px] lg:min-h-[240px] bg-zinc-950 flex items-center justify-center border border-zinc-800/60 group-hover/stability:border-orange-500/30 transition-all duration-300">
+                    <img [src]="selectedZone.stabilityImageUrl" 
+                         [alt]="selectedZone.name + ' Estabilidad'"
+                         class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-all duration-500 cursor-zoom-in"
+                         (click)="openPreview(selectedZone.stabilityImageUrl, selectedZone.name + ' - Análisis de Estabilidad')" />
+                    <div class="absolute bottom-2 right-2 bg-black/85 text-[7px] text-zinc-400 font-mono px-1.5 py-0.5 rounded border border-zinc-800/80 pointer-events-none">
+                      Método de Bishop
+                    </div>
                   </div>
                 </div>
               </div>
+
+
 
               <!-- Info Sensor Geotécnico -->
               <div *ngIf="selectedSensor && !selectedZone" class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -506,62 +583,167 @@
           <!-- CONTENIDO TAB 2: FICHA TÉCNICA (ESPECIFICACIONES) -->
           <div *ngIf="activeTab === 'specs'" class="space-y-6 flex-1">
             <div class="text-zinc-400 text-xs md:text-sm leading-relaxed">
-              Detalle de los parámetros de diseño geotécnico, obras civiles de impermeabilización y coeficientes de seguridad de la infraestructura estructural.
+              Detalle de los parámetros de diseño geotécnico, obras civiles de impermeabilización y planos de ingeniería del depósito.
             </div>
 
-            <div class="grid md:grid-cols-2 gap-4">
-              <!-- Item 1 -->
-              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
-                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Tipo de Presa</span>
-                <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.damType }}</span>
-              </div>
+            <!-- Grid de dos columnas (Especificaciones / Planos CAD) -->
+            <div class="grid lg:grid-cols-12 gap-6">
+              
+              <!-- Columna de Especificaciones Técnicas (7 cols) -->
+              <div class="lg:col-span-7 space-y-4">
+                <div class="grid md:grid-cols-2 gap-4">
+                  <!-- Item 1 -->
+                  <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                    <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Tipo de Presa</span>
+                    <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.damType }}</span>
+                  </div>
 
-              <!-- Item 2 -->
-              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
-                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Altura Máxima del Dique</span>
-                <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.height }}</span>
-              </div>
+                  <!-- Item 2 -->
+                  <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                    <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Altura Máxima del Dique</span>
+                    <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.height }}</span>
+                  </div>
 
-              <!-- Item 3 -->
-              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
-                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Factor de Seguridad de Diseño (FSD)</span>
-                <div class="flex items-center gap-2 mt-1">
-                  <span class="text-orange-500 font-mono font-black text-base">{{ activeRelavera.fsd }}</span>
-                  <span class="text-[9px] px-2 py-0.5 rounded bg-green-500/20 text-green-400 font-bold uppercase tracking-wider">Estabilidad Conforme</span>
+                  <!-- Item 3 -->
+                  <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                    <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Factor de Seguridad de Diseño (FSD)</span>
+                    <div class="flex items-center gap-2 mt-1">
+                      <span class="text-orange-500 font-mono font-black text-base">{{ activeRelavera.fsd }}</span>
+                      <span class="text-[9px] px-2 py-0.5 rounded bg-green-500/20 text-green-400 font-bold uppercase tracking-wider">Estabilidad Conforme</span>
+                    </div>
+                  </div>
+
+                  <!-- Item 4 -->
+                  <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                    <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Geología del Cimiento</span>
+                    <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.foundation }}</span>
+                  </div>
+
+                  <!-- Item 5 -->
+                  <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                    <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Recirculación de Agua de Retorno</span>
+                    <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.waterReclamation }}</span>
+                  </div>
+
+                  <!-- Item 6 -->
+                  <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
+                    <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Año de Construcción / Habilitación</span>
+                    <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.constructionYear }}</span>
+                  </div>
+                </div>
+
+                <!-- Ficha Técnica Contención -->
+                <div class="bg-black/40 border border-zinc-800/80 rounded-2xl p-5">
+                  <div class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <div>
+                      <h4 class="text-white font-bold text-sm mb-1">Barreras de Contención & Tecnología</h4>
+                      <p class="text-zinc-400 text-xs md:text-sm leading-relaxed">{{ activeRelavera.technology }}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Item 4 -->
-              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
-                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Geología del Cimiento</span>
-                <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.foundation }}</span>
-              </div>
+              <!-- Columna de Planos de Ingeniería CAD (5 cols) -->
+              <div class="lg:col-span-5 flex flex-col justify-between space-y-4">
+                <div class="bg-black/40 border border-zinc-800/80 rounded-2xl p-4 flex flex-col h-full justify-between relative overflow-hidden backdrop-blur-sm group/cad">
+                  <!-- Header del visor CAD -->
+                  <div class="flex items-center justify-between border-b border-zinc-800/60 pb-3 mb-3">
+                    <div class="flex items-center gap-2">
+                      <!-- Grid Icon -->
+                      <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                        <line x1="15" y1="3" x2="15" y2="21"></line>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="3" y1="15" x2="21" y2="15"></line>
+                      </svg>
+                      <span class="text-white font-mono font-bold text-xs uppercase tracking-wider">VISOR CAD_v2.0</span>
+                    </div>
+                    <!-- Estado / ID del Plano -->
+                    <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20">
+                      DWG_REF #0{{ blueprintCarouselIndex + 1 }}
+                    </span>
+                  </div>
 
-              <!-- Item 5 -->
-              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
-                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Recirculación de Agua de Retorno</span>
-                <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.waterReclamation }}</span>
-              </div>
+                  <!-- Cuerpo de visualización del plano con fondo de cuadrícula técnica -->
+                  <div *ngIf="activeRelavera.blueprints && activeRelavera.blueprints.length > 0; else noBlueprintsBlock" class="space-y-3 flex-1 flex flex-col justify-between">
+                    
+                    <!-- Imagen del plano con controles -->
+                    <div class="relative overflow-hidden rounded-xl aspect-[4/3] border border-zinc-800/60 bg-slate-950 flex items-center justify-center cad-grid-bg group/img">
+                      
+                      <!-- Imagen del Plano -->
+                      <img [src]="activeRelavera.blueprints[blueprintCarouselIndex].url" 
+                           [alt]="activeRelavera.blueprints[blueprintCarouselIndex].caption"
+                           class="w-full h-full object-cover opacity-85 group-hover/img:opacity-95 group-hover/img:scale-[1.03] transition-all duration-700 cursor-pointer"
+                           (click)="openPreview(activeRelavera.blueprints[blueprintCarouselIndex].url, activeRelavera.blueprints[blueprintCarouselIndex].caption)" />
 
-              <!-- Item 6 -->
-              <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
-                <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Año de Construcción / Habilitación</span>
-                <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.constructionYear }}</span>
-              </div>
-            </div>
+                      <!-- Overlay degradado técnico (cian/azul) -->
+                      <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
 
-            <!-- Ficha Técnica Contención -->
-            <div class="bg-black/40 border border-zinc-800/80 rounded-2xl p-5">
-              <div class="flex items-start gap-3">
-                <svg class="w-5 h-5 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                <div>
-                  <h4 class="text-white font-bold text-sm mb-1">Barreras de Contención & Tecnología</h4>
-                  <p class="text-zinc-400 text-xs md:text-sm leading-relaxed">{{ activeRelavera.technology }}</p>
+                      <!-- Botón Ampliar flotante -->
+                      <button (click)="openPreview(activeRelavera.blueprints[blueprintCarouselIndex].url, activeRelavera.blueprints[blueprintCarouselIndex].caption)"
+                              class="absolute top-3 right-3 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-300 border border-zinc-800/80 opacity-0 group-hover/img:opacity-100 shadow-lg transform translate-y-1 group-hover/img:translate-y-0"
+                              title="Ampliar Plano">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.637 10.637zM10.5 7.5v6m3-3h-6" />
+                        </svg>
+                      </button>
+
+                      <!-- Controles de Navegación Lateral -->
+                      <button (click)="prevBlueprint()" 
+                              class="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-0 group-hover/cad:opacity-100"
+                              aria-label="Plano anterior">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                          <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                      </button>
+                      <button (click)="nextBlueprint()" 
+                              class="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-0 group-hover/cad:opacity-100"
+                              aria-label="Plano siguiente">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                          <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                      </button>
+                    </div>
+
+                    <!-- Detalles del Plano (Caption Técnico) -->
+                    <div class="bg-zinc-950/60 border border-zinc-800/60 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[8px] font-mono font-bold block uppercase tracking-wider mb-1">Descripción de Plano / Detalle Técnico</span>
+                      <p class="text-zinc-300 font-mono text-[11px] leading-relaxed">
+                        {{ activeRelavera.blueprints[blueprintCarouselIndex].caption }}
+                      </p>
+                    </div>
+
+                    <!-- Indicadores de Selección Rápida (Miniaturas) -->
+                    <div class="flex items-center justify-center gap-1.5 pt-1">
+                      <button *ngFor="let plan of activeRelavera.blueprints; let idx = index"
+                              (click)="setBlueprintIndex(idx)"
+                              class="w-8 h-6 rounded border transition-all duration-300 overflow-hidden opacity-60 hover:opacity-100 flex-shrink-0"
+                              [class.border-orange-600]="idx === blueprintCarouselIndex"
+                              [class.opacity-100]="idx === blueprintCarouselIndex"
+                              [class.scale-105]="idx === blueprintCarouselIndex"
+                              [class.border-zinc-800]="idx !== blueprintCarouselIndex">
+                        <img [src]="plan.url" class="w-full h-full object-cover" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Fallback si no hay planos cargados -->
+                  <ng-template #noBlueprintsBlock>
+                    <div class="flex-1 bg-zinc-950/40 border border-zinc-800/80 rounded-xl p-6 flex flex-col items-center justify-center text-center">
+                      <svg class="w-10 h-10 text-zinc-700 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      <span class="text-zinc-500 text-[10px] font-mono">No hay documentación técnica disponible para este depósito.</span>
+                    </div>
+                  </ng-template>
                 </div>
               </div>
+              
             </div>
           </div>
 
