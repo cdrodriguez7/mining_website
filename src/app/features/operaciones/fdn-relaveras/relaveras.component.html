@@ -458,8 +458,13 @@
                     </div>
                   </div>
                   <!-- Variables Geotécnicas -->
-                  <div class="grid grid-cols-3 gap-3 bg-zinc-950/60 border border-zinc-800/80 rounded-xl px-4 py-3 w-full">
-                    <div *ngFor="let v of selectedZone.variables" class="text-left border-r border-zinc-800/60 last:border-0 pr-2">
+                  <div class="grid gap-3 bg-zinc-950/60 border border-zinc-800/80 rounded-xl px-4 py-3 w-full"
+                       [ngClass]="{
+                         'grid-cols-3': selectedZone.variables.length === 3,
+                         'grid-cols-2 md:grid-cols-4': selectedZone.variables.length === 4,
+                         'grid-cols-2 md:grid-cols-5': selectedZone.variables.length === 5
+                       }">
+                    <div *ngFor="let v of selectedZone.variables" class="text-left border-r border-zinc-800/60 last:border-0 pr-2 last:pr-0">
                       <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider whitespace-nowrap">{{ v.label }}</span>
                       <span class="text-white font-mono font-black text-xs md:text-sm block mt-0.5">{{ v.value }}</span>
                     </div>
@@ -590,61 +595,119 @@
             <div class="grid lg:grid-cols-12 gap-6">
               
               <!-- Columna de Especificaciones Técnicas (7 cols) -->
-              <div class="lg:col-span-7 space-y-4">
-                <div class="grid md:grid-cols-2 gap-4">
-                  <!-- Item 1 -->
-                  <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
-                    <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Tipo de Presa</span>
-                    <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.damType }}</span>
-                  </div>
-
-                  <!-- Item 2 -->
-                  <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
-                    <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Altura Máxima del Dique</span>
-                    <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.height }}</span>
-                  </div>
-
-                  <!-- Item 3 -->
-                  <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
-                    <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Factor de Seguridad de Diseño (FSD)</span>
-                    <div class="flex items-center gap-2 mt-1">
-                      <span class="text-orange-500 font-mono font-black text-base">{{ activeRelavera.fsd }}</span>
-                      <span class="text-[9px] px-2 py-0.5 rounded bg-green-500/20 text-green-400 font-bold uppercase tracking-wider">Estabilidad Conforme</span>
+              <div class="lg:col-span-7 space-y-4" *ngIf="activeRelavera.specs">
+                
+                <!-- Categoría 1: Cotas y Geometría -->
+                <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-4 space-y-3">
+                  <span class="text-orange-500 font-mono font-bold text-xs uppercase tracking-wider block border-b border-zinc-800/60 pb-2 flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                      <path d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    Cotas y Geometría del Dique
+                  </span>
+                  <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Nivel Base Relavera</span>
+                      <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.baseLevel }}</span>
                     </div>
-                  </div>
-
-                  <!-- Item 4 -->
-                  <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
-                    <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Geología del Cimiento</span>
-                    <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.foundation }}</span>
-                  </div>
-
-                  <!-- Item 5 -->
-                  <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
-                    <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Recirculación de Agua de Retorno</span>
-                    <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.waterReclamation }}</span>
-                  </div>
-
-                  <!-- Item 6 -->
-                  <div class="bg-zinc-950/40 border border-zinc-800/60 rounded-xl p-4">
-                    <span class="text-zinc-500 text-[10px] font-bold block uppercase tracking-wider mb-1">Año de Construcción / Habilitación</span>
-                    <span class="text-zinc-100 text-sm font-semibold">{{ activeRelavera.constructionYear }}</span>
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Corona del Dique</span>
+                      <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.crestLevel }}</span>
+                    </div>
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Máx. Llenado Relave</span>
+                      <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.maxTailingLevel }}</span>
+                    </div>
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Ancho Coronamiento</span>
+                      <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.crestWidth }}</span>
+                    </div>
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Borde Libre (Seguridad)</span>
+                      <span class="text-orange-400 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.freeboard }}</span>
+                    </div>
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Talud Aguas Abajo</span>
+                      <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.downstreamSlope }}</span>
+                    </div>
                   </div>
                 </div>
 
-                <!-- Ficha Técnica Contención -->
-                <div class="bg-black/40 border border-zinc-800/80 rounded-2xl p-5">
-                  <div class="flex items-start gap-3">
-                    <svg class="w-5 h-5 text-orange-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                      <circle cx="12" cy="7" r="4"></circle>
+                <!-- Categoría 2: Capacidad y Volúmenes -->
+                <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-4 space-y-3">
+                  <span class="text-orange-500 font-mono font-bold text-xs uppercase tracking-wider block border-b border-zinc-800/60 pb-2 flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                      <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    Capacidad y Parámetros del Vaso
+                  </span>
+                  <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Almacenamiento Neto</span>
+                      <span class="text-zinc-100 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.netCapacityVol }}</span>
+                    </div>
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Capacidad en Peso</span>
+                      <span class="text-zinc-100 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.tonCapacity }}</span>
+                    </div>
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Densidad Relave Seco</span>
+                      <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.dryDensity }}</span>
+                    </div>
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Área Vaso Superior</span>
+                      <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.upperArea }}</span>
+                    </div>
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Área Vaso Inferior</span>
+                      <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.lowerArea }}</span>
+                    </div>
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Excavación Vaso</span>
+                      <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.excavationVol }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Categoría 3: Contención e Impermeabilización -->
+                <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-4 space-y-3">
+                  <span class="text-orange-500 font-mono font-bold text-xs uppercase tracking-wider block border-b border-zinc-800/60 pb-2 flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                      <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                    Estructura, Revestimiento y Suelos
+                  </span>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Volumen Material en Dique</span>
+                      <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.damMaterialVol }}</span>
+                    </div>
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Suelo Utilizado en Dique</span>
+                      <span class="text-zinc-150 font-extrabold text-xs block leading-tight">{{ activeRelavera.specs.soilClassification }}</span>
+                    </div>
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Impermeabilización Vaso Interno</span>
+                      <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.hdpeInnerArea }}</span>
+                    </div>
+                    <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
+                      <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Impermeabilización Taludes/Dique</span>
+                      <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.hdpeOuterArea }}</span>
+                    </div>
+                  </div>
+                  <div class="bg-zinc-950/60 border border-zinc-800/50 rounded-xl p-3 flex items-start gap-3 mt-1">
+                    <svg class="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                      <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                     </svg>
                     <div>
-                      <h4 class="text-white font-bold text-sm mb-1">Barreras de Contención & Tecnología</h4>
-                      <p class="text-zinc-400 text-xs md:text-sm leading-relaxed">{{ activeRelavera.technology }}</p>
+                      <span class="text-white text-xs font-bold block">Revestimiento Interior: {{ activeRelavera.specs.liningType }}</span>
+                      <p class="text-zinc-400 text-[10px] mt-0.5 leading-relaxed">
+                        Geomembrana termo-sellada de alta densidad (HDPE) con espesor calibrado para mitigación de filtraciones y control de lixiviación.
+                      </p>
                     </div>
                   </div>
                 </div>
+
               </div>
 
               <!-- Columna de Planos de Ingeniería CAD (5 cols) -->

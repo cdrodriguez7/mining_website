@@ -26,6 +26,26 @@ interface FailureZone {
   stabilityImageUrl?: string;
 }
 
+interface RelaveraSpecs {
+  baseLevel: string;
+  crestLevel: string;
+  maxTailingLevel: string;
+  crestWidth: string;
+  netCapacityVol: string;
+  dryDensity: string;
+  tonCapacity: string;
+  upperArea: string;
+  lowerArea: string;
+  freeboard: string;
+  damMaterialVol: string;
+  excavationVol: string;
+  downstreamSlope: string;
+  liningType: string;
+  hdpeInnerArea: string;
+  hdpeOuterArea: string;
+  soilClassification: string;
+}
+
 interface RelaveraImage {
   url: string;
   caption: string;
@@ -50,6 +70,7 @@ interface Relavera {
   sensors: SensorInfo[];
   images: RelaveraImage[];
   blueprints?: RelaveraImage[];
+  specs?: RelaveraSpecs;
 }
 
 @Component({
@@ -88,7 +109,7 @@ export class RelaverasComponent implements OnInit {
       coordinates: 'UTM 17S 634500E 9642100N',
       damType: 'Presa de Tierra con Pantalla de Arcilla Homogénea',
       fsd: 1.65,
-      height: '35 metros',
+      height: '30 metros',
       foundation: 'Roca volcánica (Andesita) de alta compacidad y baja permeabilidad',
       constructionYear: 2018,
       waterReclamation: '92%',
@@ -121,7 +142,26 @@ export class RelaverasComponent implements OnInit {
           url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80',
           caption: 'Esquema del sistema de instrumentación y distribución de piezómetros.'
         }
-      ]
+      ],
+      specs: {
+        baseLevel: '100.0 msnm',
+        crestLevel: '130.0 m',
+        maxTailingLevel: '127.00 m',
+        crestWidth: '5.00 m',
+        netCapacityVol: '322,041.84 m³',
+        dryDensity: '2.2 g/cm³',
+        tonCapacity: '708,492.05 Ton',
+        upperArea: '24,014.65 m²',
+        lowerArea: '3,119.50 m²',
+        freeboard: '2 m',
+        damMaterialVol: '336,772.91 m³',
+        excavationVol: '335,545.78 m³',
+        downstreamSlope: '1V:2H',
+        liningType: 'Geomembrana HDPE 2.00 mm',
+        hdpeInnerArea: '31,096.55 m²',
+        hdpeOuterArea: '33,738.23 m²',
+        soilClassification: 'Limos orgánicos, ML y MH'
+      }
     },
     {
       id: 'ponce-sur',
@@ -164,12 +204,31 @@ export class RelaverasComponent implements OnInit {
           url: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80',
           caption: 'Plano técnico del canal de coronación y vertederos de demasías.'
         }
-      ]
+      ],
+      specs: {
+        baseLevel: '100.0 msnm',
+        crestLevel: '124.0 m',
+        maxTailingLevel: '121.50 m',
+        crestWidth: '4.50 m',
+        netCapacityVol: '181,148.54 m³',
+        dryDensity: '2.2 g/cm³',
+        tonCapacity: '398,526.78 Ton',
+        upperArea: '13,500.00 m²',
+        lowerArea: '1,750.00 m²',
+        freeboard: '2.5 m',
+        damMaterialVol: '189,450.00 m³',
+        excavationVol: '188,750.00 m³',
+        downstreamSlope: '1V:2.2H',
+        liningType: 'Arcilla compactada y Geodrenes',
+        hdpeInnerArea: '17,490.00 m²',
+        hdpeOuterArea: '18,970.00 m²',
+        soilClassification: 'Gravas arcillosas, GC y SC'
+      }
     },
     {
       id: 'el-salto',
       name: 'Relavera El Salto',
-      status: 'Monitoreo y Estabilización',
+      status: 'Monitoreo & Estabilización',
       statusClass: 'bg-yellow-500',
       capacity: '240,000 m³',
       occupancy: 95,
@@ -207,7 +266,26 @@ export class RelaverasComponent implements OnInit {
           url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
           caption: 'Esquema de disipación de presión de poros mediante drenes de chimenea.'
         }
-      ]
+      ],
+      specs: {
+        baseLevel: '100.0 msnm',
+        crestLevel: '130.0 m',
+        maxTailingLevel: '127.20 m',
+        crestWidth: '5.00 m',
+        netCapacityVol: '241,531.38 m³',
+        dryDensity: '2.2 g/cm³',
+        tonCapacity: '531,369.04 Ton',
+        upperArea: '18,010.99 m²',
+        lowerArea: '2,339.63 m²',
+        freeboard: '2.8 m',
+        damMaterialVol: '252,579.68 m³',
+        excavationVol: '251,659.34 m³',
+        downstreamSlope: '1V:2H',
+        liningType: 'Pantalla de Concreto (CFRD)',
+        hdpeInnerArea: '23,322.41 m²',
+        hdpeOuterArea: '25,303.67 m²',
+        soilClassification: 'Escollera limpia y Gravas limosas, GP y GM'
+      }
     },
     {
       id: 'mirador',
@@ -249,7 +327,26 @@ export class RelaverasComponent implements OnInit {
           url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80',
           caption: 'Plano del sistema de subdrenaje y canales de escorrentía pluvial perimetral.'
         }
-      ]
+      ],
+      specs: {
+        baseLevel: '100.0 msnm',
+        crestLevel: '118.0 m',
+        maxTailingLevel: '115.50 m',
+        crestWidth: '4.00 m',
+        netCapacityVol: '150,957.11 m³',
+        dryDensity: '2.2 g/cm³',
+        tonCapacity: '332,105.65 Ton',
+        upperArea: '11,250.00 m²',
+        lowerArea: '1,460.00 m²',
+        freeboard: '2.5 m',
+        damMaterialVol: '157,860.00 m³',
+        excavationVol: '157,290.00 m³',
+        downstreamSlope: '1V:2.5H',
+        liningType: 'Cobertura Arcilla y Suelo Orgánico (Sellada)',
+        hdpeInnerArea: '14,570.00 m²',
+        hdpeOuterArea: '15,810.00 m²',
+        soilClassification: 'Limos arcillosos orgánicos de cobertura'
+      }
     },
     {
       id: 'ponce-norte',
@@ -291,7 +388,26 @@ export class RelaverasComponent implements OnInit {
           url: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80',
           caption: 'Esquema de tendido de fibra óptica para sensores SCADA en tiempo real.'
         }
-      ]
+      ],
+      specs: {
+        baseLevel: '100.0 msnm',
+        crestLevel: '128.0 m',
+        maxTailingLevel: '125.00 m',
+        crestWidth: '6.00 m',
+        netCapacityVol: '201,276.15 m³',
+        dryDensity: '2.2 g/cm³',
+        tonCapacity: '442,807.53 Ton',
+        upperArea: '15,009.15 m²',
+        lowerArea: '1,949.68 m²',
+        freeboard: '3 m',
+        damMaterialVol: '210,483.07 m³',
+        excavationVol: '209,716.11 m³',
+        downstreamSlope: '1V:2H',
+        liningType: 'Geomembrana GCL (Bentonita)',
+        hdpeInnerArea: '19,435.35 m²',
+        hdpeOuterArea: '21,086.40 m²',
+        soilClassification: 'Arenas limosas y Arcillas magras, SM y CL'
+      }
     },
     {
       id: 'rio-chico',
@@ -333,7 +449,26 @@ export class RelaverasComponent implements OnInit {
           url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
           caption: 'Diagrama de flujo del sistema de cascadas de neutralización ácida.'
         }
-      ]
+      ],
+      specs: {
+        baseLevel: '100.0 msnm',
+        crestLevel: '116.0 m',
+        maxTailingLevel: '113.80 m',
+        crestWidth: '4.00 m',
+        netCapacityVol: '110,707.88 m³',
+        dryDensity: '2.2 g/cm³',
+        tonCapacity: '243,557.34 Ton',
+        upperArea: '8,255.03 m²',
+        lowerArea: '1,072.32 m²',
+        freeboard: '2.2 m',
+        damMaterialVol: '115,770.69 m³',
+        excavationVol: '115,348.97 m³',
+        downstreamSlope: '1V:2.2H',
+        liningType: 'Geomembrana de PVC 1.50 mm',
+        hdpeInnerArea: '10,689.87 m²',
+        hdpeOuterArea: '11,598.63 m²',
+        soilClassification: 'Limos y arcillas inorgánicas, CL y ML'
+      }
     }
   ];
 
@@ -393,12 +528,14 @@ export class RelaverasComponent implements OnInit {
         name: 'Pie del Dique',
         fs: pieFs,
         risk: risk(pieFs),
-        description: 'Zona de mayor concentración de esfuerzos hidrostáticos. El empuje del relave saturado genera una presión activa crítica en la base del talud externo que debe controlarse para evitar la falla por deslizamiento del cuerpo del dique.',
-        analysis: 'Bishop Simplificado · Equilibrio Límite',
+        description: 'Zona de mayor concentración de esfuerzos hidrostáticos y base de apoyo de la estructura. El empuje del relave saturado genera una presión activa crítica en la cimentación que debe disiparse mediante filtros drenantes para prevenir tubificación.',
+        analysis: 'Estabilidad de Cimentación · Presión de Poros',
         variables: [
-          { label: 'Presión de Poros (u)', value: `${(pieFs * 18.5).toFixed(1)} kPa` },
+          { label: 'Capac. Admisible', value: '450 kPa' },
+          { label: 'Tipo de Drenaje', value: 'Dren de Chimenea (Grava/ML-MH)' },
           { label: "Cohesión (c')", value: `${(18 + g * 3).toFixed(0)} kN/m²` },
-          { label: "Fricción (φ')", value: `${(28 + g * 2).toFixed(0)}°` }
+          { label: "Fricción (φ')", value: `${(28 + g * 2).toFixed(0)}°` },
+          { label: 'Peso Esp. (γ)', value: '19.8 kN/m³' }
         ],
         stabilityImageUrl: 'assets/pie-estabilidad.png'
       },
@@ -407,11 +544,12 @@ export class RelaverasComponent implements OnInit {
         name: 'Talud Externo',
         fs: g,
         risk: risk(g),
-        description: 'Superficie de falla circular crítica modelada por Bishop. Zona de transición entre el material de relleno compactado y la geomembrana interior. Sujeto a análisis de superficies de deslizamiento circulares de Fellenius.',
-        analysis: 'Fellenius · Superficies Circulares',
+        description: 'Superficie de falla circular crítica modelada por Bishop. Zona de transición entre el material de relleno compactado y la geomembrana interior, sujeta a deslizamiento por gravedad y empujes activos.',
+        analysis: 'Bishop Simplificado · Círculos de Deslizamiento',
         variables: [
-          { label: 'Relación H:V', value: `${(1.5 + g * 0.1).toFixed(1)}H:1V` },
-          { label: 'Densidad Relave', value: '1.65 t/m³' },
+          { label: 'Pend. Aguas Arriba', value: '1H:1V' },
+          { label: 'Pend. Aguas Abajo', value: '2H:1V (1V:2H)' },
+          { label: 'Densidad Seca', value: '2.2 g/cm³' },
           { label: 'Altura Dique', value: rel.height }
         ],
         stabilityImageUrl: 'assets/talud-estabilidad.png'
@@ -421,12 +559,12 @@ export class RelaverasComponent implements OnInit {
         name: 'Corona del Dique',
         fs: coronaFs,
         risk: risk(coronaFs),
-        description: 'Zona superior de la coronación del dique. Bajo carga dinámica sísmica es susceptible a asiento diferencial y erosión superficial. El gradiente hidráulico determina el nivel freático interno y la estabilidad a largo plazo.',
-        analysis: 'Pseudo-estático · Ley de Darcy',
+        description: 'Zona superior de la coronación del dique. Determina la cota de cresta de contención física y el borde libre de seguridad ante crecidas de agua o asentamientos diferenciales por sismos.',
+        analysis: 'Análisis Pseudo-estático de Asentamientos',
         variables: [
-          { label: 'Ancho Corona', value: `${(3 + g * 1.2).toFixed(1)} m` },
-          { label: 'Gradiente Hidr. (i)', value: `${(0.15 + g * 0.05).toFixed(2)}` },
-          { label: 'FS Sísmico', value: `${(coronaFs * 0.75).toFixed(2)}` }
+          { label: 'Ancho Corona', value: '5.00 m' },
+          { label: 'Cota Máxima', value: '130.0 msnm' },
+          { label: 'Nivel de Relave', value: '127.00 msnm' }
         ],
         stabilityImageUrl: 'assets/corona-estabilidad.png'
       }
