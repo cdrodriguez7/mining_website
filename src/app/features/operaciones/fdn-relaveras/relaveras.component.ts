@@ -691,6 +691,15 @@ export class RelaverasComponent implements OnInit {
     this.previewVisible = true;
   }
 
+  handlePreviewIndexChange(newIndex: number): void {
+    this.previewIndex = newIndex;
+    if (this.activeTab === 'gallery') {
+      this.carouselIndex = newIndex;
+    } else if (this.activeTab === 'blueprint') {
+      this.blueprintCarouselIndex = newIndex;
+    }
+  }
+
   closePreview(): void {
     this.previewVisible = false;
     this.previewImages = [];

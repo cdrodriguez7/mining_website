@@ -52,8 +52,31 @@
   color: #E88A1E;
 }
 
-// ── Botón cerrar ───────────────────────────────────────────────────────────────
+// ── Botón cerrar (reemplazado por .ip-btn pero mantenemos estilos específicos si es necesario) ──
 .ip-close {
+  background: rgba(239, 68, 68, 0.2); // Red tint for close button
+  border-color: rgba(239, 68, 68, 0.4);
+  &:hover {
+    background: #ef4444 !important;
+    border-color: #ef4444 !important;
+  }
+}
+
+// ── Controles de Zoom ──────────────────────────────────────────────────────────
+.ip-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ip-divider {
+  width: 1px;
+  height: 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 0.25rem;
+}
+
+.ip-btn {
   flex-shrink: 0;
   width: 2.25rem;
   height: 2.25rem;
@@ -92,7 +115,6 @@
   justify-content: center;
   padding: 1.5rem;
   overflow: hidden;
-  cursor: zoom-out;
 }
 
 // ── Imagen ─────────────────────────────────────────────────────────────────────
@@ -102,8 +124,19 @@
   object-fit: contain;
   border-radius: 0.5rem;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-  cursor: default;
+  cursor: zoom-in;
+  transition: transform 0.15s ease-out;
   animation: ip-scale-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+
+  &.ip-zoomed {
+    cursor: grab;
+  }
+  
+  &.ip-dragging {
+    cursor: grabbing;
+    transition: none; // Instant movement while dragging
+  }
 }
 
 @keyframes ip-scale-in {

@@ -951,21 +951,26 @@
                     <div
                       class="relative overflow-hidden rounded-xl aspect-[4/3] border border-zinc-800/60 bg-slate-950 flex items-center justify-center cad-grid-bg group/img">
 
-                      <!-- Imagen del Plano -->
+                      <!-- Fondo desenfocado para evitar recortes (blur container) -->
+                      <div class="absolute inset-0 w-full h-full opacity-40">
+                        <img [src]="activeRelavera.blueprints[blueprintCarouselIndex].url" class="w-full h-full object-cover blur-md scale-110" />
+                      </div>
+
+                      <!-- Imagen del Plano (object-contain) -->
                       <img [src]="activeRelavera.blueprints[blueprintCarouselIndex].url"
                         [alt]="activeRelavera.blueprints[blueprintCarouselIndex].caption"
-                        class="w-full h-full object-cover opacity-85 group-hover/img:opacity-95 group-hover/img:scale-[1.03] transition-all duration-700 cursor-pointer"
+                        class="w-full h-full object-contain relative z-10 opacity-90 group-hover/img:opacity-100 group-hover/img:scale-[1.02] transition-all duration-700 cursor-pointer"
                         (click)="openPreview(activeRelavera.blueprints[blueprintCarouselIndex].url, activeRelavera.blueprints[blueprintCarouselIndex].caption, blueprintCarouselIndex, activeRelavera.blueprints)" />
 
                       <!-- Overlay degradado técnico (cian/azul) -->
                       <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none">
+                        class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none z-10">
                       </div>
 
                       <!-- Botón Ampliar flotante -->
                       <button
                         (click)="openPreview(activeRelavera.blueprints[blueprintCarouselIndex].url, activeRelavera.blueprints[blueprintCarouselIndex].caption, blueprintCarouselIndex, activeRelavera.blueprints)"
-                        class="absolute top-3 right-3 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-300 border border-zinc-800/80 opacity-0 group-hover/img:opacity-100 shadow-lg transform translate-y-1 group-hover/img:translate-y-0"
+                        class="absolute z-20 top-3 right-3 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-300 border border-zinc-800/80 opacity-0 group-hover/img:opacity-100 shadow-lg transform translate-y-1 group-hover/img:translate-y-0"
                         title="Ampliar Plano">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                           <path stroke-linecap="round" stroke-linejoin="round"
@@ -975,14 +980,14 @@
 
                       <!-- Controles de Navegación Lateral -->
                       <button (click)="prevBlueprint()"
-                        class="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-0 group-hover/cad:opacity-100"
+                        class="absolute z-20 left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-0 group-hover/cad:opacity-100"
                         aria-label="Plano anterior">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                           <polyline points="15 18 9 12 15 6"></polyline>
                         </svg>
                       </button>
                       <button (click)="nextBlueprint()"
-                        class="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-0 group-hover/cad:opacity-100"
+                        class="absolute z-20 right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-0 group-hover/cad:opacity-100"
                         aria-label="Plano siguiente">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                           <polyline points="9 18 15 12 9 6"></polyline>
@@ -1040,48 +1045,96 @@
             </div>
 
             <div *ngIf="activeRelavera.images && activeRelavera.images.length > 0; else noImagesBlock"
-              class="space-y-4">
-              <!-- Carrusel Grande -->
-              <div
-                class="relative overflow-hidden rounded-2xl aspect-[16/9] border border-zinc-800/80 bg-black flex items-center justify-center">
-                <!-- Imagen Activa -->
-                <img [src]="activeRelavera.images[carouselIndex].url"
-                  [alt]="activeRelavera.images[carouselIndex].caption"
-                  class="w-full h-full object-cover cursor-pointer hover:scale-[1.02] transition-transform duration-500"
-                  (click)="openPreview(activeRelavera.images[carouselIndex].url, activeRelavera.name, carouselIndex, activeRelavera.images)" />
+              class="flex flex-col h-full justify-between space-y-4">
+              
+              <div class="bg-black/40 border border-zinc-800/80 rounded-2xl p-4 flex flex-col h-full justify-between relative overflow-hidden backdrop-blur-sm group/gallery">
+                  
+                  <!-- Header del visor Galería -->
+                  <div class="flex items-center justify-between border-b border-zinc-800/60 pb-3 mb-3">
+                    <div class="flex items-center gap-2">
+                      <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                      </svg>
+                      <span class="text-white font-mono font-bold text-xs uppercase tracking-wider">VISOR FOTOGRÁFICO</span>
+                    </div>
+                    <!-- Estado / ID de la foto -->
+                    <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20">
+                      IMG_REF #0{{ carouselIndex + 1 }}
+                    </span>
+                  </div>
 
-                <!-- Degradado de fondo para la leyenda -->
-                <div
-                  class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex flex-col justify-end p-5">
-                  <p class="text-white text-xs md:text-sm font-semibold">{{ activeRelavera.images[carouselIndex].caption
-                    }}</p>
-                </div>
+                  <div class="space-y-3 flex-1 flex flex-col justify-between">
+                      
+                      <!-- Imagen con controles y fondo blur -->
+                      <div class="relative overflow-hidden rounded-xl aspect-[16/9] border border-zinc-800/60 bg-slate-950 flex items-center justify-center group/img">
+                        
+                        <!-- Fondo desenfocado para evitar espacios negros (blur container) -->
+                        <div class="absolute inset-0 w-full h-full opacity-40">
+                          <img [src]="activeRelavera.images[carouselIndex].url" class="w-full h-full object-cover blur-md scale-110" />
+                        </div>
 
-                <!-- Botones Atrás/Adelante -->
-                <button (click)="prevImage()"
-                  class="absolute left-4 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-orange-600 text-white flex items-center justify-center transition-colors border border-zinc-800/60"
-                  aria-label="Imagen anterior">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                  </svg>
-                </button>
-                <button (click)="nextImage()"
-                  class="absolute right-4 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-orange-600 text-white flex items-center justify-center transition-colors border border-zinc-800/60"
-                  aria-label="Imagen siguiente">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </button>
+                        <!-- Imagen Principal (object-contain para verla completa sin recortes) -->
+                        <img [src]="activeRelavera.images[carouselIndex].url"
+                          [alt]="activeRelavera.images[carouselIndex].caption"
+                          class="w-full h-full object-contain relative z-10 opacity-95 group-hover/img:opacity-100 group-hover/img:scale-[1.02] transition-all duration-700 cursor-pointer"
+                          (click)="openPreview(activeRelavera.images[carouselIndex].url, activeRelavera.images[carouselIndex].caption, carouselIndex, activeRelavera.images)" />
+
+                        <!-- Overlay degradado sutil inferior -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none z-10"></div>
+
+                        <!-- Botón Ampliar flotante -->
+                        <button
+                          (click)="openPreview(activeRelavera.images[carouselIndex].url, activeRelavera.images[carouselIndex].caption, carouselIndex, activeRelavera.images)"
+                          class="absolute z-20 top-3 right-3 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-300 border border-zinc-800/80 opacity-0 group-hover/img:opacity-100 shadow-lg transform translate-y-1 group-hover/img:translate-y-0"
+                          title="Ampliar Imagen">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.637 10.637zM10.5 7.5v6m3-3h-6" />
+                          </svg>
+                        </button>
+
+                        <!-- Controles de Navegación Lateral -->
+                        <button (click)="prevImage()"
+                          class="absolute z-20 left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-0 group-hover/gallery:opacity-100"
+                          aria-label="Imagen anterior">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                          </svg>
+                        </button>
+                        <button (click)="nextImage()"
+                          class="absolute z-20 right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-0 group-hover/gallery:opacity-100"
+                          aria-label="Imagen siguiente">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                          </svg>
+                        </button>
+                      </div>
+
+                      <!-- Detalles de la Foto (Caption) -->
+                      <div class="bg-zinc-950/60 border border-zinc-800/60 rounded-xl p-3">
+                        <span class="text-zinc-500 text-[8px] font-mono font-bold block uppercase tracking-wider mb-1">Descripción Fotográfica</span>
+                        <p class="text-zinc-300 font-mono text-[11px] leading-relaxed">
+                          {{ activeRelavera.images[carouselIndex].caption }}
+                        </p>
+                      </div>
+
+                      <!-- Indicadores de Selección Rápida (Miniaturas) -->
+                      <div class="flex items-center justify-center gap-1.5 pt-1 flex-wrap">
+                        <button *ngFor="let img of activeRelavera.images; let idx = index"
+                          (click)="setCarouselIndex(idx)"
+                          class="w-10 h-7 md:w-12 md:h-8 rounded border transition-all duration-300 overflow-hidden opacity-60 hover:opacity-100 flex-shrink-0"
+                          [class.border-orange-600]="idx === carouselIndex"
+                          [class.opacity-100]="idx === carouselIndex"
+                          [class.scale-105]="idx === carouselIndex"
+                          [class.border-zinc-800]="idx !== carouselIndex">
+                          <img [src]="img.url" class="w-full h-full object-cover" />
+                        </button>
+                      </div>
+
+                  </div>
               </div>
 
-              <!-- Indicadores del Carrusel -->
-              <div class="flex justify-center items-center gap-2">
-                <button *ngFor="let img of activeRelavera.images; let i = index" (click)="setCarouselIndex(i)"
-                  class="w-2.5 h-2.5 rounded-full transition-all duration-300"
-                  [class.bg-orange-600]="i === carouselIndex" [class.w-6]="i === carouselIndex"
-                  [class.bg-zinc-700]="i !== carouselIndex">
-                </button>
-              </div>
             </div>
 
             <!-- Fallback si no hay fotos cargadas -->
@@ -1108,7 +1161,7 @@
 
 <!-- Componente compartido para Zoom de Imagen -->
 <app-image-preview [visible]="previewVisible" [imageUrl]="previewUrl" [imageTitle]="previewTitle"
-  [images]="previewImages" [currentIndex]="previewIndex" (closed)="closePreview()">
+  [images]="previewImages" [currentIndex]="previewIndex" (closed)="closePreview()" (indexChanged)="handlePreviewIndexChange($event)">
 </app-image-preview>
 
 <app-footer></app-footer>
