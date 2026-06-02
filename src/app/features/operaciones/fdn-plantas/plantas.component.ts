@@ -152,11 +152,11 @@ export class PlantasComponent implements OnInit {
       ],
       images: [
         {
-          url: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&w=1200&q=80',
+          url: 'assets/operaciones/plantas/shumiral/galeria/img-01.jpg',
           caption: 'Obras de infraestructura y celdas del circuito de flotación en el Complejo Metalúrgico Shumiral.'
         },
         {
-          url: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=80',
+          url: 'assets/operaciones/plantas/shumiral/galeria/img-02.jpg',
           caption: 'Molienda principal y clasificadores en espiral operando al 100% de su capacidad.'
         }
       ]
@@ -229,11 +229,11 @@ export class PlantasComponent implements OnInit {
       ],
       images: [
         {
-          url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80',
+          url: 'assets/operaciones/plantas/lajo/galeria/img-01.jpg',
           caption: 'Vista general de las tolvas de recepción e infraestructura de Planta Lajo.'
         },
         {
-          url: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=1200&q=80',
+          url: 'assets/operaciones/plantas/lajo/galeria/img-02.jpg',
           caption: 'Mantenimiento mecánico y calibración de las celdas de flotación.'
         }
       ]
