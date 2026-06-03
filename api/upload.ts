@@ -1,7 +1,8 @@
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3') as typeof import('@aws-sdk/client-s3');
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner') as typeof import('@aws-sdk/s3-request-presigner');
 
-export default async function handler(req: any, res: any) {
+module.exports = async (req: any, res: any) => {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
@@ -76,4 +77,6 @@ export default async function handler(req: any, res: any) {
       error: error.message || 'Error al generar URL de subida'
     });
   }
-}
+};
+
+export {};

@@ -1,6 +1,7 @@
-import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { S3Client, ListObjectsV2Command } = require('@aws-sdk/client-s3') as typeof import('@aws-sdk/client-s3');
 
-export default async function handler(req: any, res: any) {
+module.exports = async (req: any, res: any) => {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
@@ -133,7 +134,7 @@ export default async function handler(req: any, res: any) {
       error: error.message || 'Error al obtener imagenes de R2'
     });
   }
-}
+};
 
 function formatTitle(fileName: string): string {
   return fileName
@@ -145,3 +146,5 @@ function formatTitle(fileName: string): string {
     .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ') || 'Imagen';
 }
+
+export {};

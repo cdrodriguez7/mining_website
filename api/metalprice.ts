@@ -58,3 +58,5 @@ function fetchJson(url: string): Promise<any> {
     }).on('error', reject);
   });
 }
+
+export {};

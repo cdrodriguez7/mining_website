@@ -12,5 +12,5 @@
     "outDir": "dist/api"
   },
   "include": ["api/**/*"],
-  "exclude": ["node_modules", "src"]
+  "exclude": ["node_modules", "src", "api/api-news.ts"]
 }

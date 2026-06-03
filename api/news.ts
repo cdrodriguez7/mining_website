@@ -193,3 +193,5 @@ module.exports = async (req: any, res: any) => {
     });
   }
 };
+
+export {};
