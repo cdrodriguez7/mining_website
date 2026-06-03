@@ -1,16 +1,23 @@
+/**
+ * Modelo de imagen del sistema de galería.
+ * Anteriormente acoplado a Cloudinary, ahora genérico para Cloudflare R2.
+ */
 export interface CloudinaryImage {
-  publicId: string;
+  publicId: string;       // Key del objeto en R2 (ej: "mineria/home/hero.jpg")
   title: string;
   description: string;
-  folder: string;       // último segmento del assetFolder (ej: "noticias")
-  assetFolder?: string; // Location completa en Cloudinary (ej: "mineria/noticias")
+  folder: string;         // último segmento del path (ej: "home")
+  assetFolder?: string;   // Ruta completa del prefijo en R2 (ej: "mineria/home")
   tags: string[];
   width: number;
   height: number;
   format: string;
   createdAt: Date;
-  secureUrl: string;
+  secureUrl: string;      // URL pública completa del objeto en R2
 }
+
+/** Alias moderno — usar GalleryImage en código nuevo */
+export type GalleryImage = CloudinaryImage;
 
 export interface GalleryFolder {
   id: string;
@@ -27,9 +34,9 @@ export interface ImageDimensions {
 }
 
 /**
- * Carpetas de Cloudinary por sección del sitio.
+ * Carpetas por sección del sitio.
  *
- * Estructura en Cloudinary Media Library:
+ * Estructura en Cloudflare R2 (bucket: planpromin):
  *   mineria/
  *   ├── home/           → heroes del homepage, vistas panorámicas del cantón CPE
  *   ├── empresa/        → reuniones ejecutivas, oficinas, equipo directivo
@@ -61,8 +68,8 @@ export type SectionFolder = typeof SECTION_FOLDERS[keyof typeof SECTION_FOLDERS]
 
 /**
  * Definición de carpetas visibles en la galería pública.
- * El id debe coincidir exactamente con el nombre de subcarpeta en Cloudinary
- * (último segmento del path), ya que api/images.ts extrae folder de public_id.
+ * El id debe coincidir exactamente con el nombre de subcarpeta en R2
+ * (último segmento del path), ya que api/images.ts extrae folder del key.
  */
 export const GALLERY_FOLDERS: GalleryFolder[] = [
   {

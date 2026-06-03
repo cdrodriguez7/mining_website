@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { ImagePreviewComponent } from '../../../shared/components/image-preview/image-preview.component';
+import { environment } from '../../../../environments/environment';
 
 interface SensorInfo {
   id: string;
@@ -105,10 +106,11 @@ export class RelaverasComponent implements OnInit {
 
   // Carrusel index por relavera
   carouselIndex = 0;
-  blueprintCarouselIndex = 0; relaveras: Relavera[] = [
+  blueprintCarouselIndex = 0;
+  relaveras: Relavera[] = [
     {
       id: 'fdn-1',
-      name: 'Relavera FDN-1 (Principal)',
+      name: 'Relavera #7',
       status: 'Reprocesamiento Activo',
       statusClass: 'bg-green-500',
       capacity: '320,000 m³',
@@ -211,7 +213,7 @@ export class RelaverasComponent implements OnInit {
     },
     {
       id: 'ponce-sur',
-      name: 'Relavera Ponce Sur',
+      name: 'Relavera #5',
       status: 'Reprocesamiento Activo',
       statusClass: 'bg-green-500',
       capacity: '180,000 m³',
@@ -219,7 +221,7 @@ export class RelaverasComponent implements OnInit {
       technology: 'Barreras geodrenantes tridimensionales, control sísmico acelerográfico en tiempo real e impermeabilización por arcillas compactadas.',
       process: 'Centrado en el lavado, clasificación granulométrica y recuperación secundaria de arenas gruesas con contenidos auríferos históricos del cantón.',
       coordinates: 'UTM 17S 634200E 9641800N',
-      damType: 'Diquede Escollera con Núcleo de Arcilla Impermeable',
+      damType: 'Dique de Escollera con Núcleo de Arcilla Impermeable',
       fsd: 1.58,
       height: '24 metros',
       foundation: 'Coluvio denso sobre basamento basáltico competente',
@@ -278,11 +280,11 @@ export class RelaverasComponent implements OnInit {
     },
     {
       id: 'el-salto',
-      name: 'Relavera El Salto',
+      name: 'Relavera #4',
       status: 'Monitoreo & Estabilización',
       statusClass: 'bg-yellow-500',
       capacity: '240,000 m³',
-      occupancy: 95,
+      occupancy: 94,
       technology: 'Drenes de chimenea de grava fina, inclinómetros digitales para registrar deformación angular y sensores de nivel freático.',
       process: 'Actualmente en reposo para consolidación física del material (disipación de presiones) previo al inicio del reprocesamiento masivo.',
       coordinates: 'UTM 17S 634800E 9642500N',
@@ -345,7 +347,7 @@ export class RelaverasComponent implements OnInit {
     },
     {
       id: 'mirador',
-      name: 'Relavera Mirador',
+      name: 'Relavera #6',
       status: 'Cierre Técnico & Reforestación',
       statusClass: 'bg-blue-500',
       capacity: '150,000 m³',
@@ -411,11 +413,11 @@ export class RelaverasComponent implements OnInit {
     },
     {
       id: 'ponce-norte',
-      name: 'Relavera Ponce Norte',
+      name: 'Relavera #1',
       status: 'En Preparación',
       statusClass: 'bg-orange-500',
       capacity: '200,000 m³',
-      occupancy: 15,
+      occupancy: 92,
       technology: 'Contención lateral de grava compactada, geomembranas de bentonita de sodio auto-sellantes y sistema SCADA en fibra óptica.',
       process: 'Adecuación de bombas y tuberías de transporte de lodos para recibir material de relave disperso de la región para centralización.',
       coordinates: 'UTM 17S 633900E 9641500N',
@@ -477,11 +479,11 @@ export class RelaverasComponent implements OnInit {
     },
     {
       id: 'rio-chico',
-      name: 'Relavera Río Chico',
+      name: 'Relavera #2',
       status: 'Mitigación Ambiental Activa',
       statusClass: 'bg-yellow-500',
       capacity: '110,000 m³',
-      occupancy: 88,
+      occupancy: 91,
       technology: 'Filtros de carbón activo en serie y neutralización alcalina en cascada para tratamiento preventivo de drenaje ácido de roca.',
       process: 'Tratamiento activo y deshidratación de relaves antiguos expuestos a la intemperie por operaciones de terceros no controladas en el pasado.',
       coordinates: 'UTM 17S 634900E 9642300N',
@@ -540,10 +542,108 @@ export class RelaverasComponent implements OnInit {
         talud: 'assets/operaciones/relaveras/rio-chico/estabilidad/talud.png',
         corona: 'assets/operaciones/relaveras/rio-chico/estabilidad/corona.png'
       }
+    },
+    {
+      id: 'relavera-3',
+      name: 'Relavera #3',
+      status: 'Material en Stock',
+      statusClass: 'bg-yellow-500',
+      capacity: '130,000 m³',
+      occupancy: 90,
+      technology: 'Contención mediante dique de tierra compactada con filtros de arena y grava y control de instrumentación geotécnica.',
+      process: 'Almacenamiento temporal de relaves consolidados para futuro reprocesamiento.',
+      coordinates: 'UTM 17S 635200E 9642600N',
+      damType: 'Presa de Tierra Homogénea',
+      fsd: 1.55,
+      height: '20 metros',
+      foundation: 'Roca volcánica meteorizada compactada',
+      constructionYear: 2017,
+      waterReclamation: '92%',
+      sensors: [
+        { id: 'pz-7-1', name: 'Piezómetro PZ-09', type: 'piezometro', value: '15.2 kPa (Normal)', status: 'normal', x: 50, y: 40 },
+        { id: 'inc-7-1', name: 'Inclinómetro INC-07', type: 'inclinometro', value: '0.08 mm (Estable)', status: 'normal', x: 28, y: 57 },
+        { id: 'dr-7-1', name: 'Medidor de Drenaje D-07', type: 'drenaje', value: '0.35 L/s (Normal)', status: 'normal', x: 56, y: 67 }
+      ],
+      images: [
+        {
+          url: 'assets/operaciones/relaveras/rio-chico/galeria/img-01.jpg',
+          caption: 'Vista general del depósito Relavera #3 para control de material.'
+        },
+        {
+          url: 'assets/operaciones/relaveras/rio-chico/galeria/img-02.jpg',
+          caption: 'Detalle de la instrumentación y piezómetros instalados en la corona.'
+        }
+      ],
+      blueprints: [
+        {
+          url: 'assets/operaciones/relaveras/rio-chico/planos/plano-01.jpg',
+          caption: 'Plano transversal del dique de Relavera #3.'
+        },
+        {
+          url: 'assets/operaciones/relaveras/rio-chico/planos/plano-02.jpg',
+          caption: 'Esquema general de instrumentación y monitoreo.'
+        }
+      ],
+      specs: {
+        baseLevel: '100.0 msnm',
+        crestLevel: '120.0 m',
+        maxTailingLevel: '118.00 m',
+        crestWidth: '4.50 m',
+        netCapacityVol: '130,500.00 m³',
+        dryDensity: '2.2 g/cm³',
+        tonCapacity: '287,100.00 Ton',
+        upperArea: '10,000.00 m²',
+        lowerArea: '1,200.00 m²',
+        freeboard: '2.00 m',
+        damMaterialVol: '135,000.00 m³',
+        excavationVol: '134,200.00 m³',
+        downstreamSlope: '1V:2.2H',
+        liningType: 'Geomembrana de PVC 1.50 mm',
+        hdpeInnerArea: '12,500.00 m²',
+        hdpeOuterArea: '13,200.00 m²',
+        soilClassification: 'Limos arcillosos, CL y ML'
+      },
+      stabilityImages: {
+        pie: 'assets/operaciones/relaveras/rio-chico/estabilidad/pie.png',
+        talud: 'assets/operaciones/relaveras/rio-chico/estabilidad/talud.png',
+        corona: 'assets/operaciones/relaveras/rio-chico/estabilidad/corona.png'
+      }
     }
   ];
 
   ngOnInit(): void {
+    // Convertir URLs locales a URLs de R2 si R2 está configurado
+    const r2Url = environment.r2?.publicUrl?.replace(/\/$/, '');
+    if (r2Url) {
+      this.relaveras.forEach(r => {
+        // 1. Imágenes de galería
+        r.images?.forEach(img => {
+          if (img.url && img.url.startsWith('assets/')) {
+            img.url = `${r2Url}/${img.url}`;
+          }
+        });
+        // 2. Planos (blueprints)
+        r.blueprints?.forEach(bp => {
+          if (bp.url && bp.url.startsWith('assets/')) {
+            bp.url = `${r2Url}/${bp.url}`;
+          }
+        });
+        // 3. Imágenes de análisis de estabilidad
+        if (r.stabilityImages) {
+          const si = r.stabilityImages;
+          if (si.pie && si.pie.startsWith('assets/')) {
+            si.pie = `${r2Url}/${si.pie}`;
+          }
+          if (si.talud && si.talud.startsWith('assets/')) {
+            si.talud = `${r2Url}/${si.talud}`;
+          }
+          if (si.corona && si.corona.startsWith('assets/')) {
+            si.corona = `${r2Url}/${si.corona}`;
+          }
+        }
+      });
+    }
+
     // Inicializar con el primer sensor de la relavera activa para que no esté vacío
     this.selectedSensor = this.activeRelavera.sensors[0] || null;
   }

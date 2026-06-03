@@ -107,7 +107,9 @@ export class GalleryComponent implements OnInit {
   }
 
   onImageError(event: any, image: CloudinaryImage) {
-    const fallbackUrl = `https://res.cloudinary.com/dlumbzsnd/image/upload/${image.publicId}`;
-    event.target.src = fallbackUrl;
+    // Fallback: usar la URL directa almacenada en el objeto de imagen
+    if (image.secureUrl && event.target.src !== image.secureUrl) {
+      event.target.src = image.secureUrl;
+    }
   }
 }

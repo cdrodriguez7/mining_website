@@ -1,4 +1,4 @@
-const cloudinary = require('cloudinary').v2;
+import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3';
 
 module.exports = async (req: any, res: any) => {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -22,123 +22,102 @@ module.exports = async (req: any, res: any) => {
       return res.status(400).json({ success: false, error: 'Parametro folder es requerido' });
     }
 
-    if (
-      !process.env.CLOUDINARY_CLOUD_NAME ||
-      !process.env.CLOUDINARY_API_KEY ||
-      !process.env.CLOUDINARY_API_SECRET
-    ) {
-      return res.status(500).json({ success: false, error: 'Configuracion de Cloudinary incompleta' });
-    }
+    const endpoint   = process.env.R2_ENDPOINT;
+    const accessKey  = process.env.R2_ACCESS_KEY_ID;
+    const secretKey  = process.env.R2_SECRET_ACCESS_KEY;
+    const bucketName = process.env.R2_BUCKET_NAME;
+    const publicUrl  = process.env.R2_PUBLIC_URL;
 
-    cloudinary.config({
-      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-      api_key:    process.env.CLOUDINARY_API_KEY,
-      api_secret: process.env.CLOUDINARY_API_SECRET
+    console.log('[API] Env check:', {
+      endpoint: endpoint ? 'OK' : 'MISSING',
+      accessKey: accessKey ? 'OK' : 'MISSING',
+      secretKey: secretKey ? 'OK' : 'MISSING',
+      bucketName: bucketName ? 'OK' : 'MISSING',
+      publicUrl: publicUrl ? 'OK' : 'MISSING',
     });
 
-    console.log('[API] Buscando por asset_folder (Location):', folder);
-
-    const resourceMap = new Map<string, any>();
-
-    // ── Estrategia principal: asset_folder ──────────────────────────────────
-    // Usa el campo "Location" del Media Library de Cloudinary (modo Dynamic Folders).
-    // Es independiente del public_id — busca por dónde está guardada la imagen en la UI.
-    try {
-      let nextCursor: string | undefined;
-      do {
-        const result: any = await cloudinary.api.resources_by_asset_folder(folder, {
-          max_results: 500,
-          context:     true,
-          tags:        true,
-          fields:      'public_id,asset_folder,display_name,secure_url,width,height,format,created_at,bytes,context,tags',
-          ...(nextCursor ? { next_cursor: nextCursor } : {})
-        });
-        result.resources.forEach((r: any) => resourceMap.set(r.public_id, r));
-        console.log(`[API] asset_folder "${folder}" — lote: ${result.resources.length}`);
-        nextCursor = result.next_cursor;
-      } while (nextCursor);
-    } catch (e: any) {
-      console.warn('[API] resources_by_asset_folder falló:', e.message);
+    if (!endpoint || !accessKey || !secretKey || !bucketName || !publicUrl) {
+      return res.status(500).json({ success: false, error: 'Configuracion de R2 incompleta' });
     }
 
-    // ── Subcarpetas: si pidieron la carpeta raíz, recorre sus hijos ─────────
-    // Necesario para SECTION_FOLDERS.ALL = 'mineria', que debe traer todo.
-    try {
-      const subResult = await cloudinary.api.sub_folders(folder);
-      const subFolders: string[] = subResult.folders.map((f: any) => f.path);
-      console.log(`[API] subcarpetas de "${folder}":`, subFolders);
-
-      await Promise.all(subFolders.map(async (sf: string) => {
-        try {
-          let nextCursor: string | undefined;
-          do {
-            const sfResult: any = await cloudinary.api.resources_by_asset_folder(sf, {
-              max_results: 500,
-              context:     true,
-              tags:        true,
-              fields:      'public_id,asset_folder,display_name,secure_url,width,height,format,created_at,bytes,context,tags',
-              ...(nextCursor ? { next_cursor: nextCursor } : {})
-            });
-            sfResult.resources.forEach((r: any) => {
-              if (!resourceMap.has(r.public_id)) resourceMap.set(r.public_id, r);
-            });
-            console.log(`[API]   subcarpeta "${sf}": ${sfResult.resources.length}`);
-            nextCursor = sfResult.next_cursor;
-          } while (nextCursor);
-        } catch { /* subcarpeta vacía */ }
-      }));
-    } catch (e: any) {
-      console.warn('[API] sub_folders falló:', e.message);
-    }
-
-    // ── Fallback: prefix-based (Fixed Folders / public_id contiene ruta) ────
-    // Solo se activa si los métodos anteriores no encontraron nada.
-    if (resourceMap.size === 0) {
-      console.warn('[API] asset_folder vacío — intentando prefix fallback...');
-      try {
-        const prefixResult = await cloudinary.api.resources({
-          type:        'upload',
-          prefix:      folder,
-          max_results: 500,
-          context:     true,
-          tags:        true
-        });
-        prefixResult.resources.forEach((r: any) => resourceMap.set(r.public_id, r));
-        console.log(`[API] prefix fallback "${folder}": ${prefixResult.resources.length}`);
-      } catch (e: any) {
-        console.warn('[API] prefix fallback también falló:', e.message);
+    const s3 = new S3Client({
+      region: 'auto',
+      endpoint,
+      credentials: {
+        accessKeyId: accessKey,
+        secretAccessKey: secretKey
       }
-    }
-
-    const allResources = Array.from(resourceMap.values());
-    console.log(`[API] Total: ${allResources.length} recursos en "${folder}"`);
-
-    const images = allResources.map((resource: any) => {
-      // asset_folder = Location real en el Media Library (ej: "mineria/noticias")
-      // Usamos su último segmento como nombre de carpeta para los filtros del frontend
-      const assetFolder: string = resource.asset_folder || folder;
-      const folderName  = assetFolder.split('/').pop() || assetFolder;
-
-      // display_name o último segmento del public_id como nombre de archivo
-      const fileName = resource.display_name
-        || resource.public_id.split('/').pop()
-        || resource.public_id;
-
-      return {
-        publicId:    resource.public_id,
-        title:       resource.context?.custom?.caption || formatTitle(fileName),
-        description: resource.context?.custom?.alt     || `Imagen de ${folderName}`,
-        folder:      folderName,
-        assetFolder: assetFolder,
-        tags:        resource.tags    || [folderName],
-        width:       resource.width,
-        height:      resource.height,
-        format:      resource.format,
-        createdAt:   resource.created_at,
-        secureUrl:   resource.secure_url,
-        bytes:       resource.bytes   || 0
-      };
     });
+
+    const baseUrl = publicUrl.replace(/\/$/, '');
+
+    console.log('[API] Listando objetos R2 con prefijo:', folder);
+
+    // Asegurar que el prefix termine en / para listar "dentro" de la carpeta
+    const prefix = folder.endsWith('/') ? folder : folder + '/';
+
+    const allObjects: any[] = [];
+    let continuationToken: string | undefined;
+
+    // Listar objetos directos en esta carpeta + subcarpetas
+    do {
+      const command = new ListObjectsV2Command({
+        Bucket: bucketName,
+        Prefix: prefix,
+        MaxKeys: 1000,
+        ...(continuationToken ? { ContinuationToken: continuationToken } : {})
+      });
+
+      const result = await s3.send(command);
+
+      if (result.Contents) {
+        allObjects.push(...result.Contents);
+      }
+
+      continuationToken = result.IsTruncated ? result.NextContinuationToken : undefined;
+      console.log(`[API] Lote: ${result.Contents?.length || 0} objetos (truncated: ${result.IsTruncated})`);
+    } while (continuationToken);
+
+    console.log(`[API] Total: ${allObjects.length} objetos en "${folder}"`);
+
+    // Filtrar solo archivos de imagen (no carpetas vacías ni otros archivos)
+    const imageExtensions = new Set([
+      'jpg', 'jpeg', 'png', 'gif', 'webp', 'avif', 'svg', 'bmp', 'tiff', 'ico'
+    ]);
+
+    const images = allObjects
+      .filter((obj: any) => {
+        // Excluir "carpetas" (keys que terminan en /)
+        if (obj.Key.endsWith('/')) return false;
+        // Solo imágenes
+        const ext = obj.Key.split('.').pop()?.toLowerCase() || '';
+        return imageExtensions.has(ext);
+      })
+      .map((obj: any) => {
+        const key: string = obj.Key;
+        const ext = key.split('.').pop()?.toLowerCase() || '';
+
+        // Extraer la carpeta inmediata (último directorio antes del archivo)
+        const parts = key.split('/');
+        const fileName = parts.pop() || key;
+        const parentPath = parts.join('/');
+        const folderName = parts.pop() || folder;
+
+        return {
+          publicId:    key,
+          title:       formatTitle(fileName.replace(/\.[^/.]+$/, '')),
+          description: `Imagen de ${folderName}`,
+          folder:      folderName,
+          assetFolder: parentPath,
+          tags:        [folderName],
+          width:       0,  // R2 no almacena dimensiones; el frontend las maneja
+          height:      0,
+          format:      ext,
+          createdAt:   obj.LastModified ? obj.LastModified.toISOString() : new Date().toISOString(),
+          secureUrl:   `${baseUrl}/${key}`,
+          bytes:       obj.Size || 0
+        };
+      });
 
     return res.status(200).json({
       success: true,
@@ -151,7 +130,7 @@ module.exports = async (req: any, res: any) => {
     console.error('[API] Error general:', error);
     return res.status(500).json({
       success: false,
-      error: error.message || 'Error al obtener imagenes de Cloudinary'
+      error: error.message || 'Error al obtener imagenes de R2'
     });
   }
 };

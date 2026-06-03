@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Cloudinary } from '@cloudinary/url-gen';
-import { fill, scale, fit, crop } from '@cloudinary/url-gen/actions/resize';
-import { auto } from '@cloudinary/url-gen/qualifiers/quality';
 import { environment } from '../../../environments/environment';
 
+/**
+ * Opciones de transformación de imagen.
+ * Cuando se habilite Cloudflare Image Resizing (requiere custom domain + plan Pro),
+ * estas opciones se traducen a parámetros de cdn-cgi/image/.
+ * Mientras tanto, se devuelve la URL original sin transformaciones.
+ */
 export interface TransformOptions {
   width?: number;
   height?: number;
@@ -13,76 +16,55 @@ export interface TransformOptions {
   gravity?: string;
 }
 
-export interface CloudinaryUploadResponse {
-  public_id: string;
-  version: number;
-  signature: string;
-  width: number;
-  height: number;
-  format: string;
-  resource_type: string;
-  created_at: string;
-  bytes: number;
-  type: string;
+export interface R2UploadResponse {
+  key: string;
   url: string;
-  secure_url: string;
-  original_filename?: string;
-  folder?: string;
+  size: number;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class CloudinaryService {
-  private cloudinary: Cloudinary;
-  private readonly API_URL: string;
-  private readonly CLOUD_NAME: string;
+  private readonly PUBLIC_URL: string;
+  private readonly CUSTOM_DOMAIN: string;
+  private readonly IMAGE_RESIZING: boolean;
 
   constructor() {
-    this.CLOUD_NAME = environment.cloudinary.cloudName;
-    
-    this.cloudinary = new Cloudinary({
-      cloud: {
-        cloudName: this.CLOUD_NAME
-      }
-    });
+    this.PUBLIC_URL = environment.r2.publicUrl.replace(/\/$/, '');
+    this.CUSTOM_DOMAIN = environment.r2.customDomain?.replace(/\/$/, '') || '';
+    this.IMAGE_RESIZING = environment.r2.imageResizing ?? false;
 
-    this.API_URL = `https://api.cloudinary.com/v1_1/${this.CLOUD_NAME}/image/upload`;
-    
-    console.log('☁️ Cloudinary Service inicializado');
-    console.log('📦 Cloud Name:', this.CLOUD_NAME);
+    console.log('☁️ R2 Image Service inicializado');
+    console.log('📦 Public URL:', this.PUBLIC_URL);
   }
 
+  /**
+   * Construye la URL pública de una imagen en R2.
+   *
+   * Si Cloudflare Image Resizing está habilitado (custom domain + plan Pro),
+   * genera una URL con transformaciones on-the-fly:
+   *   https://cdn.planpromin.com/cdn-cgi/image/width=800,height=600,fit=cover/mineria/home/hero.jpg
+   *
+   * Si no, devuelve la URL directa del objeto:
+   *   https://pub-xxx.r2.dev/mineria/home/hero.jpg
+   */
   getImageUrl(publicId: string, options?: TransformOptions): string {
-    const image = this.cloudinary.image(publicId);
-    
-    if (options?.width || options?.height) {
-      const w = options.width || 0;
-      const h = options.height || 0;
-      
-      switch (options.crop) {
-        case 'fill':
-          image.resize(fill().width(w).height(h));
-          break;
-        case 'fit':
-          image.resize(fit().width(w).height(h));
-          break;
-        case 'scale':
-          image.resize(scale().width(w).height(h));
-          break;
-        case 'crop':
-          image.resize(crop().width(w).height(h));
-          break;
-        default:
-          image.resize(fill().width(w).height(h));
+    const key = publicId.startsWith('/') ? publicId.slice(1) : publicId;
+
+    if (this.IMAGE_RESIZING && this.CUSTOM_DOMAIN && options) {
+      const params = this.buildTransformParams(options);
+      if (params) {
+        return `${this.CUSTOM_DOMAIN}/cdn-cgi/image/${params}/${key}`;
       }
     }
 
-    image.quality(auto());
-    
-    return image.toURL();
+    return `${this.PUBLIC_URL}/${key}`;
   }
 
+  /**
+   * URL responsiva con tamaño específico.
+   */
   getResponsiveUrl(publicId: string, width: number, height: number): string {
     return this.getImageUrl(publicId, {
       width,
@@ -92,6 +74,9 @@ export class CloudinaryService {
     });
   }
 
+  /**
+   * URL de miniatura cuadrada.
+   */
   getThumbnailUrl(publicId: string, size: number = 200): string {
     return this.getImageUrl(publicId, {
       width: size,
@@ -100,6 +85,9 @@ export class CloudinaryService {
     });
   }
 
+  /**
+   * URL para imágenes hero (16:9).
+   */
   getHeroUrl(publicId: string, width: number = 1600): string {
     const height = Math.round(width * 9 / 16);
     return this.getImageUrl(publicId, {
@@ -110,6 +98,9 @@ export class CloudinaryService {
     });
   }
 
+  /**
+   * URL para tarjetas (4:3).
+   */
   getCardUrl(publicId: string, width: number = 400): string {
     const height = Math.round(width * 3 / 4);
     return this.getImageUrl(publicId, {
@@ -120,28 +111,36 @@ export class CloudinaryService {
   }
 
   /**
-   * Subir imagen a Cloudinary
+   * Subir imagen a R2 mediante presigned URL.
+   * 1. Solicita un presigned URL al backend
+   * 2. Sube el archivo directamente a R2
    */
-  uploadImage(
+  async uploadImage(
     file: File,
     folder?: string,
     onProgress?: (progress: number) => void
-  ): Promise<CloudinaryUploadResponse> {
+  ): Promise<R2UploadResponse> {
+    // Paso 1: Obtener presigned URL del backend
+    const filename = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const queryParams = new URLSearchParams({ filename });
+    if (folder) queryParams.set('folder', folder);
+
+    const presignResponse = await fetch(`/api/upload?${queryParams.toString()}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    if (!presignResponse.ok) {
+      const err = await presignResponse.text();
+      throw new Error(`Error obteniendo URL de subida: ${err}`);
+    }
+
+    const { uploadUrl, key, publicUrl } = await presignResponse.json();
+
+    // Paso 2: Subir directamente a R2 con presigned URL
     return new Promise((resolve, reject) => {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', environment.cloudinary.uploadPreset);
-      
-      if (folder) {
-        console.log('[Cloudinary Service] Guardando en carpeta:', folder);
-        formData.append('folder', folder);
-      }
-
-      formData.append('timestamp', Date.now().toString());
-
       const xhr = new XMLHttpRequest();
 
-      // Progress tracking
       xhr.upload.addEventListener('progress', (event) => {
         if (event.lengthComputable && onProgress) {
           const percentComplete = Math.round((event.loaded / event.total) * 100);
@@ -149,39 +148,68 @@ export class CloudinaryService {
         }
       });
 
-      // Success
       xhr.addEventListener('load', () => {
         if (xhr.status >= 200 && xhr.status < 300) {
-          try {
-            const response = JSON.parse(xhr.responseText);
-            console.log('✅ Upload exitoso:', response);
-            resolve(response);
-          } catch (error) {
-            reject(new Error('Error al procesar la respuesta de Cloudinary'));
-          }
+          console.log('✅ Upload exitoso a R2:', key);
+          resolve({
+            key,
+            url: publicUrl,
+            size: file.size
+          });
         } else {
-          try {
-            const errorData = JSON.parse(xhr.responseText);
-            reject(new Error(errorData.error?.message || `Error ${xhr.status}`));
-          } catch {
-            reject(new Error(`Error HTTP ${xhr.status}`));
-          }
+          reject(new Error(`Error HTTP ${xhr.status} al subir a R2`));
         }
       });
 
-      // Error
       xhr.addEventListener('error', () => {
-        reject(new Error('Error de conexión con Cloudinary'));
+        reject(new Error('Error de conexión con R2'));
       });
 
-      // Timeout
       xhr.addEventListener('timeout', () => {
         reject(new Error('Timeout al subir la imagen'));
       });
 
-      xhr.timeout = 60000; // 60 segundos
-      xhr.open('POST', this.API_URL);
-      xhr.send(formData);
+      xhr.timeout = 120000; // 120 segundos
+      xhr.open('PUT', uploadUrl);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.send(file);
     });
+  }
+
+  /**
+   * Construye parámetros de Cloudflare Image Resizing.
+   * Formato: width=800,height=600,fit=cover,quality=auto
+   * Ref: https://developers.cloudflare.com/images/transform-images/transform-via-url/
+   */
+  private buildTransformParams(options: TransformOptions): string {
+    const parts: string[] = [];
+
+    if (options.width) parts.push(`width=${options.width}`);
+    if (options.height) parts.push(`height=${options.height}`);
+
+    // Mapear nuestro crop mode al "fit" de Cloudflare
+    if (options.crop) {
+      const fitMap: Record<string, string> = {
+        fill: 'cover',
+        fit: 'contain',
+        scale: 'scale-down',
+        crop: 'crop'
+      };
+      parts.push(`fit=${fitMap[options.crop] || 'cover'}`);
+    }
+
+    if (options.quality === 'auto') {
+      parts.push('quality=85');
+    } else if (typeof options.quality === 'number') {
+      parts.push(`quality=${options.quality}`);
+    }
+
+    if (options.format && options.format !== 'auto') {
+      parts.push(`format=${options.format}`);
+    } else {
+      parts.push('format=auto');
+    }
+
+    return parts.join(',');
   }
 }

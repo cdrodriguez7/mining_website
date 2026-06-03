@@ -322,9 +322,9 @@
 
 <section class="py-10 md:py-16 lg:py-20 bg-black relative overflow-hidden">
   <!-- Video de fondo que abarca toda la ventana de esta sección, resaltado -->
-  <video autoplay loop muted playsinline
-    class="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none z-0">
-    <source src="assets/pag-web-3.mp4" type="video/mp4">
+  <video [src]="videoPath" autoplay loop muted playsinline
+    class="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none z-0"
+    type="video/mp4">
   </video>
   <div class="absolute inset-0 bg-black/40 z-0 pointer-events-none"></div>
 
@@ -357,11 +357,13 @@
           <div class="absolute left-0 top-[20px] h-[2px] bg-orange-600 transition-all duration-500 z-0"
                [style.width.%]="
                  activeProcessTab === 'acopio' ? 0 : 
-                 activeProcessTab === 'trituracion' ? 33.3 : 
-                 activeProcessTab === 'cianuracion' ? 66.6 : 100">
+                 activeProcessTab === 'trituracion' ? 20 : 
+                 activeProcessTab === 'molienda' ? 40 : 
+                 activeProcessTab === 'flotacion' ? 60 : 
+                 activeProcessTab === 'cianuracion' ? 80 : 100">
           </div>
 
-          <!-- Botones de Paso (A, B, C, D) -->
+          <!-- Botones de Paso (A, B, C, D, E, F) -->
           <button (click)="activeProcessTab = 'acopio'" class="relative z-10 flex flex-col items-center group focus:outline-none">
             <span class="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm transition-all duration-300 cursor-pointer"
                   [ngClass]="activeProcessTab === 'acopio' ? 'bg-orange-600 text-white shadow-[0_0_15px_rgba(234,88,12,0.6)] scale-110' : 'bg-zinc-900 border border-zinc-700 text-gray-400 group-hover:text-white group-hover:border-zinc-500'">A</span>
@@ -376,11 +378,11 @@
                   [ngClass]="activeProcessTab === 'trituracion' ? 'text-orange-500' : 'text-zinc-500 group-hover:text-zinc-300'">Trituración</span>
           </button>
 
-          <button (click)="activeProcessTab = 'cianuracion'" class="relative z-10 flex flex-col items-center group focus:outline-none">
+          <button (click)="activeProcessTab = 'molienda'" class="relative z-10 flex flex-col items-center group focus:outline-none">
             <span class="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm transition-all duration-300 cursor-pointer"
-                  [ngClass]="activeProcessTab === 'cianuracion' ? 'bg-orange-600 text-white shadow-[0_0_15px_rgba(234,88,12,0.6)] scale-110' : 'bg-zinc-900 border border-zinc-700 text-gray-400 group-hover:text-white group-hover:border-zinc-500'">C</span>
+                  [ngClass]="activeProcessTab === 'molienda' ? 'bg-orange-600 text-white shadow-[0_0_15px_rgba(234,88,12,0.6)] scale-110' : 'bg-zinc-900 border border-zinc-700 text-gray-400 group-hover:text-white group-hover:border-zinc-500'">C</span>
             <span class="text-[10px] font-bold mt-2 uppercase tracking-wider transition-colors duration-300"
-                  [ngClass]="activeProcessTab === 'cianuracion' ? 'text-orange-500' : 'text-zinc-500 group-hover:text-zinc-300'">Cianuración</span>
+                  [ngClass]="activeProcessTab === 'molienda' ? 'text-orange-500' : 'text-zinc-500 group-hover:text-zinc-300'">Molienda</span>
           </button>
 
           <button (click)="activeProcessTab = 'flotacion'" class="relative z-10 flex flex-col items-center group focus:outline-none">
@@ -388,6 +390,20 @@
                   [ngClass]="activeProcessTab === 'flotacion' ? 'bg-orange-600 text-white shadow-[0_0_15px_rgba(234,88,12,0.6)] scale-110' : 'bg-zinc-900 border border-zinc-700 text-gray-400 group-hover:text-white group-hover:border-zinc-500'">D</span>
             <span class="text-[10px] font-bold mt-2 uppercase tracking-wider transition-colors duration-300"
                   [ngClass]="activeProcessTab === 'flotacion' ? 'text-orange-500' : 'text-zinc-500 group-hover:text-zinc-300'">Flotación</span>
+          </button>
+
+          <button (click)="activeProcessTab = 'cianuracion'" class="relative z-10 flex flex-col items-center group focus:outline-none">
+            <span class="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm transition-all duration-300 cursor-pointer"
+                  [ngClass]="activeProcessTab === 'cianuracion' ? 'bg-orange-600 text-white shadow-[0_0_15px_rgba(234,88,12,0.6)] scale-110' : 'bg-zinc-900 border border-zinc-700 text-gray-400 group-hover:text-white group-hover:border-zinc-500'">E</span>
+            <span class="text-[10px] font-bold mt-2 uppercase tracking-wider transition-colors duration-300"
+                  [ngClass]="activeProcessTab === 'cianuracion' ? 'text-orange-500' : 'text-zinc-500 group-hover:text-zinc-300'">Cianuración</span>
+          </button>
+
+          <button (click)="activeProcessTab = 'concentrado'" class="relative z-10 flex flex-col items-center group focus:outline-none">
+            <span class="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm transition-all duration-300 cursor-pointer"
+                  [ngClass]="activeProcessTab === 'concentrado' ? 'bg-orange-600 text-white shadow-[0_0_15px_rgba(234,88,12,0.6)] scale-110' : 'bg-zinc-900 border border-zinc-700 text-gray-400 group-hover:text-white group-hover:border-zinc-500'">F</span>
+            <span class="text-[10px] font-bold mt-2 uppercase tracking-wider transition-colors duration-300"
+                  [ngClass]="activeProcessTab === 'concentrado' ? 'text-orange-500' : 'text-zinc-500 group-hover:text-zinc-300'">Concentrado</span>
           </button>
         </div>
       </div>

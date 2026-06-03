@@ -9,6 +9,10 @@ interface ApiResponse {
   error?: string;
 }
 
+/**
+ * Servicio que se comunica con el endpoint serverless /api/images
+ * para listar imágenes almacenadas en Cloudflare R2.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +20,7 @@ export class CloudinaryBackendService {
   private readonly API_BASE = '';
 
   constructor() {
-    console.log('Estableciendo conexion con Cloudinary');
+    console.log('Estableciendo conexion con R2 backend');
   }
 
   async listResourcesByFolder(folder: string): Promise<CloudinaryImage[]> {

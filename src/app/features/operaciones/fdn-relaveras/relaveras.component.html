@@ -18,7 +18,7 @@
           Gestión de <span class="text-orange-600">Relaveras</span>
         </h1>
         <p class="text-gray-400 leading-relaxed text-justify max-w-4xl text-sm lg:text-base">
-          Operamos y monitoreamos de forma continua seis depósitos de relaves activos, estabilizados y clausurados.
+          Operamos y monitoreamos de forma continua siete depósitos de relaves activos, estabilizados y clausurados.
           Nuestras instalaciones combinan recubrimientos impermeables de geosintéticos, sistemas de drenaje por gravedad
           en circuito cerrado
           e instrumentación geotécnica satelital en tiempo real para garantizar el máximo nivel de seguridad y
@@ -256,169 +256,499 @@
 
               <!-- SVG Perfil Transversal con Zonas de Estabilidad (Relavera con dique aguas arriba) -->
               <div
-                class="relative bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-4 overflow-hidden flex items-center justify-center min-h-[200px]">
-                <svg viewBox="0 0 800 300" class="w-full h-auto max-h-[380px] select-none">
+                class="relative bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-4 overflow-hidden flex items-center justify-center min-h-[200px] w-full">
+                
+                <!-- Relavera #7 (fdn-1) real SVG -->
+                <ng-container *ngIf="activeRelavera.id === 'fdn-1'">
+                  <svg viewBox="0 0 966.8 466.89" class="w-full h-auto max-h-[380px] select-none">
+                    <defs>
+                      <pattern id="svg-grid-7" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5" />
+                      </pattern>
+                      <pattern id="dique-hatch-7" width="12" height="12" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+                        <line x1="0" y1="0" x2="0" y2="12" stroke="rgba(232,138,30,0.12)" stroke-width="0.8" />
+                        <line x1="0" y1="0" x2="12" y2="0" stroke="rgba(232,138,30,0.12)" stroke-width="0.8" />
+                      </pattern>
+                      <pattern id="relaves-hatch-7" width="8" height="8" patternUnits="userSpaceOnUse">
+                        <circle cx="2" cy="2" r="0.8" fill="rgba(202,138,4,0.15)" />
+                        <circle cx="6" cy="6" r="0.8" fill="rgba(202,138,4,0.15)" />
+                      </pattern>
+                    </defs>
 
-                  <defs>
-                    <!-- Cuadrícula técnica CAD de fondo -->
-                    <pattern id="svg-grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5" />
-                    </pattern>
-                    <!-- Trama para el dique (arena/grava compacta) -->
-                    <pattern id="dique-hatch" width="12" height="12" patternTransform="rotate(45 0 0)"
-                      patternUnits="userSpaceOnUse">
-                      <line x1="0" y1="0" x2="0" y2="12" stroke="rgba(232,138,30,0.15)" stroke-width="0.8" />
-                      <line x1="0" y1="0" x2="12" y2="0" stroke="rgba(232,138,30,0.15)" stroke-width="0.8" />
-                    </pattern>
-                    <!-- Trama para los relaves (puntos finos compactados) -->
-                    <pattern id="relaves-hatch" width="8" height="8" patternUnits="userSpaceOnUse">
-                      <circle cx="2" cy="2" r="0.8" fill="rgba(202,138,4,0.18)" />
-                      <circle cx="6" cy="6" r="0.8" fill="rgba(202,138,4,0.18)" />
-                    </pattern>
-                  </defs>
+                    <!-- Background grid -->
+                    <rect width="100%" height="100%" fill="url(#svg-grid-7)" />
 
-                  <!-- Cuadrícula de Fondo -->
-                  <rect width="100%" height="100%" fill="url(#svg-grid)" />
+                    <!-- Legends -->
+                    <text x="15" y="18" fill="#52525b" font-size="8" font-family="monospace">ANÁLISIS DE ESTABILIDAD — SECCIÓN DIQUE AGUAS ARRIBA</text>
+                    <text x="15" y="28" fill="#52525b" font-size="8" font-family="monospace">ESTRUCTURA: {{ activeRelavera.height }} · FSD GLOBAL: {{ activeRelavera.fsd }}</text>
 
-                  <!-- Leyendas técnicas -->
-                  <text x="15" y="18" fill="#52525b" font-size="8" font-family="monospace">ANÁLISIS DE ESTABILIDAD —
-                    SECCIÓN DIQUE AGUAS ARRIBA</text>
-                  <text x="15" y="28" fill="#52525b" font-size="8" font-family="monospace">ESTRUCTURA: {{
-                    activeRelavera.height }} · FSD GLOBAL: {{ activeRelavera.fsd }}</text>
+                    <!-- ═══════ INFRAESTRUCTURA RELAVERA 7 ═══════ -->
+                    <!-- Basamento Rocoso (Cimiento) -->
+                    <polygon points="902.13,101.17 902.32,363 63.96,363 63.96,347.43 64.58,347.22 73.65,346.89 83.47,344.92 91.54,343.89 93.72,343.84 95.71,343.77 110.79,341.37 125.7,338.76 143.71,335.52 155.62,333.54 177.37,329.67 189.58,327.36 209.74,323.82 220.58,321.99 238.88,317.98 241.9,317.23 257.34,313.43 262.85,312.13 276.95,309.1 284.2,307.68 289.97,306.69 292.37,306.28 312.43,302.98 326.96,286.81 331.9,280.71 333.15,278.69 340.39,267.23 345.3,259.09 386.84,247.82 453.36,238.63 460.66,234.02 467.74,227.8 507.06,204.7 516.53,200.47 546.24,184.39 567.96,212.65 569.33,214.43 582.77,231.91 583.56,232.94 638.59,304.53 642.93,304.53 649.62,304.53 653.66,304.53 677.93,304.53 687.93,304.53 723.27,258.57 745.9,229.13 772.42,194.64 849.55,94.31 861.7,93.22 883.48,90.2 884.5,87.55 901.04,100.43 902.13,101.17"
+                      fill="#141416" stroke="#22c55e" stroke-width="1.8" />
 
-                  <!-- ═══════ CAPAS DE SUELO / INFRAESTRUCTURA ═══════ -->
+                    <!-- Cuerpo del Dique -->
+                    <polygon points="208.51,324.04 233.94,307.5 240.8,303.04 254.23,294.3 254.66,294.02 267.97,285.37 268.46,285.04 301.24,263.72 305.95,260.66 307.57,259.6 312.54,256.37 315.76,254.28 316.33,253.91 347.12,233.88 352.33,230.49 360.12,225.43 412.59,191.3 422.81,184.65 426.27,182.4 428.33,181.06 428.97,180.64 429,180.63 429.03,180.61 429.08,180.57 430.77,179.48 435.84,176.17 436.34,175.85 439.75,173.63 490.24,140.79 491.69,140.79 493.25,140.79 494.59,140.79 495.75,140.79 496.78,140.79 497.69,140.79 503.9,140.79 505.46,140.79 511.38,140.79 511.43,140.79 511.48,140.79 511.54,140.79 511.6,140.79 511.68,140.79 511.77,140.79 511.87,140.79 511.99,140.79 512.14,140.79 512.31,140.79 512.53,140.79 512.72,140.79 532.09,165.98 546.24,184.39 516.53,200.47 507.06,204.7 467.74,227.8 460.66,234.02 453.36,238.63 386.84,247.82 345.3,259.09 340.39,267.23 333.15,278.69 331.9,280.71 326.96,286.81 312.43,302.98 292.37,306.28 289.97,306.69 284.2,307.68 276.95,309.1 262.85,312.13 257.34,313.43 241.9,317.23 238.88,317.98 220.58,321.99 209.74,323.82"
+                      fill="url(#dique-hatch-7)" stroke="none" opacity="0.85" />
 
-                  <!-- Basamento Rocoso (Cimiento) -->
-                  <polygon points="0,270 90,260 430,175 530,250 580,250 680,110 740,70 800,70 800,300 0,300"
-                    fill="#141416" stroke="#27272a" stroke-width="1" />
-                  <polyline points="0,270 90,260 430,175 530,250 580,250 680,110 740,70 800,70" fill="none"
-                    stroke="#22c55e" stroke-width="2" />
-                  <text x="700" y="280" fill="#3f3f46" font-size="10" font-weight="bold"
-                    font-family="monospace">Cimiento Rocoso</text>
+                    <!-- Línea de la Corona del Dique (CAD) -->
+                    <polyline points="208.51,324.04 233.94,307.5 240.8,303.04 254.23,294.3 254.66,294.02 267.97,285.37 268.46,285.04 301.24,263.72 305.95,260.66 307.57,259.6 312.54,256.37 315.76,254.28 316.33,253.91 347.12,233.88 352.33,230.49 360.12,225.43 412.59,191.3 422.81,184.65 426.27,182.4 428.33,181.06 428.97,180.64 429,180.63 429.03,180.61 429.08,180.57 430.77,179.48 435.84,176.17 436.34,175.85 439.75,173.63 490.24,140.79 491.69,140.79 493.25,140.79 494.59,140.79 495.75,140.79 496.78,140.79 497.69,140.79 503.9,140.79 505.46,140.79 511.38,140.79 511.43,140.79 511.48,140.79 511.54,140.79 511.6,140.79 511.68,140.79 511.77,140.79 511.87,140.79 511.99,140.79 512.14,140.79 512.31,140.79 512.53,140.79 512.72,140.79 532.09,165.98 546.24,184.39"
+                      fill="none" stroke="#22c55e" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.75" />
 
-                  <!-- Relaves (Tailings) -->
-                  <polygon points="450,125 475,170 530,250 580,250 680,110 740,70 600,125"
-                    fill="rgba(161,161,170,0.1)" />
-                  <polygon points="450,125 475,170 530,250 580,250 680,110 740,70 600,125" fill="url(#relaves-hatch)"
-                    stroke="rgba(202,138,4,0.3)" stroke-width="1" />
-                  <text x="590" y="180" fill="#71717a" font-size="11" font-weight="bold"
-                    font-family="monospace">RELAVES</text>
+                    <!-- Relaves -->
+                    <polygon points="518.71,148.59 807.82,148.59 772.42,194.64 745.9,229.13 723.27,258.57 687.93,304.53 677.93,304.53 653.66,304.53 649.62,304.53 642.93,304.53 638.59,304.53 583.56,232.94 582.77,231.91 569.33,214.43 567.96,212.65 546.24,184.39 532.09,165.98"
+                      fill="url(#relaves-hatch-7)" opacity="0.6" />
 
-                  <!-- Espejo de Agua Sobrenadante -->
-                  <polygon points="440,110 680,110 600,125 450,125" fill="rgba(6,182,212,0.22)" stroke="#06b6d4"
-                    stroke-width="1.2" />
+                    <!-- Espejo de agua -->
+                    <line x1="518.71" y1="148.59" x2="807.82" y2="148.59" stroke="#06b6d4" stroke-width="2" />
 
-                  <!-- Cuerpo del Dique -->
-                  <polygon points="90,260 390,70 420,70 475,170 430,175" fill="rgba(232,138,30,0.06)" />
-                  <polygon points="90,260 390,70 420,70 475,170 430,175" fill="url(#dique-hatch)" stroke="#E88A1E"
-                    stroke-width="1.8" />
-                  <text x="270" y="150" fill="#e4e4e7" font-size="11" font-weight="bold"
-                    font-family="monospace">DIQUE</text>
+                    <!-- Textos descriptivos y anotaciones originales de CAD -->
+                    <text x="644" y="225" fill="#a1a1aa" font-size="10" font-weight="bold" font-family="monospace">RELAVES</text>
+                    <text x="447" y="200" fill="#e4e4e7" font-size="10" font-weight="bold" font-family="monospace">DIQUE</text>
+                    <text x="597.64" y="143.95" fill="#a1a1aa" font-size="8.2" font-family="monospace" font-weight="bold">Nivel Máximo de Relave: 136 m</text>
+                    <text x="648.11" y="298.21" fill="#a1a1aa" font-size="8.2" font-family="monospace" font-weight="bold">Fondo</text>
+                    <text x="565.84" y="206.06" fill="#71717a" font-size="8.2" font-family="monospace" font-weight="bold">1H:1V</text>
+                    <text x="320.94" y="209.42" fill="#71717a" font-size="8.2" font-family="monospace" font-weight="bold">2H:1V</text>
 
-                  <!-- ═══════ LÍNEAS DE REFERENCIA Y LEYENDAS GEOMÉTRICAS ═══════ -->
+                    <!-- Multileaders originales -->
+                    <!-- Nivel de Fundación Derecho -->
+                    <g opacity="0.85">
+                      <text x="675.77" y="323.93" fill="#a1a1aa" font-size="8.2" font-family="monospace" font-weight="bold">Nivel de Fundación</text>
+                      <line x1="667.67" y1="320.24" x2="674.69" y2="320.24" stroke="#06b6d4" stroke-width="0.8" />
+                      <line x1="654.13" y1="306.98" x2="667.67" y2="320.24" stroke="#06b6d4" stroke-width="0.8" />
+                      <polygon fill="#06b6d4" points="653.72,307.4 651.62,304.53 654.54,306.56" />
+                    </g>
+                    <!-- Nivel de Fundación Izquierdo -->
+                    <g opacity="0.85">
+                      <text x="336.56" y="322.38" fill="#a1a1aa" font-size="8.2" font-family="monospace" font-weight="bold">Nivel de Fundación</text>
+                      <line x1="328.46" y1="318.69" x2="335.48" y2="318.69" stroke="#06b6d4" stroke-width="0.8" />
+                      <line x1="314.91" y1="305.43" x2="328.46" y2="318.69" stroke="#06b6d4" stroke-width="0.8" />
+                      <polygon fill="#06b6d4" points="314.5,305.85 312.4,302.98 315.32,305.02" />
+                    </g>
+                    <!-- Corona de Dique -->
+                    <g opacity="0.85">
+                      <text x="376.01" y="125.88" fill="#a1a1aa" font-size="8.2" font-family="monospace" font-weight="bold">Corona de Dique: 138 m</text>
+                      <line x1="480.37" y1="127.21" x2="473.35" y2="127.21" stroke="#06b6d4" stroke-width="0.8" />
+                      <line x1="488.16" y1="137.95" x2="480.37" y2="127.21" stroke="#06b6d4" stroke-width="0.8" />
+                      <line x1="376.39" y1="127.21" x2="473.35" y2="127.21" stroke="#06b6d4" stroke-width="0.8" />
+                      <polygon fill="#06b6d4" points="488.63,137.61 490.22,140.79 487.69,138.29" />
+                    </g>
 
-                  <!-- Corona de Dique -->
-                  <line x1="390" y1="70" x2="420" y2="70" stroke="#ffffff" stroke-width="2" />
-                  <polyline points="405,70 370,40 300,40" fill="none" stroke="#52525b" stroke-width="0.8"
-                    stroke-dasharray="2 2" />
-                  <text x="295" y="36" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="end">Corona de
-                    Dique: 140 m</text>
+                    <!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
+                    <!-- ZONA CORONA -->
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
+                      <polygon points="480,128 520,128 520,153 480,153"
+                        [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
+                        [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
+                      <text x="500" y="148" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
+                        [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
+                      <text x="500" y="120" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
+                    </g>
 
-                  <!-- Nivel de Fundación (Izquierda) -->
-                  <polyline points="250,212 210,235 150,235" fill="none" stroke="#52525b" stroke-width="0.8"
-                    stroke-dasharray="2 2" />
-                  <circle cx="250" cy="212" r="2" fill="#22c55e" />
-                  <text x="145" y="231" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="end">Nivel de
-                    Fundación</text>
+                    <!-- ZONA TALUD -->
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
+                      <polygon points="210,315 480,138 495,153 225,330"
+                        [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
+                        [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
+                      <text x="350" y="225" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
+                        [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
+                      <text x="350" y="210" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD MED.</text>
+                    </g>
 
-                  <!-- Nivel de Fundación (Derecha / Fondo) -->
-                  <polyline points="555,250 590,270 650,270" fill="none" stroke="#52525b" stroke-width="0.8"
-                    stroke-dasharray="2 2" />
-                  <circle cx="555" cy="250" r="2" fill="#22c55e" />
-                  <text x="655" y="266" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="start">Nivel
-                    de Fundación</text>
+                    <!-- ZONA PIE -->
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
+                      <polygon points="175,305 235,305 235,335 175,335"
+                        [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
+                        [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
+                      <text x="205" y="325" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
+                        [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
+                      <text x="205" y="295" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
+                    </g>
 
-                  <!-- Nivel Máximo de Relave -->
-                  <polyline points="560,110 520,85 450,85" fill="none" stroke="#52525b" stroke-width="0.8"
-                    stroke-dasharray="2 2" />
-                  <circle cx="560" cy="110" r="2" fill="#06b6d4" />
-                  <text x="445" y="81" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="end">Nivel
-                    Máximo de Relave: 136 m</text>
+                    <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
+                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
+                        class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
+                        [class.stroke-yellow-500]="sensor.status === 'alerta'"
+                        [class.stroke-zinc-600]="sensor.status === 'inactivo'">
+                      </circle>
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="6.5"
+                        [class.fill-green-500]="sensor.status === 'normal'"
+                        [class.fill-yellow-500]="sensor.status === 'alerta'"
+                        [class.fill-zinc-600]="sensor.status === 'inactivo'"
+                        [class.stroke-white]="selectedSensor?.id === sensor.id"
+                        [class.stroke-transparent]="selectedSensor?.id !== sensor.id" stroke-width="2">
+                      </circle>
+                    </g>
+                  </svg>
+                </ng-container>
 
-                  <!-- Fondo -->
-                  <polyline points="555,250 520,270 460,270" fill="none" stroke="#52525b" stroke-width="0.8"
-                    stroke-dasharray="2 2" />
-                  <text x="455" y="266" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="end">Fondo:
-                    110 m</text>
+                <!-- Relavera #5 (ponce-sur) real SVG -->
+                <ng-container *ngIf="activeRelavera.id === 'ponce-sur'">
+                  <svg viewBox="0 0 966.8 466.89" class="w-full h-auto max-h-[380px] select-none">
+                    <defs>
+                      <pattern id="svg-grid-5" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5" />
+                      </pattern>
+                      <pattern id="dique-hatch-5" width="12" height="12" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+                        <line x1="0" y1="0" x2="0" y2="12" stroke="rgba(232,138,30,0.12)" stroke-width="0.8" />
+                        <line x1="0" y1="0" x2="12" y2="0" stroke="rgba(232,138,30,0.12)" stroke-width="0.8" />
+                      </pattern>
+                      <pattern id="relaves-hatch-5" width="8" height="8" patternUnits="userSpaceOnUse">
+                        <circle cx="2" cy="2" r="0.8" fill="rgba(202,138,4,0.15)" />
+                        <circle cx="6" cy="6" r="0.8" fill="rgba(202,138,4,0.15)" />
+                      </pattern>
+                    </defs>
 
-                  <!-- Pendiente 2H:1V (Izquierda) -->
-                  <text x="210" y="150" fill="#a1a1aa" font-size="9" font-family="monospace"
-                    font-weight="bold">2H:1V</text>
+                    <!-- Background grid -->
+                    <rect width="100%" height="100%" fill="url(#svg-grid-5)" />
 
-                  <!-- Pendiente 1H:1V (Derecha) -->
-                  <text x="465" y="130" fill="#a1a1aa" font-size="9" font-family="monospace"
-                    font-weight="bold">1H:1V</text>
+                    <!-- Legends -->
+                    <text x="15" y="18" fill="#52525b" font-size="8" font-family="monospace">ANÁLISIS DE ESTABILIDAD — SECCIÓN DIQUE ESCOLLERA</text>
+                    <text x="15" y="28" fill="#52525b" font-size="8" font-family="monospace">ESTRUCTURA: {{ activeRelavera.height }} · FSD GLOBAL: {{ activeRelavera.fsd }}</text>
 
-                  <!-- Curva de falla circular de Bishop (decorativa adaptada) -->
-                  <path d="M 125,238 Q 280,180 415,70" fill="none" stroke="#ef4444" stroke-width="1.2"
-                    stroke-dasharray="5 3" opacity="0.4" />
+                    <!-- ═══════ INFRAESTRUCTURA RELAVERA 5 ═══════ -->
+                    <!-- Basamento Rocoso (Cimiento) -->
+                    <polygon points="925.42,232.03 925.42,354.57 48.49,354.57 48.49,88.62 100.8,88.62 122.77,100.71 146.01,100.56 196.4,150.93 199.52,154.04 206.57,161.09 209.39,163.91 209.45,163.97 212.19,166.71 309.43,263.9 321.26,275.72 329.76,275.72 360.01,275.72 367.58,275.72 383.44,275.72 384.68,274.49 508.97,150.73 508.98,150.72 517.29,142.44 520.33,139.42 524.88,134.88 528.07,131.7 538.44,121.38 541.88,117.95 559.35,100.56 618.28,100.56 628.25,107.47 667.66,135.12 688.71,135.97 690.83,136.11 693.82,137.55 705.67,144.99 716.83,145.66 732.35,146.16 750.93,159.89 751.64,160.43 774.76,161.97 775.14,162 776.05,162.72 796.11,178.91 803.38,178.93 816.13,178.81 844.92,197.54 881.37,219 887.35,221.38 921.79,230.78"
+                      fill="#141416" stroke="#22c55e" stroke-width="1.8" />
 
-                  <!-- ═══════ ZONAS DE FALLA CLICKABLES (OVERLAYS) ═══════ -->
+                    <!-- Cuerpo del Dique (Hatch) -->
+                    <polygon points="321.26,275.72 383.44,275.72 559.35,100.56 618.28,100.56 628.25,107.47 667.66,135.12 508.97,150.73"
+                      fill="url(#dique-hatch-5)" stroke="none" opacity="0.85" />
 
-                  <!-- ZONA CORONA -->
-                  <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
-                    <polygon points="385,65 425,65 430,85 390,85"
-                      [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
-                      [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
-                      [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
-                    <text x="408" y="80" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle"
-                      [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs
-                      }}</text>
-                    <text x="408" y="60" font-size="6" font-family="monospace" fill="#d4d4d8" text-anchor="middle"
-                      opacity="0.85">CORONA</text>
-                  </g>
+                    <!-- Relaves -->
+                    <polygon points="122.77,100.71 146.01,100.56 196.4,150.93 209.45,163.97 309.43,263.9 321.26,275.72 508.97,150.73 520.33,139.42 559.35,100.56"
+                      fill="url(#relaves-hatch-5)" opacity="0.6" />
 
-                  <!-- ZONA TALUD -->
-                  <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
-                    <polygon points="130,230 380,75 390,95 140,250"
-                      [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
-                      [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
-                      [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
-                    <text x="260" y="165" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle"
-                      [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs
-                      }}</text>
-                    <text x="260" y="153" font-size="6" font-family="monospace" fill="#d4d4d8" text-anchor="middle"
-                      opacity="0.85">TALUD MED.</text>
-                  </g>
+                    <!-- Espejo de agua -->
+                    <line x1="158.24" y1="112.79" x2="547.07" y2="112.79" stroke="#06b6d4" stroke-width="2" />
 
-                  <!-- ZONA PIE -->
-                  <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
-                    <polygon points="85,250 140,220 150,240 95,270" [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
-                      [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
-                      [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
-                    <text x="117" y="248" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle"
-                      [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
-                    <text x="117" y="235" font-size="6" font-family="monospace" fill="#d4d4d8" text-anchor="middle"
-                      opacity="0.85">PIE</text>
-                  </g>
+                    <!-- Textos descriptivos y anotaciones originales de CAD -->
+                    <text x="325" y="213" fill="#a1a1aa" font-size="10" font-weight="bold" font-family="monospace">RELAVES</text>
+                    <text x="574" y="125" fill="#e4e4e7" font-size="10" font-weight="bold" font-family="monospace">DIQUE</text>
+                    <text x="570" y="137" fill="#a1a1aa" font-size="8" font-family="monospace">ACTUAL</text>
+                    <text x="294.41" y="106.55" fill="#a1a1aa" font-size="8.2" font-family="monospace" font-weight="bold">Nivel Máximo de Relave</text>
+                    <text x="333.68" y="266.80" fill="#a1a1aa" font-size="8.2" font-family="monospace" font-weight="bold">Fondo</text>
+                    <text x="455.46" y="215.78" fill="#71717a" font-size="8.2" font-family="monospace" font-weight="bold">1H:1V</text>
+                    <text x="217.11" y="215.78" fill="#71717a" font-size="8.2" font-family="monospace" font-weight="bold">1H:1V</text>
 
-                  <!-- ═══════ SENSORES GEOTÉCNICOS INTERACTIVOS ═══════ -->
-                  <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
-                    <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="9" fill="none" stroke-width="2"
-                      class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
-                      [class.stroke-yellow-500]="sensor.status === 'alerta'"
-                      [class.stroke-zinc-600]="sensor.status === 'inactivo'">
-                    </circle>
-                    <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="5.5"
-                      [class.fill-green-500]="sensor.status === 'normal'"
-                      [class.fill-yellow-500]="sensor.status === 'alerta'"
-                      [class.fill-zinc-600]="sensor.status === 'inactivo'"
-                      [class.stroke-white]="selectedSensor?.id === sensor.id"
-                      [class.stroke-transparent]="selectedSensor?.id !== sensor.id" stroke-width="1.5">
-                    </circle>
-                  </g>
+                    <!-- Multileaders originales -->
+                    <!-- Nivel de Fundación -->
+                    <g opacity="0.85">
+                      <text x="412.96" y="295.24" fill="#a1a1aa" font-size="8.2" font-family="monospace" font-weight="bold">Nivel de Fundación</text>
+                      <line x1="403.16" y1="290.77" x2="411.65" y2="290.77" stroke="#06b6d4" stroke-width="0.8" />
+                      <line x1="386.82" y1="278.30" x2="403.16" y2="290.77" stroke="#06b6d4" stroke-width="0.8" />
+                      <polygon fill="#06b6d4" points="386.39,278.86 383.44,275.72 387.25,277.73" />
+                    </g>
+                    <!-- Corona de Dique -->
+                    <g opacity="0.85">
+                      <text x="609.73" y="81.02" fill="#a1a1aa" font-size="8.2" font-family="monospace" font-weight="bold">Corona de Dique</text>
+                      <line x1="599.57" y1="78.13" x2="608.07" y2="78.13" stroke="#06b6d4" stroke-width="0.8" />
+                      <line x1="590.65" y1="96.73" x2="599.57" y2="78.13" stroke="#06b6d4" stroke-width="0.8" />
+                      <polygon fill="#06b6d4" points="591.29,97.04 588.81,100.56 590.01,96.43" />
+                    </g>
 
-                </svg>
+                    <!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
+                    <!-- ZONA CORONA -->
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
+                      <polygon points="545,90 625,90 635,115 545,115"
+                        [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
+                        [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
+                      <text x="585" y="110" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
+                        [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
+                      <text x="585" y="82" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
+                    </g>
+
+                    <!-- ZONA TALUD -->
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
+                      <polygon points="375,260 550,85 570,105 395,285"
+                        [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
+                        [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
+                      <text x="470" y="175" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
+                        [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
+                      <text x="470" y="160" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD MED.</text>
+                    </g>
+
+                    <!-- ZONA PIE -->
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
+                      <polygon points="300,250 375,250 375,290 300,290"
+                        [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
+                        [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
+                      <text x="337" y="275" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
+                        [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
+                      <text x="337" y="243" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
+                    </g>
+
+                    <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
+                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
+                        class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
+                        [class.stroke-yellow-500]="sensor.status === 'alerta'"
+                        [class.stroke-zinc-600]="sensor.status === 'inactivo'">
+                      </circle>
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="6.5"
+                        [class.fill-green-500]="sensor.status === 'normal'"
+                        [class.fill-yellow-500]="sensor.status === 'alerta'"
+                        [class.fill-zinc-600]="sensor.status === 'inactivo'"
+                        [class.stroke-white]="selectedSensor?.id === sensor.id"
+                        [class.stroke-transparent]="selectedSensor?.id !== sensor.id" stroke-width="2">
+                      </circle>
+                    </g>
+                  </svg>
+                </ng-container>
+
+                <!-- Relavera #6 (mirador) real SVG -->
+                <ng-container *ngIf="activeRelavera.id === 'mirador'">
+                  <svg viewBox="0 0 966.8 466.89" class="w-full h-auto max-h-[380px] select-none">
+                    <defs>
+                      <pattern id="svg-grid-6" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5" />
+                      </pattern>
+                      <pattern id="dique-hatch-6" width="12" height="12" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+                        <line x1="0" y1="0" x2="0" y2="12" stroke="rgba(232,138,30,0.12)" stroke-width="0.8" />
+                        <line x1="0" y1="0" x2="12" y2="0" stroke="rgba(232,138,30,0.12)" stroke-width="0.8" />
+                      </pattern>
+                      <pattern id="relaves-hatch-6" width="8" height="8" patternUnits="userSpaceOnUse">
+                        <circle cx="2" cy="2" r="0.8" fill="rgba(202,138,4,0.15)" />
+                        <circle cx="6" cy="6" r="0.8" fill="rgba(202,138,4,0.15)" />
+                      </pattern>
+                    </defs>
+
+                    <!-- Background grid -->
+                    <rect width="100%" height="100%" fill="url(#svg-grid-6)" />
+
+                    <!-- Legends -->
+                    <text x="15" y="18" fill="#52525b" font-size="8" font-family="monospace">ANÁLISIS DE ESTABILIDAD — SECCIÓN CLAUSURADA</text>
+                    <text x="15" y="28" fill="#52525b" font-size="8" font-family="monospace">ESTRUCTURA: {{ activeRelavera.height }} · FSD GLOBAL: {{ activeRelavera.fsd }}</text>
+
+                    <!-- ═══════ INFRAESTRUCTURA RELAVERA 6 ═══════ -->
+                    <!-- Basamento Rocoso (Cimiento) -->
+                    <polygon points="825.21,178 832.96,182.05 838.98,183.73 840.85,185 953.07,213.49 953.07,401.55 42.98,401.55 42.98,54.59 42.98,46.8 65.79,46.59 65.83,46.59 65.86,46.59 66.17,46.58 83.98,64.28 84.98,65.27 85.94,66.22 86.96,67.24 87.1,67.38 87.19,67.47 87.34,67.62 88.79,69.05 213.05,192.49 282.92,261.89 356.33,261.89 397.45,261.89 435.84,223.62 580.2,79.66 588.61,71.28 590.84,69.05 590.89,69 590.9,69 590.9,69 590.9,68.99 591,68.9 591.03,68.86 591.11,68.78 592.16,67.74 592.64,67.26 594.07,65.83 611.24,65.83 618.18,65.83 670.73,111.19 685.19,111.19 784.84,168.21 784.95,168.25 823.98,178.13"
+                      fill="#141416" stroke="#22c55e" stroke-width="1.8" />
+
+                    <!-- Cuerpo del Dique -->
+                    <polygon points="356.33,261.89 397.45,261.89 435.84,223.62 580.2,79.66 594.07,65.83 618.18,65.83 670.73,111.19 685.19,111.19"
+                      fill="url(#dique-hatch-6)" stroke="none" opacity="0.85" />
+
+                    <!-- Relaves -->
+                    <polygon points="88.79,69.05 213.05,192.49 282.92,261.89 356.33,261.89 435.84,223.62 580.2,79.66 594.07,65.83"
+                      fill="url(#relaves-hatch-6)" opacity="0.6" />
+
+                    <!-- Espejo de agua -->
+                    <line x1="584.4" y1="75.47" x2="95.25" y2="75.47" stroke="#06b6d4" stroke-width="2" />
+
+                    <!-- Textos descriptivos y anotaciones originales de CAD -->
+                    <text x="316" y="164" fill="#a1a1aa" font-size="10" font-weight="bold" font-family="monospace">RELAVES</text>
+                    <text x="592" y="132" fill="#e4e4e7" font-size="10" font-weight="bold" font-family="monospace">DIQUE</text>
+                    <text x="588" y="144" fill="#a1a1aa" font-size="8" font-family="monospace">ACTUAL</text>
+                    <text x="298.60" y="69.39" fill="#a1a1aa" font-size="8.2" font-family="monospace" font-weight="bold">Nivel Máximo de Relave</text>
+                    <text x="320.72" y="254.02" fill="#a1a1aa" font-size="8.2" font-family="monospace" font-weight="bold">Fondo</text>
+                    <text x="504.79" y="166.58" fill="#71717a" font-size="8.2" font-family="monospace" font-weight="bold">1H:1V</text>
+                    <text x="157.26" y="181.96" fill="#71717a" font-size="8.2" font-family="monospace" font-weight="bold">1H:1V</text>
+
+                    <!-- Multileaders originales -->
+                    <!-- Nivel de Fundación -->
+                    <g opacity="0.85">
+                      <text x="427.60" y="281.83" fill="#a1a1aa" font-size="8.2" font-family="monospace" font-weight="bold">Nivel de Fundación</text>
+                      <line x1="417.59" y1="277.27" x2="426.27" y2="277.27" stroke="#06b6d4" stroke-width="0.8" />
+                      <line x1="400.90" y1="264.53" x2="417.59" y2="277.27" stroke="#06b6d4" stroke-width="0.8" />
+                      <polygon fill="#06b6d4" points="400.46,265.10 397.45,261.89 401.34,263.95" />
+                    </g>
+                    <!-- Corona de Dique -->
+                    <g opacity="0.85">
+                      <text x="628.20" y="46.02" fill="#a1a1aa" font-size="8.2" font-family="monospace" font-weight="bold">Corona de Dique</text>
+                      <line x1="617.82" y1="43.06" x2="626.50" y2="43.06" stroke="#06b6d4" stroke-width="0.8" />
+                      <line x1="608.71" y1="62.07" x2="617.82" y2="43.06" stroke="#06b6d4" stroke-width="0.8" />
+                      <polygon fill="#06b6d4" points="609.36,62.38 606.83,65.98 608.06,61.76" />
+                    </g>
+
+                    <!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
+                    <!-- ZONA CORONA -->
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
+                      <polygon points="580,50 630,50 630,75 580,75"
+                        [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
+                        [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
+                      <text x="605" y="70" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
+                        [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
+                      <text x="605" y="42" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
+                    </g>
+
+                    <!-- ZONA TALUD -->
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
+                      <polygon points="425,210 575,65 595,80 445,225"
+                        [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
+                        [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
+                      <text x="510" y="150" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
+                        [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
+                      <text x="510" y="135" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD MED.</text>
+                    </g>
+
+                    <!-- ZONA PIE -->
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
+                      <polygon points="340,245 425,245 425,275 340,275"
+                        [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
+                        [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
+                      <text x="382" y="265" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
+                        [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
+                      <text x="382" y="235" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
+                    </g>
+
+                    <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
+                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
+                        class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
+                        [class.stroke-yellow-500]="sensor.status === 'alerta'"
+                        [class.stroke-zinc-600]="sensor.status === 'inactivo'">
+                      </circle>
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="6.5"
+                        [class.fill-green-500]="sensor.status === 'normal'"
+                        [class.fill-yellow-500]="sensor.status === 'alerta'"
+                        [class.fill-zinc-600]="sensor.status === 'inactivo'"
+                        [class.stroke-white]="selectedSensor?.id === sensor.id"
+                        [class.stroke-transparent]="selectedSensor?.id !== sensor.id" stroke-width="2">
+                      </circle>
+                    </g>
+                  </svg>
+                </ng-container>
+
+                <!-- Fallback original generic SVG structure for other relaveras -->
+                <ng-container *ngIf="activeRelavera.id !== 'fdn-1' && activeRelavera.id !== 'ponce-sur' && activeRelavera.id !== 'mirador'">
+                  <svg viewBox="0 0 800 300" class="w-full h-auto max-h-[380px] select-none">
+                    <defs>
+                      <pattern id="svg-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5" />
+                      </pattern>
+                      <pattern id="dique-hatch" width="12" height="12" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+                        <line x1="0" y1="0" x2="0" y2="12" stroke="rgba(232,138,30,0.15)" stroke-width="0.8" />
+                        <line x1="0" y1="0" x2="12" y2="0" stroke="rgba(232,138,30,0.15)" stroke-width="0.8" />
+                      </pattern>
+                      <pattern id="relaves-hatch" width="8" height="8" patternUnits="userSpaceOnUse">
+                        <circle cx="2" cy="2" r="0.8" fill="rgba(202,138,4,0.18)" />
+                        <circle cx="6" cy="6" r="0.8" fill="rgba(202,138,4,0.18)" />
+                      </pattern>
+                    </defs>
+
+                    <!-- Background grid -->
+                    <rect width="100%" height="100%" fill="url(#svg-grid)" />
+
+                    <!-- Legends -->
+                    <text x="15" y="18" fill="#52525b" font-size="8" font-family="monospace">ANÁLISIS DE ESTABILIDAD — SECCIÓN DIQUE AGUAS ARRIBA</text>
+                    <text x="15" y="28" fill="#52525b" font-size="8" font-family="monospace">ESTRUCTURA: {{ activeRelavera.height }} · FSD GLOBAL: {{ activeRelavera.fsd }}</text>
+
+                    <!-- ═══════ CAPAS DE SUELO / INFRAESTRUCTURA ═══════ -->
+                    <!-- Basamento Rocoso (Cimiento) -->
+                    <polygon points="0,270 90,260 430,175 530,250 580,250 680,110 740,70 800,70 800,300 0,300"
+                      fill="#141416" stroke="#27272a" stroke-width="1" />
+                    <polyline points="0,270 90,260 430,175 530,250 580,250 680,110 740,70 800,70" fill="none"
+                      stroke="#22c55e" stroke-width="2" />
+                    <text x="700" y="280" fill="#3f3f46" font-size="10" font-weight="bold" font-family="monospace">Cimiento Rocoso</text>
+
+                    <!-- Relaves (Tailings) -->
+                    <polygon points="450,125 475,170 530,250 580,250 680,110 740,70 600,125" fill="rgba(161,161,170,0.1)" />
+                    <polygon points="450,125 475,170 530,250 580,250 680,110 740,70 600,125" fill="url(#relaves-hatch)"
+                      stroke="rgba(202,138,4,0.3)" stroke-width="1" />
+                    <text x="590" y="180" fill="#71717a" font-size="11" font-weight="bold" font-family="monospace">RELAVES</text>
+
+                    <!-- Espejo de Agua Sobrenadante -->
+                    <polygon points="440,110 680,110 600,125 450,125" fill="rgba(6,182,212,0.22)" stroke="#06b6d4" stroke-width="1.2" />
+
+                    <!-- Cuerpo del Dique -->
+                    <polygon points="90,260 390,70 420,70 475,170 430,175" fill="rgba(232,138,30,0.06)" />
+                    <polygon points="90,260 390,70 420,70 475,170 430,175" fill="url(#dique-hatch)" stroke="none" />
+                    <text x="270" y="150" fill="#e4e4e7" font-size="11" font-weight="bold" font-family="monospace">DIQUE</text>
+
+                    <!-- ═══════ LÍNEAS DE REFERENCIA Y LEYENDAS GEOMÉTRICAS ═══════ -->
+                    <!-- Corona de Dique -->
+                    <line x1="390" y1="70" x2="420" y2="70" stroke="#ffffff" stroke-width="2" />
+                    <polyline points="405,70 370,40 300,40" fill="none" stroke="#52525b" stroke-width="0.8" stroke-dasharray="2 2" />
+                    <text x="295" y="36" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="end">Corona de Dique: 140 m</text>
+
+                    <!-- Nivel de Fundación (Izquierda) -->
+                    <polyline points="250,212 210,235 150,235" fill="none" stroke="#52525b" stroke-width="0.8" stroke-dasharray="2 2" />
+                    <circle cx="250" cy="212" r="2" fill="#22c55e" />
+                    <text x="145" y="231" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="end">Nivel de Fundación</text>
+
+                    <!-- Nivel de Fundación (Derecha / Fondo) -->
+                    <polyline points="555,250 590,270 650,270" fill="none" stroke="#52525b" stroke-width="0.8" stroke-dasharray="2 2" />
+                    <circle cx="555" cy="250" r="2" fill="#22c55e" />
+                    <text x="655" y="266" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="start">Nivel de Fundación</text>
+
+                    <!-- Nivel Máximo de Relave -->
+                    <polyline points="560,110 520,85 450,85" fill="none" stroke="#52525b" stroke-width="0.8" stroke-dasharray="2 2" />
+                    <circle cx="560" cy="110" r="2" fill="#06b6d4" />
+                    <text x="445" y="81" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="end">Nivel Máximo de Relave: 136 m</text>
+
+                    <!-- Fondo -->
+                    <polyline points="555,250 520,270 460,270" fill="none" stroke="#52525b" stroke-width="0.8" stroke-dasharray="2 2" />
+                    <text x="455" y="266" fill="#a1a1aa" font-size="8" font-family="monospace" text-anchor="end">Fondo: 110 m</text>
+
+                    <!-- Pendientes -->
+                    <text x="210" y="150" fill="#a1a1aa" font-size="9" font-family="monospace" font-weight="bold">2H:1V</text>
+                    <text x="465" y="130" fill="#a1a1aa" font-size="9" font-family="monospace" font-weight="bold">1H:1V</text>
+
+                    <!-- Curva de Bishop -->
+                    <path d="M 125,238 Q 280,180 415,70" fill="none" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.4" />
+
+                    <!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
+                    <!-- ZONA CORONA -->
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
+                      <polygon points="385,65 425,65 430,85 390,85"
+                        [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
+                        [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
+                      <text x="408" y="80" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle"
+                        [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
+                      <text x="408" y="60" font-size="6" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
+                    </g>
+
+                    <!-- ZONA TALUD -->
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
+                      <polygon points="130,230 380,75 390,95 140,250"
+                        [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
+                        [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
+                      <text x="260" y="165" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle"
+                        [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
+                      <text x="260" y="153" font-size="6" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD MED.</text>
+                    </g>
+
+                    <!-- ZONA PIE -->
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
+                      <polygon points="85,250 140,220 150,240 95,270" [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
+                        [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
+                      <text x="117" y="248" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle"
+                        [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
+                      <text x="117" y="235" font-size="6" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
+                    </g>
+
+                    <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
+                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="9" fill="none" stroke-width="2"
+                        class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
+                        [class.stroke-yellow-500]="sensor.status === 'alerta'"
+                        [class.stroke-zinc-600]="sensor.status === 'inactivo'">
+                      </circle>
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="5.5"
+                        [class.fill-green-500]="sensor.status === 'normal'"
+                        [class.fill-yellow-500]="sensor.status === 'alerta'"
+                        [class.fill-zinc-600]="sensor.status === 'inactivo'"
+                        [class.stroke-white]="selectedSensor?.id === sensor.id"
+                        [class.stroke-transparent]="selectedSensor?.id !== sensor.id" stroke-width="1.5">
+                      </circle>
+                    </g>
+                  </svg>
+                </ng-container>
+
               </div>
 
 
@@ -523,10 +853,7 @@
                       <div class="w-5 h-3 rounded-sm bg-green-500/70 flex-shrink-0"></div>
                       <span class="text-[9px] text-zinc-400">≥ 1.50 — Seguro</span>
                     </div>
-                    <div class="flex items-center gap-2">
-                      <div class="w-5 h-3 rounded-sm bg-yellow-500/70 flex-shrink-0"></div>
-                      <span class="text-[9px] text-zinc-400">1.00–1.49 — Aceptable</span>
-                    </div>
+
                     <div class="flex items-center gap-2">
                       <div class="w-5 h-3 rounded-sm bg-red-500/70 flex-shrink-0"></div>
                       <span class="text-[9px] text-zinc-400">&lt; 1.00 — Monitoreo</span>

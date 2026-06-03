@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CloudinaryService, CloudinaryUploadResponse } from '../../core/services/cloudinary.services';
+import { CloudinaryService, R2UploadResponse } from '../../core/services/cloudinary.services';
 import { GalleryService } from '../../core/services/gallery.service';
 import { CloudinaryImage } from '../../core/models/gallery.model';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
@@ -34,7 +34,7 @@ export class UploadComponent {
   ];
 
   constructor(
-    private cloudinaryService: CloudinaryService,
+    private imageService: CloudinaryService,
     private galleryService: GalleryService
   ) {}
 
@@ -72,29 +72,29 @@ export class UploadComponent {
     this.uploadProgress = 0;
 
     try {
-      const response = await this.cloudinaryService.uploadImage(
+      const response: R2UploadResponse = await this.imageService.uploadImage(
         file,
         this.selectedFolder,
         (progress) => { this.uploadProgress = progress; }
       );
 
       const newImage: CloudinaryImage = {
-        publicId: response.public_id,
-        title: response.original_filename || 'Nueva imagen',
+        publicId: response.key,
+        title: file.name.replace(/\.[^/.]+$/, '') || 'Nueva imagen',
         description: `Subida el ${new Date().toLocaleDateString()}`,
         folder: this.selectedFolder.split('/').pop() || 'general',
         tags: [this.selectedFolder.split('/').pop() || 'general'],
-        width: response.width,
-        height: response.height,
-        format: response.format,
-        createdAt: new Date(response.created_at),
-        secureUrl: response.secure_url
+        width: 0,
+        height: 0,
+        format: file.name.split('.').pop() || 'jpg',
+        createdAt: new Date(),
+        secureUrl: response.url
       };
 
       // Registro en memoria solo para mostrar en la sesión actual
       this.uploadedImages.unshift(newImage);
 
-      // Invalida el cache para que las secciones recarguen desde Cloudinary
+      // Invalida el cache para que las secciones recarguen desde R2
       await this.galleryService.reload();
 
       this.imageUploaded.emit();
@@ -120,6 +120,6 @@ export class UploadComponent {
   }
 
   getImageUrl(publicId: string): string {
-    return this.cloudinaryService.getThumbnailUrl(publicId, 300);
+    return this.imageService.getThumbnailUrl(publicId, 300);
   }
 }

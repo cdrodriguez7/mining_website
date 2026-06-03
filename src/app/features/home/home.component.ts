@@ -13,6 +13,8 @@ import { NewsService, NewsItem } from '../../core/services/news.service';
 import { Subscription } from 'rxjs';
 import { ImagePreviewComponent } from '../../shared/components/image-preview/image-preview.component';
 
+import { environment } from '../../../environments/environment';
+
 import {
   Chart,
   LineController,
@@ -66,8 +68,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private newsService = inject(NewsService);
   private cdr = inject(ChangeDetectorRef);
 
+  // Obtener URL de R2
+  private r2BaseUrl = environment.r2.publicUrl.replace(/\/$/, '');
 
-  mapImagePath = 'assets/planpromin_sa.png';
+  mapImagePath = `${this.r2BaseUrl}/assets/planpromin_sa.png`;
+  videoPath = `${this.r2BaseUrl}/assets/pag-web-3.mp4`;
 
   previewVisible = false;
   previewUrl = '';
@@ -121,9 +126,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   // ── Tarjetas de servicio ──────────────────────────────────────────────────
   serviceCardImages: CloudinaryImage[] = [];
 
-  activeProcessTab: 'acopio' | 'trituracion' | 'cianuracion' | 'flotacion' = 'acopio';
+  activeProcessTab: 'acopio' | 'trituracion' | 'molienda' | 'flotacion' | 'cianuracion' | 'concentrado' = 'acopio';
 
-  procesosTratamiento: Record<'acopio' | 'trituracion' | 'cianuracion' | 'flotacion', {
+  procesosTratamiento: Record<'acopio' | 'trituracion' | 'molienda' | 'flotacion' | 'cianuracion' | 'concentrado', {
     letter: string;
     title: string;
     stageId: string;
@@ -136,7 +141,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       letter: 'A',
       title: 'Acopio de Material',
       stageId: 'tri-shumiral',
-      description: 'Recepción, homogeneización y preparación del mineral. El material extraído se tritura y muele en molinos de bolas para alcanzar la granulometría óptima requerida antes de ingresar a los circuitos de recuperación metalúrgica.',
+      description: 'El proceso inicia con la llegada de volquetes que transportan el mineral extraído desde las labores mineras hasta la zona de acopio, donde el material es almacenado y homogeneizado previo a su ingreso a planta. Desde el acopio, el mineral pasa por trituración para reducir su tamaño, seguida de molienda en molinos de bolas para alcanzar la granulometría requerida por los circuitos metalúrgicos. El material molido avanza hacia las etapas de concentración, cianuración, cementación y reproceso de colas. De forma complementaria, los relaves generados en planta son conducidos mediante el relaveducto — sistema de tuberías HDPE de alta densidad — hasta la presa de relaves, desde donde pueden ser recirculados para su reprocesamiento y maximizar la recuperación metálica.',
       equipos: 'Tolvas de recepción, homogenizadores, cargadores frontales.',
       imagen: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80',
       metrics: [
@@ -147,41 +152,67 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     },
     trituracion: {
       letter: 'B',
-      title: 'Trituración y Clasificación',
-      stageId: 'mol-shumiral',
-      description: 'Reducción progresiva del tamaño del mineral mediante trituración y clasificación granulométrica con cribas en circuito cerrado. Controlamos la granulometría ideal (P80) para maximizar la liberación mineralógica y asegurar la máxima eficiencia.',
-      equipos: 'Trituradoras de mandíbula, cribas vibratorias, molinos de bolas.',
+      title: 'Trituración y Clasificación Granulométrica',
+      stageId: 'tri-shumiral',
+      description: 'El procesamiento del mineral inicia con la reducción progresiva de su tamaño mediante trituración y molienda, operaciones desarrolladas en circuito cerrado junto con sistemas de clasificación granulométrica que emplean cribas (zarandas) para controlar la distribución de tamaños. Las cribas separan eficientemente el material grueso del fino: el sobredimensionado retorna al circuito de molienda, mientras el material que cumple la granulometría requerida (P80) avanza a las etapas siguientes. Esta etapa es clave porque la liberación mineralógica que se logra aquí condiciona directamente la eficiencia de los procesos de concentración y extracción posteriores.',
+      equipos: 'Trituradoras de mandíbula, cribas vibratorias, zarandas de clasificación.',
       imagen: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=600&q=80',
       metrics: [
-        { label: 'Granulometría Ideal (P80)', value: '< 12 mm' },
-        { label: 'Finura (-200 mesh)', value: '78.2%' },
+        { label: 'Granulometría (P80)', value: '< 12 mm' },
+        { label: 'Eficiencia Cribado', value: '94.5%' },
         { label: 'Módulos Activos', value: '4/4 Módulos' }
       ]
     },
-    cianuracion: {
+    molienda: {
       letter: 'C',
-      title: 'Cianuración (Lixiviación CIL)',
-      stageId: 'cil-shumiral',
-      description: 'Disolución química controlada del oro en tanques de agitación alcalinos. La solución cargada con metales valiosos es recuperada mediante adsorción en carbón activado, elución (proceso Zadra) y electrodeposición, culminando en la fundición de lingotes doré.',
-      equipos: 'Tanques de lixiviación, celdas de electrodeposición, hornos de fundición.',
+      title: 'Molienda',
+      stageId: 'mol-shumiral',
+      description: 'El área de molienda y clasificación gravimétrica en la planta de procesamiento mineral desempeña un papel clave al reducir el tamaño de las partículas y clasificarlas según su densidad. Mediante el uso de molinos y hidrociclones, se logra una eficiente preparación del mineral para procesos subsiguientes, mejorando la concentración de minerales valiosos y contribuyendo a la eficiencia general del sistema.',
+      equipos: 'Molinos de bolas, hidrociclones, concentradores centrífugos.',
       imagen: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=600&q=80',
       metrics: [
-        { label: 'Tiempo de Residencia', value: '28 Horas' },
-        { label: 'Eficiencia de Adsorción', value: '98.8%' },
-        { label: 'Detoxificación CN- WAD', value: '< 1.0 ppm' }
+        { label: 'Finura (-200 mesh)', value: '78.2%' },
+        { label: 'Presión Hidrociclón', value: '1.2 bar' },
+        { label: 'Clasificación Densidad', value: 'Óptima' }
       ]
     },
     flotacion: {
       letter: 'D',
-      title: 'Flotación de Minerales',
+      title: 'Flotación de Minerales Sulfurados',
       stageId: 'flo-shumiral',
-      description: 'Separación física y selectiva de sulfuros de valor mediante burbujas de aire y reactivos químicos específicos (xantatos y espumantes). Monitoreamos continuamente la dosificación, aireación y estabilidad de la espuma para producir concentrados comerciales de alta ley.',
+      description: 'La flotación separa los minerales de interés del material estéril aprovechando las diferencias en la superficie de las partículas. En las celdas de flotación se inyecta aire controladamente generando burbujas a las que se adhieren selectivamente los minerales, gracias a reactivos químicos como colectores (xantatos, ditiofosfatos), espumantes y modificadores de pH, depresores y activadores que controlan la selectividad del sistema. Se monitorean continuamente la granulometría (P80), dosificación de reactivos, aireación y estabilidad de la espuma. El concentrado obtenido es acondicionado para su comercialización; los relaves son gestionados bajo criterios técnicos y ambientales que garantizan el cumplimiento normativo.',
       equipos: 'Celdas de flotación Rougher y Scavenger, sopladores industriales, espesadores.',
       imagen: 'https://images.unsplash.com/photo-158109288338-2314dddb7ecc?auto=format&fit=crop&w=600&q=80',
       metrics: [
         { label: 'Recuperación de Sulfuros', value: '92.1%' },
         { label: 'Ley de Concentrado', value: '45.2 g/t Au' },
-        { label: 'Sistema de Control', value: 'SCADA Automático' }
+        { label: 'Dosificación Reactivos', value: 'Automática' }
+      ]
+    },
+    cianuracion: {
+      letter: 'E',
+      title: 'Cianuración (Lixiviación Metalúrgica)',
+      stageId: 'cil-shumiral',
+      description: 'La cianuración es el proceso mediante el cual se disuelve el oro presente en el mineral usando soluciones alcalinas de cianuro. Antes de iniciar la lixiviación, la pulpa es acondicionada controlando su densidad, pH y nivel de oxidación. La disolución ocurre en tanques de agitación donde se monitorean parámetros como cianuro libre, oxígeno disuelto, potencial redox y tiempo de residencia para asegurar la máxima recuperación del metal. La solución cargada con oro es luego capturada en carbón activado (adsorción), el metal se extrae del carbón mediante elución y se recupera por electrodeposición. El proceso culmina con la fundición para obtener doré, una aleación metálica de oro y plata lista para su refinación final.',
+      equipos: 'Tanques de agitación, columnas de adsorción CIL, hornos de fundición.',
+      imagen: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=600&q=80',
+      metrics: [
+        { label: 'Tiempo de Residencia', value: '28 Horas' },
+        { label: 'pH de Acondicionado', value: '10.5 - 11.0' },
+        { label: 'Recuperación CIL', value: '98.8%' }
+      ]
+    },
+    concentrado: {
+      letter: 'F',
+      title: 'Concentrado y Almacenamiento de Big Bag',
+      stageId: 'bag-shumiral',
+      description: 'Adyacente a la Cocha de Concentrados, encontramos el espacio destinado al Almacenamiento de Big Bag. Aquí, estos contenedores especializados son resguardados de manera segura, contando con una infraestructura cubierta que preserva la calidad de los materiales. La disposición ordenada de esta zona facilita la manipulación eficaz de los Big Bag, contribuyendo a la eficiencia general en el manejo de concentrados valiosos en la planta. En conjunto, la Cocha de Concentrados y el Almacenamiento de Big Bag reflejan una planificación detallada y una gestión cuidadosa en el tratamiento y almacenamiento de materiales esenciales en la planta. Este enfoque integral asegura un proceso eficiente y seguro en todas las etapas del manejo de concentrados.',
+      equipos: 'Cocha de concentrados, tolvas de empaque, montacargas, Big Bags de exportación.',
+      imagen: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80',
+      metrics: [
+        { label: 'Almacenamiento Big Bags', value: 'Habilitado' },
+        { label: 'Preservación de Calidad', value: '100% Cubierta' },
+        { label: 'Eficiencia Manipulación', value: 'Alta' }
       ]
     }
   };
