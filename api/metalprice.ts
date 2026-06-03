@@ -20,7 +20,7 @@ module.exports = async (req: any, res: any) => {
 
   // API key: variable de entorno en Vercel (METALPRICE_API_KEY)
   // o valor hardcodeado como fallback para desarrollo local
-  const apiKey = process.env.METALPRICE_API_KEY || '25d0e09e06c131e31f3900e844a22fbd';
+  const apiKey = process.env['METALPRICE_API_KEY'] || '25d0e09e06c131e31f3900e844a22fbd';
   const symbols = 'XAU,XAG';
   const upstream = `https://api.metalpriceapi.com/v1/latest?api_key=${apiKey}&base=USD&currencies=${symbols}`;
 

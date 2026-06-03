@@ -1,6 +1,6 @@
 import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3';
 
-module.exports = async (req: any, res: any) => {
+export default async function handler(req: any, res: any) {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
@@ -22,11 +22,11 @@ module.exports = async (req: any, res: any) => {
       return res.status(400).json({ success: false, error: 'Parametro folder es requerido' });
     }
 
-    const endpoint   = process.env.R2_ENDPOINT;
-    const accessKey  = process.env.R2_ACCESS_KEY_ID;
-    const secretKey  = process.env.R2_SECRET_ACCESS_KEY;
-    const bucketName = process.env.R2_BUCKET_NAME;
-    const publicUrl  = process.env.R2_PUBLIC_URL;
+    const endpoint   = process.env['R2_ENDPOINT'];
+    const accessKey  = process.env['R2_ACCESS_KEY_ID'];
+    const secretKey  = process.env['R2_SECRET_ACCESS_KEY'];
+    const bucketName = process.env['R2_BUCKET_NAME'];
+    const publicUrl  = process.env['R2_PUBLIC_URL'];
 
     console.log('[API] Env check:', {
       endpoint: endpoint ? 'OK' : 'MISSING',
@@ -133,7 +133,7 @@ module.exports = async (req: any, res: any) => {
       error: error.message || 'Error al obtener imagenes de R2'
     });
   }
-};
+}
 
 function formatTitle(fileName: string): string {
   return fileName
