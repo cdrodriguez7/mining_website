@@ -16,6 +16,7 @@ export class GerenciaComponent {
   previewVisible = false;
   previewUrl = '';
   previewTitle = '';
+  activeSlideIndex = 0;
 
   openPreview(url: string, title: string): void {
     this.previewUrl   = url;
@@ -27,76 +28,62 @@ export class GerenciaComponent {
     this.previewVisible = false;
   }
 
+  nextSlide(): void {
+    this.activeSlideIndex = (this.activeSlideIndex + 1) % this.destacados.length;
+  }
+
+  prevSlide(): void {
+    this.activeSlideIndex = (this.activeSlideIndex - 1 + this.destacados.length) % this.destacados.length;
+  }
+
+  setSlide(index: number): void {
+    this.activeSlideIndex = index;
+  }
+
   destacados = [
     {
-      nombre: 'Juan Carlos Rodríguez Vega',
-      cargo: 'Gerente General',
-      area: 'Dirección Ejecutiva',
-      experiencia: '22 años',
+      nombre: 'Sr. Marco Antonio Neves Osorio',
+      cargo: 'Presidente',
+      area: 'Presidencia',
+      experiencia: 'Internacional',
       foto: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80&fit=crop&crop=faces,top',
-      trayectoria: 'Ingeniero de Minas por la ESPOL. Lideró la obtención del EIA institucional ante el MAATE, la implementación del sistema QHSE corporativo y la expansión de la planta de beneficio a 220 t/día. Miembro del Directorio Técnico de la Cámara de Minería del Ecuador.',
-      certificaciones: ['MBA — Universidad Andina Simón Bolívar', 'Ing. Minas ESPOL — Promoción 2002', 'Certificado CRIRSCO — Recursos Minerales'],
-      especialidades: ['Planificación minera estratégica', 'Gestión de proyectos EPC', 'Relaciones con organismos de control', 'Liderazgo de equipos técnicos'],
-      email: 'jrodriguez@planpromin.ec',
+      trayectoria: 'Empresario portugués con destacada trayectoria internacional en minería, aviación, inversión corporativa, protección ejecutiva y cooperación humanitaria. Desarrolla su actividad entre Europa y América Latina. Es presidente de Planpromin S.A., impulsando importantes inversiones destinadas a incrementar la capacidad de producción y fortalecer el desarrollo sostenible de la industria minera ecuatoriana.',
+      certificaciones: [
+        'Civil Diplomat – Chaplain (Civil Diplomat Human and Humanitarian Committee)'
+      ],
+      especialidades: [
+        'Inversión estratégica y corporativa (Colorado Mining, Osocorp)',
+        'Aeronáutica corporativa (Centennials Helicópteros)',
+        'Gestión de riesgos y seguridad (Sinergia)',
+        'Responsabilidad social y cooperación bilateral Portugal-Ecuador'
+      ],
+      actividades: [
+        'Múltiples iniciativas de cooperación comunitaria',
+        'Apoyo a comunidades rurales e instituciones públicas',
+        'Piloto de automovilismo deportivo en Portugal'
+      ],
+      email: 'mneves@planpromin.ec',
       linkedin: '#'
     },
     {
-      nombre: 'María Elena Suárez Montoya',
-      cargo: 'Gerente de Operaciones',
-      area: 'Operaciones Mineras',
-      experiencia: '16 años',
-      foto: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80&fit=crop&crop=faces,top',
-      trayectoria: 'Ingeniera Geóloga con especialización en Minería a Cielo Abierto. Supervisó la ampliación de la planta de beneficio y el diseño del sistema de relaves. Docente invitada en la Universidad de Cuenca. Anteriormente en Kinross Gold Ecuador y CODELCO Chile.',
-      certificaciones: ['Ing. Geóloga — Universidad de Cuenca', 'MSc. Ingeniería de Minas — U. de Chile', 'Certificación PERC — Exploración Europa'],
-      especialidades: ['Optimización de plantas de beneficio', 'Diseño de sistemas de relaves', 'Planificación de pit a largo plazo', 'Control de dilución y recuperación'],
-      email: 'msuarez@planpromin.ec',
-      linkedin: '#'
-    }
-  ];
-
-  equipo = [
-    {
-      nombre: 'Carlos Mendoza Alvarado',
-      cargo: 'Gerente Financiero',
-      area: 'Finanzas y Administración',
-      experiencia: '14 años',
-      foto: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80&fit=crop&crop=faces,top',
-      bio: 'CPA con MBA en Finanzas Corporativas (USFQ). Especialista en estructuración financiera de proyectos mineros, compliance tributario y auditoría.',
-      especialidades: ['Finanzas corporativas', 'Auditoría y compliance', 'Gestión de riesgos financieros'],
-      email: 'cmendoza@planpromin.ec',
-      linkedin: '#'
-    },
-    {
-      nombre: 'Ana Patricia Torres Ríos',
-      cargo: 'Gerente QHSE',
-      area: 'Seguridad, Salud y Ambiente',
-      experiencia: '12 años',
-      foto: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80&fit=crop&crop=faces,top',
-      bio: 'Ingeniera Ambiental (FLACSO). Arquitecta del sistema ISO 14001 de PLANPROMIN. Responsable del programa de 0 fatalidades, activo por tercer año consecutivo.',
-      especialidades: ['ISO 14001 / ISO 45001', 'Gestión de emergencias', 'Monitoreo ambiental'],
-      email: 'atorres@planpromin.ec',
-      linkedin: '#'
-    },
-    {
-      nombre: 'Roberto Espinoza Castillo',
-      cargo: 'Gerente de Geología',
-      area: 'Exploración y Recursos',
-      experiencia: '18 años',
-      foto: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80&fit=crop&crop=faces,top',
-      bio: 'Doctor en Ciencias Geológicas (U. Complutense de Madrid). Dirige la estimación de recursos minerales y los programas de exploración en el cinturón aurífero del Azuay.',
-      especialidades: ['Exploración de recursos auríferos', 'Modelado geológico 3D', 'Estimación de reservas (NI 43-101)'],
-      email: 'respinoza@planpromin.ec',
-      linkedin: '#'
-    },
-    {
-      nombre: 'Diana Lucía Herrera Pino',
-      cargo: 'Gerente de Relaciones Comunitarias',
-      area: 'Comunidades y RSE',
-      experiencia: '10 años',
-      foto: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=80&fit=crop&crop=faces,top',
-      bio: 'Socióloga especializada en Desarrollo Comunitario y Consulta Previa. Gestiona la inversión social en las 8 comunidades del área de influencia del proyecto.',
-      especialidades: ['Consulta previa libre e informada', 'Programas de inversión social', 'Gestión de conflictos sociales'],
-      email: 'dherrera@planpromin.ec',
+      nombre: 'Abg. Alberto Emilio Pincay Morla',
+      cargo: 'Gerente General',
+      area: 'Gerencia General',
+      experiencia: '+25 años',
+      foto: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/gerente_general_alberto.jpeg',
+      trayectoria: 'Más de 25 años en libre ejercicio profesional. Ha destacado como Jefe del Departamento Jurídico en el Banco de Machala, así como profesor universitario y funcionario público en áreas afines a su profesión, aportando una sólida experiencia legal, corporativa y administrativa.',
+      certificaciones: [
+        'Abogado de los Tribunales y Juzgados de la República (UCSG, 2002)',
+        'Magister en Derecho Constitucional (UEES, 2023)',
+        'Magister en Administración de Empresas (UEES, 2026)'
+      ],
+      especialidades: [
+        'Derecho Constitucional y Corporativo',
+        'Asesoría Jurídica Empresarial',
+        'Administración y Gestión Estratégica',
+        'Gestión Pública y Privada'
+      ],
+      email: 'apincay@planpromin.ec',
       linkedin: '#'
     }
   ];
