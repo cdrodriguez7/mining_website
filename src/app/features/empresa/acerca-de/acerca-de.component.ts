@@ -51,17 +51,17 @@ export class AcercaDeComponent implements OnInit {
     },
     {
       icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
-      value: '72%',
-      label: 'Producción Nacional de Oro'
+      value: '86%',
+      label: 'Oro de Pequeña Minería (Azuay/El Oro)'
     },
     {
       icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
-      value: '25+',
-      label: 'Años de Experiencia'
+      value: '15',
+      label: 'Años de Trayectoria'
     },
     {
       icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z',
-      value: '123+',
+      value: '120+',
       label: 'Trabajadores Activos'
     }
   ];
@@ -90,12 +90,11 @@ export class AcercaDeComponent implements OnInit {
   ];
 
   hitos = [
-    { anio: '1998', evento: 'Constitución de PLANPROMIN S.A. en Quito, Ecuador' },
-    { anio: '2003', evento: 'Obtención de primeras concesiones en el cantón Ponce Enríquez' },
-    { anio: '2010', evento: 'Ampliación de operaciones: planta de beneficio y sistema de relaves' },
-    { anio: '2015', evento: 'Certificación ISO 14001 e implementación del Plan de Manejo Ambiental' },
-    { anio: '2019', evento: 'Aprobación del EIA por el MAATE y actualización del Plan QHSE' },
-    { anio: '2024', evento: 'Récord de producción responsable y 0 fatalidades por tercer año consecutivo' },
+    { anio: '2011', evento: 'Constitución de PLANPROMIN S.A. en Machala, provincia de El Oro, dedicada a la minería y proyectos de ingeniería.' },
+    { anio: '2015', evento: 'Expansión de las operaciones comerciales de minerales y proyectos de ingeniería a nivel nacional.' },
+    { anio: '2019', evento: 'Consolidación de las operaciones en el cantón Camilo Ponce Enríquez y obtención de licencias operativas claves.' },
+    { anio: '2023', evento: 'Fortalecimiento de la consultoría en ingeniería de minas y ampliación de la comercialización mayorista.' },
+    { anio: '2026', evento: 'Consolidación como referente en extracción y comercialización responsable de minerales preciosos en Ecuador.' },
   ];
 
   constructor(

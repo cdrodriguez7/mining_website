@@ -44,22 +44,22 @@ export class PlantasComponent implements OnInit {
   isLoading = false;
   activePlantaIndex = 0;
   activeTab: 'specs' | 'blueprint' | 'gallery' = 'blueprint';
-  
+
   // Detalle del proceso seleccionado en el SVG
   selectedStage: StageInfo | null = null;
-  
+
   // Control de zoom de imagen
   previewVisible = false;
   previewUrl = '';
   previewTitle = '';
-  
+
   // Carrusel index
   carouselIndex = 0;
 
   plantas: Planta[] = [
     {
       id: 'shumiral',
-      name: 'Complejo Metalúrgico Shumiral (Principal)',
+      name: 'Complejo Metalúrgico Planpromin (Principal)',
       status: 'Operación Continua 24/7',
       statusClass: 'bg-green-500',
       capacity: '2,040 TPD',
@@ -168,8 +168,8 @@ export class PlantasComponent implements OnInit {
       statusClass: 'bg-yellow-500',
       capacity: '400 TPD',
       occupancy: 65,
-      technology: 'Molienda convencional, circuito de concentración gravimétrica, celdas de flotación bulk de sulfuros y espesamiento de concentrados.',
-      description: 'La Planta Lajo es una instalación satélite operada bajo cesión de derechos contractuales. Permite procesar de manera dedicada lotes específicos de mineral artesanal de menor volumen, ayudando a la descongestión y optimización de capacidades del distrito.',
+      technology: 'Reprocesamiento de relaves mediante rehidratación, agitación, acondicionamiento y celdas de flotación (Delkor, Wemco y celdas circulares/limpieza).',
+      description: 'La Planta Lajo está dedicada al reprocesamiento y recuperación de metales preciosos (oro y plata) a partir de relaves acumulados en las presas número 4, 5 y 6. Utiliza un circuito completo de flotación de sulfuros para revalorizar arenas residuales.',
       coordinates: 'UTM 17S 633850E 9641720N',
       permitCode: 'CONTRATO CESIÓN DE DERECHOS',
       recoveryRate: '86.2%',
@@ -177,53 +177,73 @@ export class PlantasComponent implements OnInit {
       establishedYear: 2024,
       stages: [
         {
-          id: 'ali-lajo',
-          name: 'Recepción & Alimentación',
-          description: 'Alimentación de mineral grueso mediante tolvas de descarga. Clasificación por parrillas fijas para alimentar la trituradora de mandíbula.',
+          id: 'rec-lajo',
+          name: 'Recepción y Almacenamiento',
+          description: 'Área total de 137.45 m2 para el acopio de los relaves procedentes de las presas 4, 5 y 6, rehidratados con agua a presión para optimizar sus condiciones físicas.',
           status: 'activo',
           metrics: [
-            { label: 'Alimentación Tolva', value: '18.2 t/h' },
-            { label: 'Humedad Mineral', value: '6.5%' }
+            { label: 'Área Acopio', value: '137.45 m²' },
+            { label: 'Origen Material', value: 'Presas 4, 5 y 6' }
           ]
         },
         {
-          id: 'mol-lajo',
-          name: 'Circuito de Molienda Lajo',
-          description: 'Molino de bolas de 8x8 pies que reduce el mineral en húmedo, acoplado a un clasificador de espiral mecánico para recircular las partículas gruesas.',
+          id: 'agi-lajo',
+          name: 'Agitadores',
+          description: 'Homogeneización de la mezcla de agua y arenas mediante tanques agitadores de 3.00 m x 4.10 m antes de la adición de reactivos y espumantes.',
           status: 'activo',
           metrics: [
-            { label: 'Tamaño de Carga', value: '-80% a malla 100' },
-            { label: 'Consumo Eléctrico', value: '75 kW' }
+            { label: 'Dimensiones Tanque', value: '3.00m x 4.10m' },
+            { label: 'Función', value: 'Homogeneizar pulpa' }
           ]
         },
         {
-          id: 'con-lajo',
-          name: 'Concentración Gravimétrica',
-          description: 'Mesa vibratoria concentradora de tableros estriados para capturar de manera directa el oro nativo y concentrar sulfuros gruesos de alto valor.',
+          id: 'aco-lajo',
+          name: 'Tanques Acondicionadores',
+          description: 'Tanques de 3.00 m x 4.10 m diseñados para lograr la mezcla completa de los reactivos incorporados en la pulpa antes de entrar al circuito de flotación.',
           status: 'activo',
           metrics: [
-            { label: 'Ley de Cabeza', value: '12.4 g/t Au' },
-            { label: 'Recuperación Grav', value: '31.2%' }
+            { label: 'Dimensiones Tanque', value: '3.00m x 4.10m' },
+            { label: 'Mezcla Reactivos', value: 'Completa' }
           ]
         },
         {
-          id: 'flo-lajo',
-          name: 'Celdas de Flotación',
-          description: 'Batería de 6 celdas de flotación sub-A para la separación colectiva de sulfuros con adición de xantatos y espumantes.',
+          id: 'flo-delkor',
+          name: 'Celdas de Flotación Delkor',
+          description: 'Celdas primarias Delkor tipo Serrano (Scavenger) para el primer proceso de flotación, enviando concentrado de alta pureza directo a cochas.',
           status: 'activo',
           metrics: [
-            { label: 'Recuperación Colectiva', value: '84.8%' },
-            { label: 'Ley de Concentrado', value: '32.1 g/t Au' }
+            { label: 'Tipo Celdas', value: 'Serrano (Scavenger)' },
+            { label: 'Primer Concentrado', value: 'Directo a cochas' }
           ]
         },
         {
-          id: 'esp-lajo',
-          name: 'Espesamiento & Filtrado',
-          description: 'Espesador convencional para la sedimentación de concentrados polimetálicos y filtros de lona para deshidratar el producto final.',
+          id: 'flo-wemco',
+          name: 'Celdas de Flotación Wemco',
+          description: 'Celdas Wemco tipo Denver y celda circular que flotan los minerales suspendidos residuales. El relave final es conducido a la presa de relaves.',
           status: 'activo',
           metrics: [
-            { label: 'Humedad Torta Filtro', value: '10.8%' },
-            { label: 'Densidad Descarga', value: '1,550 g/L' }
+            { label: 'Modelos Celdas', value: 'Denver & Circular' },
+            { label: 'Destino Relave', value: 'Presa de relaves' }
+          ]
+        },
+        {
+          id: 'flo-limpieza',
+          name: 'Celda Circular & Limpieza',
+          description: 'Celdas compuestas por banco simple y banco doble destinadas a la limpieza del concentrado wemco, incrementando significativamente la pureza final.',
+          status: 'activo',
+          metrics: [
+            { label: 'Configuración', value: 'Banco simple / doble' },
+            { label: 'Función', value: 'Enriquecimiento final' }
+          ]
+        },
+        {
+          id: 'cochas-lajo',
+          name: 'Cochas de Concentrado',
+          description: 'Piscinas construidas con muros de hormigón armado para la deshidratación por gravedad de las espumas de concentrado y empaque en Big Bags.',
+          status: 'activo',
+          metrics: [
+            { label: 'Estructura', value: 'Hormigón armado' },
+            { label: 'Presentación', value: 'Sacos Big Bag' }
           ]
         }
       ],

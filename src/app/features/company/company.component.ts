@@ -28,7 +28,7 @@ import { RouterModule } from '@angular/router';
             que las empresas mineras deben cumplir para operar de manera responsable y legal.
           </p>
           <p class="text-gray-300 text-lg leading-relaxed">
-            Con más de 83 concesiones activas y siendo responsables del 72% de la producción nacional de oro, 
+            Con más de 82 concesiones activas y siendo el cantón Ponce Enríquez junto a la provincia de El Oro responsables del 86% de la producción nacional de oro de la pequeña minería, 
             creemos que la transparencia es fundamental para generar confianza entre la industria, las autoridades 
             y la ciudadanía.
           </p>
