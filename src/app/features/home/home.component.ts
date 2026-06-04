@@ -73,6 +73,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   mapImagePath = `${this.r2BaseUrl}/assets/planpromin_sa.png`;
   videoPath = `${this.r2BaseUrl}/assets/pag-web-3.mp4`;
+  aboutImageUrl = `${this.r2BaseUrl}/assets/concentrado.jpg`;
+  plantasBeneficioImageUrl = `${this.r2BaseUrl}/assets/plantas_beneficio.jpg`;
+  relaverasImageUrl = `${this.r2BaseUrl}/assets/gestion_relaveras.jpg`;
 
   previewVisible = false;
   previewUrl = '';
