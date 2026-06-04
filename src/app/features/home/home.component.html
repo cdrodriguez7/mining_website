@@ -322,7 +322,7 @@
 
 <section class="py-10 md:py-16 lg:py-20 bg-black relative overflow-hidden">
   <!-- Video de fondo que abarca toda la ventana de esta sección, resaltado -->
-  <video [src]="videoPath" autoplay loop muted playsinline
+  <video *ngIf="videoPath" [src]="videoPath" autoplay loop [muted]="true" playsinline
     class="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none z-0"
     type="video/mp4">
   </video>
