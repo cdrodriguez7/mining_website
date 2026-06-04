@@ -33,12 +33,4 @@ export class InformacionCorporativaComponent {
     { nombre: 'Bloque Cerro Pelado', tipo: 'Exploración Avanzada', has: '410 ha', estado: 'Vigente', vence: '2028' },
   ];
 
-  hitos = [
-    { anio: '1998', titulo: 'Constitución', desc: 'PLANPROMIN S.A. se inscribe en el Registro Mercantil de Cuenca con capital inicial de USD 1.200.000.' },
-    { anio: '2003', titulo: 'Primer Título Minero', desc: 'ARCOM otorga el primer título de explotación para el Área Ponce Norte.' },
-    { anio: '2010', titulo: 'Ampliación Industrial', desc: 'Inauguración de la planta de beneficio con capacidad de 150 t/día.' },
-    { anio: '2015', titulo: 'Certificación ISO', desc: 'Obtención de la certificación ISO 14001:2015 por el Bureau Veritas.' },
-    { anio: '2019', titulo: 'Nuevo EIA', desc: 'Aprobación del Estudio de Impacto Ambiental actualizado por el MAATE.' },
-    { anio: '2022', titulo: 'Expansión', desc: 'Ampliación de capacidad de la planta a 220 t/día e incorporación de 25 nuevas concesiones.' },
-  ];
 }

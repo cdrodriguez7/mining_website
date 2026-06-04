@@ -15,7 +15,7 @@
       Información<br><span class="text-orange-600">Corporativa</span>
     </h1>
     <p class="text-gray-300 text-lg max-w-2xl leading-relaxed">
-      Datos legales, concesiones mineras vigentes e hitos institucionales de
+      Datos legales y concesiones mineras vigentes de
       PLANPROMIN S.A., la empresa productora de oro del cantón Camilo Ponce Enríquez.
     </p>
   </div>
@@ -103,51 +103,65 @@
   </div>
 </section>
 
-<!-- Hitos institucionales -->
-<section class="py-20 bg-zinc-900">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="text-center mb-14">
-      <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-4">Historia</p>
-      <h2 class="text-3xl font-black text-white">Hitos <span class="text-orange-600">Institucionales</span></h2>
-    </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-      <div *ngFor="let h of hitos"
-        class="bg-black border border-zinc-800 hover:border-orange-600/40 rounded-xl p-6 transition-colors">
-        <div class="text-3xl font-black text-orange-600 mb-3">{{ h.anio }}</div>
-        <h4 class="text-white font-bold mb-2">{{ h.titulo }}</h4>
-        <p class="text-gray-400 text-sm leading-relaxed">{{ h.desc }}</p>
+<!-- Organismos reguladores -->
+<section class="py-16 bg-zinc-900">
+  <div class="container mx-auto px-6 lg:px-12 max-w-5xl">
+    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-8 text-center">Supervisión Institucional
+    </p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-black border border-zinc-800 rounded-xl p-5 text-center">
+        <div class="text-orange-600 font-black text-sm mb-2">ARCOM</div>
+        <div class="text-white font-semibold text-xs mb-1">Agencia de Regulación y Control Minero</div>
+        <div class="text-gray-500 text-xs">Títulos mineros y cumplimiento sectorial</div>
+      </div>
+      <div class="bg-black border border-zinc-800 rounded-xl p-5 text-center">
+        <div class="text-orange-600 font-black text-sm mb-2">MAATE</div>
+        <div class="text-white font-semibold text-xs mb-1">Ministerio del Ambiente</div>
+        <div class="text-gray-500 text-xs">Licencia ambiental y EIA</div>
+      </div>
+      <div class="bg-black border border-zinc-800 rounded-xl p-5 text-center">
+        <div class="text-orange-600 font-black text-sm mb-2">SRI</div>
+        <div class="text-white font-semibold text-xs mb-1">Servicio de Rentas Internas</div>
+        <div class="text-gray-500 text-xs">Obligaciones tributarias</div>
+      </div>
+      <div class="bg-black border border-zinc-800 rounded-xl p-5 text-center">
+        <div class="text-orange-600 font-black text-sm mb-2">Supercias</div>
+        <div class="text-white font-semibold text-xs mb-1">Superintendencia de Compañías</div>
+        <div class="text-gray-500 text-xs">Estados financieros anuales</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Organismos reguladores -->
-<section class="py-16 bg-black">
-  <div class="container mx-auto px-6 lg:px-12 max-w-5xl">
-    <p class="text-orange-600 font-semibold uppercase tracking-wider text-sm mb-8 text-center">Supervisión Institucional
+<!-- CTA SECTION -->
+<section class="py-12 lg:py-16 bg-orange-600 relative overflow-hidden">
+  <!-- Pattern Background -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute inset-0"
+      style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px);">
+    </div>
+  </div>
+
+  <div class="w-full max-w-[90%] xl:max-w-[85%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6 relative z-10 text-center">
+    <h2 class="text-3xl lg:text-5xl font-black text-white mb-4 lg:mb-6">
+      Conoce más sobre nosotros
+    </h2>
+    <p class="text-white/90 text-base lg:text-xl mb-7 lg:mb-10 max-w-3xl mx-auto">
+      Contáctenos hoy para una consulta sobre sus necesidades mineras y requisitos de cumplimiento legal.
     </p>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 text-center">
-        <div class="text-orange-600 font-black text-sm mb-2">ARCOM</div>
-        <div class="text-white font-semibold text-xs mb-1">Agencia de Regulación y Control Minero</div>
-        <div class="text-gray-500 text-xs">Títulos mineros y cumplimiento sectorial</div>
-      </div>
-      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 text-center">
-        <div class="text-orange-600 font-black text-sm mb-2">MAATE</div>
-        <div class="text-white font-semibold text-xs mb-1">Ministerio del Ambiente</div>
-        <div class="text-gray-500 text-xs">Licencia ambiental y EIA</div>
-      </div>
-      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 text-center">
-        <div class="text-orange-600 font-black text-sm mb-2">SRI</div>
-        <div class="text-white font-semibold text-xs mb-1">Servicio de Rentas Internas</div>
-        <div class="text-gray-500 text-xs">Obligaciones tributarias</div>
-      </div>
-      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 text-center">
-        <div class="text-orange-600 font-black text-sm mb-2">Supercias</div>
-        <div class="text-white font-semibold text-xs mb-1">Superintendencia de Compañías</div>
-        <div class="text-gray-500 text-xs">Estados financieros anuales</div>
-      </div>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a routerLink="/contacto"
+        class="px-8 py-4 bg-white text-orange-600 font-bold rounded-lg hover:bg-gray-100 transition-colors inline-flex items-center">
+        <span>Contáctenos</span>
+        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+      <a routerLink="/servicios"
+        class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-orange-600 transition-all">
+        Nuestros Servicios
+      </a>
     </div>
   </div>
 </section>
