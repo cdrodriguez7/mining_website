@@ -1,5 +1,0 @@
-📍 UBICACIÓN EN TU PROYECTO:
-
-src/app/features/empresa/directorio/
-
-Copia TODOS los archivos de esta carpeta a la ubicación indicada arriba.

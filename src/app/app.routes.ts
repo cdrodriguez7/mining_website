@@ -23,10 +23,7 @@ export const routes: Routes = [
         path: 'gerencia',
         loadComponent: () => import('./features/empresa/gerencia/gerencia.component').then(m => m.GerenciaComponent)
       },
-      {
-        path: 'directorio',
-        loadComponent: () => import('./features/empresa/directorio/directorio.component').then(m => m.DirectorioComponent)
-      },
+
       {
         path: 'gobierno-corporativo',  // ✅ CORREGIDO: era "gobierno-corporativo-main"
         children: [
