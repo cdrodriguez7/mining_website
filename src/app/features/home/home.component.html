@@ -5,39 +5,37 @@
   <!-- Background Image DINÁMICA -->
   <div class="absolute inset-0 flex items-center">
     <div *ngIf="heroImage" class="absolute inset-0">
-      <img [src]="mapImagePath" alt="Planpromin S.A." class="w-full h-full object-cover"
-        style="object-position: center 25%;">
+      <img [src]="mapImagePath" alt="Planpromin S.A." class="w-full h-full object-cover hero-bg-img">
     </div>
     <div class="absolute inset-0 bg-gradient-to-b from-black via-black/0 to-black"></div>
   </div>
 
 
-  <!-- Brand Accent Bar (derecha) -->
-  <div class="absolute top-0 right-0 w-96 h-full transform skew-x-[-15deg] translate-x-48 hidden lg:block"
-    style="background: linear-gradient(to bottom, #F7A13D);">
+  <!-- Brand Accent Gradient (derecha) -->
+  <div class="absolute top-0 right-0 h-full hidden lg:block hero-accent-gradient">
   </div>
 
   <!-- Hero Content -->
-  <!-- <div class="relative z-10 h-full flex items-start pt-20 ">
+  <div class="relative z-10 h-full flex items-center pt-20">
     <div class="container mx-auto px-6 lg:px-12">
       <div class="max-w-4xl">
-         Main Heading 
-        <h1 class="text-6xl lg:text-8xl font-black text-white mb-8 leading-tight">
-          From Waste<br>
-          to Gold<br>
+        <!-- Main Heading -->
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-8 leading-tight">
+          Planpromin S.A.<br>
+          <span class="text-orange-500 text-3xl md:text-5xl lg:text-6xl block mt-2 font-bold">From Waste to Gold</span>
         </h1>
 
-         Subtitle 
+        <!-- Subtitle -->
         <div class="flex items-start space-x-4 max-w-2xl">
           <div class="w-1 h-20 bg-orange-600"></div>
           <p class="text-gray-300 text-lg leading-relaxed">
             Transparencia,<br>
-            Innovacion y Desarrollo Minero.
+            Innovación y Desarrollo Minero.
           </p>
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <!-- Metal Price Ticker — bottom of hero -->
   <div *ngIf="!metalsLoading && metalPrices"
