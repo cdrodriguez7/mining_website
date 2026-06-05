@@ -170,20 +170,28 @@ export class RelaverasComponent implements OnInit {
       ],
       blueprints: [
         {
-          url: 'assets/operaciones/relaveras/fdn-1/planos/plano-01.png',
-          caption: 'Plano de Distribución General y Curvas de Nivel del vaso del depósito FDN-1.'
+          url: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/relaveras/fdn-1/planos/plano-01.png',
+          caption: 'Implantación General (A1 - IMPLN G)'
         },
         {
-          url: 'assets/operaciones/relaveras/fdn-1/planos/plano-02.png',
-          caption: 'Detalle estructural de la presa de tierra y cimentación en andesita.'
+          url: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/relaveras/fdn-1/planos/plano-02.png',
+          caption: 'Ubicación del Dique'
         },
         {
-          url: 'assets/operaciones/relaveras/fdn-1/planos/plano-03.png',
-          caption: 'Esquema del sistema de instrumentación y distribución de piezómetros.'
+          url: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/relaveras/fdn-1/planos/plano-03.png',
+          caption: 'Geoubicación de Relavera 7'
         },
         {
-          url: 'assets/operaciones/relaveras/fdn-1/planos/plano-04.png',
-          caption: 'Esquema del sistema de instrumentación y distribución de piezómetros.'
+          url: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/relaveras/fdn-1/planos/plano-04.png',
+          caption: 'Secciones Transversales del Dique'
+        },
+        {
+          url: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/relaveras/fdn-1/planos/plano-05.png',
+          caption: 'Sistema de Drenaje'
+        },
+        {
+          url: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/relaveras/fdn-1/planos/plano-06.png',
+          caption: 'Secciones Típicas del Depósito'
         }
       ],
       specs: {
