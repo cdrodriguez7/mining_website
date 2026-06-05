@@ -85,6 +85,46 @@ export class GerenciaComponent {
       ],
       email: 'apincay@planpromin.ec',
       linkedin: '#'
+    },
+    {
+      nombre: 'Ing. María Gracia Dueñas Condo',
+      cargo: 'Directora del Departamento de Finanzas',
+      area: 'Finanzas',
+      experiencia: '+25 años',
+      foto: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80&fit=crop&crop=faces,top',
+      trayectoria: 'Más de 25 años en libre ejercicio profesional en el área de finanzas y administración empresarial, aportando una sólida experiencia en gestión financiera, contabilidad y auditoría al equipo de PLANPROMIN.',
+      certificaciones: [],
+      especialidades: [
+        'Gestión Financiera Empresarial',
+        'Contabilidad y Auditoría',
+        'Administración de Recursos',
+        'Planificación Presupuestaria'
+      ],
+      actividades: [],
+      email: 'mduenas@planpromin.ec',
+      linkedin: '#'
+    },
+    {
+      nombre: 'Ing. Gabriel Hipólito Lajo Morales',
+      cargo: 'Project Manager',
+      area: 'Gestión de Proyectos',
+      experiencia: '+30 años',
+      foto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80&fit=crop&crop=faces,top',
+      trayectoria: 'Su trayectoria combina liderazgo técnico, innovación digital y gestión estratégica, orientada al desarrollo sostenible y la excelencia operativa en minería y metalurgia. Ingeniero Metalurgista con más de tres décadas de experiencia en dirección de plantas concentradoras, optimización de procesos metalúrgicos y gestión de proyectos mineros en Perú, Ecuador y Portugal.',
+      certificaciones: [
+        'Universidad Nacional de San Agustín de Arequipa, Perú',
+        'Posgrado Fast Track MBA – Dirección de Empresas Mineras, Universidad de Antofagasta, Chile',
+        'Máster en Transformación Digital e Industria 4.0, TECH Universidad Tecnológica, España'
+      ],
+      especialidades: [
+        'Dirección de Plantas Concentradoras',
+        'Optimización de Procesos Metalúrgicos',
+        'Gestión de Proyectos Mineros',
+        'Transformación Digital e Industria 4.0'
+      ],
+      actividades: [],
+      email: 'glajo@planpromin.ec',
+      linkedin: '#'
     }
   ];
 
