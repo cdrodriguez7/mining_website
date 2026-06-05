@@ -12,6 +12,7 @@ package-lock.json
 .env
 .env.local
 .env*.local
+.env*
 
 # Vercel
 .vercel/
@@ -27,14 +28,7 @@ package-lock.json
 .DS_Store
 Thumbs.db
 
-<<<<<<< HEAD
-.env
-.env.local
-.env*.local
-.vercel
-.vercel
-.env*.local
-=======
-.vercel
->>>>>>> 834c6fddd9bf3d184a2cc9019d2da2fe3599c7b2
-.env*
+# Cloudflare R2 Credentials / Scripts
+scripts/migrate-to-r2.mjs
+scripts/upload-assets-to-r2.mjs
+scripts/rename-planos.mjs
