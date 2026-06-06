@@ -1,6 +1,5 @@
-<nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" [ngClass]="{
-    'bg-black/95 backdrop-blur-sm shadow-lg': isScrolled,
-    'bg-transparent': !isScrolled
+<nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-black/30 backdrop-blur-md" [ngClass]="{
+    'shadow-lg border-b border-white/5': isScrolled || openDropdown
   }">
 
   <div class="container mx-auto px-4 lg:px-12">
@@ -109,7 +108,7 @@
 
   <!-- Mobile Menu -->
   <div *ngIf="isMobileMenuOpen"
-    class="lg:hidden bg-black/98 border-t border-orange-600/20 max-h-[80vh] overflow-y-auto">
+    class="mobile-menu-container lg:hidden bg-black/30 backdrop-blur-xl border-t border-b border-orange-600/20 max-h-[70vh] rounded-b-2xl shadow-2xl overflow-y-auto">
     <div class="container mx-auto px-6 py-6 space-y-2">
       <ng-container *ngFor="let item of menuItems">
         <!-- Items sin submenu -->

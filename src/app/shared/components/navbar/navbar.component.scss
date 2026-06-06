@@ -27,3 +27,20 @@
   background: #E88A1E;
   border-radius: 3px;
 }
+
+// Soporte nativo de backdrop-filter para navegadores Webkit (Safari/iOS)
+nav {
+  &.bg-black\/85 {
+    -webkit-backdrop-filter: blur(16px) !important;
+    backdrop-filter: blur(16px) !important;
+  }
+  &.bg-black\/30 {
+    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
+  }
+}
+
+.mobile-menu-container {
+  -webkit-backdrop-filter: blur(24px) !important;
+  backdrop-filter: blur(24px) !important;
+}

@@ -398,3 +398,65 @@
     display: none;  /* Chrome, Safari and Opera */
   }
 }
+
+// ── Carruseles Responsive (Infraestructura + Servicios) ─────────────────────
+.infra-carousel,
+.services-carousel {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  // Sombra de "peek" a la derecha para indicar contenido scrollable
+  @media (max-width: 1023px) {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 2%,
+      black 92%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 2%,
+      black 92%,
+      transparent 100%
+    );
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+}
+
+.services-carousel {
+  @media (max-width: 767px) {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 2%,
+      black 92%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 2%,
+      black 92%,
+      transparent 100%
+    );
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  @media (min-width: 768px) {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+}
+
+// ── Monitoreo Operativo: layout compacto en móvil ───────────────────────────
+.monitoring-content {
+  @media (max-width: 1023px) {
+    // Forzar que la imagen (order-1) aparezca primero visualmente
+    display: flex;
+    flex-direction: column;
+  }
+}
