@@ -265,12 +265,16 @@ export class PlantasComponent implements OnInit {
       ],
       images: [
         {
-          url: 'assets/operaciones/plantas/lajo/galeria/img-01.jpg',
-          caption: 'Vista general de las tolvas de recepción e infraestructura de Planta Lajo.'
+          url: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/plantas/lajo/galeria/1.%20ALMACENAMIENTO%20DE%20RELAVES.JPG',
+          caption: 'Recepción y almacenamiento de los relaves procedentes de las presas.'
         },
         {
-          url: 'assets/operaciones/plantas/lajo/galeria/img-02.jpg',
-          caption: 'Mantenimiento mecánico y calibración de las celdas de flotación.'
+          url: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/plantas/lajo/galeria/2.%20TANQUE%20DE%20ALMACENAMIENTO%20DE%20AGUA.JPG',
+          caption: 'Tanque de almacenamiento de agua para procesos de la Planta.'
+        },
+        {
+          url: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/plantas/lajo/galeria/3.%20TANQUE%20DE%20AGITACI%C3%93N.JPG',
+          caption: 'Módulo de tanques agitadores para homogenización de pulpa.'
         }
       ],
       locationMap: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/plantas/lajo/planos/1.%20Ubicaci%C3%B3n.png'

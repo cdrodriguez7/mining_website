@@ -15,6 +15,7 @@
     "importHelpers": false,
     "target": "ES2022",
     "module": "preserve",
+    "resolveJsonModule": true,
     "types": ["vitest/globals"]
 
   },

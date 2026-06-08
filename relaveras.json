@@ -1,0 +1,579 @@
+{
+  "documento": "FORMULARIO DE DATOS REALES — GESTIÓN DE RELAVERAS — PLANPROMIN",
+  "fecha_solicitud": "2026-06-02",
+  "leyenda": {
+    "escala_FS": "≥1.50 SEGURO | 1.00-1.49 ACEPTABLE | <1.00 CRÍTICO",
+    "norma_minima": "FS ≥ 1.00 (estático) | FS ≥ 1.05 (dinámico/sísmico)",
+    "nota_campos_vacios": "Los campos null corresponden a celdas vacías o marcadas '???' (sin dato real)"
+  },
+  "total_relaveras": 7,
+  "relaveras": [
+    {
+      "id": "Relavera #7",
+      "nombre_completo": "Relavera #7",
+      "datos_generales": {
+        "estado": "Reprocesamiento Activo",
+        "color_estado": "VERDE",
+        "capacidad_total": "320,000 m³",
+        "ocupacion_actual_pct": "78",
+        "anio_construccion": "2018",
+        "recuperacion_agua": "92%",
+        "FSD_factor_seguridad_diseno": "1.65",
+        "altura_dique": "30 metros",
+        "tipo_presa": "Presa de Tierra con Pantalla de Arcilla Homogénea",
+        "geologia_cimiento": "Roca volcánica (Andesita) de alta compacidad y baja permeabilidad",
+        "coordenadas_UTM": "UTM 17S 634500E 9642100N",
+        "tecnologia_aplicada": "Geomembrana de HDPE de 2.0 mm de doble textura, piezómetros automáticos de cuerda vibrante y canalización de lixiviados en circuito cerrado.",
+        "proceso_operativo": "Recepción directa de lodos finos de la planta de beneficio y extracción de oro residual fino mediante flotación de colas y agitación química en reactores."
+      },
+      "especificaciones": {
+        "cotas_geometria": {
+          "nivel_base_relavera": "100.0 msnm",
+          "corona_dique": "130.0 m",
+          "max_llenado_relave": "127.00 m",
+          "ancho_coronamiento": "5.00 m",
+          "borde_libre": "2.00 m",
+          "talud_aguas_abajo": "1V:2H"
+        },
+        "capacidad_volumenes": {
+          "almacenamiento_neto": "322,041.84 m³",
+          "capacidad_en_peso": "708,492.05 Ton",
+          "densidad_relave_seco": "2.2 g/cm³",
+          "area_vaso_superior": "24,014.65 m²",
+          "area_vaso_inferior": "3,119.50 m²",
+          "volumen_material_dique": "336,772.91 m³",
+          "excavacion_vaso": "335,545.78 m³"
+        },
+        "revestimiento_impermeabilizacion": {
+          "tipo_revestimiento": "Geomembrana HDPE 2.00 mm",
+          "impermeabilizacion_vaso_interior": "31,096.55 m²",
+          "impermeabilizacion_taludes_dique": "33,738.23 m²",
+          "clasificacion_suelo_SUCS": "Limos orgánicos, ML y MH"
+        }
+      },
+      "zonas_estabilidad": {
+        "pie_dique": {
+          "FS_pie": "1.52",
+          "capacidad_admisible": "450 kPa",
+          "cohesion_c": "23 kN/m²",
+          "angulo_friccion_phi": "31°",
+          "tipo_drenaje": "Espina de Pez",
+          "tuberia_colectora": "Microperforada con Grava"
+        },
+        "talud_medio": {
+          "FS_talud_medio": "1.65",
+          "pendiente_aguas_arriba": "1H:1V (Geomembrana HDPE)",
+          "pendiente_aguas_abajo": "2H:1V (Bermas 3m c/15m)",
+          "densidad_seca_relave": "2.2 g/cm³"
+        },
+        "corona_dique": {
+          "FS_corona": "1.78",
+          "cota_maxima_corona": "138 msnm",
+          "ancho_corona": "5 m",
+          "borde_libre": "2 m"
+        }
+      },
+      "perfil_svg": {
+        "cota_corona_dique": "140 m",
+        "nivel_maximo_relave": "136 m",
+        "cota_fondo_vaso": "110 m",
+        "pendiente_aguas_arriba": "1H:1V",
+        "pendiente_aguas_abajo": "2H:1V",
+        "superficie_total_proyecto": "3.7644 ha",
+        "descripcion_proyecto": {
+          "superficie_proyecto": "3.7644 ha",
+          "altura_max_talud_interno": "5.00 m",
+          "inclinacion_talud_interno": "45°",
+          "material_dique": "Arcilla + Escombrera de mina",
+          "FS_zona_critica_global": "1.386"
+        }
+      }
+    },
+    {
+      "id": "RELAVERA 6",
+      "nombre_completo": "RELAVERA 6",
+      "datos_generales": {
+        "estado": "Reprocesamiento Activo",
+        "color_estado": "VERDE",
+        "capacidad_total": "180,000 m³",
+        "ocupacion_actual_pct": 72,
+        "anio_construccion": "2021",
+        "recuperacion_agua": "88%",
+        "FSD_factor_seguridad_diseno": "1.58",
+        "altura_dique": "24 metros",
+        "tipo_presa": "Dique de Escollera con Núcleo de Arcilla Impermeable",
+        "geologia_cimiento": "Coluvio denso sobre basamento basáltico competente",
+        "coordenadas_UTM": "UTM 17S 634200E 9641800N",
+        "tecnologia_aplicada": "Barreras geodrenantes tridimensionales, control sísmico acelerográfico en tiempo real e impermeabilización por arcillas compactadas.",
+        "proceso_operativo": "Centrado en el lavado, clasificación granulométrica y recuperación secundaria de arenas gruesas con contenidos auríferos históricos del cantón."
+      },
+      "especificaciones": {
+        "cotas_geometria": {
+          "nivel_base_relavera": "100.0 msnm",
+          "corona_dique": "124.0 m",
+          "max_llenado_relave": "121.50 m",
+          "ancho_coronamiento": "4.50 m",
+          "borde_libre": "2.50 m",
+          "talud_aguas_abajo": "1V:2.2H"
+        },
+        "capacidad_volumenes": {
+          "almacenamiento_neto": "181,148.54 m³",
+          "capacidad_en_peso": "398,526.78 Ton",
+          "densidad_relave_seco": "2.2 g/cm³",
+          "area_vaso_superior": "13,500.00 m²",
+          "area_vaso_inferior": "1,750.00 m²",
+          "volumen_material_dique": "189,450.00 m³",
+          "excavacion_vaso": "188,750.00 m³"
+        },
+        "revestimiento_impermeabilizacion": {
+          "tipo_revestimiento": "Arcilla compactada y Geodrenes",
+          "impermeabilizacion_vaso_interior": "17,490.00 m²",
+          "impermeabilizacion_taludes_dique": "18,970.00 m²",
+          "clasificacion_suelo_SUCS": "Gravas arcillosas, GC y SC"
+        }
+      },
+      "zonas_estabilidad": {
+        "pie_dique": {
+          "FS_pie": "1.45",
+          "capacidad_admisible": null,
+          "cohesion_c": null,
+          "angulo_friccion_phi": null,
+          "tipo_drenaje": "Espina de Pez",
+          "tuberia_colectora": "Microperforada con Grava"
+        },
+        "talud_medio": {
+          "FS_talud_medio": "1.58",
+          "pendiente_aguas_arriba": null,
+          "pendiente_aguas_abajo": null,
+          "densidad_seca_relave": "2.2 g/cm³"
+        },
+        "corona_dique": {
+          "FS_corona": "1.71",
+          "cota_maxima_corona": null,
+          "ancho_corona": null,
+          "borde_libre": null
+        }
+      },
+      "perfil_svg": {
+        "cota_corona_dique": null,
+        "nivel_maximo_relave": null,
+        "cota_fondo_vaso": null,
+        "pendiente_aguas_arriba": null,
+        "pendiente_aguas_abajo": null,
+        "superficie_total_proyecto": null,
+        "descripcion_proyecto": {
+          "superficie_proyecto": null,
+          "altura_max_talud_interno": null,
+          "inclinacion_talud_interno": null,
+          "material_dique": null,
+          "FS_zona_critica_global": null
+        }
+      }
+    },
+    {
+      "id": "RELAVERA 5",
+      "nombre_completo": "RELAVERA 5",
+      "datos_generales": {
+        "estado": "Monitoreo & Estabilización",
+        "color_estado": "AMARILLO",
+        "capacidad_total": "240,000 m³",
+        "ocupacion_actual_pct": "95",
+        "anio_construccion": 2014,
+        "recuperacion_agua": "95%",
+        "FSD_factor_seguridad_diseno": "3.29",
+        "altura_dique": "52 (altura de analisis)",
+        "tipo_presa": "Zanja de desvío con geomembrana + muro de gaviones + relleno granular",
+        "geologia_cimiento": "Esquisto arcilloso meteorizado compactado",
+        "coordenadas_UTM": "UTM 17S 645590 E, 9668141 N, 142 msnm",
+        "tecnologia_aplicada": "Drenes de chimenea de grava fina, inclinómetros digitales para registrar deformación angular y sensores de nivel freático.",
+        "proceso_operativo": "Actualmente en reposo para consolidación física del material (disipación de presiones) previo al inicio del reprocesamiento masivo."
+      },
+      "especificaciones": {
+        "cotas_geometria": {
+          "nivel_base_relavera": "100.0 msnm",
+          "corona_dique": "118.0 m",
+          "max_llenado_relave": "115.50 m",
+          "ancho_coronamiento": "4.00 m",
+          "borde_libre": "2.50 m",
+          "talud_aguas_abajo": "1V:2.5H"
+        },
+        "capacidad_volumenes": {
+          "almacenamiento_neto": "140371,51 m³",
+          "capacidad_en_peso": "332,105.65 Ton",
+          "densidad_relave_seco": "2.2 g/cm³",
+          "area_vaso_superior": "11,250.00 m²",
+          "area_vaso_inferior": "1,460.00 m²",
+          "volumen_material_dique": "157,860.00 m³",
+          "excavacion_vaso": "157,290.00 m³"
+        },
+        "revestimiento_impermeabilizacion": {
+          "tipo_revestimiento": "Limo arcilloso café amarillento, Limo arcilloso café rojizo con pintas blancas",
+          "impermeabilizacion_vaso_interior": "14,570.00 m²",
+          "impermeabilizacion_taludes_dique": "15,810.00 m²",
+          "clasificacion_suelo_SUCS": "MH; AASHTO A-7-5"
+        }
+      },
+      "zonas_estabilidad": {
+        "pie_dique": {
+          "FS_pie": 3.29,
+          "capacidad_admisible": "196,13 kPa",
+          "cohesion_c": null,
+          "angulo_friccion_phi": "32°",
+          "tipo_drenaje": "Espina de Pez",
+          "tuberia_colectora": "Microperforada con Grava"
+        },
+        "talud_medio": {
+          "FS_talud_medio": 3.84,
+          "pendiente_aguas_arriba": null,
+          "pendiente_aguas_abajo": null,
+          "densidad_seca_relave": "2.2 g/cm³"
+        },
+        "corona_dique": {
+          "FS_corona": 3.29,
+          "cota_maxima_corona": null,
+          "ancho_corona": null,
+          "borde_libre": null
+        }
+      },
+      "perfil_svg": {
+        "cota_corona_dique": null,
+        "nivel_maximo_relave": null,
+        "cota_fondo_vaso": null,
+        "pendiente_aguas_arriba": null,
+        "pendiente_aguas_abajo": null,
+        "superficie_total_proyecto": null,
+        "descripcion_proyecto": {
+          "superficie_proyecto": null,
+          "altura_max_talud_interno": null,
+          "inclinacion_talud_interno": null,
+          "material_dique": null,
+          "FS_zona_critica_global": null
+        }
+      }
+    },
+    {
+      "id": "RELAVERA 4",
+      "nombre_completo": "RELAVERA 4",
+      "datos_generales": {
+        "estado": "Cierre Técnico & Reforestación",
+        "color_estado": "AZUL",
+        "capacidad_total": "150,000 m³",
+        "ocupacion_actual_pct": "100",
+        "anio_construccion": 2018,
+        "recuperacion_agua": "100% (Efluente Cero)",
+        "FSD_factor_seguridad_diseno": 1.64,
+        "altura_dique": "25 metros",
+        "tipo_presa": "Matrial de Mejoramiento, existen estratos entre limos y coluvios",
+        "geologia_cimiento": "Basamento rocoso sano y seco",
+        "coordenadas_UTM": "UTM 17S 645485.78E 9668092.76N",
+        "tecnologia_aplicada": "Fue diseñada para disponer de una demanda requerida equivalente a 1000 t/dia",
+        "proceso_operativo": "Fase de fitorremediación y siembra de especies endémicas locales para la restauración ecológica y estabilización biológica definitiva."
+      },
+      "especificaciones": {
+        "cotas_geometria": {
+          "nivel_base_relavera": "120.00 msnm",
+          "corona_dique": "155.00 mnsm",
+          "max_llenado_relave": "153.00 msnm",
+          "ancho_coronamiento": "9.00 m",
+          "borde_libre": "2.00 m",
+          "talud_aguas_abajo": "2V:1H"
+        },
+        "capacidad_volumenes": {
+          "almacenamiento_neto": "140371.51 m³",
+          "capacidad_en_peso": "308817.32 Ton",
+          "densidad_relave_seco": "2.2 g/cm³",
+          "area_vaso_superior": "9329.1 m²",
+          "area_vaso_inferior": null,
+          "volumen_material_dique": "304.67 m³",
+          "excavacion_vaso": "72756.39 m³"
+        },
+        "revestimiento_impermeabilizacion": {
+          "tipo_revestimiento": "Geomembrana HDPE 2.00 mm",
+          "impermeabilizacion_vaso_interior": "9329.1 m²",
+          "impermeabilizacion_taludes_dique": "15,810.00 m²",
+          "clasificacion_suelo_SUCS": "Arcilla y limo con gravas, Arena arcillosa, Arena limosa con gravas"
+        }
+      },
+      "zonas_estabilidad": {
+        "pie_dique": {
+          "FS_pie": 1.98,
+          "capacidad_admisible": "182.40 kPa",
+          "cohesion_c": "56.28 kN/m²",
+          "angulo_friccion_phi": "32°",
+          "tipo_drenaje": "Espina de Pez",
+          "tuberia_colectora": "Microperforada con Grava"
+        },
+        "talud_medio": {
+          "FS_talud_medio": 1.71,
+          "pendiente_aguas_arriba": "1H:1V",
+          "pendiente_aguas_abajo": "1H:2V",
+          "densidad_seca_relave": "2.2 g/cm³"
+        },
+        "corona_dique": {
+          "FS_corona": 1.88,
+          "cota_maxima_corona": "155.00 msnm",
+          "ancho_corona": "9.00 m",
+          "borde_libre": "2.00 m"
+        }
+      },
+      "perfil_svg": {
+        "cota_corona_dique": "155 m",
+        "nivel_maximo_relave": "153 m",
+        "cota_fondo_vaso": "120 m",
+        "pendiente_aguas_arriba": "1H:1V",
+        "pendiente_aguas_abajo": "1H:2V",
+        "superficie_total_proyecto": "15 ha",
+        "descripcion_proyecto": {
+          "superficie_proyecto": "15 ha",
+          "altura_max_talud_interno": null,
+          "inclinacion_talud_interno": "47°",
+          "material_dique": "Arena y Limo con grava",
+          "FS_zona_critica_global": 1.71
+        }
+      }
+    },
+    {
+      "id": "RELAVERA 1",
+      "nombre_completo": "RELAVERA 1",
+      "datos_generales": {
+        "estado": "En Preparación",
+        "color_estado": "NARANJA",
+        "capacidad_total": "200,000 m³",
+        "ocupacion_actual_pct": "15",
+        "anio_construccion": "2025",
+        "recuperacion_agua": "En fase de pruebas",
+        "FSD_factor_seguridad_diseno": "1.85",
+        "altura_dique": "28 metros",
+        "tipo_presa": "Presa de Grava con Núcleo Geosintético",
+        "geologia_cimiento": "Aluvión consolidado de alta densidad",
+        "coordenadas_UTM": "UTM 17S 633900E 9641500N",
+        "tecnologia_aplicada": "Contención lateral de grava compactada, geomembranas de bentonita de sodio auto-sellantes y sistema SCADA en fibra óptica.",
+        "proceso_operativo": "Adecuación de bombas y tuberías de transporte de lodos para recibir material de relave disperso de la región para centralización."
+      },
+      "especificaciones": {
+        "cotas_geometria": {
+          "nivel_base_relavera": "100.0 msnm",
+          "corona_dique": "128.0 m",
+          "max_llenado_relave": "125.00 m",
+          "ancho_coronamiento": "6.00 m",
+          "borde_libre": "3.00 m",
+          "talud_aguas_abajo": "1V:2H"
+        },
+        "capacidad_volumenes": {
+          "almacenamiento_neto": "201,276.15 m³",
+          "capacidad_en_peso": "442,807.53 Ton",
+          "densidad_relave_seco": "2.2 g/cm³",
+          "area_vaso_superior": "15,009.15 m²",
+          "area_vaso_inferior": "1,949.68 m²",
+          "volumen_material_dique": "210,483.07 m³",
+          "excavacion_vaso": "209,716.11 m³"
+        },
+        "revestimiento_impermeabilizacion": {
+          "tipo_revestimiento": "Geomembrana GCL (Bentonita)",
+          "impermeabilizacion_vaso_interior": "19,435.35 m²",
+          "impermeabilizacion_taludes_dique": "21,086.40 m²",
+          "clasificacion_suelo_SUCS": "Arenas limosas y Arcillas magras, SM y CL"
+        }
+      },
+      "zonas_estabilidad": {
+        "pie_dique": {
+          "FS_pie": "1.7",
+          "capacidad_admisible": null,
+          "cohesion_c": null,
+          "angulo_friccion_phi": null,
+          "tipo_drenaje": "Espina de Pez",
+          "tuberia_colectora": "Microperforada con Grava"
+        },
+        "talud_medio": {
+          "FS_talud_medio": "1.85",
+          "pendiente_aguas_arriba": null,
+          "pendiente_aguas_abajo": null,
+          "densidad_seca_relave": "2.2 g/cm³"
+        },
+        "corona_dique": {
+          "FS_corona": "2",
+          "cota_maxima_corona": null,
+          "ancho_corona": null,
+          "borde_libre": null
+        }
+      },
+      "perfil_svg": {
+        "cota_corona_dique": null,
+        "nivel_maximo_relave": null,
+        "cota_fondo_vaso": null,
+        "pendiente_aguas_arriba": null,
+        "pendiente_aguas_abajo": null,
+        "superficie_total_proyecto": null,
+        "descripcion_proyecto": {
+          "superficie_proyecto": null,
+          "altura_max_talud_interno": null,
+          "inclinacion_talud_interno": null,
+          "material_dique": null,
+          "FS_zona_critica_global": null
+        }
+      }
+    },
+    {
+      "id": "RELAVERA 2",
+      "nombre_completo": "RELAVERA 2",
+      "datos_generales": {
+        "estado": "Mitigación Ambiental Activa",
+        "color_estado": "AMARILLO",
+        "capacidad_total": "110,000 m³",
+        "ocupacion_actual_pct": "88",
+        "anio_construccion": "2013",
+        "recuperacion_agua": "90%",
+        "FSD_factor_seguridad_diseno": "1.51",
+        "altura_dique": "16 metros",
+        "tipo_presa": "Presa de Tierra compactada con contrafuertes de escollera",
+        "geologia_cimiento": "Suelo limo-arcilloso consolidado",
+        "coordenadas_UTM": "UTM 17S 634900E 9642300N",
+        "tecnologia_aplicada": "Filtros de carbón activo en serie y neutralización alcalina en cascada para tratamiento preventivo de drenaje ácido de roca.",
+        "proceso_operativo": "Tratamiento activo y deshidratación de relaves antiguos expuestos a la intemperie por operaciones de terceros no controladas en el pasado."
+      },
+      "especificaciones": {
+        "cotas_geometria": {
+          "nivel_base_relavera": "100.0 msnm",
+          "corona_dique": "116.0 m",
+          "max_llenado_relave": "113.80 m",
+          "ancho_coronamiento": "4.00 m",
+          "borde_libre": "2.20 m",
+          "talud_aguas_abajo": "1V:2.2H"
+        },
+        "capacidad_volumenes": {
+          "almacenamiento_neto": "110,707.88 m³",
+          "capacidad_en_peso": "243,557.34 Ton",
+          "densidad_relave_seco": "2.2 g/cm³",
+          "area_vaso_superior": "8,255.03 m²",
+          "area_vaso_inferior": "1,072.32 m²",
+          "volumen_material_dique": "115,770.69 m³",
+          "excavacion_vaso": "115,348.97 m³"
+        },
+        "revestimiento_impermeabilizacion": {
+          "tipo_revestimiento": "Geomembrana de PVC 1.50 mm",
+          "impermeabilizacion_vaso_interior": "10,689.87 m²",
+          "impermeabilizacion_taludes_dique": "11,598.63 m²",
+          "clasificacion_suelo_SUCS": "Limos y arcillas inorgánicas, CL y ML"
+        }
+      },
+      "zonas_estabilidad": {
+        "pie_dique": {
+          "FS_pie": "1.39",
+          "capacidad_admisible": null,
+          "cohesion_c": null,
+          "angulo_friccion_phi": null,
+          "tipo_drenaje": "Espina de Pez",
+          "tuberia_colectora": "Microperforada con Grava"
+        },
+        "talud_medio": {
+          "FS_talud_medio": "1.51",
+          "pendiente_aguas_arriba": null,
+          "pendiente_aguas_abajo": null,
+          "densidad_seca_relave": "2.2 g/cm³"
+        },
+        "corona_dique": {
+          "FS_corona": "1.63",
+          "cota_maxima_corona": null,
+          "ancho_corona": null,
+          "borde_libre": null
+        }
+      },
+      "perfil_svg": {
+        "cota_corona_dique": null,
+        "nivel_maximo_relave": null,
+        "cota_fondo_vaso": null,
+        "pendiente_aguas_arriba": null,
+        "pendiente_aguas_abajo": null,
+        "superficie_total_proyecto": null,
+        "descripcion_proyecto": {
+          "superficie_proyecto": null,
+          "altura_max_talud_interno": null,
+          "inclinacion_talud_interno": null,
+          "material_dique": null,
+          "FS_zona_critica_global": null
+        }
+      }
+    },
+    {
+      "id": "RELAVERA 3",
+      "nombre_completo": "RELAVERA 3",
+      "datos_generales": {
+        "estado": "Mitigación Ambiental Activa",
+        "color_estado": "AMARILLO",
+        "capacidad_total": "110,000 m³",
+        "ocupacion_actual_pct": "88",
+        "anio_construccion": "2013",
+        "recuperacion_agua": "90%",
+        "FSD_factor_seguridad_diseno": "1.51",
+        "altura_dique": "16 metros",
+        "tipo_presa": "Presa de Tierra compactada con contrafuertes de escollera",
+        "geologia_cimiento": "Suelo limo-arcilloso consolidado",
+        "coordenadas_UTM": "UTM 17S 634900E 9642300N",
+        "tecnologia_aplicada": "Filtros de carbón activo en serie y neutralización alcalina en cascada para tratamiento preventivo de drenaje ácido de roca.",
+        "proceso_operativo": "Tratamiento activo y deshidratación de relaves antiguos expuestos a la intemperie por operaciones de terceros no controladas en el pasado."
+      },
+      "especificaciones": {
+        "cotas_geometria": {
+          "nivel_base_relavera": "100.0 msnm",
+          "corona_dique": "116.0 m",
+          "max_llenado_relave": "113.80 m",
+          "ancho_coronamiento": "4.00 m",
+          "borde_libre": "2.20 m",
+          "talud_aguas_abajo": "1V:2.2H"
+        },
+        "capacidad_volumenes": {
+          "almacenamiento_neto": "110,707.88 m³",
+          "capacidad_en_peso": "243,557.34 Ton",
+          "densidad_relave_seco": "2.2 g/cm³",
+          "area_vaso_superior": "8,255.03 m²",
+          "area_vaso_inferior": "1,072.32 m²",
+          "volumen_material_dique": "115,770.69 m³",
+          "excavacion_vaso": "115,348.97 m³"
+        },
+        "revestimiento_impermeabilizacion": {
+          "tipo_revestimiento": "Geomembrana de PVC 1.50 mm",
+          "impermeabilizacion_vaso_interior": "10,689.87 m²",
+          "impermeabilizacion_taludes_dique": "11,598.63 m²",
+          "clasificacion_suelo_SUCS": "Limos y arcillas inorgánicas, CL y ML"
+        }
+      },
+      "zonas_estabilidad": {
+        "pie_dique": {
+          "FS_pie": "1.39",
+          "capacidad_admisible": null,
+          "cohesion_c": null,
+          "angulo_friccion_phi": null,
+          "tipo_drenaje": "Espina de Pez",
+          "tuberia_colectora": "Microperforada con Grava"
+        },
+        "talud_medio": {
+          "FS_talud_medio": "1.51",
+          "pendiente_aguas_arriba": null,
+          "pendiente_aguas_abajo": null,
+          "densidad_seca_relave": "2.2 g/cm³"
+        },
+        "corona_dique": {
+          "FS_corona": "1.63",
+          "cota_maxima_corona": null,
+          "ancho_corona": null,
+          "borde_libre": null
+        }
+      },
+      "perfil_svg": {
+        "cota_corona_dique": null,
+        "nivel_maximo_relave": null,
+        "cota_fondo_vaso": null,
+        "pendiente_aguas_arriba": null,
+        "pendiente_aguas_abajo": null,
+        "superficie_total_proyecto": null,
+        "descripcion_proyecto": {
+          "superficie_proyecto": null,
+          "altura_max_talud_interno": null,
+          "inclinacion_talud_interno": null,
+          "material_dique": null,
+          "FS_zona_critica_global": null
+        }
+      }
+    }
+  ]
+}

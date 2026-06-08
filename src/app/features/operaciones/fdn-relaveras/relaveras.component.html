@@ -334,41 +334,44 @@
                       <polygon fill="#06b6d4" points="488.63,137.61 490.22,140.79 487.69,138.29" />
                     </g>
 
-                    <!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
+                    <ng-container *ngIf="activeFailureZones">
+<!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
                     <!-- ZONA CORONA -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.corona)">
                       <polygon points="480,128 520,128 520,153 480,153"
-                        [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.corona.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.corona.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="500" y="148" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.corona.fs)">FS={{ activeFailureZones!.corona.fs }}</text>
                       <text x="500" y="120" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
                     </g>
 
                     <!-- ZONA TALUD -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.talud)">
                       <polygon points="210,315 480,138 495,153 225,330"
-                        [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.talud.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.talud.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="350" y="225" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.talud.fs)">FS={{ activeFailureZones!.talud.fs }}</text>
                       <text x="350" y="210" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD MED.</text>
                     </g>
 
                     <!-- ZONA PIE -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.pie)">
                       <polygon points="175,305 235,305 235,335 175,335"
-                        [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.pie.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.pie.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="205" y="325" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.pie.fs)">FS={{ activeFailureZones!.pie.fs }}</text>
                       <text x="205" y="295" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
                     </g>
 
-                    <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
+                    
+</ng-container>
+<!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
                     <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
@@ -451,41 +454,44 @@
                       <polygon fill="#06b6d4" points="591.29,97.04 588.81,100.56 590.01,96.43" />
                     </g>
 
-                    <!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
+                    <ng-container *ngIf="activeFailureZones">
+<!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
                     <!-- ZONA CORONA -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.corona)">
                       <polygon points="545,90 625,90 635,115 545,115"
-                        [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.corona.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.corona.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="585" y="110" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.corona.fs)">FS={{ activeFailureZones!.corona.fs }}</text>
                       <text x="585" y="82" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
                     </g>
 
                     <!-- ZONA TALUD -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.talud)">
                       <polygon points="375,260 550,85 570,105 395,285"
-                        [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.talud.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.talud.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="470" y="175" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.talud.fs)">FS={{ activeFailureZones!.talud.fs }}</text>
                       <text x="470" y="160" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD MED.</text>
                     </g>
 
                     <!-- ZONA PIE -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.pie)">
                       <polygon points="300,250 375,250 375,290 300,290"
-                        [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.pie.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.pie.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="337" y="275" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.pie.fs)">FS={{ activeFailureZones!.pie.fs }}</text>
                       <text x="337" y="243" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
                     </g>
 
-                    <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
+                    
+</ng-container>
+<!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
                     <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
@@ -568,41 +574,44 @@
                       <polygon fill="#06b6d4" points="609.36,62.38 606.83,65.98 608.06,61.76" />
                     </g>
 
-                    <!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
+                    <ng-container *ngIf="activeFailureZones">
+<!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
                     <!-- ZONA CORONA -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.corona)">
                       <polygon points="580,50 630,50 630,75 580,75"
-                        [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.corona.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.corona.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="605" y="70" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.corona.fs)">FS={{ activeFailureZones!.corona.fs }}</text>
                       <text x="605" y="42" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
                     </g>
 
                     <!-- ZONA TALUD -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.talud)">
                       <polygon points="425,210 575,65 595,80 445,225"
-                        [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.talud.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.talud.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="510" y="150" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.talud.fs)">FS={{ activeFailureZones!.talud.fs }}</text>
                       <text x="510" y="135" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD MED.</text>
                     </g>
 
                     <!-- ZONA PIE -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.pie)">
                       <polygon points="340,245 425,245 425,275 340,275"
-                        [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.pie.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.pie.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="382" y="265" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.pie.fs)">FS={{ activeFailureZones!.pie.fs }}</text>
                       <text x="382" y="235" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
                     </g>
 
-                    <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
+                    
+</ng-container>
+<!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
                     <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
@@ -686,41 +695,44 @@
                       <polygon fill="#06b6d4" points="768.39,191.37 764.91,196.32 766.6,190.5" />
                     </g>
 
-                    <!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
+                    <ng-container *ngIf="activeFailureZones">
+<!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
                     <!-- ZONA CORONA -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.corona)">
                       <polygon points="725,185 780,185 780,210 725,210"
-                        [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.corona.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.corona.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="752" y="204" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.corona.fs)">FS={{ activeFailureZones!.corona.fs }}</text>
                       <text x="752" y="178" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
                     </g>
 
                     <!-- ZONA TALUD -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.talud)">
                       <polygon points="680,245 760,190 775,205 695,260"
-                        [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.talud.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.talud.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="728" y="225" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.talud.fs)">FS={{ activeFailureZones!.talud.fs }}</text>
                       <text x="728" y="210" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD MED.</text>
                     </g>
 
                     <!-- ZONA PIE -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.pie)">
                       <polygon points="275,240 330,240 330,265 275,265"
-                        [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.pie.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.pie.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="302" y="258" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.pie.fs)">FS={{ activeFailureZones!.pie.fs }}</text>
                       <text x="302" y="233" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
                     </g>
 
-                    <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
+                    
+</ng-container>
+<!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
                     <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
@@ -804,41 +816,44 @@
                       <polygon fill="#06b6d4" points="328.55,151.34 324.36,157.31 326.38,150.3" />
                     </g>
 
-                    <!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
+                    <ng-container *ngIf="activeFailureZones">
+<!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
                     <!-- ZONA CORONA -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.corona)">
                       <polygon points="310,145 365,145 365,170 310,170"
-                        [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.corona.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.corona.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="337" y="163" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.corona.fs)">FS={{ activeFailureZones!.corona.fs }}</text>
                       <text x="337" y="138" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
                     </g>
 
                     <!-- ZONA TALUD -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.talud)">
                       <polygon points="220,228 340,148 358,168 238,248"
-                        [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.talud.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.talud.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="290" y="200" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.talud.fs)">FS={{ activeFailureZones!.talud.fs }}</text>
                       <text x="290" y="185" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD MED.</text>
                     </g>
 
                     <!-- ZONA PIE -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.pie)">
                       <polygon points="170,230 240,230 240,260 170,260"
-                        [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.pie.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.pie.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="205" y="250" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.pie.fs)">FS={{ activeFailureZones!.pie.fs }}</text>
                       <text x="205" y="223" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
                     </g>
 
-                    <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
+                    
+</ng-container>
+<!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
                     <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
@@ -937,35 +952,35 @@
 
                     <!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
                     <!-- ZONA CORONA (dique izquierdo) -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.corona)">
                       <polygon points="330,155 385,155 385,180 330,180"
-                        [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.corona.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.corona.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="357" y="173" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.corona.fs)">FS={{ activeFailureZones!.corona.fs }}</text>
                       <text x="357" y="148" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
                     </g>
 
                     <!-- ZONA TALUD (dique izquierdo) -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.talud)">
                       <polygon points="210,220 345,158 362,175 227,237"
-                        [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.talud.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.talud.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="285" y="198" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.talud.fs)">FS={{ activeFailureZones!.talud.fs }}</text>
                       <text x="285" y="183" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD MED.</text>
                     </g>
 
                     <!-- ZONA PIE (fondo central) -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.pie)">
                       <polygon points="470,215 550,215 550,245 470,245"
-                        [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.pie.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.pie.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="510" y="236" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.pie.fs)">FS={{ activeFailureZones!.pie.fs }}</text>
                       <text x="510" y="208" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
                     </g>
 
@@ -1053,41 +1068,44 @@
                       <polygon fill="#06b6d4" points="714.05,148.99 711.04,153.27 712.5,148.25" />
                     </g>
 
-                    <!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
+                    <ng-container *ngIf="activeFailureZones">
+<!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
                     <!-- ZONA CORONA -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.corona)">
                       <polygon points="690,140 745,140 745,170 690,170"
-                        [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.corona.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.corona.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="717" y="161" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.corona.fs)">FS={{ activeFailureZones!.corona.fs }}</text>
                       <text x="717" y="133" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
                     </g>
 
                     <!-- ZONA TALUD -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.talud)">
                       <polygon points="500,290 660,155 678,172 518,307"
-                        [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.talud.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.talud.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="590" y="232" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.talud.fs)">FS={{ activeFailureZones!.talud.fs }}</text>
                       <text x="590" y="217" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD MED.</text>
                     </g>
 
                     <!-- ZONA PIE -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.pie)">
                       <polygon points="400,335 475,335 475,365 400,365"
-                        [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.pie.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.pie.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="437" y="356" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.pie.fs)">FS={{ activeFailureZones!.pie.fs }}</text>
                       <text x="437" y="328" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
                     </g>
 
-                    <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
+                    
+</ng-container>
+<!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
                     <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
@@ -1183,40 +1201,43 @@
                     <!-- Curva de Bishop -->
                     <path d="M 125,238 Q 280,180 415,70" fill="none" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.4" />
 
-                    <!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
+                    <ng-container *ngIf="activeFailureZones">
+<!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
                     <!-- ZONA CORONA -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.corona)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.corona)">
                       <polygon points="385,65 425,65 430,85 390,85"
-                        [attr.fill]="getZoneFill(activeFailureZones.corona.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.corona.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.corona.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.corona.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'corona' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="408" y="80" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.corona.fs)">FS={{ activeFailureZones.corona.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.corona.fs)">FS={{ activeFailureZones!.corona.fs }}</text>
                       <text x="408" y="60" font-size="6" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">CORONA</text>
                     </g>
 
                     <!-- ZONA TALUD -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.talud)">
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.talud)">
                       <polygon points="130,230 380,75 390,95 140,250"
-                        [attr.fill]="getZoneFill(activeFailureZones.talud.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.talud.fs)"
+                        [attr.fill]="getZoneFill(activeFailureZones!.talud.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.talud.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'talud' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="260" y="165" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.talud.fs)">FS={{ activeFailureZones.talud.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.talud.fs)">FS={{ activeFailureZones!.talud.fs }}</text>
                       <text x="260" y="153" font-size="6" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">TALUD MED.</text>
                     </g>
 
                     <!-- ZONA PIE -->
-                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones.pie)">
-                      <polygon points="85,250 140,220 150,240 95,270" [attr.fill]="getZoneFill(activeFailureZones.pie.fs)"
-                        [attr.stroke]="getZoneStroke(activeFailureZones.pie.fs)"
+                    <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.pie)">
+                      <polygon points="85,250 140,220 150,240 95,270" [attr.fill]="getZoneFill(activeFailureZones!.pie.fs)"
+                        [attr.stroke]="getZoneStroke(activeFailureZones!.pie.fs)"
                         [attr.stroke-width]="selectedZone?.id === 'pie' ? '2.5' : '1.5'" stroke-dasharray="4 2" />
                       <text x="117" y="248" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle"
-                        [attr.fill]="getZoneStroke(activeFailureZones.pie.fs)">FS={{ activeFailureZones.pie.fs }}</text>
+                        [attr.fill]="getZoneStroke(activeFailureZones!.pie.fs)">FS={{ activeFailureZones!.pie.fs }}</text>
                       <text x="117" y="235" font-size="6" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
                     </g>
 
-                    <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
+                    
+</ng-container>
+<!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
                     <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="9" fill="none" stroke-width="2"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
@@ -1238,7 +1259,7 @@
 
 
               <!-- Panel de Leyenda y FS por Zona -->
-              <div class="bg-black/40 border border-zinc-800/60 rounded-2xl p-4 flex flex-col gap-3">
+              <div class="bg-black/40 border border-zinc-800/60 rounded-2xl p-4 flex flex-col gap-3" *ngIf="activeFailureZones">
 
                 <!-- FSD Global -->
                 <div>
@@ -1269,60 +1290,60 @@
                   <div class="space-y-1.5">
 
                     <!-- Corona -->
-                    <button (click)="selectZone(activeFailureZones.corona)"
+                    <button (click)="selectZone(activeFailureZones!.corona)"
                       class="w-full flex items-center justify-between px-2.5 py-2 rounded-lg border transition-all duration-200 text-left"
                       [ngClass]="selectedZone?.id === 'corona' ? 'border-white/20 bg-white/5' : 'border-zinc-800/40 hover:bg-zinc-800/20'">
                       <div class="flex items-center gap-2">
                         <div class="w-2.5 h-2.5 rounded-sm flex-shrink-0" [ngClass]="{
-                               'bg-green-500': activeFailureZones.corona.fs >= 1.5,
-                               'bg-yellow-500': activeFailureZones.corona.fs >= 1.0 && activeFailureZones.corona.fs < 1.5,
-                               'bg-red-500': activeFailureZones.corona.fs < 1.0
+                               'bg-green-500': activeFailureZones!.corona.fs >= 1.5,
+                               'bg-yellow-500': activeFailureZones!.corona.fs >= 1.0 && activeFailureZones!.corona.fs < 1.5,
+                               'bg-red-500': activeFailureZones!.corona.fs < 1.0
                              }"></div>
                         <span class="text-[10px] text-zinc-300 font-semibold">Corona</span>
                       </div>
                       <span class="text-xs font-mono font-black" [ngClass]="{
-                              'text-green-400': activeFailureZones.corona.fs >= 1.5,
-                              'text-yellow-400': activeFailureZones.corona.fs >= 1.0 && activeFailureZones.corona.fs < 1.5,
-                              'text-red-400': activeFailureZones.corona.fs < 1.0
-                            }">{{ activeFailureZones.corona.fs }}</span>
+                              'text-green-400': activeFailureZones!.corona.fs >= 1.5,
+                              'text-yellow-400': activeFailureZones!.corona.fs >= 1.0 && activeFailureZones!.corona.fs < 1.5,
+                              'text-red-400': activeFailureZones!.corona.fs < 1.0
+                            }">{{ activeFailureZones!.corona.fs }}</span>
                     </button>
  
                     <!-- Talud -->
-                    <button (click)="selectZone(activeFailureZones.talud)"
+                    <button (click)="selectZone(activeFailureZones!.talud)"
                       class="w-full flex items-center justify-between px-2.5 py-2 rounded-lg border transition-all duration-200 text-left"
                       [ngClass]="selectedZone?.id === 'talud' ? 'border-white/20 bg-white/5' : 'border-zinc-800/40 hover:bg-zinc-800/20'">
                       <div class="flex items-center gap-2">
                         <div class="w-2.5 h-2.5 rounded-sm flex-shrink-0" [ngClass]="{
-                               'bg-green-500': activeFailureZones.talud.fs >= 1.5,
-                               'bg-yellow-500': activeFailureZones.talud.fs >= 1.0 && activeFailureZones.talud.fs < 1.5,
-                               'bg-red-500': activeFailureZones.talud.fs < 1.0
+                               'bg-green-500': activeFailureZones!.talud.fs >= 1.5,
+                               'bg-yellow-500': activeFailureZones!.talud.fs >= 1.0 && activeFailureZones!.talud.fs < 1.5,
+                               'bg-red-500': activeFailureZones!.talud.fs < 1.0
                              }"></div>
                         <span class="text-[10px] text-zinc-300 font-semibold">Talud Medio</span>
                       </div>
                       <span class="text-xs font-mono font-black" [ngClass]="{
-                              'text-green-400': activeFailureZones.talud.fs >= 1.5,
-                              'text-yellow-400': activeFailureZones.talud.fs >= 1.0 && activeFailureZones.talud.fs < 1.5,
-                              'text-red-400': activeFailureZones.talud.fs < 1.0
-                            }">{{ activeFailureZones.talud.fs }}</span>
+                              'text-green-400': activeFailureZones!.talud.fs >= 1.5,
+                              'text-yellow-400': activeFailureZones!.talud.fs >= 1.0 && activeFailureZones!.talud.fs < 1.5,
+                              'text-red-400': activeFailureZones!.talud.fs < 1.0
+                            }">{{ activeFailureZones!.talud.fs }}</span>
                     </button>
  
                     <!-- Pie -->
-                    <button (click)="selectZone(activeFailureZones.pie)"
+                    <button (click)="selectZone(activeFailureZones!.pie)"
                       class="w-full flex items-center justify-between px-2.5 py-2 rounded-lg border transition-all duration-200 text-left"
                       [ngClass]="selectedZone?.id === 'pie' ? 'border-white/20 bg-white/5' : 'border-zinc-800/40 hover:bg-zinc-800/20'">
                       <div class="flex items-center gap-2">
                         <div class="w-2.5 h-2.5 rounded-sm flex-shrink-0" [ngClass]="{
-                               'bg-green-500': activeFailureZones.pie.fs >= 1.5,
-                               'bg-yellow-500': activeFailureZones.pie.fs >= 1.0 && activeFailureZones.pie.fs < 1.5,
-                               'bg-red-500': activeFailureZones.pie.fs < 1.0
+                               'bg-green-500': activeFailureZones!.pie.fs >= 1.5,
+                               'bg-yellow-500': activeFailureZones!.pie.fs >= 1.0 && activeFailureZones!.pie.fs < 1.5,
+                               'bg-red-500': activeFailureZones!.pie.fs < 1.0
                              }"></div>
                         <span class="text-[10px] text-zinc-300 font-semibold">Pie del Dique</span>
                       </div>
                       <span class="text-xs font-mono font-black" [ngClass]="{
-                              'text-green-400': activeFailureZones.pie.fs >= 1.5,
-                              'text-yellow-400': activeFailureZones.pie.fs >= 1.0 && activeFailureZones.pie.fs < 1.5,
-                              'text-red-400': activeFailureZones.pie.fs < 1.0
-                            }">{{ activeFailureZones.pie.fs }}</span>
+                              'text-green-400': activeFailureZones!.pie.fs >= 1.5,
+                              'text-yellow-400': activeFailureZones!.pie.fs >= 1.0 && activeFailureZones!.pie.fs < 1.5,
+                              'text-red-400': activeFailureZones!.pie.fs < 1.0
+                            }">{{ activeFailureZones!.pie.fs }}</span>
                     </button>
                   </div>
                 </div>
