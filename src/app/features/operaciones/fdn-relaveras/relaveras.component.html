@@ -1619,16 +1619,21 @@
                 <!-- Categoría 2: Capacidad y Volúmenes -->
                 <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-4 space-y-3">
                   <span
-                    class="text-orange-500 font-mono font-bold text-xs uppercase tracking-wider block border-b border-zinc-800/60 pb-2 flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                      stroke-width="2">
-                      <path
-                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
-                      </path>
-                    </svg>
-                    Capacidad y Parámetros del Vaso
+                    class="text-orange-500 font-mono font-bold text-xs uppercase tracking-wider block border-b border-zinc-800/60 pb-2 flex items-center justify-between">
+                    <span class="flex items-center gap-1.5">
+                      <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        stroke-width="2">
+                        <path
+                          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                      </svg>
+                      Capacidad y Parámetros del Vaso
+                    </span>
+                    <span *ngIf="activeRelavera.occupancy === 100" class="text-[9px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold uppercase tracking-wider">Límite Máximo</span>
                   </span>
-                  <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <div class="relative">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 transition-all duration-300"
+                      [class.opacity-25]="activeRelavera.occupancy === 100" [class.blur-[1px]]="activeRelavera.occupancy === 100">
                     <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
                       <span
                         class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Almacenamiento
@@ -1667,21 +1672,40 @@
                         activeRelavera.specs.excavationVol }}</span>
                     </div>
                   </div>
+                  <!-- Overlay de Inactividad por Capacidad Máxima -->
+                  <div *ngIf="activeRelavera.occupancy === 100" 
+                    class="absolute inset-0 bg-amber-950/5 backdrop-blur-[1.5px] rounded-xl border border-amber-500/15 flex flex-col items-center justify-center p-4 overflow-hidden z-10">
+                    <div class="absolute inset-0 stripes-pattern opacity-[0.1] pointer-events-none"></div>
+                    <div class="flex flex-col items-center text-center gap-1 z-20">
+                      <svg class="w-5 h-5 text-amber-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      <span class="text-[9px] font-mono font-bold text-amber-500 uppercase tracking-widest">DEPÓSITO INACTIVO</span>
+                      <span class="text-[8px] text-zinc-400 font-medium">CAPACIDAD LÍMITE ALCANZADA</span>
+                    </div>
+                  </div>
+                  </div>
                 </div>
 
                 <!-- Categoría 3: Contención e Impermeabilización -->
                 <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-4 space-y-3">
                   <span
-                    class="text-orange-500 font-mono font-bold text-xs uppercase tracking-wider block border-b border-zinc-800/60 pb-2 flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                      stroke-width="2">
-                      <path
-                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                      </path>
-                    </svg>
-                    Estructura, Revestimiento y Suelos
+                    class="text-orange-500 font-mono font-bold text-xs uppercase tracking-wider block border-b border-zinc-800/60 pb-2 flex items-center justify-between">
+                    <span class="flex items-center gap-1.5">
+                      <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        stroke-width="2">
+                        <path
+                          d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                        </path>
+                      </svg>
+                      Estructura, Revestimiento y Suelos
+                    </span>
+                    <span *ngIf="activeRelavera.occupancy === 100" class="text-[9px] px-2 py-0.5 rounded bg-red-500/20 text-red-400 font-bold uppercase tracking-wider">No Operativa</span>
                   </span>
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div class="relative">
+                    <div class="space-y-3 transition-all duration-300"
+                      [class.opacity-25]="activeRelavera.occupancy === 100" [class.blur-[1px]]="activeRelavera.occupancy === 100">
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
                       <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Volumen
                         Material en Dique</span>
@@ -1726,6 +1750,20 @@
                     </div>
                   </div>
                 </div>
+                <!-- Overlay de Inactividad por Fuera de Servicio -->
+                <div *ngIf="activeRelavera.occupancy === 100" 
+                  class="absolute inset-0 bg-red-950/5 backdrop-blur-[1.5px] rounded-xl border border-red-500/15 flex flex-col items-center justify-center p-4 overflow-hidden z-10">
+                  <div class="absolute inset-0 stripes-pattern opacity-[0.1] pointer-events-none"></div>
+                  <div class="flex flex-col items-center text-center gap-1 z-20">
+                    <svg class="w-5 h-5 text-red-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                    </svg>
+                    <span class="text-[9px] font-mono font-bold text-red-400 uppercase tracking-widest">FUERA DE SERVICIO</span>
+                    <span class="text-[8px] text-zinc-400 font-medium">SISTEMA NO OPERATIVO</span>
+                  </div>
+                </div>
+                </div>
+              </div>
 
               </div>
 
