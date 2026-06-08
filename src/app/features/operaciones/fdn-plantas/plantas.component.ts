@@ -11,6 +11,7 @@ interface StageInfo {
   description: string;
   status: 'activo' | 'mantenimiento' | 'parada';
   metrics: { label: string; value: string }[];
+  imageUrl?: string;
 }
 
 interface Planta {
@@ -29,6 +30,7 @@ interface Planta {
   establishedYear: number;
   stages: StageInfo[];
   images: { url: string; caption: string }[];
+  locationMap?: string;
 }
 
 @Component({
@@ -178,73 +180,87 @@ export class PlantasComponent implements OnInit {
       stages: [
         {
           id: 'rec-lajo',
-          name: 'Recepción y Almacenamiento',
-          description: 'Área total de 137.45 m2 para el acopio de los relaves procedentes de las presas 4, 5 y 6, rehidratados con agua a presión para optimizar sus condiciones físicas.',
+          name: 'Recepción y almacenamiento de los relaves',
+          description: 'En este circuito la planta dispone de un área total de 137.45 m2 para el acopio de los relaves procedentes de las presas número 4, 5 y 6; junto a esta zona se encuentra un tanque de almacenamiento de agua para procesos de la Planta. El material llega a esta área con la ayuda de volquetes que trasladan los relaves desde las diferentes ubicaciones de las presas; ya en sitio, con ayuda de una excavadora se remueve el material y al mismo tiempo se incorpora agua a presión, con el objetivo de rehidratar el relave y dejar en las condiciones casi óptimas para los procesos posteriores.',
           status: 'activo',
           metrics: [
             { label: 'Área Acopio', value: '137.45 m²' },
-            { label: 'Origen Material', value: 'Presas 4, 5 y 6' }
-          ]
+            { label: 'Origen Material', value: 'Presas 4, 5 y 6' },
+            { label: 'Método', value: 'Rehidratación a presión' }
+          ],
+          imageUrl: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/plantas/lajo/etapas/1.%20ZONA%20DE%20ACOPIO%20DE%20RELAVES%20Y%20ALMACENAMIENTO%20DE%20AGUA.png'
         },
         {
           id: 'agi-lajo',
           name: 'Agitadores',
-          description: 'Homogeneización de la mezcla de agua y arenas mediante tanques agitadores de 3.00 m x 4.10 m antes de la adición de reactivos y espumantes.',
+          description: 'Las pulpas provenientes del área de acopio, una vez rehidratado el relave; mediante bombeo llega a un distribuidor y posterior a ello, pasa a los tanques Agitadores de 3.00 m x 4.10 m (diámetro x altura), dentro de los cuales se busca homogenizar la mezcla de agua y arenas para su posterior adición de reactivos y espumantes.',
           status: 'activo',
           metrics: [
-            { label: 'Dimensiones Tanque', value: '3.00m x 4.10m' },
-            { label: 'Función', value: 'Homogeneizar pulpa' }
-          ]
+            { label: 'Dimensiones', value: '3.00 m x 4.10 m' },
+            { label: 'Objetivo', value: 'Homogeneizar mezcla' },
+            { label: 'Reactivos', value: 'Preparación' }
+          ],
+          imageUrl: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/plantas/lajo/etapas/2.%20TANQUES%20DE%20AGITACI%C3%93N.png'
         },
         {
           id: 'aco-lajo',
-          name: 'Tanques Acondicionadores',
-          description: 'Tanques de 3.00 m x 4.10 m diseñados para lograr la mezcla completa de los reactivos incorporados en la pulpa antes de entrar al circuito de flotación.',
+          name: 'Tanques acondicionadores',
+          description: 'Posterior al proceso de agitación, las pulpas pasan a los tanques Acondicionadores de 3.00 m x 4.10 m (diámetro x altura), con el objetivo de conseguir que los reactivos incorporados en este se mezclen completamente con la pulpa y pasen a las celdas de flotación primarias (Delkor).',
           status: 'activo',
           metrics: [
-            { label: 'Dimensiones Tanque', value: '3.00m x 4.10m' },
-            { label: 'Mezcla Reactivos', value: 'Completa' }
-          ]
+            { label: 'Dimensiones', value: '3.00 m x 4.10 m' },
+            { label: 'Mezcla', value: 'Reactivos + pulpa' },
+            { label: 'Destino', value: 'Celdas Delkor' }
+          ],
+          imageUrl: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/plantas/lajo/etapas/3.%20TANQUES%20ACONDICIONADORES.png'
         },
         {
           id: 'flo-delkor',
-          name: 'Celdas de Flotación Delkor',
-          description: 'Celdas primarias Delkor tipo Serrano (Scavenger) para el primer proceso de flotación, enviando concentrado de alta pureza directo a cochas.',
+          name: 'Celdas de flotación Delkor',
+          description: 'Una vez dentro de las celdas primarias (Delkor) de tipo Serrano; también denominadas celdas Scavenger, se da el primer proceso de flotación donde se extraen las partículas que con mayor facilidad flotan. El primero concentrado que se extrae en estas celdas es enviado directamente a las cochas de concentrado, pues presenta una limpieza casi optima.',
           status: 'activo',
           metrics: [
             { label: 'Tipo Celdas', value: 'Serrano (Scavenger)' },
-            { label: 'Primer Concentrado', value: 'Directo a cochas' }
-          ]
+            { label: 'Primer Concentrado', value: 'Directo a cochas' },
+            { label: 'Eficiencia', value: 'Alta selectividad' }
+          ],
+          imageUrl: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/plantas/lajo/etapas/4.%20CELDAS%20DE%20FLOTACI%C3%93N%20DELKOR.png'
         },
         {
           id: 'flo-wemco',
-          name: 'Celdas de Flotación Wemco',
-          description: 'Celdas Wemco tipo Denver y celda circular que flotan los minerales suspendidos residuales. El relave final es conducido a la presa de relaves.',
+          name: 'Celdas de flotación Wemco',
+          description: 'La pulpa que ya haya pasado las primeras celdas, son dirigidas a una segunda celda de flotación (Wemco) de tipo Denver, y una celda circular del mismo tipo, de las cuales mediante un proceso más eficiente buscan flotar el resto de los minerales que aún se encuentran suspendidos en la pulpa. El concentrado que resultas de estas dos celdas, por sus condiciones de limpieza, es enviado a las dos últimas celdas del circuito denominadas de limpieza; y el resto de material resultante denominado relave es enviado a la presa de relaves.',
           status: 'activo',
           metrics: [
             { label: 'Modelos Celdas', value: 'Denver & Circular' },
+            { label: 'Destino Concentrado', value: 'Celdas Limpieza' },
             { label: 'Destino Relave', value: 'Presa de relaves' }
-          ]
+          ],
+          imageUrl: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/plantas/lajo/etapas/5.%20CELDAS%20DE%20FLOTACI%C3%93N%20WENCO%20Y%20CELDA%20CIRCULAR.png'
         },
         {
           id: 'flo-limpieza',
-          name: 'Celda Circular & Limpieza',
-          description: 'Celdas compuestas por banco simple y banco doble destinadas a la limpieza del concentrado wemco, incrementando significativamente la pureza final.',
+          name: 'Celda circular y Celda de Limpieza',
+          description: 'Las ultimas celdas, denominadas de limpieza, están compuesta por 2 celdas de flotación diferentes, una de banco simple y otra de banco doble, encargadas de flotar nuevamente el concentrado que se produce en las celdas anteriores y dejarlo en mejores condiciones de pureza. El concentrado que resulta de estas últimas celdas es enviado a la zona de cochas de concentrado, donde se unifican los concentrados resultantes de las diferentes celdas. Los residuos o relaves igualmente son enviados a la presa de relaves.',
           status: 'activo',
           metrics: [
             { label: 'Configuración', value: 'Banco simple / doble' },
-            { label: 'Función', value: 'Enriquecimiento final' }
-          ]
+            { label: 'Función', value: 'Limpieza / Pureza' },
+            { label: 'Destino Concentrado', value: 'Cochas concentrado' }
+          ],
+          imageUrl: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/plantas/lajo/etapas/6.%20CELDAS%20DE%20FLOTACI%C3%93N%20WEMCO%20DE%20LIMPIEZA.png'
         },
         {
           id: 'cochas-lajo',
           name: 'Cochas de Concentrado',
-          description: 'Piscinas construidas con muros de hormigón armado para la deshidratación por gravedad de las espumas de concentrado y empaque en Big Bags.',
+          description: 'Comprenden un número determinado de piscinas, construidas en muros de hormigón armado con una puerta. En este lugar es donde reposan todas las espumas de concentrado para que pierdan el agua, dejando únicamente las arenas de concentrado; que luego de una acumulación considerable se extrae y se coloca en los Big Bag y se los lleva al área de almacenamiento y carga de los mismos.',
           status: 'activo',
           metrics: [
-            { label: 'Estructura', value: 'Hormigón armado' },
+            { label: 'Estructura', value: 'Muros hormigón' },
+            { label: 'Deshidratación', value: 'Pérdida de agua' },
             { label: 'Presentación', value: 'Sacos Big Bag' }
-          ]
+          ],
+          imageUrl: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/plantas/lajo/etapas/7.%20COCHAS%20DE%20CONCENTRADO.png'
         }
       ],
       images: [
@@ -256,7 +272,8 @@ export class PlantasComponent implements OnInit {
           url: 'assets/operaciones/plantas/lajo/galeria/img-02.jpg',
           caption: 'Mantenimiento mecánico y calibración de las celdas de flotación.'
         }
-      ]
+      ],
+      locationMap: 'https://pub-3f09c3012ac6444694ac1ae4da966b48.r2.dev/assets/operaciones/plantas/lajo/planos/1.%20Ubicaci%C3%B3n.png'
     }
   ];
 
