@@ -46,6 +46,9 @@ interface RelaveraSpecs {
   hdpeInnerArea: string;
   hdpeOuterArea: string;
   soilClassification: string;
+  infraestructuraExistente?: string;
+  tipoInfraestructura?: string;
+  areaUsoActual?: string;
 }
 
 interface RelaveraImage {
