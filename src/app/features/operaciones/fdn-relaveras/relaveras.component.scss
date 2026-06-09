@@ -29,7 +29,7 @@ $border-color: #27272a;
   }
 }
 
-main {
+.animate-fade-in-up {
   animation: fadeInUp 0.5s ease-out forwards;
 }
 
@@ -237,6 +237,37 @@ button {
     opacity: 1;
     backdrop-filter: blur(12px);
     transform: scale(1);
+  }
+}
+
+// ===== MEJORAS DE DETALLE TÁCTIL EN MÓVILES =====
+button {
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+// Estilos premium para botones de selección rápida en móviles
+.grid-cols-3 button,
+.flex-wrap button {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+// Contenedor de miniaturas con scroll horizontal sutil en pantallas estrechas
+.flex-wrap {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 138, 30, 0.3) transparent;
+  
+  &::-webkit-scrollbar {
+    height: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(232, 138, 30, 0.3);
+    border-radius: 2px;
   }
 }
 

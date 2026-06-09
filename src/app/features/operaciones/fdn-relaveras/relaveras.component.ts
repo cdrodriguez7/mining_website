@@ -629,7 +629,7 @@ export class RelaverasComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Mapear datos desde el JSON
     this.relaveras.forEach(r => {
-      const normalizeName = (name: string) => name.toUpperCase().replace(/\s+/g, '');
+      const normalizeName = (name: string) => name.toUpperCase().replace(/\s+/g, '').replace(/#/g, '');
       const jsonRel = relaverasData.relaveras.find((j: any) => normalizeName(j.nombre_completo) === normalizeName(r.name));
 
       if (jsonRel) {
@@ -674,6 +674,15 @@ export class RelaverasComponent implements OnInit, OnDestroy {
             }
           });
         }
+      }
+
+      // Generación y combinación de la descripción técnica para todas las relaveras
+      const baseDesc = r.description || '';
+      const projDesc = this.generateProjectDescription(r);
+      if (baseDesc) {
+        r.description = `${projDesc}\n\n${baseDesc}`;
+      } else {
+        r.description = projDesc;
       }
     });
 
@@ -748,6 +757,54 @@ export class RelaverasComponent implements OnInit, OnDestroy {
     if (this.showMobileDetail) {
       this.closeMobileDetail();
     }
+  }
+
+  generateProjectDescription(r: Relavera): string {
+    // 1. Obtener la superficie del proyecto (usar cota de área superior o fallback)
+    let superficie = 'N/D';
+    if (r.specs && r.specs.upperArea) {
+      const m2 = parseFloat(r.specs.upperArea.replace(/,/g, ''));
+      if (!isNaN(m2)) {
+        superficie = `${(m2 / 10000).toFixed(4)} hectáreas`;
+      } else {
+        superficie = r.specs.upperArea;
+      }
+    }
+    
+    // Fallbacks específicos para Relaveras según enunciado técnico
+    if (r.name === 'Relavera #1') superficie = '0.59 hectáreas';
+    if (r.name === 'Relavera #2') superficie = '0.60 hectáreas';
+    if (r.name === 'Relavera #3') superficie = '0.44 hectáreas';
+    if (r.name === 'Relavera #7') superficie = '3.7644 hectáreas';
+
+    // 2. Altura de talud
+    const altura = r.height || '30 metros';
+
+    // 3. Inclinación y material del dique
+    let materialDique = 'material seleccionado compactado';
+    if (r.specs && r.specs.soilClassification) {
+      materialDique = r.specs.soilClassification;
+    }
+    
+    // 4. Inclinación
+    let inclinacion = '45°';
+    if (r.name === 'Relavera #4') inclinacion = '47°';
+
+    // 5. Flancos de excavación y dique (según orientación típica)
+    let flancoExcavacion = 'SUR y SUR-ESTE';
+    let flancoDique = 'Norte y Nor-Este';
+    
+    if (r.name === 'Relavera #2') {
+      flancoExcavacion = 'OESTE';
+      flancoDique = 'Este';
+    } else if (r.name === 'Relavera #3') {
+      flancoExcavacion = 'ESTE';
+      flancoDique = 'Oeste';
+    }
+
+    return `El proyecto de la presa comprende una superficie de ${superficie} que corresponde a la superficie del proyecto o área útil para la infraestructura de la presa de relaves. ` +
+           `La ejecución del proyecto se basará en la excavación y conformación de taludes internos del vaso aprovechando la cota y pendiente del terreno en el flanco ${flancoExcavacion} de la presa, donde se construye un talud de manera ascendente el cual no será mayor a 5.00 metros de altura y conservará una inclinación de ${inclinacion}. ` +
+           `Por otro lado, en el flanco ${flancoDique} de la presa de relaves se conforma el dique utilizando material estéril de mina junto con el suelo natural excavado que básicamente se compone de ${materialDique}, siendo un material adecuado para conformar el cuerpo del dique.`;
   }
 
   ngOnDestroy(): void {

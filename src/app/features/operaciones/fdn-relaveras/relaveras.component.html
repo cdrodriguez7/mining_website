@@ -1,4 +1,6 @@
-<app-navbar></app-navbar>
+<div [ngClass]="{'hidden lg:block': showMobileDetail}">
+  <app-navbar></app-navbar>
+</div>
 
 <main class="bg-zinc-950 text-white min-h-screen pt-24 pb-16 relative overflow-hidden">
   <!-- Fondos decorativos abstractos -->
@@ -8,7 +10,7 @@
   </div>
 
   <div
-    class="w-full max-w-[95%] sm:max-w-[92%] xl:max-w-[88%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6 relative z-10">
+    class="w-full max-w-[95%] sm:max-w-[92%] xl:max-w-[88%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6 relative z-10 animate-fade-in-up">
     <!-- Hero Banner -->
     <div class="flex items-start gap-4 lg:gap-6 mb-12">
       <div class="w-1.5 h-20 lg:h-28 bg-orange-600 flex-shrink-0 mt-1"></div>
@@ -170,7 +172,8 @@
       <!-- Modal de Detalle para Móviles (Overlay a pantalla completa con alta prioridad z-index) -->
       <div *ngIf="showMobileDetail" 
            (click)="onBackdropClick($event)"
-           class="lg:hidden fixed inset-0 z-[1000] bg-zinc-950/98 backdrop-blur-lg overflow-hidden flex flex-col p-4 md:p-6 animate-fade-in">
+           class="lg:hidden fixed inset-0 z-[1000] bg-zinc-950 overflow-hidden flex flex-col p-4 md:p-6 animate-fade-in"
+           style="background-color: #09090b !important;">
         <!-- Cabecera del modal (Fija arriba) -->
         <div (click)="$event.stopPropagation()" class="flex justify-between items-center mb-4 pb-2 border-b border-zinc-800/60 w-full max-w-5xl mx-auto flex-shrink-0">
           <span class="text-xs font-bold uppercase tracking-wider text-orange-500">Detalle de Operación</span>
@@ -183,8 +186,8 @@
           </button>
         </div>
 
-        <!-- Contenedor scrollable para el contenido en móvil -->
-        <div class="w-full flex-1 overflow-y-auto py-2">
+        <!-- Contenedor scrollable para el contenido en móvil (con padding inferior para evitar cortes en el scroll) -->
+        <div class="w-full flex-1 overflow-y-auto py-2 pb-24">
           <!-- Detalle de la Relavera (previene cierre al hacer click dentro) -->
           <div (click)="$event.stopPropagation()" class="w-full max-w-5xl mx-auto">
             <ng-container *ngTemplateOutlet="relaveraDetails"></ng-container>
@@ -257,32 +260,10 @@
             </div>
 
             <!-- Información técnica del proyecto de la presa -->
-            <div class="bg-zinc-900/40 border border-zinc-800/60 p-4 rounded-xl space-y-2.5 text-zinc-300 text-xs md:text-sm leading-relaxed">
-              <ng-container *ngIf="activeRelavera.description">
-                <p class="text-justify">{{ activeRelavera.description }}</p>
-              </ng-container>
-              <ng-container *ngIf="!activeRelavera.description">
-                <p>
-                  El proyecto de la presa comprende una superficie de <span class="text-orange-400 font-semibold">3.7644
-                    hectáreas</span> que corresponde a la superficie del proyecto o área útil para la infraestructura de
-                  la presa de relaves.
-                </p>
-                <p>
-                  La ejecución del proyecto se basará en la excavación y conformación de taludes internos del vaso
-                  aprovechando la cota y pendiente del terreno en el flanco <span
-                    class="text-zinc-100 font-medium">SUR</span> y <span class="text-zinc-100 font-medium">SUR-ESTE</span>
-                  de la presa, donde se construye un talud de manera ascendente el cual no será mayor a <span
-                    class="text-zinc-100 font-medium">5.00 metros</span> de altura y conservará una inclinación de <span
-                    class="text-zinc-100 font-medium">45°</span>.
-                </p>
-                <p>
-                  Por otro lado, en el flanco <span class="text-zinc-100 font-medium">Norte</span> y <span
-                    class="text-zinc-100 font-medium">Nor-Este</span> de la presa de relaves se conforma el dique
-                  utilizando material estéril de mina (escombrera de mina) junto con el suelo natural excavado que
-                  básicamente se compone de <span class="text-orange-400 font-medium">arcilla</span>, siendo un material
-                  adecuado para conformar el cuerpo del dique.
-                </p>
-              </ng-container>
+            <div class="bg-zinc-900/40 border border-zinc-800/60 p-4 rounded-xl space-y-3 text-zinc-300 text-xs md:text-sm leading-relaxed">
+              <p *ngFor="let para of activeRelavera.description?.split('\n\n')" class="text-justify">
+                {{ para }}
+              </p>
             </div>
 
             <!-- Grid: SVG + Panel de Leyenda -->
@@ -406,7 +387,9 @@
                     
 </ng-container>
 <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
-                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer" (click)="selectSensor(sensor)">
+                      <!-- Hit target táctil ampliado -->
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="20" fill="transparent" class="cursor-pointer"></circle>
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
                         [class.stroke-yellow-500]="sensor.status === 'alerta'"
@@ -526,7 +509,9 @@
                     
 </ng-container>
 <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
-                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer" (click)="selectSensor(sensor)">
+                      <!-- Hit target táctil ampliado -->
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="20" fill="transparent" class="cursor-pointer"></circle>
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
                         [class.stroke-yellow-500]="sensor.status === 'alerta'"
@@ -646,7 +631,9 @@
                     
 </ng-container>
 <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
-                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer" (click)="selectSensor(sensor)">
+                      <!-- Hit target táctil ampliado -->
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="20" fill="transparent" class="cursor-pointer"></circle>
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
                         [class.stroke-yellow-500]="sensor.status === 'alerta'"
@@ -767,7 +754,9 @@
                     
 </ng-container>
 <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
-                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer" (click)="selectSensor(sensor)">
+                      <!-- Hit target táctil ampliado -->
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="20" fill="transparent" class="cursor-pointer"></circle>
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
                         [class.stroke-yellow-500]="sensor.status === 'alerta'"
@@ -888,7 +877,9 @@
                     
 </ng-container>
 <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
-                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer" (click)="selectSensor(sensor)">
+                      <!-- Hit target táctil ampliado -->
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="20" fill="transparent" class="cursor-pointer"></circle>
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
                         [class.stroke-yellow-500]="sensor.status === 'alerta'"
@@ -985,6 +976,7 @@
                     </g>
 
                     <!-- ZONAS DE FALLA CLICKABLES (OVERLAYS) -->
+                    <ng-container *ngIf="activeFailureZones">
                     <!-- ZONA CORONA (dique izquierdo) -->
                     <g class="cursor-pointer" (click)="selectZone(activeFailureZones!.corona)">
                       <polygon points="330,155 385,155 385,180 330,180"
@@ -1017,9 +1009,12 @@
                         [attr.fill]="getZoneStroke(activeFailureZones!.pie.fs)">FS={{ activeFailureZones!.pie.fs }}</text>
                       <text x="510" y="208" font-size="7" font-family="monospace" fill="#d4d4d8" text-anchor="middle" opacity="0.85">PIE</text>
                     </g>
+                    </ng-container>
 
                     <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
-                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer" (click)="selectSensor(sensor)">
+                      <!-- Hit target táctil ampliado -->
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="20" fill="transparent" class="cursor-pointer"></circle>
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
                         [class.stroke-yellow-500]="sensor.status === 'alerta'"
@@ -1140,7 +1135,9 @@
                     
 </ng-container>
 <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
-                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer" (click)="selectSensor(sensor)">
+                      <!-- Hit target táctil ampliado -->
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="20" fill="transparent" class="cursor-pointer"></circle>
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="11" fill="none" stroke-width="2.5"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
                         [class.stroke-yellow-500]="sensor.status === 'alerta'"
@@ -1272,7 +1269,9 @@
                     
 </ng-container>
 <!-- SENSORES GEOTÉCNICOS INTERACTIVOS -->
-                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer">
+                    <g *ngFor="let sensor of activeRelavera.sensors" class="cursor-pointer" (click)="selectSensor(sensor)">
+                      <!-- Hit target táctil ampliado -->
+                      <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="20" fill="transparent" class="cursor-pointer"></circle>
                       <circle [attr.cx]="sensor.x + '%'" [attr.cy]="sensor.y + '%'" r="9" fill="none" stroke-width="2"
                         class="animate-ping" [class.stroke-green-500]="sensor.status === 'normal'"
                         [class.stroke-yellow-500]="sensor.status === 'alerta'"
@@ -1401,6 +1400,52 @@
                   </div>
                 </div>
  
+              </div>
+            </div>
+
+            <!-- Panel móvil de selección rápida (Zonas y Sensores) -->
+            <div class="block lg:hidden bg-zinc-950/60 border border-zinc-800/80 rounded-xl p-4 space-y-3 mt-2">
+              <span class="text-zinc-500 text-[10px] font-black uppercase tracking-wider block">Panel de Selección Táctil</span>
+              
+              <!-- Selector de Zonas (si existen) -->
+              <div *ngIf="activeFailureZones" class="space-y-1.5">
+                <span class="text-zinc-400 text-[9px] font-bold block uppercase">Zonas de Falla</span>
+                <div class="grid grid-cols-3 gap-2">
+                  <button (click)="selectZone(activeFailureZones.corona)"
+                          class="px-2 py-1.5 rounded-lg border text-center text-xs font-bold transition-all duration-200"
+                          [ngClass]="selectedZone?.id === 'corona' ? 'border-orange-600 bg-orange-600/10 text-orange-400 font-extrabold' : 'border-zinc-800 bg-zinc-900 text-zinc-400'">
+                    Corona
+                  </button>
+                  <button (click)="selectZone(activeFailureZones.talud)"
+                          class="px-2 py-1.5 rounded-lg border text-center text-xs font-bold transition-all duration-200"
+                          [ngClass]="selectedZone?.id === 'talud' ? 'border-orange-600 bg-orange-600/10 text-orange-400 font-extrabold' : 'border-zinc-800 bg-zinc-900 text-zinc-400'">
+                    Talud
+                  </button>
+                  <button (click)="selectZone(activeFailureZones.pie)"
+                          class="px-2 py-1.5 rounded-lg border text-center text-xs font-bold transition-all duration-200"
+                          [ngClass]="selectedZone?.id === 'pie' ? 'border-orange-600 bg-orange-600/10 text-orange-400 font-extrabold' : 'border-zinc-800 bg-zinc-900 text-zinc-400'">
+                    Pie
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Selector de Sensores -->
+              <div class="space-y-1.5">
+                <span class="text-zinc-400 text-[9px] font-bold block uppercase">Sensores Geotécnicos</span>
+                <div class="flex flex-wrap gap-2">
+                  <button *ngFor="let sensor of activeRelavera.sensors"
+                          (click)="selectSensor(sensor)"
+                          class="px-2.5 py-1.5 rounded-lg border text-xs font-semibold flex items-center gap-1.5 transition-all duration-200"
+                          [ngClass]="selectedSensor?.id === sensor.id ? 'border-green-600 bg-green-600/10 text-green-400 font-extrabold' : 'border-zinc-800 bg-zinc-900 text-zinc-400'">
+                    <span class="w-1.5 h-1.5 rounded-full" 
+                          [ngClass]="{
+                            'bg-green-500 animate-pulse': sensor.status === 'normal',
+                            'bg-yellow-500 animate-pulse': sensor.status === 'alerta',
+                            'bg-zinc-500': sensor.status === 'inactivo'
+                          }"></span>
+                    {{ sensor.name.replace('Piezómetro', 'PZ').replace('Inclinómetro', 'INC').replace('Medidor de Drenaje', 'DR').replace('Sismógrafo', 'SIS') }}
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -1633,7 +1678,7 @@
                     </svg>
                     Estado Actual
                   </span>
-                  <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
                       <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Infraestructura Existente</span>
                       <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.infraestructuraExistente }}</span>
@@ -1659,7 +1704,7 @@
                     </svg>
                     Cotas y Geometría del Dique
                   </span>
-                  <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                     <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
                       <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Nivel Base
                         Relavera</span>
@@ -1715,7 +1760,7 @@
                     <span *ngIf="activeRelavera.occupancy === 100" class="text-[9px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold uppercase tracking-wider">Límite Máximo</span>
                   </span>
                   <div class="relative">
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 transition-all duration-300"
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 transition-all duration-300"
                       [class.opacity-25]="activeRelavera.occupancy === 100" [class.blur-[1px]]="activeRelavera.occupancy === 100">
                     <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
                       <span
@@ -1788,7 +1833,7 @@
                   <div class="relative">
                     <div class="space-y-3 transition-all duration-300"
                       [class.opacity-25]="activeRelavera.occupancy === 100" [class.blur-[1px]]="activeRelavera.occupancy === 100">
-                      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
                       <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Volumen
                         Material en Dique</span>
@@ -1848,7 +1893,7 @@
                 </div>
               </div>
               <!-- Categoría 4: Estado Actual (Solo para Relaveras Inactivas) -->
-              <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-4 space-y-3" *ngIf="activeRelavera.specs?.infraestructuraExistente">
+              <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-4 space-y-3" *ngIf="activeRelavera.specs && activeRelavera.specs.infraestructuraExistente">
                 <span class="text-orange-500 font-mono font-bold text-xs uppercase tracking-wider block border-b border-zinc-800/60 pb-2 flex items-center justify-between">
                   <span class="flex items-center gap-1.5">
                     <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -1857,18 +1902,18 @@
                     Estado Actual
                   </span>
                 </span>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
                     <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Infraestructura Existente</span>
-                    <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs?.infraestructuraExistente }}</span>
+                    <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.infraestructuraExistente }}</span>
                   </div>
                   <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
                     <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Tipo</span>
-                    <span class="text-zinc-150 font-extrabold text-xs block leading-tight">{{ activeRelavera.specs?.tipoInfraestructura }}</span>
+                    <span class="text-zinc-150 font-extrabold text-xs block leading-tight">{{ activeRelavera.specs.tipoInfraestructura }}</span>
                   </div>
                   <div class="bg-zinc-950/50 border border-zinc-800/50 rounded-xl p-3">
                     <span class="text-zinc-500 text-[9px] font-bold block uppercase tracking-wider mb-0.5">Área de Uso Actual</span>
-                    <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs?.areaUsoActual }}</span>
+                    <span class="text-zinc-150 font-mono font-extrabold text-xs block">{{ activeRelavera.specs.areaUsoActual }}</span>
                   </div>
                 </div>
               </div>
@@ -1928,7 +1973,7 @@
                       <!-- Botón Ampliar flotante -->
                       <button
                         (click)="openPreview(activeRelavera.blueprints[blueprintCarouselIndex].url, activeRelavera.blueprints[blueprintCarouselIndex].caption, blueprintCarouselIndex, activeRelavera.blueprints)"
-                        class="absolute z-20 top-3 right-3 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-300 border border-zinc-800/80 opacity-0 group-hover/img:opacity-100 shadow-lg transform translate-y-1 group-hover/img:translate-y-0"
+                        class="absolute z-20 top-3 right-3 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-300 border border-zinc-800/80 opacity-100 lg:opacity-0 lg:group-hover/img:opacity-100 shadow-lg transform lg:translate-y-1 lg:group-hover/img:translate-y-0"
                         title="Ampliar Plano">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                           <path stroke-linecap="round" stroke-linejoin="round"
@@ -1938,14 +1983,14 @@
 
                       <!-- Controles de Navegación Lateral -->
                       <button (click)="prevBlueprint()"
-                        class="absolute z-20 left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-0 group-hover/cad:opacity-100"
+                        class="absolute z-20 left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-100 lg:opacity-0 lg:group-hover/cad:opacity-100"
                         aria-label="Plano anterior">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                           <polyline points="15 18 9 12 15 6"></polyline>
                         </svg>
                       </button>
                       <button (click)="nextBlueprint()"
-                        class="absolute z-20 right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-0 group-hover/cad:opacity-100"
+                        class="absolute z-20 right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-100 lg:opacity-0 lg:group-hover/cad:opacity-100"
                         aria-label="Plano siguiente">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                           <polyline points="9 18 15 12 9 6"></polyline>
@@ -1964,7 +2009,7 @@
                     </div>
 
                     <!-- Indicadores de Selección Rápida (Miniaturas) -->
-                    <div class="flex items-center justify-center gap-1.5 pt-1">
+                    <div class="flex flex-wrap items-center justify-center gap-1.5 pt-1">
                       <button *ngFor="let plan of activeRelavera.blueprints; let idx = index"
                         (click)="setBlueprintIndex(idx)"
                         class="w-8 h-6 rounded border transition-all duration-300 overflow-hidden opacity-60 hover:opacity-100 flex-shrink-0"
@@ -2045,7 +2090,7 @@
                         <!-- Botón Ampliar flotante -->
                         <button
                           (click)="openPreview(activeRelavera.images[carouselIndex].url, activeRelavera.images[carouselIndex].caption, carouselIndex, activeRelavera.images)"
-                          class="absolute z-20 top-3 right-3 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-300 border border-zinc-800/80 opacity-0 group-hover/img:opacity-100 shadow-lg transform translate-y-1 group-hover/img:translate-y-0"
+                          class="absolute z-20 top-3 right-3 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-300 border border-zinc-800/80 opacity-100 lg:opacity-0 lg:group-hover/img:opacity-100 shadow-lg transform lg:translate-y-1 lg:group-hover/img:translate-y-0"
                           title="Ampliar Imagen">
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.637 10.637zM10.5 7.5v6m3-3h-6" />
@@ -2054,14 +2099,14 @@
 
                         <!-- Controles de Navegación Lateral -->
                         <button (click)="prevImage()"
-                          class="absolute z-20 left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-0 group-hover/gallery:opacity-100"
+                          class="absolute z-20 left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-100 lg:opacity-0 lg:group-hover/gallery:opacity-100"
                           aria-label="Imagen anterior">
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                             <polyline points="15 18 9 12 15 6"></polyline>
                           </svg>
                         </button>
                         <button (click)="nextImage()"
-                          class="absolute z-20 right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-0 group-hover/gallery:opacity-100"
+                          class="absolute z-20 right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-black/70 hover:bg-orange-600 text-white flex items-center justify-center transition-all duration-200 border border-zinc-800/80 shadow-md opacity-100 lg:opacity-0 lg:group-hover/gallery:opacity-100"
                           aria-label="Imagen siguiente">
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                             <polyline points="9 18 15 12 9 6"></polyline>
@@ -2109,7 +2154,16 @@
             </ng-template>
           </div>
 
-
+          <!-- Botón Cerrar al final (Solo visible en Móvil en el modal) -->
+          <div *ngIf="showMobileDetail" class="lg:hidden mt-8 pt-4 border-t border-zinc-800/60 flex justify-center">
+            <button (click)="closeMobileDetail()" 
+                    class="w-full max-w-xs flex items-center justify-center gap-2 px-5 py-3 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 hover:text-white rounded-xl text-sm font-bold transition-all duration-300 shadow-lg">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+              Cerrar y Volver a la Lista
+            </button>
+          </div>
 
         </div>
       </ng-template>
