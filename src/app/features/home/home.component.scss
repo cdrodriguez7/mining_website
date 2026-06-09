@@ -459,4 +459,22 @@
     display: flex;
     flex-direction: column;
   }
+}
+
+// ── Animación Marquee para KPIs en Móvil ─────────────────────────────────────
+@keyframes marqueeMobile {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-marquee {
+  @media (max-width: 1023px) {
+    animation: marqueeMobile 20s linear infinite;
+  }
+}
+
+.pause-marquee:hover .animate-marquee {
+  @media (max-width: 1023px) {
+    animation-play-state: paused;
+  }
 }

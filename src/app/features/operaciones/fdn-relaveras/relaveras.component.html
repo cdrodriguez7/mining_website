@@ -227,28 +227,32 @@
             </div>
 
             <!-- Información técnica del proyecto de la presa -->
-            <div
-              class="bg-zinc-900/40 border border-zinc-800/60 p-4 rounded-xl space-y-2.5 text-zinc-300 text-xs md:text-sm leading-relaxed">
-              <p>
-                El proyecto de la presa comprende una superficie de <span class="text-orange-400 font-semibold">3.7644
-                  hectáreas</span> que corresponde a la superficie del proyecto o área útil para la infraestructura de
-                la presa de relaves.
-              </p>
-              <p>
-                La ejecución del proyecto se basará en la excavación y conformación de taludes internos del vaso
-                aprovechando la cota y pendiente del terreno en el flanco <span
-                  class="text-zinc-100 font-medium">SUR</span> y <span class="text-zinc-100 font-medium">SUR-ESTE</span>
-                de la presa, donde se construye un talud de manera ascendente el cual no será mayor a <span
-                  class="text-zinc-100 font-medium">5.00 metros</span> de altura y conservará una inclinación de <span
-                  class="text-zinc-100 font-medium">45°</span>.
-              </p>
-              <p>
-                Por otro lado, en el flanco <span class="text-zinc-100 font-medium">Norte</span> y <span
-                  class="text-zinc-100 font-medium">Nor-Este</span> de la presa de relaves se conforma el dique
-                utilizando material estéril de mina (escombrera de mina) junto con el suelo natural excavado que
-                básicamente se compone de <span class="text-orange-400 font-medium">arcilla</span>, siendo un material
-                adecuado para conformar el cuerpo del dique.
-              </p>
+            <div class="bg-zinc-900/40 border border-zinc-800/60 p-4 rounded-xl space-y-2.5 text-zinc-300 text-xs md:text-sm leading-relaxed">
+              <ng-container *ngIf="activeRelavera.description">
+                <p class="text-justify">{{ activeRelavera.description }}</p>
+              </ng-container>
+              <ng-container *ngIf="!activeRelavera.description">
+                <p>
+                  El proyecto de la presa comprende una superficie de <span class="text-orange-400 font-semibold">3.7644
+                    hectáreas</span> que corresponde a la superficie del proyecto o área útil para la infraestructura de
+                  la presa de relaves.
+                </p>
+                <p>
+                  La ejecución del proyecto se basará en la excavación y conformación de taludes internos del vaso
+                  aprovechando la cota y pendiente del terreno en el flanco <span
+                    class="text-zinc-100 font-medium">SUR</span> y <span class="text-zinc-100 font-medium">SUR-ESTE</span>
+                  de la presa, donde se construye un talud de manera ascendente el cual no será mayor a <span
+                    class="text-zinc-100 font-medium">5.00 metros</span> de altura y conservará una inclinación de <span
+                    class="text-zinc-100 font-medium">45°</span>.
+                </p>
+                <p>
+                  Por otro lado, en el flanco <span class="text-zinc-100 font-medium">Norte</span> y <span
+                    class="text-zinc-100 font-medium">Nor-Este</span> de la presa de relaves se conforma el dique
+                  utilizando material estéril de mina (escombrera de mina) junto con el suelo natural excavado que
+                  básicamente se compone de <span class="text-orange-400 font-medium">arcilla</span>, siendo un material
+                  adecuado para conformar el cuerpo del dique.
+                </p>
+              </ng-container>
             </div>
 
             <!-- Grid: SVG + Panel de Leyenda -->
@@ -1524,7 +1528,7 @@
             </div>
 
             <!-- Bloque de Contexto Técnico -->
-            <div class="bg-zinc-950/60 border border-zinc-800/50 rounded-2xl p-5">
+            <div *ngIf="activeFailureZones" class="bg-zinc-950/60 border border-zinc-800/50 rounded-2xl p-5">
               <div class="flex items-start gap-3">
                 <svg class="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
                   viewBox="0 0 24 24" stroke-width="2">
@@ -1564,6 +1568,8 @@
                 </div>
               </div>
             </div>
+
+
 
           </div>
 

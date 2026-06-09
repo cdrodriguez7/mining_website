@@ -58,7 +58,7 @@
         <span class="text-yellow-500 text-sm font-black uppercase tracking-wider">XAU</span>
         <span class="w-px h-4 bg-white/20"></span>
         <span class="text-yellow-500/80 text-sm font-semibold">Oro</span>
-        <span class="text-white font-black text-base">${{ metalPrices.gold.price | number:'1.2-2' }}</span>
+        <span class="text-white font-black text-base">${{ metalPrices.gold.price | number:'1.2-2' }} <span class="text-xs font-normal text-white/60">/oz</span></span>
         <span *ngIf="metalPrices.gold.change !== null" class="text-sm font-bold flex items-center gap-0.5"
           [ngClass]="metalPrices.gold.change >= 0 ? 'text-green-400' : 'text-red-400'">
           {{ metalPrices.gold.change >= 0 ? '▲' : '▼' }}
@@ -78,7 +78,7 @@
         <span class="text-gray-300 text-sm font-black uppercase tracking-wider">XAG</span>
         <span class="w-px h-4 bg-white/20"></span>
         <span class="text-gray-400/80 text-sm font-semibold">Plata</span>
-        <span class="text-white font-black text-base">${{ metalPrices.silver.price | number:'1.2-2' }}</span>
+        <span class="text-white font-black text-base">${{ metalPrices.silver.price | number:'1.2-2' }} <span class="text-xs font-normal text-white/60">/oz</span></span>
         <span *ngIf="metalPrices.silver.change !== null" class="text-sm font-bold flex items-center gap-0.5"
           [ngClass]="metalPrices.silver.change >= 0 ? 'text-green-400' : 'text-red-400'">
           {{ metalPrices.silver.change >= 0 ? '▲' : '▼' }}
@@ -98,7 +98,7 @@
         <span class="text-orange-400 text-sm font-black uppercase tracking-wider">XCU</span>
         <span class="w-px h-4 bg-white/20"></span>
         <span class="text-orange-400/70 text-sm font-semibold">Cobre</span>
-        <span class="text-white font-black text-base">${{ metalPrices.copper.price | number:'1.2-2' }}</span>
+        <span class="text-white font-black text-base">${{ metalPrices.copper.price | number:'1.2-2' }} <span class="text-xs font-normal text-white/60">/lb</span></span>
         <span *ngIf="metalPrices.copper.change !== null" class="text-sm font-bold flex items-center gap-0.5"
           [ngClass]="metalPrices.copper.change >= 0 ? 'text-green-400' : 'text-red-400'">
           {{ metalPrices.copper.change >= 0 ? '▲' : '▼' }}
@@ -122,33 +122,67 @@
   </div>
 </section>
 <!-- STATS SECTION -->
-<section class="py-8 md:py-12 bg-zinc-900">
-  <div class="w-full max-w-[90%] xl:max-w-[85%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-4 lg:px-6">
-    <div class="grid grid-cols-3 gap-3 md:gap-8 3xl:gap-12">
-      <div class="text-center">
-        <div class="text-3xl sm:text-4xl lg:text-6xl 3xl:text-7xl font-black text-white mb-1 md:mb-2">15</div>
-        <div class="flex items-center justify-center mb-1 md:mb-2">
-          <div class="w-6 h-0.5 md:w-8 md:h-1 bg-orange-600"></div>
-        </div>
-        <div class="text-orange-600 font-bold text-xs sm:text-sm md:text-base mb-0.5">Años</div>
-        <div class="text-gray-400 text-[10px] sm:text-xs md:text-sm">Experiencia</div>
+<section #statsSection class="py-12 md:py-16 bg-zinc-950 relative overflow-hidden">
+  <!-- Decorativos de fondo -->
+  <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay pointer-events-none"></div>
+  <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-orange-500/30 to-transparent"></div>
+  <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-orange-500/10 to-transparent"></div>
+  
+  <!-- Resplandor sutil central -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-orange-600/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+  <div class="relative w-full max-w-full lg:max-w-[90%] xl:max-w-[85%] 2xl:max-w-[1600px] 3xl:max-w-[1720px] mx-auto px-0 lg:px-6 overflow-hidden">
+    <!-- Wrapper Flex para Mobile (Marquee) / Grid para Desktop -->
+    <div class="flex lg:grid lg:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 3xl:gap-12 w-full pause-marquee">
+      
+      <!-- Pista 1: Visible siempre. En móvil hace marquee, en desktop es content de grid -->
+      <div class="flex lg:contents shrink-0 animate-marquee lg:animate-none gap-4 pl-4 lg:pl-0">
+        <a *ngFor="let kpi of kpis" [routerLink]="kpi.route"
+           class="group/kpi relative flex flex-col items-center justify-center p-6 sm:p-8 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm hover:-translate-y-2 hover:bg-white/10 hover:border-orange-500/30 transition-all duration-500 shadow-2xl overflow-hidden cursor-pointer w-[260px] sm:w-[300px] lg:w-auto shrink-0">
+          
+          <!-- Glow on hover -->
+          <div class="absolute inset-0 bg-gradient-to-b from-orange-500/0 to-orange-500/10 opacity-0 group-hover/kpi:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+          
+          <!-- Valor numérico -->
+          <div class="relative flex items-center justify-center text-4xl sm:text-5xl lg:text-6xl 3xl:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400 group-hover/kpi:from-white group-hover/kpi:to-orange-200 transition-colors duration-300 mb-2 md:mb-3 drop-shadow-lg">
+            {{ kpi.current }}<span class="text-2xl sm:text-3xl lg:text-4xl text-orange-500 ml-1 drop-shadow-none">{{ kpi.suffix }}</span>
+          </div>
+          
+          <!-- Separador -->
+          <div class="flex items-center justify-center mb-3 sm:mb-4">
+            <div class="w-8 h-1 bg-gradient-to-r from-orange-600 to-orange-400 rounded-full group-hover/kpi:w-16 transition-all duration-500"></div>
+          </div>
+          
+          <!-- Etiquetas -->
+          <div class="text-orange-400 font-bold text-sm sm:text-base md:text-lg mb-0.5 tracking-wide uppercase group-hover/kpi:text-orange-300 transition-colors text-center">{{ kpi.label }}</div>
+          <div class="text-gray-500 text-xs sm:text-sm font-medium tracking-wider uppercase group-hover/kpi:text-gray-300 transition-colors text-center">{{ kpi.sublabel }}</div>
+        </a>
       </div>
-      <div class="text-center">
-        <div class="text-3xl sm:text-4xl lg:text-6xl 3xl:text-7xl font-black text-white mb-1 md:mb-2">6</div>
-        <div class="flex items-center justify-center mb-1 md:mb-2">
-          <div class="w-6 h-0.5 md:w-8 md:h-1 bg-orange-600"></div>
-        </div>
-        <div class="text-orange-600 font-bold text-xs sm:text-sm md:text-base mb-0.5">Relaveras</div>
-        <div class="text-gray-400 text-[10px] sm:text-xs md:text-sm">Funcionando</div>
+
+      <!-- Pista 2: Duplicada para efecto infinito en móvil. Oculta en desktop -->
+      <div class="flex lg:hidden shrink-0 animate-marquee gap-4 pl-4 pr-4" aria-hidden="true">
+        <a *ngFor="let kpi of kpis" [routerLink]="kpi.route" tabindex="-1"
+           class="group/kpi relative flex flex-col items-center justify-center p-6 sm:p-8 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm hover:-translate-y-2 hover:bg-white/10 hover:border-orange-500/30 transition-all duration-500 shadow-2xl overflow-hidden cursor-pointer w-[260px] sm:w-[300px] shrink-0">
+          
+          <!-- Glow on hover -->
+          <div class="absolute inset-0 bg-gradient-to-b from-orange-500/0 to-orange-500/10 opacity-0 group-hover/kpi:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+          
+          <!-- Valor numérico -->
+          <div class="relative flex items-center justify-center text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400 group-hover/kpi:from-white group-hover/kpi:to-orange-200 transition-colors duration-300 mb-2 md:mb-3 drop-shadow-lg">
+            {{ kpi.current }}<span class="text-2xl sm:text-3xl text-orange-500 ml-1 drop-shadow-none">{{ kpi.suffix }}</span>
+          </div>
+          
+          <!-- Separador -->
+          <div class="flex items-center justify-center mb-3 sm:mb-4">
+            <div class="w-8 h-1 bg-gradient-to-r from-orange-600 to-orange-400 rounded-full group-hover/kpi:w-16 transition-all duration-500"></div>
+          </div>
+          
+          <!-- Etiquetas -->
+          <div class="text-orange-400 font-bold text-sm sm:text-base mb-0.5 tracking-wide uppercase group-hover/kpi:text-orange-300 transition-colors text-center">{{ kpi.label }}</div>
+          <div class="text-gray-500 text-xs sm:text-sm font-medium tracking-wider uppercase group-hover/kpi:text-gray-300 transition-colors text-center">{{ kpi.sublabel }}</div>
+        </a>
       </div>
-      <div class="text-center">
-        <div class="text-3xl sm:text-4xl lg:text-6xl 3xl:text-7xl font-black text-white mb-1 md:mb-2">120+</div>
-        <div class="flex items-center justify-center mb-1 md:mb-2">
-          <div class="w-6 h-0.5 md:w-8 md:h-1 bg-orange-600"></div>
-        </div>
-        <div class="text-orange-600 font-bold text-xs sm:text-sm md:text-base mb-0.5">Trabajadores</div>
-        <div class="text-gray-400 text-[10px] sm:text-xs md:text-sm">Activos</div>
-      </div>
+
     </div>
   </div>
 </section>

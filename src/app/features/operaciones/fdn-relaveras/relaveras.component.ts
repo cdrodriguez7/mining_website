@@ -83,6 +83,7 @@ interface Relavera {
   blueprints?: RelaveraImage[];
   specs?: RelaveraSpecs;
   stabilityImages: StabilityImages; // Imágenes de análisis de estabilidad por zona
+  description?: string; // Descripción general de la relavera
 }
 
 @Component({
@@ -426,6 +427,7 @@ export class RelaverasComponent implements OnInit {
     {
       id: 'ponce-norte',
       name: 'Relavera #1',
+      description: 'La Relavera 1 presenta infraestructura existente conformada por campamentos y oficinas, con un área de uso actual de 0,59 ha. Inicialmente, la estructura fue diseñada con un nivel base de 127,00 msnm, una cota de corona del dique de 142,00 msnm y un nivel máximo de llenado de 125,00 msnm. El diseño contempló un ancho de coronamiento de 4,00 m, un borde libre de 2,00 m y taludes aguas abajo con una relación 2H:1V. Actualmente, la relavera se encuentra en operación y conserva infraestructura asociada a sus actividades.',
       status: 'Material en Stock',
       statusClass: 'bg-yellow-500',
       capacity: '200,000 m³',
@@ -446,12 +448,8 @@ export class RelaverasComponent implements OnInit {
       ],
       images: [
         {
-          url: 'assets/operaciones/relaveras/ponce-norte/galeria/img-01.jpg',
+          url: '/assets/operaciones/relaveras/ponce-norte/galeria/relavera1.png',
           caption: 'Adecuación del canal perimetral de escorrentías e instalación de anclajes de geomembrana.'
-        },
-        {
-          url: 'assets/operaciones/relaveras/ponce-norte/galeria/img-02.jpg',
-          caption: 'Integración del sistema telemétrico SCADA en la sala de control de operaciones de PLANPROMIN.'
         }
       ],
       blueprints: [
@@ -492,6 +490,7 @@ export class RelaverasComponent implements OnInit {
     {
       id: 'rio-chico',
       name: 'Relavera #2',
+      description: 'La Relavera 2 no presenta infraestructura existente y actualmente corresponde a una conformación tipo terraplén, con un área de uso de 0,60 ha. Inicialmente, la estructura fue diseñada con un nivel base de 111,00 msnm, una cota de corona del dique de 122,00 msnm y un nivel máximo de llenado de 120,00 msnm. El diseño contempló un ancho de coronamiento de 5,00 m, un borde libre de 2,00 m y taludes aguas abajo con una relación 2H:1V. En la actualidad, el área no cuenta con infraestructura asociada.',
       status: 'Material en Stock',
       statusClass: 'bg-yellow-500',
       capacity: '110,000 m³',
@@ -512,21 +511,17 @@ export class RelaverasComponent implements OnInit {
       ],
       images: [
         {
-          url: 'assets/operaciones/relaveras/rio-chico/galeria/img-01.jpg',
-          caption: 'Sistema de cascadas de neutralización con cal activa para control preventivo de pH.'
-        },
-        {
-          url: 'assets/operaciones/relaveras/rio-chico/galeria/img-02.jpg',
-          caption: 'Detalle de los filtros de absorción instalados para retención de metales disueltos.'
+          url: '/assets/operaciones/relaveras/rio-chico/galeria/relavera2.png',
+          caption: 'Vista general del depósito Relavera #2 para control de material.'
         }
       ],
       blueprints: [
         {
-          url: 'assets/operaciones/relaveras/rio-chico/planos/plano-01.jpg',
+          url: '/assets/operaciones/relaveras/rio-chico/planos/plano-01.jpg',
           caption: 'Plano de la presa y ubicación de contrafuertes de escollera de Río Chico.'
         },
         {
-          url: 'assets/operaciones/relaveras/rio-chico/planos/plano-02.jpg',
+          url: '/assets/operaciones/relaveras/rio-chico/planos/plano-02.jpg',
           caption: 'Diagrama de flujo del sistema de cascadas de neutralización ácida.'
         }
       ],
@@ -550,14 +545,15 @@ export class RelaverasComponent implements OnInit {
         soilClassification: 'Limos y arcillas inorgánicas, CL y ML'
       },
       stabilityImages: {
-        pie: 'assets/operaciones/relaveras/rio-chico/estabilidad/pie.png',
-        talud: 'assets/operaciones/relaveras/rio-chico/estabilidad/talud.png',
-        corona: 'assets/operaciones/relaveras/rio-chico/estabilidad/corona.png'
+        pie: '/assets/operaciones/relaveras/rio-chico/estabilidad/pie.png',
+        talud: '/assets/operaciones/relaveras/rio-chico/estabilidad/talud.png',
+        corona: '/assets/operaciones/relaveras/rio-chico/estabilidad/corona.png'
       }
     },
     {
       id: 'relavera-3',
       name: 'Relavera #3',
+      description: 'La Relavera 3 no dispone de infraestructura existente y actualmente corresponde a un área verde con una superficie de 0,44 ha. En su diseño original, la estructura fue concebida con un nivel base de 110,00 msnm, una cota de corona del dique de 120,00 msnm y un nivel máximo de llenado de 118,00 msnm. Asimismo, se estableció un ancho de coronamiento de 4,00 m, un borde libre de 2,00 m y taludes aguas abajo con una pendiente de 2H:1V. Actualmente, la relavera no presenta edificaciones o instalaciones asociadas y el área se encuentra cubierta por vegetación.',
       status: 'Material en Stock',
       statusClass: 'bg-yellow-500',
       capacity: '130,000 m³',
@@ -578,21 +574,17 @@ export class RelaverasComponent implements OnInit {
       ],
       images: [
         {
-          url: 'assets/operaciones/relaveras/rio-chico/galeria/img-01.jpg',
+          url: '/assets/operaciones/relaveras/relavera-3/galeria/relaver3.png',
           caption: 'Vista general del depósito Relavera #3 para control de material.'
-        },
-        {
-          url: 'assets/operaciones/relaveras/rio-chico/galeria/img-02.jpg',
-          caption: 'Detalle de la instrumentación y piezómetros instalados en la corona.'
         }
       ],
       blueprints: [
         {
-          url: 'assets/operaciones/relaveras/rio-chico/planos/plano-01.jpg',
+          url: '/assets/operaciones/relaveras/relavera-3/planos/plano-01.jpg',
           caption: 'Plano transversal del dique de Relavera #3.'
         },
         {
-          url: 'assets/operaciones/relaveras/rio-chico/planos/plano-02.jpg',
+          url: '/assets/operaciones/relaveras/relavera-3/planos/plano-02.jpg',
           caption: 'Esquema general de instrumentación y monitoreo.'
         }
       ],
@@ -616,20 +608,20 @@ export class RelaverasComponent implements OnInit {
         soilClassification: 'Limos arcillosos, CL y ML'
       },
       stabilityImages: {
-        pie: 'assets/operaciones/relaveras/rio-chico/estabilidad/pie.png',
-        talud: 'assets/operaciones/relaveras/rio-chico/estabilidad/talud.png',
-        corona: 'assets/operaciones/relaveras/rio-chico/estabilidad/corona.png'
+        pie: '/assets/operaciones/relaveras/relavera-3/estabilidad/pie.png',
+        talud: '/assets/operaciones/relaveras/relavera-3/estabilidad/talud.png',
+        corona: '/assets/operaciones/relaveras/relavera-3/estabilidad/corona.png'
       }
     }
   ];
 
-  
+
   ngOnInit(): void {
     // Mapear datos desde el JSON
     this.relaveras.forEach(r => {
       const normalizeName = (name: string) => name.toUpperCase().replace(/\s+/g, '');
       const jsonRel = relaverasData.relaveras.find((j: any) => normalizeName(j.nombre_completo) === normalizeName(r.name));
-      
+
       if (jsonRel) {
         if (jsonRel.datos_generales.estado) r.status = jsonRel.datos_generales.estado;
         if (jsonRel.datos_generales.capacidad_total) r.capacity = jsonRel.datos_generales.capacidad_total;
@@ -665,7 +657,7 @@ export class RelaverasComponent implements OnInit {
           r.specs.hdpeInnerArea = e.revestimiento_impermeabilizacion?.impermeabilizacion_vaso_interior || r.specs.hdpeInnerArea;
           r.specs.hdpeOuterArea = e.revestimiento_impermeabilizacion?.impermeabilizacion_taludes_dique || r.specs.hdpeOuterArea;
           r.specs.soilClassification = e.revestimiento_impermeabilizacion?.clasificacion_suelo_SUCS || r.specs.soilClassification;
-          
+
           Object.keys(r.specs).forEach(key => {
             if ((r.specs as any)[key] === null || (r.specs as any)[key] === 'null') {
               (r.specs as any)[key] = '';
@@ -775,7 +767,7 @@ export class RelaverasComponent implements OnInit {
     const buildVariables = (zoneData: any, fallbackVars: { label: string; value: string }[]) => {
       const vars: { label: string; value: string }[] = [];
       if (!zoneData) return fallbackVars;
-      
+
       const addIfValid = (label: string, val: any) => {
         if (val !== null && val !== undefined && val !== 'null') {
           vars.push({ label, value: val.toString() });
@@ -793,7 +785,7 @@ export class RelaverasComponent implements OnInit {
       addIfValid('Cota Máxima', zoneData.cota_maxima_corona);
       addIfValid('Ancho Corona', zoneData.ancho_corona);
       addIfValid('Borde Libre', zoneData.borde_libre);
-      
+
       return vars.length > 0 ? vars : fallbackVars;
     };
 

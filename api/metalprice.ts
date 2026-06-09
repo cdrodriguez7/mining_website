@@ -1,4 +1,4 @@
-// Serverless function — llama a MetalpriceAPI desde el servidor
+// Serverless function — llama a MetalpriceAPI y Yahoo Finance desde el servidor
 // para evitar problemas de CORS y no exponer la API key en el cliente.
 // Desplegado en Vercel como GET /api/metalprice
 const https = require('https');
@@ -24,31 +24,47 @@ module.exports = async (req: any, res: any) => {
   const symbols = 'XAU,XAG';
   const upstream = `https://api.metalpriceapi.com/v1/latest?api_key=${apiKey}&base=USD&currencies=${symbols}`;
 
-  console.log('[metalprice] Consultando MetalpriceAPI...');
+  console.log('[metalprice] Consultando MetalpriceAPI y Yahoo Finance...');
 
   try {
-    const data = await fetchJson(upstream);
+    const [data, copperData] = await Promise.all([
+      fetchJson(upstream).catch(err => {
+        console.error('[metalprice] Error Metalprice:', err.message);
+        return null;
+      }),
+      fetchJson('https://query1.finance.yahoo.com/v8/finance/chart/HG=F').catch(err => {
+        console.error('[metalprice] Error Yahoo Finance (Cobre):', err.message);
+        return null;
+      })
+    ]);
 
-    if (!data?.success) {
+    if (!data || !data.success) {
       console.error('[metalprice] API retornó error:', data?.error);
       return res.status(502).json({ success: false, error: data?.error ?? 'API error' });
     }
 
     console.log('[metalprice] Respuesta OK, rates:', Object.keys(data.rates ?? {}));
 
+    if (copperData?.chart?.result?.[0]?.meta?.regularMarketPrice) {
+      const copperPrice = copperData.chart.result[0].meta.regularMarketPrice;
+      if (!data.rates) data.rates = {};
+      data.rates['XCU'] = 1 / copperPrice;
+      console.log('[metalprice] Precio de cobre obtenido:', copperPrice);
+    }
+
     // Cache corto (5 min en Vercel Edge) para no agotar la cuota del plan gratuito
     res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=60');
     return res.status(200).json(data);
 
   } catch (err: any) {
-    console.error('[metalprice] Error de red:', err.message);
+    console.error('[metalprice] Error general:', err.message);
     return res.status(502).json({ success: false, error: err.message });
   }
 };
 
 function fetchJson(url: string): Promise<any> {
   return new Promise((resolve, reject) => {
-    https.get(url, (response: any) => {
+    https.get(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } }, (response: any) => {
       let raw = '';
       response.on('data', (chunk: any) => { raw += chunk; });
       response.on('end', () => {

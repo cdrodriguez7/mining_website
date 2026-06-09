@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef, inject, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef, inject, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
@@ -88,6 +88,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   heroImage: CloudinaryImage | null = null;
   aboutImage: CloudinaryImage | null = null;
   galleryPreviewImages: CloudinaryImage[] = [];
+
+  // ── Estadísticas Dinámicas (KPIs) ─────────────────────────────────────────
+  @ViewChild('statsSection') statsSection!: ElementRef;
+  kpis = [
+    { target: 15, current: 0, label: 'Años', sublabel: 'Experiencia', suffix: '', route: '/empresa/acerca-de' },
+    { target: 3, current: 0, label: 'Relaveras', sublabel: 'Operativas', suffix: '', route: '/operaciones/ponce-enriquez/relaveras' },
+    { target: 2, current: 0, label: 'Plantas', sublabel: 'De Beneficio', suffix: '', route: '/operaciones/ponce-enriquez/plantas' },
+    { target: 120, current: 0, label: 'Trabajadores', sublabel: 'Activos', suffix: '+', route: '/empresa/gerencia' }
+  ];
 
   // ── Proyectos de Nuestro Trabajo ──────────────────────────────────────────
   projectModalVisible = false;
@@ -258,7 +267,35 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadNewsPreview(); // async, corre en paralelo con el resto
   }
 
-  ngAfterViewInit(): void { }
+  ngAfterViewInit(): void { 
+    if (typeof IntersectionObserver !== 'undefined' && this.statsSection) {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          this.animateKpis();
+          observer.disconnect();
+        }
+      }, { threshold: 0.1 });
+      observer.observe(this.statsSection.nativeElement);
+    } else {
+      this.animateKpis();
+    }
+  }
+
+  private animateKpis() {
+    this.kpis.forEach(kpi => {
+      const duration = 2000;
+      const steps = 60;
+      const stepTime = duration / steps;
+      const increment = kpi.target / steps;
+      let currentStep = 0;
+      const interval = setInterval(() => {
+        currentStep++;
+        kpi.current = Math.min(Math.ceil(increment * currentStep), kpi.target);
+        this.cdr.detectChanges();
+        if (currentStep >= steps) clearInterval(interval);
+      }, stepTime);
+    });
+  }
 
   ngOnDestroy(): void {
     this.metalsSub?.unsubscribe();

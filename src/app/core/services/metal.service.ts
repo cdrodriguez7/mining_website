@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { MetalHistoryService } from './metal-history.service';
+import { environment } from '../../../environments/environment';
 
 export interface MetalData {
   price: number;
@@ -36,7 +37,7 @@ interface MetalpriceApiResponse {
   rates: { [key: string]: number };
 }
 
-const STORAGE_KEY = 'planpromin_metals_v1';
+const STORAGE_KEY = 'planpromin_metals_v2';
 const TTL_MS = 24 * 60 * 60 * 1000; // 24 horas
 
 interface CachedMetals {
@@ -49,7 +50,7 @@ export class MetalsService {
   private http = inject(HttpClient);
   private historyService = inject(MetalHistoryService);
 
-  private readonly apiUrl = 'https://api.metalpriceapi.com/v1/latest?api_key=25d0e09e06c131e31f3900e844a22fbd&base=USD&currencies=XAU,XAG';
+  private readonly apiUrl = environment.metalpriceUrl;
 
   /** Precios base para fallback cuando la API falla completamente */
   private readonly fallbackPrices = { gold: 3022.50, silver: 33.82, copper: 4.68 };
@@ -92,8 +93,8 @@ export class MetalsService {
         const r = res.rates;
         const goldPrice   = r['USDXAU'] ?? (r['XAU'] ? +(1 / r['XAU']).toFixed(2) : 0);
         const silverPrice = r['USDXAG'] ?? (r['XAG'] ? +(1 / r['XAG']).toFixed(2) : 0);
-        const copperPrice = this.fallbackPrices.copper; // cobre no incluido en el plan
-        const isLive      = goldPrice > 0 && silverPrice > 0;
+        const copperPrice = r['USDXCU'] ?? (r['XCU'] ? +(1 / r['XCU']).toFixed(2) : this.fallbackPrices.copper);
+        const isLive      = goldPrice > 0 && silverPrice > 0 && copperPrice > 0;
 
         if (!isLive) {
           return this.buildState(
