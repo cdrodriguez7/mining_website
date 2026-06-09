@@ -4,7 +4,6 @@ npm-debug.log
 package-lock.json
 
 # Angular
-/dist/
 /.angular/
 .ng_build_cache/
 
