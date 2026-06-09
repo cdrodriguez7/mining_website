@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
@@ -93,10 +93,11 @@ interface Relavera {
   templateUrl: './relaveras.component.html',
   styleUrls: ['./relaveras.component.scss']
 })
-export class RelaverasComponent implements OnInit {
+export class RelaverasComponent implements OnInit, OnDestroy {
   isLoading = false;
   activeRelaveraIndex = 0;
   activeTab: 'specs' | 'blueprint' | 'gallery' = 'blueprint';
+  showMobileDetail = false;
 
   // Detalle del sensor seleccionado en el SVG
   selectedSensor: SensorInfo | null = null;
@@ -722,6 +723,37 @@ export class RelaverasComponent implements OnInit {
     this.blueprintCarouselIndex = 0;
     this.selectedSensor = this.activeRelavera.sensors[0] || null;
     this.selectedZone = null;
+    this.showMobileDetail = true;
+    
+    // Desactivar scroll del fondo si estamos en móvil para mejorar la navegación en el modal
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      document.body.classList.add('overflow-hidden');
+    }
+  }
+
+  closeMobileDetail(): void {
+    this.showMobileDetail = false;
+    if (typeof document !== 'undefined') {
+      document.body.classList.remove('overflow-hidden');
+    }
+  }
+
+  onBackdropClick(event: MouseEvent): void {
+    // Cerrar el modal al hacer clic en el fondo oscuro
+    this.closeMobileDetail();
+  }
+
+  @HostListener('window:keydown.escape', ['$event'])
+  handleEscapeKey(event: KeyboardEvent): void {
+    if (this.showMobileDetail) {
+      this.closeMobileDetail();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (typeof document !== 'undefined') {
+      document.body.classList.remove('overflow-hidden');
+    }
   }
 
   changeTab(tab: 'specs' | 'blueprint' | 'gallery'): void {

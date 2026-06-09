@@ -162,10 +162,40 @@
         </div>
       </div>
 
-      <!-- Ficha de Operación Principal (Derecha): 8 columnas -->
-      <div class="lg:col-span-8 space-y-6">
+      <!-- Ficha de Operación Principal (Derecha): Escritorio (Siempre visible en desktop) -->
+      <div class="hidden lg:block lg:col-span-8 space-y-6">
+        <ng-container *ngTemplateOutlet="relaveraDetails"></ng-container>
+      </div>
+
+      <!-- Modal de Detalle para Móviles (Overlay a pantalla completa con alta prioridad z-index) -->
+      <div *ngIf="showMobileDetail" 
+           (click)="onBackdropClick($event)"
+           class="lg:hidden fixed inset-0 z-[1000] bg-zinc-950/98 backdrop-blur-lg overflow-hidden flex flex-col p-4 md:p-6 animate-fade-in">
+        <!-- Cabecera del modal (Fija arriba) -->
+        <div (click)="$event.stopPropagation()" class="flex justify-between items-center mb-4 pb-2 border-b border-zinc-800/60 w-full max-w-5xl mx-auto flex-shrink-0">
+          <span class="text-xs font-bold uppercase tracking-wider text-orange-500">Detalle de Operación</span>
+          <button (click)="closeMobileDetail()" 
+                  class="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 hover:text-white rounded-xl text-xs font-bold transition-all duration-300 shadow-md">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+            Cerrar Detalle
+          </button>
+        </div>
+
+        <!-- Contenedor scrollable para el contenido en móvil -->
+        <div class="w-full flex-1 overflow-y-auto py-2">
+          <!-- Detalle de la Relavera (previene cierre al hacer click dentro) -->
+          <div (click)="$event.stopPropagation()" class="w-full max-w-5xl mx-auto">
+            <ng-container *ngTemplateOutlet="relaveraDetails"></ng-container>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template reutilizable de los detalles de la relavera -->
+      <ng-template #relaveraDetails>
         <div
-          class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 lg:p-8 backdrop-blur-sm relative overflow-hidden flex flex-col min-h-[500px]">
+          class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 lg:p-8 backdrop-blur-sm relative overflow-hidden flex flex-col min-h-[500px] w-full max-w-5xl mx-auto">
 
           <!-- Encabezado de la Relavera Activa -->
           <div
@@ -2082,7 +2112,7 @@
 
 
         </div>
-      </div>
+      </ng-template>
     </div>
   </div>
 </main>
